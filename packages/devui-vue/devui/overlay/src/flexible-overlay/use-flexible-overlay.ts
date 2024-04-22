@@ -1,6 +1,6 @@
-import { ref, unref, watch, nextTick, onUnmounted, toRefs } from 'vue';
+import { ref, unref, watch, nextTick, onUnmounted, toRefs, computed } from 'vue';
 import { arrow, computePosition, offset, flip } from '@floating-ui/dom';
-import { FlexibleOverlayProps, Placement, Point, UseOverlayFn, EmitEventFn, Rect } from './flexible-overlay-types';
+import { FlexibleOverlayProps, Placement, Point, EmitEventFn, Rect } from './flexible-overlay-types';
 
 function adjustArrowPosition(isArrowCenter: boolean, point: Point, placement: Placement, originRect: Rect): Point {
   let { x, y } = point;
@@ -23,10 +23,20 @@ function adjustArrowPosition(isArrowCenter: boolean, point: Point, placement: Pl
   return { x, y };
 }
 
-export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn): UseOverlayFn {
-  const { position, showArrow } = toRefs(props);
+export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn) {
+  const { fitOriginWidth, position, showArrow } = toRefs(props);
   const overlayRef = ref<HTMLElement | undefined>();
   const arrowRef = ref<HTMLElement | undefined>();
+  const overlayWidth = ref(0);
+  let originObserver: ResizeObserver;
+
+  const styles = computed(() => {
+    if (fitOriginWidth.value) {
+      return { width: overlayWidth.value + 'px' };
+    } else {
+      return {};
+    }
+  });
 
   const updateArrowPosition = (arrowEl: HTMLElement, placement: Placement, point: Point, overlayEl: HTMLElement) => {
     const { x, y } = adjustArrowPosition(props.isArrowCenter, point, placement, overlayEl.getBoundingClientRect());
@@ -73,6 +83,27 @@ export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn): UseO
       updatePosition();
     }
   };
+
+  const updateWidth = (originEl: HTMLElement) => {
+    overlayWidth.value = originEl.getBoundingClientRect().width;
+    updatePosition();
+  };
+
+  const observeOrigin = () => {
+    if (fitOriginWidth.value && typeof window !== 'undefined') {
+      const originEl = props.origin?.$el ?? props.origin;
+      if (originEl) {
+        originObserver = new window.ResizeObserver(() => updateWidth(originEl));
+        originObserver.observe(originEl);
+      }
+    }
+  };
+
+  const unobserveOrigin = () => {
+    const originEl = props.origin?.$el ?? props.origin;
+    originEl && originObserver?.unobserve(originEl);
+  };
+
   watch(
     () => props.modelValue,
     () => {
@@ -80,16 +111,19 @@ export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn): UseO
         nextTick(updatePosition);
         window.addEventListener('scroll', scrollCallback, true);
         window.addEventListener('resize', updatePosition);
+        observeOrigin();
       } else {
         window.removeEventListener('scroll', scrollCallback, true);
         window.removeEventListener('resize', updatePosition);
+        unobserveOrigin();
       }
     }
   );
   onUnmounted(() => {
     window.removeEventListener('scroll', scrollCallback, true);
     window.removeEventListener('resize', updatePosition);
+    unobserveOrigin();
   });
 
-  return { arrowRef, overlayRef, updatePosition };
+  return { arrowRef, overlayRef, styles, updatePosition };
 }
