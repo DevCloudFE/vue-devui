@@ -1,6 +1,6 @@
 {
   "name": "vue-devui",
-  "version": "1.6.15",
+  "version": "1.6.16",
   "license": "MIT",
   "description": "DevUI components based on Vite and Vue3",
   "keywords": [
@@ -25,6 +25,7 @@
   "style": "style.css",
   "scripts": {
     "dev": "pnpm generate:theme && vitepress dev docs",
+    "dev:site": "vite --port 3010",
     "build": "pnpm generate:theme && node --max-old-space-size=8192 node_modules/vitepress/bin/vitepress.js build docs && cp public/* docs/.vitepress/dist/assets && cp docs/assets/* docs/.vitepress/dist/assets",
     "build:lib": "pnpm predev -- -e prod && pnpm build:components && pnpm release",
     "test": "jest --config jest.config.js",
@@ -67,13 +68,14 @@
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.20",
     "markdown-it": "12.2.0",
+    "markdown-it-emoji": "^3.0.0",
     "markdown-it-plantuml": "^1.4.1",
     "mermaid": "9.1.1",
     "mitt": "^3.0.0",
     "monaco-editor": "0.34.0",
     "rxjs": "^7.8.1",
-    "vue": "^3.3.4",
     "uuid": "^9.0.1",
+    "vue": "^3.3.4",
     "vue-router": "^4.0.3",
     "xss": "^1.0.14"
   },

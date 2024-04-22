@@ -10,7 +10,6 @@ import {
   Teleport,
   watch,
   withModifiers,
-  onUnmounted,
   nextTick,
   computed,
 } from 'vue';
@@ -79,7 +78,6 @@ export default defineComponent({
     const isRender = ref<boolean>(false);
     const currentPosition = ref('bottom');
     const position = ref<Placement[]>(['bottom-start', 'top-start']);
-    const dropdownWidth = ref('0');
 
     const handlePositionChange = (pos: string) => {
       currentPosition.value = pos.split('-')[0] === 'top' ? 'top' : 'bottom';
@@ -89,14 +87,9 @@ export default defineComponent({
       'z-index': 'var(--devui-z-index-dropdown, 1052)',
     }));
 
-    const updateDropdownWidth = () => {
-      dropdownWidth.value = originRef?.value?.clientWidth ? originRef.value.clientWidth + 'px' : '100%';
-    };
-
     watch(selectRef, (val) => {
       if (val) {
         originRef.value = val.$el;
-        updateDropdownWidth();
       }
     });
 
@@ -110,15 +103,9 @@ export default defineComponent({
 
     onMounted(() => {
       isRender.value = true;
-      updateDropdownWidth();
-      window.addEventListener('resize', updateDropdownWidth);
       nextTick(() => {
-        dropdownContainer.value.addEventListener('scroll', scrollToBottom);
+        dropdownContainer.value?.addEventListener('scroll', scrollToBottom);
       });
-    });
-
-    onUnmounted(() => {
-      window.removeEventListener('resize', updateDropdownWidth);
     });
 
     provide(
@@ -156,10 +143,12 @@ export default defineComponent({
                 origin={originRef.value}
                 align="start"
                 offset={4}
+                fit-origin-width
                 position={position.value}
                 onPositionChange={handlePositionChange}
-                style={styles.value}>
-                <div v-dLoading={isLoading.value} class={dropdownCls} style={{ width: `${dropdownWidth.value}` }}>
+                style={styles.value}
+                class={props.menuClass}>
+                <div v-dLoading={isLoading.value} class={dropdownCls}>
                   <ul class={listCls} v-show={!isLoading.value} ref={dropdownContainer}>
                     {isShowCreateOption.value && (
                       <Option value={filterQuery.value} name={filterQuery.value} create>
@@ -179,6 +168,7 @@ export default defineComponent({
                         </Option>
                       ))}
                   </ul>
+
                   {(isLoading.value || isShowEmptyText.value) && (
                     <div>
                       {ctx.slots?.empty && ctx.slots.empty()}

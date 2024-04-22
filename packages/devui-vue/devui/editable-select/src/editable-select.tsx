@@ -34,7 +34,7 @@ export default defineComponent({
 
     const states = useSelectStates();
     //  data refs
-    const { appendToBody, disabled, modelValue, position, placeholder } = toRefs(props);
+    const { appendToBody, disabled, modelValue, position, placeholder, maxLength } = toRefs(props);
     const align = computed(() => (position.value.some((item) => item.includes('start') || item.includes('end')) ? 'start' : null));
 
     // input事件
@@ -135,6 +135,7 @@ export default defineComponent({
                 disabled={disabled.value}
                 placeholder={placeholder.value}
                 value={states.inputValue}
+                maxlength={maxLength?.value}
                 type="text"
                 onInput={onInput}
                 onFocus={handleFocus}
