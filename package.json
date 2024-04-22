@@ -6,6 +6,7 @@
     "precommit": "lint-staged",
     "scripts": "better-scripts",
     "dev": "pnpm scripts run dev",
+    "dev:site": "pnpm scripts run dev:site",
     "build": "pnpm scripts run build",
     "build:lib": "pnpm scripts run build:lib",
     "build:lib:theme": "pnpm scripts run build:lib:theme",

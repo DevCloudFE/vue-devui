@@ -401,6 +401,7 @@ export default defineComponent({
 | chooseItems         | 调用组件方法处理选中数据，针对`checkbox \| label`类型，参数为当前 tag      | (tag: ICategorySearchTagItem) => void                         |
 | getTextInputValue   | 调用组件方法处理选中数据，针对`textInput`类型，参数为当前 tag 和输入内容   | (tag: ICategorySearchTagItem, inputValue: string) => void     |
 | getNumberRangeValue | 调用组件方法处理选中数据，针对`numberRange`类型，参数为当前 tag 和输入内容 | (tag: ICategorySearchTagItem, rangeValue: number[]) => void   |
+|toggleTagMenu|控制某个已选择tag所对应下拉框的展开收起状态，可通过`status`参数指定展开收起状态|`(field: string, status?: boolean) => void`|
 
 ### 类型定义
 

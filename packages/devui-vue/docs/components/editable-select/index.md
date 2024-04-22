@@ -467,6 +467,7 @@ export default defineComponent({
 | filter-method         | `(inputValue:string)=>Array<Options>` | --       | 可选，自定义筛选方法                         | [自定义匹配方法](#自定义筛选方法)  |
 | remote-method         | `(inputValue:string)=>Array<Options>`  | --       | 可选，自定义远程搜索方法                     | [远程搜索](#远程搜索)              |
 |show-glow-style|`boolean`|true|可选，是否展示悬浮发光效果||
+|max-length|`number`|--|可选，输入框可输入的最大长度||
 
 ### EditableSelect 事件
 

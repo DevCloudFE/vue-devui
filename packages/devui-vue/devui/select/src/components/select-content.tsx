@@ -23,6 +23,7 @@ export default defineComponent({
     const multipleCls = ns.e('multiple');
     const multipleInputCls = ns.em('multiple', 'input');
     const {
+      select,
       searchQuery,
       selectedData,
       isSelectDisable,
@@ -99,6 +100,7 @@ export default defineComponent({
                   placeholder={placeholder.value}
                   readonly={isReadOnly.value}
                   disabled={isSelectDisable.value}
+                  maxlength={select?.maxLength}
                   onInput={queryFilter}
                   onFocus={onFocus}
                   onBlur={onBlur}
@@ -114,6 +116,7 @@ export default defineComponent({
               placeholder={placeholder.value}
               readonly={isReadOnly.value}
               disabled={isSelectDisable.value}
+              maxlength={select?.maxLength}
               onFocus={onFocus}
               onBlur={onBlur}
               onInput={queryFilter}

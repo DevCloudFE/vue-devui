@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, provide, ref, SetupContext, withModifiers } from 'vue';
+import { defineComponent, toRefs, provide, ref, SetupContext, withModifiers, computed } from 'vue';
 import { Fullscreen } from '../../fullscreen';
 import { useEditorMd } from './composables/use-editor-md';
 import { useEditorMdTheme } from './composables/use-editor-md-theme';
@@ -34,6 +34,13 @@ export default defineComponent({
     } = toRefs(props);
 
     const showFullscreen = ref(false);
+    const finalModelValue = computed(() => {
+      if (typeof maxlength.value === 'number') {
+        return modelValue.value.substring(0, maxlength.value);
+      } else {
+        return modelValue.value;
+      }
+    });
 
     const {
       editorRef,
@@ -80,7 +87,7 @@ export default defineComponent({
             style={{ height: editorContainerHeight?.value + 'px' }}>
             <div class="dp-md-editor">
               <textarea ref={editorRef} placeholder={placeholder.value}>
-                {modelValue.value}
+                {finalModelValue.value}
               </textarea>
               <FlexibleOverlay
                 ref={overlayRef}
@@ -93,7 +100,7 @@ export default defineComponent({
               </FlexibleOverlay>
               {Boolean(maxlength?.value) && (
                 <div class="dp-md-count">
-                  {modelValue.value.length || 0}/{maxlength.value}
+                  {finalModelValue.value.length || 0}/{maxlength.value}
                 </div>
               )}
             </div>
@@ -101,7 +108,7 @@ export default defineComponent({
               ref={renderRef}
               base-url={baseUrl.value}
               breaks={breaks.value}
-              content={modelValue.value}
+              content={finalModelValue.value}
               custom-parse={customParse.value}
               render-parse={renderParse.value}
               md-rules={mdRules.value}

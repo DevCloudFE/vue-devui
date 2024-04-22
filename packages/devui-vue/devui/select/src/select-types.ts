@@ -107,37 +107,18 @@ export const selectProps = {
     type: Boolean,
     default: true,
   },
+  menuClass: {
+    type: String,
+    default: '',
+  },
+  maxLength: {
+    type: Number,
+  },
 } as const;
 
 export type SelectProps = ExtractPropTypes<typeof selectProps>;
 
 export type OptionModelValue = number | string;
-
-export interface UseSelectReturnType {
-  selectDisabled: ComputedRef<boolean>;
-  selectSize: ComputedRef<SelectSize>;
-  originRef: Ref<HTMLElement | undefined>;
-  dropdownRef: Ref<HTMLElement | undefined>;
-  isOpen: Ref<boolean>;
-  selectCls: ComputedRef<string>;
-  mergeOptions: Ref<OptionObjectItem[]>;
-  selectedOptions: ComputedRef<OptionObjectItem[]>;
-  filterQuery: Ref<string>;
-  emptyText: ComputedRef<string>;
-  isLoading: Ref<boolean>;
-  isShowEmptyText: ComputedRef<boolean>;
-  handleClear: (e: MouseEvent) => void;
-  valueChange: (item: OptionObjectItem) => void;
-  handleClose: () => void;
-  updateInjectOptions: (item: Record<string, unknown>, operation: string, isObject: boolean) => void;
-  tagDelete: (data: OptionObjectItem) => void;
-  onFocus: (e: FocusEvent) => void;
-  onBlur: (e: FocusEvent) => void;
-  isDisabled: (item: OptionObjectItem) => boolean;
-  toggleChange: (bool: boolean) => void;
-  debounceQueryFilter: (query: string) => void;
-  isShowCreateOption: ComputedRef<boolean>;
-}
 
 export interface SelectContext extends SelectProps {
   selectDisabled: boolean;
@@ -180,26 +161,6 @@ export interface UseOptionReturnType {
   selectOptionCls: ComputedRef<string>;
   isVisible: ComputedRef<boolean>;
   optionSelect: () => void;
-}
-
-export interface UseSelectContentReturnType {
-  searchQuery: Ref<string>;
-  selectedData: ComputedRef<OptionObjectItem[]>;
-  isSelectDisable: ComputedRef<boolean>;
-  isSupportCollapseTags: ComputedRef<boolean>;
-  isDisabledTooltip: ComputedRef<boolean>;
-  isReadOnly: ComputedRef<boolean>;
-  selectionCls: ComputedRef<string>;
-  inputCls: ComputedRef<string>;
-  tagSize: ComputedRef<string>;
-  placeholder: ComputedRef<string>;
-  isMultiple: ComputedRef<boolean>;
-  displayInputValue: ComputedRef<string>;
-  handleClear: (e: MouseEvent) => void;
-  tagDelete: (data: OptionObjectItem) => void;
-  onFocus: (e: FocusEvent) => void;
-  onBlur: (e: FocusEvent) => void;
-  queryFilter: (e: Event) => void;
 }
 
 export interface UseSelectFunctionReturn {
