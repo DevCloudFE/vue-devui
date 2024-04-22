@@ -160,25 +160,27 @@ export default defineComponent({
                 onPositionChange={handlePositionChange}
                 style={styles.value}>
                 <div v-dLoading={isLoading.value} class={dropdownCls} style={{ width: `${dropdownWidth.value}` }}>
-                  <ul class={listCls} v-show={!isLoading.value} ref={dropdownContainer}>
-                    {isShowCreateOption.value && (
-                      <Option value={filterQuery.value} name={filterQuery.value} create>
-                        {props.multiple ? <Checkbox modelValue={false} label={filterQuery.value} /> : filterQuery.value}
-                      </Option>
-                    )}
-                    {ctx.slots?.default && ctx.slots.default()}
-                    {!ctx.slots?.default &&
-                      mergeOptions.value.length >= 1 &&
-                      mergeOptions.value.map((item) => (
-                        <Option key={item.value} value={item.value} name={item.name} disabled={isDisabled(item)}>
-                          {props.multiple ? (
-                            <Checkbox modelValue={item._checked} label={item.name} disabled={isDisabled(item)} />
-                          ) : (
-                            item.name || item.value
-                          )}
+                  {!isShowEmptyText.value && (
+                    <ul class={listCls} v-show={!isLoading.value} ref={dropdownContainer}>
+                      {isShowCreateOption.value && (
+                        <Option value={filterQuery.value} name={filterQuery.value} create>
+                          {props.multiple ? <Checkbox modelValue={false} label={filterQuery.value} /> : filterQuery.value}
                         </Option>
-                      ))}
-                  </ul>
+                      )}
+                      {ctx.slots?.default && ctx.slots.default()}
+                      {!ctx.slots?.default &&
+                        mergeOptions.value.length >= 1 &&
+                        mergeOptions.value.map((item) => (
+                          <Option key={item.value} value={item.value} name={item.name} disabled={isDisabled(item)}>
+                            {props.multiple ? (
+                              <Checkbox modelValue={item._checked} label={item.name} disabled={isDisabled(item)} />
+                            ) : (
+                              item.name || item.value
+                            )}
+                          </Option>
+                        ))}
+                    </ul>
+                  )}
                   {(isLoading.value || isShowEmptyText.value) && (
                     <div>
                       {ctx.slots?.empty && ctx.slots.empty()}
