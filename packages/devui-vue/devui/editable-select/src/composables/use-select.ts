@@ -159,9 +159,7 @@ export function useSelect(
   watch(
     () => props.options,
     (newOptions) => {
-      if (newOptions.length !== 0) {
-        cachedOptions.value = newOptions;
-      }
+      cachedOptions.value = newOptions;
     }
   );
 
