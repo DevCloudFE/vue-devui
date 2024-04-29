@@ -15,7 +15,7 @@ export default defineComponent({
   props: dropdownProps,
   emits: ['toggle'],
   setup(props: DropdownProps, { slots, attrs, emit, expose }) {
-    const { visible, position, align, offset, destroyOnHide, shiftOffset, showAnimation, teleport } = toRefs(props);
+    const { visible, position, offset, destroyOnHide, shiftOffset, showAnimation, teleport } = toRefs(props);
     const origin = ref<HTMLElement | undefined>();
     const dropdownRef = ref<HTMLElement | undefined>();
     const overlayRef = ref();
@@ -59,7 +59,6 @@ export default defineComponent({
               ref={overlayRef}
               origin={origin.value}
               position={position.value}
-              align={align.value}
               offset={offset.value}
               shiftOffset={shiftOffset?.value}
               onPositionChange={handlePositionChange}

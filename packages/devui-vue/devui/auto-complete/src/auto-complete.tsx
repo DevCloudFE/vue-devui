@@ -44,7 +44,6 @@ export default defineComponent({
     const inputNs = useNamespace('auto-complete-input');
     const isDisabled = computed(() => formContext?.disabled || disabled.value);
     const autoCompleteSize = computed(() => formContext?.size || props.size);
-    const align = computed(() => (position.value.some((item) => item.includes('start') || item.includes('end')) ? 'start' : null));
 
     const { handleSearch, searchList, showNoResultItemTemplate, recentlyFocus } = useSearchFn(
       ctx,
@@ -126,7 +125,6 @@ export default defineComponent({
           <FlexibleOverlay
             origin={origin.value}
             position={position.value}
-            align={align.value}
             v-model={visible.value}
             onPositionChange={handlePositionChange}
             style={overlayStyles.value}>

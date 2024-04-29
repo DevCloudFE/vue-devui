@@ -47,11 +47,21 @@
     margin-right: 8px;
     margin-left: -12px;
   }
+}
 
-  &-hide {
-    &::before {
-      display: none;
-    }
+.#{$devui-prefix}-form__label--required-right {
+  &::after {
+    content: '*';
+    color: red;
+    display: inline-block;
+    margin-left: 8px;
+  }
+}
+
+.#{$devui-prefix}-form__label--required-hide {
+  &::before,
+  &::after {
+    display: none;
   }
 }
 

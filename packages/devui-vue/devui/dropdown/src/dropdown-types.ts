@@ -15,7 +15,6 @@ export type Placement =
   | 'bottom-end'
   | 'left-start'
   | 'left-end';
-export type Alignment = 'start' | 'end';
 export type OffsetOptions = { mainAxis?: number; crossAxis?: number };
 
 export type EmitEvent = (event: 'toggle', result: boolean) => void;
@@ -35,11 +34,7 @@ export const dropdownProps = {
   },
   position: {
     type: Array as PropType<Array<Placement>>,
-    default: ['bottom'],
-  },
-  align: {
-    type: String as PropType<Alignment> | null,
-    default: null,
+    default: () => ['bottom', 'top', 'left', 'right'],
   },
   offset: {
     type: [Number, Object] as PropType<number | OffsetOptions>,

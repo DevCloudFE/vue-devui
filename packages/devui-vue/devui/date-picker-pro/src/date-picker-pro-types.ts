@@ -50,7 +50,7 @@ export const datePickerProCommonProps = {
   },
   position: {
     type: Array as PropType<Placement[]>,
-    default: () => ['bottom-start', 'top-start'],
+    default: () => ['bottom-start', 'top-start', 'left-start', 'right-start'],
   },
 };
 

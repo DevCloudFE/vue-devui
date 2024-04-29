@@ -47,15 +47,6 @@ export default defineComponent({
       transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
       'z-index': 'var(--devui-z-index-dropdown, 1052)',
     }));
-    const align = computed(() => {
-      if (position.value.some((item: string) => item.includes('start'))) {
-        return 'start';
-      }
-      if (position.value.some((item: string) => item.includes('end'))) {
-        return 'end';
-      }
-      return undefined;
-    });
 
     return () => {
       const vSlots = {
@@ -98,7 +89,6 @@ export default defineComponent({
                 v-model={isPanelShow.value}
                 ref={overlayRef}
                 origin={originRef.value}
-                align={align.value}
                 position={position.value}
                 style={styles.value}
                 onPositionChange={handlePositionChange}>

@@ -14,7 +14,7 @@ export default defineComponent({
   props: popoverProps,
   emits: ['show', 'hide'],
   setup(props: PopoverProps, { slots, attrs, emit }) {
-    const { content, popType, position, align, offset, showAnimation } = toRefs(props);
+    const { content, popType, position, offset, showAnimation } = toRefs(props);
     const origin = ref<HTMLElement>();
     const popoverRef = ref<HTMLElement>();
     const visible = ref(false);
@@ -40,7 +40,6 @@ export default defineComponent({
               ref={popoverRef}
               origin={origin.value}
               position={position.value}
-              align={align.value}
               offset={offset.value}
               class={[ns.e('content'), popType.value !== 'default' ? 'is-icon' : '']}
               show-arrow

@@ -13,6 +13,19 @@ export type Options = Array<OptionItem>;
 export type ModelValue = number | string | Array<number | string>;
 export type filterValue = boolean | ((query: string) => void);
 export type SelectSize = 'sm' | 'md' | 'lg';
+export type Placement =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
 export const selectProps = {
   modelValue: {
     type: [String, Number, Array] as PropType<ModelValue>,
@@ -25,6 +38,10 @@ export const selectProps = {
   options: {
     type: Array as PropType<Options>,
     default: () => [],
+  },
+  position: {
+    type: Array as PropType<Placement[]>,
+    default: () => ['bottom', 'top', 'left', 'right'],
   },
   size: {
     type: String as PropType<SelectSize>,

@@ -34,7 +34,7 @@ export const editableSelectProps = {
   },
   position: {
     type: Array as PropType<Placement[]>,
-    default: ['bottom'],
+    default: () => ['bottom', 'top', 'left', 'right'],
   },
   options: {
     type: Array as PropType<Options>,

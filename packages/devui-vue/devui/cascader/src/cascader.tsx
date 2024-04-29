@@ -97,7 +97,6 @@ export default defineComponent({
               ref={overlayRef}
               v-model={menuShow.value}
               position={position.value as Placement[]}
-              align="start"
               style={styles.value}
               onPositionChange={handlePositionChange}>
               <div class={ns.e('drop-menu-animation')}>

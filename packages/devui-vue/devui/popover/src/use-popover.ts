@@ -50,6 +50,7 @@ export function usePopover(
 export function usePopoverEvent(props: PopoverProps, visible: Ref<boolean>, origin: Ref): UsePopoverEvent {
   const { trigger, position, mouseEnterDelay, mouseLeaveDelay, disabled } = toRefs(props);
   const isClick: ComputedRef<boolean> = computed(() => trigger.value === 'click');
+  const isHover: ComputedRef<boolean> = computed(() => trigger.value === 'hover');
   const placement: Ref<string> = ref(position.value[0].split('-')[0]);
   const isEnter: Ref<boolean> = ref(false);
 
@@ -69,13 +70,13 @@ export function usePopoverEvent(props: PopoverProps, visible: Ref<boolean>, orig
     if (disabled.value) {
       return;
     }
-    if (!isClick.value) {
+    if (isHover.value) {
       isEnter.value = true;
       enter();
     }
   };
   const onMouseleave = () => {
-    if (!isClick.value) {
+    if (isHover.value) {
       isEnter.value = false;
       leave();
     }

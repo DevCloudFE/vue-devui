@@ -16,6 +16,7 @@ export type LabelAlign = 'start' | 'center' | 'end';
 export type FormData = Record<string, unknown>;
 export type StyleType = 'default' | 'gray';
 export type AppendToBodyScrollStrategy = 'close' | 'reposition';
+export type RequirePosition = 'left' | 'right';
 
 export type FormRules = Partial<Record<string, Array<FormRuleItem>>>;
 export interface ValidateFailure {
@@ -77,6 +78,10 @@ export const formProps = {
   appendToBodyScrollStrategy: {
     type: String as PropType<AppendToBodyScrollStrategy>,
     default: 'reposition',
+  },
+  requirePosition: {
+    type: String as PropType<RequirePosition>,
+    default: 'left',
   },
 } as const;
 
