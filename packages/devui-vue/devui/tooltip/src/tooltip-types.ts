@@ -1,6 +1,5 @@
 import type { ComputedRef, ExtractPropTypes, PropType, Ref, TeleportProps } from 'vue';
 
-export type Alignment = 'start' | 'end';
 export type BasePlacement =
   | 'top'
   | 'right'
@@ -22,11 +21,7 @@ export const tooltipProps = {
   },
   position: {
     type: [String, Array] as PropType<BasePlacement | Array<BasePlacement>>,
-    default: 'top',
-  },
-  align: {
-    type: String as PropType<Alignment> | null,
-    default: null,
+    default: () => ['top', 'right', 'bottom', 'left'],
   },
   showAnimation: {
     type: Boolean,

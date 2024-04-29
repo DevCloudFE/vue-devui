@@ -24,7 +24,7 @@ import SelectContent from './components/select-content';
 import useSelectFunction from './composables/use-select-function';
 import './select.scss';
 import { createI18nTranslate } from '../../locale/create';
-import { FlexibleOverlay, Placement } from '../../overlay';
+import { FlexibleOverlay } from '../../overlay';
 import LoadingDirective from '../../loading/src/loading-directive';
 
 export default defineComponent({
@@ -77,7 +77,6 @@ export default defineComponent({
     ctx.expose({ focus, blur, toggleChange });
     const isRender = ref<boolean>(false);
     const currentPosition = ref('bottom');
-    const position = ref<Placement[]>(['bottom-start', 'top-start']);
 
     const handlePositionChange = (pos: string) => {
       currentPosition.value = pos.split('-')[0] === 'top' ? 'top' : 'bottom';
@@ -141,10 +140,9 @@ export default defineComponent({
                 v-model={isRender.value}
                 ref={dropdownRef}
                 origin={originRef.value}
-                align="start"
                 offset={4}
                 fit-origin-width
-                position={position.value}
+                position={props.position}
                 onPositionChange={handlePositionChange}
                 style={styles.value}
                 class={props.menuClass}>
