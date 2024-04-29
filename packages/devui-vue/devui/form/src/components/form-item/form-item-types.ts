@@ -1,6 +1,6 @@
 import type { RuleItem, ValidateFieldsError } from 'async-validator';
-import type { ComputedRef, ExtractPropTypes, PropType, InjectionKey, Ref, SetupContext } from 'vue';
-import { LabelAlign, LabelSize, Layout } from '../../form-types';
+import type { ComputedRef, ExtractPropTypes, PropType, Ref, SetupContext } from 'vue';
+import { LabelAlign, LabelSize, Layout, RequirePosition } from '../../form-types';
 import { FeedbackStatus } from '../form-control/form-control-types';
 
 export type FormItemValidateState = '' | 'error' | 'pending' | 'success';
@@ -81,6 +81,7 @@ export type LabelData = ComputedRef<{
   layout: Layout;
   labelSize: LabelSize;
   labelAlign: LabelAlign;
+  requiredPosition: RequirePosition;
   helpTips: string | HelpTips;
   formItemCtx: SetupContext;
 }>;

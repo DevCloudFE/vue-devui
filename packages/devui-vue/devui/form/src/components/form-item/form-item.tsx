@@ -24,6 +24,7 @@ export default defineComponent({
       layout: formContext.layout,
       labelSize: formContext.labelSize,
       labelAlign: formContext.labelAlign,
+      requiredPosition: formContext.requirePosition,
       helpTips: helpTips.value,
       formItemCtx: ctx,
     }));
