@@ -20,7 +20,7 @@ export default defineComponent({
 					rootCtx.slots[`${item.value.field}Tag`]!({ tag: item.value })
 				) : isJoinLabelType.value ? (
 					<>
-						<span>{item.value.label}</span>
+						<span>{item.value.label}: </span>
 						<span class='dp-category-search-multi-tag' style={{ maxWidth: tagMaxWidth?.value + 'px' }}>
 							{Array.isArray(item.value.value?.cache) &&
 								item.value.value?.cache?.map((tag: any, index: number) => (

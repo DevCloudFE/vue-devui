@@ -48,7 +48,7 @@ export const autoCompleteProps = {
   },
   position: {
     type: Array as PropType<Array<Placement>>,
-    default: ['bottom-end'],
+    default: () => ['bottom', 'top', 'left', 'right'],
   },
   disabled: {
     type: Boolean,

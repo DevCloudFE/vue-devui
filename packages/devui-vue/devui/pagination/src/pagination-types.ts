@@ -19,7 +19,7 @@ export const paginationProps = {
   },
   pageSizeDirection: {
     type: Array as PropType<Array<PageSizeDirection>>,
-    default: () => ['bottom', 'top'],
+    default: () => ['bottom', 'top', 'left', 'bottom'],
   },
   pageIndex: {
     type: Number,

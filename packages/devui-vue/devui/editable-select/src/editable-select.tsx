@@ -35,7 +35,6 @@ export default defineComponent({
     const states = useSelectStates();
     //  data refs
     const { appendToBody, disabled, modelValue, position, placeholder, maxLength } = toRefs(props);
-    const align = computed(() => (position.value.some((item) => item.includes('start') || item.includes('end')) ? 'start' : null));
 
     // input事件
     const { onInput, onMouseenter, onMouseleave, setSoftFocus, handleBlur, handleFocus, handleClear } = useInputEvent(
@@ -101,7 +100,6 @@ export default defineComponent({
             v-model={states.visible}
             origin={originRef.value}
             position={position.value}
-            align={align.value}
             style={styles.value}
             onPositionChange={handlePositionChange}>
             <Dropdown options={filteredOptions.value} width={props.width} maxHeight={props.maxHeight} v-slots={ctx.slots}></Dropdown>

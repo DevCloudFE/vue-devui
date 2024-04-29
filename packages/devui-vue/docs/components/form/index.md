@@ -666,6 +666,7 @@ export default defineComponent({
 | hide-required-mark             | `boolean`                                                 | false              | 可选，是否隐藏所有表单项的必选标记                                                              |                       |
 | style-type                     | [StyleType](#styletype)                                   | 'default'          | 可选，设置表单为灰色表单                                                                        |                       |
 | append-to-body-scroll-strategy | [AppendToBodyScrollStrategy](#appendtobodyscrollstrategy) | 'reposition'       | 可选，消息显示为 popover 时，滚动时 popover 处理策略，默认策略跟随宿主移动；`close`为滚动时关闭 |                       |
+|require-position|`string`|'left'|可选，必填型号的位置，可选值为`left`和`right`||
 
 ### Form 事件
 

@@ -4,7 +4,7 @@ import { Icon } from '../../icon';
 import useTimePicker from './composables/use-time-picker';
 import TimePopup from './components/time-popup/index';
 import DInput from '../../input/src/input';
-import { FlexibleOverlay, Placement } from '../../overlay';
+import { FlexibleOverlay } from '../../overlay';
 import { useNamespace } from '@devui/shared/utils';
 
 import './time-picker.scss';
@@ -20,7 +20,6 @@ export default defineComponent({
     const activeMinute = ref('00');
     const activeSecond = ref('00');
     const format = props.format.toLowerCase();
-    const position = ref(['bottom-start', 'top-start']);
     const currentPosition = ref('bottom');
     const handlePositionChange = (pos: string) => {
       currentPosition.value = pos.split('-')[0] === 'top' ? 'top' : 'bottom';
@@ -94,8 +93,7 @@ export default defineComponent({
                 v-model={showPopup.value}
                 ref={overlayRef}
                 origin={inputDom.value?.$el}
-                position={position.value as Placement[]}
-                align="start"
+                position={props.position}
                 style={styles.value}
                 onPositionChange={handlePositionChange}>
                 <TimePopup
