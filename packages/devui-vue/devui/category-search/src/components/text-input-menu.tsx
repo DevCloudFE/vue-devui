@@ -28,6 +28,7 @@ export default defineComponent({
 					<d-input
 						v-model={formData.text}
 						autocomplete='off'
+						autofocus
 						maxlength={tag.value.maxLength}
 						placeholder={tag.value.placeholder || ''}></d-input>
 				</d-form-item>
