@@ -3,6 +3,9 @@ import type { PropType, ExtractPropTypes, ComputedRef, Ref, CSSProperties, Input
 export type ISize = 'lg' | 'md' | 'sm';
 
 export const inputNumberProps = {
+  modelValue: {
+    type: [Number, String] as PropType<number | string>,
+  },
   placeholder: {
     type: String,
   },
@@ -24,9 +27,6 @@ export const inputNumberProps = {
   },
   size: {
     type: String as PropType<ISize>,
-  },
-  modelValue: {
-    type: Number,
   },
   precision: {
     type: Number,

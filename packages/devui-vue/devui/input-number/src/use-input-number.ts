@@ -56,7 +56,7 @@ export function useExpose(ctx: SetupContext): UseExpose {
   return { inputRef };
 }
 
-function getPrecision(pre: number | undefined): number {
+function getPrecision(pre: string | number | undefined): number {
   let precision = 0;
   if (isUndefined(pre)) {
     return precision;
@@ -111,6 +111,9 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
   };
 
   const correctValue = (value: number | string | undefined | null) => {
+    if (value === '') { // 空串允许被直接返回 因为用户可能会删除掉值
+      return '';
+    }
     // 校验正则
     const valueStr = value + '';
     if (props.reg && !valueStr.match(new RegExp(props.reg))) {
@@ -141,8 +144,8 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
 
     state.userInputValue = undefined;
 
-    // 0 可以被更新
-    if (newVal !== 0 && !newVal) {
+    // 0 和 '' 可以被更新
+    if (newVal !== 0 && newVal !== '' && !newVal) {
       ctx.emit('update:modelValue', oldVal);
       return;
     }
