@@ -20,30 +20,46 @@ export default defineComponent({
     const showSuggestions = ref<boolean>(false);
     const currentIndex = ref<number>(0);
     const suggestionsTop = ref<number>();
+    const suggestionsLeft = ref<number>();
     const suggestions = ref<IMentionSuggestionItem[]>([]);
     const filteredSuggestions = ref<IMentionSuggestionItem[]>([]);
     const suggestionsDom = ref<HTMLDivElement>();
     const loading = computed(() => props.loading);
     const instance = getCurrentInstance();
 
+    const checkShouldShowSuggestions = (word: string) => {
+      if (word && props.trigger.includes(word[0])) {
+        // 需要以空格作为分割，单词尾部的 trigger 符号不生效
+        return word.length === 1 || !props.trigger.includes(word[word.length - 1]);
+      } else {
+        return false;
+      }
+    };
+
     const handleUpdate = debounce((val: string) => {
-      if (props.trigger.includes(val[0])) {
+      const wordsWithoutSpace = val.split(' ');
+      const lastWordIndex = wordsWithoutSpace.length - 1;
+      const lastWord = wordsWithoutSpace[lastWordIndex];
+      const shouldBeActive = checkShouldShowSuggestions(lastWord);
+      if (shouldBeActive) {
         showSuggestions.value = true;
         if (props.position === 'top') {
           setTimeout(() => {
-            const height = window.getComputedStyle(suggestionsDom.value as Element, null).height;
+            const element = window.getComputedStyle(suggestionsDom.value as Element, null);
+            const { height, width } = element;
             suggestionsTop.value = -Number(height.replace('px', ''));
+            suggestionsLeft.value = Number(width.replace('px', ''));
           }, 0);
         }
         filteredSuggestions.value = (suggestions.value as IMentionSuggestionItem[]).filter((item: IMentionSuggestionItem) =>
           String(item[props.dmValueParse.value as keyof IMentionSuggestionItem])
             .toLocaleLowerCase()
-            .includes(val.slice(1).toLocaleLowerCase())
+            .includes(lastWord.slice(1).toLocaleLowerCase())
         );
       } else {
         showSuggestions.value = false;
       }
-      emit('change', val.slice(1));
+      emit('change', lastWord.slice(1));
     }, 300);
 
     const handleBlur = (e: Event) => {
@@ -67,7 +83,12 @@ export default defineComponent({
       e.stopPropagation();
       e.preventDefault();
       showSuggestions.value = false;
-      textContext.value = textContext.value.substring(0, 1) + item[props.dmValueParse.value as keyof IMentionSuggestionItem];
+      const wordsWithoutSpace = textContext.value.split(' ');
+      const lastWordIndex = wordsWithoutSpace.length - 1;
+      const lastWord = wordsWithoutSpace[lastWordIndex];
+      const selectedWord = item[props.dmValueParse.value as keyof IMentionSuggestionItem];
+      wordsWithoutSpace[lastWordIndex] = `${lastWord[0]}${selectedWord}`;
+      textContext.value = wordsWithoutSpace.join(' ');
     };
 
     const arrowKeyDown = (e: KeyboardEvent) => {
@@ -102,9 +123,12 @@ export default defineComponent({
           e.stopPropagation();
           e.preventDefault();
           showSuggestions.value = false;
-          textContext.value =
-            textContext.value.substring(0, 1) +
-            filteredSuggestions.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem];
+          const wordsWithoutSpace = textContext.value.split(' ');
+          const lastWordIndex = wordsWithoutSpace.length - 1;
+          const lastWord = wordsWithoutSpace[lastWordIndex];
+          const selectedWord = filteredSuggestions.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem];
+          wordsWithoutSpace[lastWordIndex] = `${lastWord[0]}${selectedWord}`;
+          textContext.value = wordsWithoutSpace.join(' ');
           emit('select', filteredSuggestions.value[currentIndex.value]);
         }
       }
@@ -149,6 +173,7 @@ export default defineComponent({
                 style={{
                   marginTop: props.position === 'top' ? '0px' : '-16px',
                   top: suggestionsTop.value ? suggestionsTop.value + 'px' : 'inherit',
+                  left: suggestionsLeft.value ? suggestionsLeft.value + 'px' : 'inherit',
                 }}>
                 {filteredSuggestions.value.length > 0 ? (
                   filteredSuggestions.value?.map((item, index) => {
