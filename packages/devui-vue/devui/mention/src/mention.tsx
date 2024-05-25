@@ -36,6 +36,14 @@ export default defineComponent({
       }
     };
 
+    const updateTextContentWithSuggestion = (suggestion: string | number) => {
+      const wordsWithoutSpace = textContext.value.split(' ');
+      const lastWordIndex = wordsWithoutSpace.length - 1;
+      const lastWord = wordsWithoutSpace[lastWordIndex];
+      wordsWithoutSpace[lastWordIndex] = `${lastWord[0]}${suggestion}`;
+      textContext.value = wordsWithoutSpace.join(' ');
+    };
+
     const handleUpdate = debounce((val: string) => {
       const wordsWithoutSpace = val.split(' ');
       const lastWordIndex = wordsWithoutSpace.length - 1;
@@ -83,12 +91,8 @@ export default defineComponent({
       e.stopPropagation();
       e.preventDefault();
       showSuggestions.value = false;
-      const wordsWithoutSpace = textContext.value.split(' ');
-      const lastWordIndex = wordsWithoutSpace.length - 1;
-      const lastWord = wordsWithoutSpace[lastWordIndex];
-      const selectedWord = item[props.dmValueParse.value as keyof IMentionSuggestionItem];
-      wordsWithoutSpace[lastWordIndex] = `${lastWord[0]}${selectedWord}`;
-      textContext.value = wordsWithoutSpace.join(' ');
+      const suggestion = item[props.dmValueParse.value as keyof IMentionSuggestionItem];
+      updateTextContentWithSuggestion(suggestion);
     };
 
     const arrowKeyDown = (e: KeyboardEvent) => {
@@ -123,12 +127,8 @@ export default defineComponent({
           e.stopPropagation();
           e.preventDefault();
           showSuggestions.value = false;
-          const wordsWithoutSpace = textContext.value.split(' ');
-          const lastWordIndex = wordsWithoutSpace.length - 1;
-          const lastWord = wordsWithoutSpace[lastWordIndex];
-          const selectedWord = filteredSuggestions.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem];
-          wordsWithoutSpace[lastWordIndex] = `${lastWord[0]}${selectedWord}`;
-          textContext.value = wordsWithoutSpace.join(' ');
+          const suggestion = filteredSuggestions.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem];
+          updateTextContentWithSuggestion(suggestion);
           emit('select', filteredSuggestions.value[currentIndex.value]);
         }
       }
