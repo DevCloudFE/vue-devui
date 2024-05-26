@@ -147,7 +147,7 @@ export default defineComponent({
                 style={styles.value}
                 class={props.menuClass}>
                 <div v-dLoading={isLoading.value} class={dropdownCls}>
-                  <ul class={listCls} v-show={!isLoading.value} ref={dropdownContainer}>
+                  <ul class={listCls} v-show={!isLoading.value && !isShowEmptyText.value} ref={dropdownContainer}>
                     {isShowCreateOption.value && (
                       <Option value={filterQuery.value} name={filterQuery.value} create>
                         {props.multiple ? <Checkbox modelValue={false} label={filterQuery.value} /> : filterQuery.value}
