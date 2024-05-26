@@ -221,7 +221,7 @@ export default defineComponent({
           const fd = new FormData();
           fd.append('file', file);
           xhr.send(fd);
-        }).then((res: any) => {
+        }).then((res) => {
           if (res.status === 'success') {
             callback({ name: file.name, imgUrl: res['imgUrl'], title: res['imgTitle'] });
           } else {
