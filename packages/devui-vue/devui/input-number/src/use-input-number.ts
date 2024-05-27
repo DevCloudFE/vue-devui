@@ -1,17 +1,16 @@
-import { computed, reactive, toRefs, watch, ref, inject } from 'vue';
+import { computed, reactive, toRefs, watch, ref, inject, InjectionKey } from 'vue';
 import type { SetupContext, Ref, CSSProperties } from 'vue';
 import { InputNumberProps, UseEvent, UseRender, IState, UseExpose } from './input-number-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { isNumber, isUndefined } from '../../shared/utils';
-import { FORM_TOKEN } from '../../form';
+import { FORM_TOKEN, type FormProps } from '../../form';
 
 const ns = useNamespace('input-number');
 
 export function useRender(props: InputNumberProps, ctx: SetupContext): UseRender {
-  const formContext = inject(FORM_TOKEN, undefined);
+  const formContext: FormProps | undefined | any = inject(FORM_TOKEN, undefined); // 修复ts语法错误组件不被d-from组件引用时，formContext未被定义
   const { style, class: customClass, ...otherAttrs } = ctx.attrs;
   const customStyle = { style: style as CSSProperties };
-
   const inputNumberSize = computed(() => props.size || formContext?.size || 'md');
 
   const wrapClass = computed(() => [
@@ -56,12 +55,12 @@ export function useExpose(ctx: SetupContext): UseExpose {
   return { inputRef };
 }
 
-function getPrecision(pre: string | number | undefined): number {
+function getPrecision(pre: string | number | undefined | null): number {
   let precision = 0;
   if (isUndefined(pre)) {
     return precision;
   }
-  const preString = pre.toString();
+  const preString = (pre as string).toString();
   const dotIndex = preString.indexOf('.');
   if (dotIndex !== -1) {
     precision = preString.length - dotIndex - 1;
@@ -89,8 +88,8 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
       return state.userInputValue;
     }
     let currentValue = state.currentValue;
-    if (currentValue === '' || isUndefined(currentValue) || Number.isNaN(currentValue)) {
-      return '';
+    if (!currentValue && currentValue !== 0) {
+      return null;
     }
     if (isNumber(currentValue)) {
       // todo 小数精度 确认是否应该以正则处理
@@ -111,8 +110,8 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
   };
 
   const correctValue = (value: number | string | undefined | null) => {
-    if (value === '') { // 空串允许被直接返回 因为用户可能会删除掉值
-      return '';
+    if ((!value && value !== 0) && props.allowEmpty) { // 当用户开始允许空值时 value不为0的false全返回null(即'',null,undefined,NaN都会反回null设计与dev_ui_ag版本一致)
+      return null;
     }
     // 校验正则
     const valueStr = value + '';
@@ -121,10 +120,6 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
     }
 
     let newVal = Number(value);
-    // 不是0 是假值或者是NaN返回undefined
-    if (newVal !== 0 && (!Number(value) || Number.isNaN(newVal))) {
-      return undefined;
-    }
 
     // 精度限制存在才做转换
     if (!isUndefined(props.precision)) {
@@ -138,14 +133,14 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
     return newVal;
   };
 
-  const setCurrentValue = (value: number | string | undefined) => {
+  const setCurrentValue = (value: number | string | undefined | null) => {
     const oldVal = state.currentValue;
     const newVal = correctValue(value);
 
     state.userInputValue = undefined;
 
     // 0 和 '' 可以被更新
-    if (newVal !== 0 && newVal !== '' && !newVal) {
+    if (newVal !== 0 && newVal !== null && !newVal) {
       ctx.emit('update:modelValue', oldVal);
       return;
     }
