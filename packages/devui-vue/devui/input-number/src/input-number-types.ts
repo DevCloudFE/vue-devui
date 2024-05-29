@@ -40,8 +40,7 @@ export const inputNumberProps = {
     default: true,
   },
   decimalLimit: {
-    type: Number || null,
-    default: 2,
+    type: Number,
   },
 } as const;
 
