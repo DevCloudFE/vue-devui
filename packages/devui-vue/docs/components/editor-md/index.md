@@ -122,15 +122,20 @@ export default defineComponent({
 
 ### 自定义代码高亮
 
-`devui`的代码编辑器本身的高亮是由`highlight.js`和一些自定义颜色实现的。传入`preview-style-class`属性则可以覆盖默认类实现自定义高亮样式。
+`DevUI`的代码编辑器本身的高亮是由`highlight.js`和一些自定义颜色实现的。传入`preview-style-class`属性则可以覆盖默认类实现自定义高亮样式。
 
 :::demo 使用 highlight.js进行代码高亮或自定义类覆盖高亮样式
 
 ```vue
 <template>
   <d-md-render :preview-style-class="`custom-blank`" :content="content" :md-rules="mdRules" base-url="https://test-base-url"></d-md-render>
+  <p>自定义类custom-blank</p>
+
   <d-md-render preview-style-class :content="content" :md-rules="mdRules" base-url="https://test-base-url"></d-md-render>
+  <p>highlight原始样式</p>
+  
   <d-md-render :content="content" :md-rules="mdRules" base-url="https://test-base-url"></d-md-render>
+  <p>DevUI样式</p>
 </template>
 
 <script>
@@ -138,7 +143,7 @@ import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const content = ref('# h1 \n [link](#test)');
+    const content = ref("# h1 \n [link](#test) \n\n Markdown 语法 `python` 代码部分\n\n```python\ndef text_to_speech(self, text, file_path):\n        print(f\"Converting text to speech: {text}\")\n        t = self.llm.chat_oai(conversations=[{\n            \"role\":\"user\",\n            \"content\": json.dumps({\n                \"input\": text,\n                \"voice\": \"echo\",\n                \"response_format\": \"wav\"\n            }, ensure_ascii=False)\n        }])\n ```");
     const mdRules = reactive({
       linkify: {
         fuzzyLink: false,
@@ -153,6 +158,12 @@ export default defineComponent({
 .custom-blank h1{
   font-size: 48px;
   font-weight: 700;
+}
+.custom-blank .hljs-string{
+  color: red;
+}
+.custom-blank .hljs-literal{
+  color: blue;
 }
 .custom-blank p > a:hover{
   color: blue;
