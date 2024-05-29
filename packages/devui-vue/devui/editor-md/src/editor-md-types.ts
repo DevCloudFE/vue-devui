@@ -61,6 +61,10 @@ const commonProps = {
     type: Array as PropType<Array<MdPlugin>>,
     default: () => [],
   },
+  previewStyleClass: {
+    type: String,
+    default: 'dp-md-view',
+  },
 };
 
 export interface HintConfigItem {

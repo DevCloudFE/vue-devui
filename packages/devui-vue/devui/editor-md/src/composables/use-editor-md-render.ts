@@ -3,7 +3,7 @@ import { MdPlugin, MdRenderProps } from '../editor-md-types';
 import { MDRenderService } from './md-render-service';
 
 export function useEditorMdRender(props: MdRenderProps, ctx: SetupContext) {
-  const { content, customParse, disableRender } = toRefs(props);
+  const { content, customParse, disableRender, previewStyleClass } = toRefs(props);
   const renderService = new MDRenderService();
   const previewRef = ref();
   let timer: ReturnType<typeof setTimeout> | null = null;
@@ -58,7 +58,7 @@ export function useEditorMdRender(props: MdRenderProps, ctx: SetupContext) {
     }
   };
 
-  return { previewRef, renderService, onPreviewClick, setContainerContent };
+  return { previewRef, renderService, previewStyleClass, onPreviewClick, setContainerContent };
 }
 
 export function useMdRenderWatcher(props: MdRenderProps, renderService: MDRenderService, setContainerContent: () => void) {

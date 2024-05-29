@@ -120,6 +120,48 @@ export default defineComponent({
 
 :::
 
+### 自定义代码高亮
+
+`devui`的代码编辑器本身的高亮是由`highlight.js`和一些自定义颜色实现的。传入`preview-style-class`属性则可以覆盖默认类实现自定义高亮样式。
+
+:::demo 使用 highlight.js进行代码高亮或自定义类覆盖高亮样式
+
+```vue
+<template>
+  <d-md-render :preview-style-class="`custom-blank`" :content="content" :md-rules="mdRules" base-url="https://test-base-url"></d-md-render>
+  <d-md-render preview-style-class :content="content" :md-rules="mdRules" base-url="https://test-base-url"></d-md-render>
+  <d-md-render :content="content" :md-rules="mdRules" base-url="https://test-base-url"></d-md-render>
+</template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const content = ref('# h1 \n [link](#test)');
+    const mdRules = reactive({
+      linkify: {
+        fuzzyLink: false,
+      },
+    });
+
+    return { content, mdRules };
+  },
+});
+</script>
+<style>
+.custom-blank h1{
+  font-size: 48px;
+  font-weight: 700;
+}
+.custom-blank p > a:hover{
+  color: blue;
+}
+</style>
+```
+
+:::
+
 ### 单列渲染模式
 
 :::demo 通过 mode 控制不同的显示模式
@@ -630,6 +672,8 @@ Bob-->>John: Jolly good!
 | fullscreen-z-index     | `number`                                  | 10       | 编辑器全屏状态的 z-index                                                                                           |
 | image-upload-to-server | `boolean`                                 | false    | 是否打开图片自定义上传开关（打开后将将监听图片的复制，toolbar 图片功能上传，传出事件回调）                         |
 |editor-container-height|`number`|--|可选，编辑器内容区高度||
+|preview-style-class|`string`|--|可选，自定义代码渲染的高亮样式  [自定义代码高亮](#自定义代码高亮)||
+
 
 ### EditorMd 事件
 
