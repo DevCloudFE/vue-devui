@@ -109,6 +109,28 @@ describe('d-input-number', () => {
     wrapper.unmount();
   });
 
+  it('decimal limit', async () => {
+    const num = ref(1);
+    const wrapper = mount({
+      setup() {
+        return () => <DInputNumber v-model={num.value} decimalLimit={2}></DInputNumber>;
+      },
+    });
+
+    const inputInner = wrapper.find(ns.e('input-box'));
+    expect((inputInner.element as HTMLInputElement).value).toBe('1');
+
+    num.value = 1.23456;
+    await nextTick();
+    expect((inputInner.element as HTMLInputElement).value).toBe('1.23');
+
+    num.value = 1.99999;
+    await nextTick();
+    expect((inputInner.element as HTMLInputElement).value).toBe('1.99');
+
+    wrapper.unmount();
+  });
+
   it('size', async () => {
     const num = ref(1);
     const wrapper = mount({
