@@ -39,6 +39,10 @@ export const inputNumberProps = {
     type: Boolean,
     default: true,
   },
+  decimalLimit: {
+    type: Number || null,
+    default: 2,
+  },
 } as const;
 
 export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>;

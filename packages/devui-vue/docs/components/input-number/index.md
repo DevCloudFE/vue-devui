@@ -223,6 +223,32 @@ export default defineComponent({
 
 :::
 
+### 限制小数
+
+:::demo 设置 `decimalLimit` 属性可以限制小数位数。设置此参数后会将所有小数点后面的数字截断，而不是四舍五入。
+
+```vue
+<template>
+  <div>
+    <d-input-number v-model="num" :decimalLimit="1" :step="0.1"></d-input-number>
+  </div>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const num = ref(3.9);
+    return {
+      num
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### InputNumber 参数
 
 | 参数名         | 类型              | 默认值        | 说明                 | 跳转 Demo            |

@@ -84,6 +84,13 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
     }
   });
 
+  const decimalLimit = computed(() => {
+    if (isUndefined(props.decimalLimit)) {
+      return null;
+    }
+    return props.decimalLimit;
+  });
+
   const inputVal = computed(() => {
     if (!isUndefined(state.userInputValue)) {
       return state.userInputValue;
@@ -131,6 +138,17 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
     // 判断数据是否大于或小于限定数值
     if (newVal > max.value || newVal < min.value) {
       newVal = newVal > max.value ? max.value : min.value;
+    }
+
+    // 精度限制存在才做限制
+    if (decimalLimit.value) {
+      const splitVal = newVal.toString().split('.');
+      if (splitVal.length > 1) {
+        const decimalVal = splitVal[1];
+        if (decimalVal.length > decimalLimit.value) {
+          newVal = Number.parseFloat(newVal.toFixed(decimalLimit.value));
+        }
+      }
     }
     return newVal;
   };
