@@ -22,6 +22,10 @@ export const buttonProps = {
     type: String,
     default: '',
   },
+  iconPos: {
+    type: String as PropType<'left' | 'right'>,
+    default: 'left',
+  },
   loading: {
     type: Boolean,
     default: false,
