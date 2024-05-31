@@ -9,6 +9,7 @@ export default defineComponent({
   props: actionTimelineProps,
   emits: ['actionLoadMore'],
   setup(props: ActionTimelineProps, ctx: SetupContext) {
+    console.log(ctx.slots.content)
     const { layout, data, showTailLine, showStatusBgColor, showStatusLineColor, loadMoreConfig } = toRefs(props);
     const isVertical = computed(() => layout.value === 'vertical');
     const containerClass = computed(() => ({
@@ -48,10 +49,10 @@ export default defineComponent({
         <div class={timelineItemClass(index, parentIndex, actionData, item)}>
           <div class="vertical-list-item-top">
             <div class="vertical-list-item-top-left">
-              <div class={itemIconClass(item, true)}>
+              {ctx.slots.iconContent?.({ option: item }) || <div class={itemIconClass(item, true)}>
                 {!item.icon && <div class="list-empty-icon-dot"></div>}
                 <em class={itemIconClass(item)}></em>
-              </div>
+              </div>}
               <div class="vertical-list-item-top-left-title">{ctx.slots.title?.({ option: item })}</div>
             </div>
             <div class="dp-action-timeline-item-data">{item.createdAt}</div>
@@ -62,10 +63,10 @@ export default defineComponent({
     const renderHorizontalBody = (actionData: ActionData, parentIndex: number) =>
       actionData.actions?.map((item, index) => (
         <div class={timelineItemClass(index, parentIndex, actionData, item)}>
-          <div class={itemIconClass(item, true)}>
+          {ctx.slots.iconContent?.({ option: item }) || <div class={itemIconClass(item, true)}>
             {!item.icon && <div class="list-empty-icon-dot"></div>}
             <em class={itemIconClass(item)}></em>
-          </div>
+          </div>}
           <div class="dp-action-timeline-list-data">{ctx.slots.content?.({ option: item })}</div>
           <div class="dp-action-timeline-item-date">{item.createdAt}</div>
           {!(actionData.actions && data?.value && index === actionData.actions.length - 1 && parentIndex === data?.value?.length - 1) && (
