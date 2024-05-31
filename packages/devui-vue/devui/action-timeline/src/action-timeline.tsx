@@ -9,7 +9,6 @@ export default defineComponent({
   props: actionTimelineProps,
   emits: ['actionLoadMore'],
   setup(props: ActionTimelineProps, ctx: SetupContext) {
-    console.log(ctx.slots.content)
     const { layout, data, showTailLine, showStatusBgColor, showStatusLineColor, loadMoreConfig } = toRefs(props);
     const isVertical = computed(() => layout.value === 'vertical');
     const containerClass = computed(() => ({
