@@ -78,7 +78,7 @@ export default {
     const pathArr = ref(route.path.split('/'));
     const component = computed(() => pathArr.value[pathArr.value.length - 1].split('.')[0]);
     const DemoComponent =
-      props.demoList?.[props.targetFilePath]?.default ?? defineAsyncComponent(() => import(/* vite-ignore */ props.targetFilePath));
+      props.demoList?.[props.targetFilePath]?.default ?? defineAsyncComponent(() => import(/* @vite-ignore */ props.targetFilePath));
     watch(
       () => route.path,
       (path) => {
