@@ -136,6 +136,7 @@ export interface IEditorMdInjection {
   showFullscreen: Ref<boolean>;
   toolbars: Record<string, IToolbarItemConfig>;
   toolbarConfig: Ref<ToolbarConfigProp>;
+  customToolbars: Ref<Record<string, IToolbarItemConfig> | undefined> | undefined;
   getEditorIns: () => any;
   t: (name: string) => string;
 }
