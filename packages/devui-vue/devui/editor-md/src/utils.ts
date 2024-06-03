@@ -84,5 +84,5 @@ export function locale(key: string): string {
     loading: '正在加载中...',
     pasting: '您粘贴内容较多, 正在努力加载中，请耐心等待...',
   };
-  return localeMap[key];
+  return localeMap[key] || key;
 }

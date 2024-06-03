@@ -88,6 +88,64 @@ export default defineComponent({
 });
 </script>
 ```
+:::
+
+### 自定义工具栏
+
+:::demo 自定义编辑器的工具栏
+
+```vue
+<template>
+  <d-editor-md v-model="content" :toolbar-config="toolbarConfig" :custom-toolbars="customToolbars"></d-editor-md>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const content = ref('');
+    const toolbarConfig = ['add',
+      ['undo', 'redo'],
+      ['h1', 'h2', 'bold', 'italic', 'strike', 'underline', 'color', 'font'],
+      ['ul', 'ol', 'checklist', 'code', 'link', 'image', 'table'],
+      'fullscreen',
+    ];
+    const customToolbars = {
+      add: {
+        id: 'add',
+        name: '新增',
+        exitName: '新增',
+        type: 'button',
+        icon: `<span>+</span>`,
+        shortKey: 'ALT+K',
+        handler: () => {
+          console.log('自定义工具点击事件');
+        },
+      },
+      undo: {
+        id: 'undo',
+        name: '撤销',
+        exitName: '撤销',
+        type: 'button',
+        icon: `<svg width="16px" height="14px" viewBox="0 0 16 14">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g fill="#293040">
+            <path d="M11,5 C13.7614237,5 16,7.23857625 16,10 C16,12.7614237 13.7614237,15 11,15 L7,15 L7,14 L11,14 C13.209139,14 15,12.209139 15,10 C15,7.790861 13.209139,6 11,6 L5,6 L5,10 L0,5.5 L5,1 L5,5 L11,5 Z" id="路径"></path>
+          </g>
+        </g>
+        </svg>`,
+        shortKey: 'Ctrl+M',
+        handler: () => {
+          console.log('覆盖原有工具栏功能事件');
+        },
+      }
+    };
+    return { content, toolbarConfig, customToolbars };
+  },
+});
+</script>
+```
 
 :::
 
@@ -629,7 +687,9 @@ Bob-->>John: Jolly good!
 | placeholder            | `string`                                  | ''       | 编辑器无内容是的提示信息                                                                                           |
 | fullscreen-z-index     | `number`                                  | 10       | 编辑器全屏状态的 z-index                                                                                           |
 | image-upload-to-server | `boolean`                                 | false    | 是否打开图片自定义上传开关（打开后将将监听图片的复制，toolbar 图片功能上传，传出事件回调）                         |
-|editor-container-height|`number`|--|可选，编辑器内容区高度||
+| editor-container-height| `number`|--|可选，编辑器内容区高度          ||
+| toolbar-config         | `Array(string)`                                   |`[['undo', 'redo'],['h1', 'h2', 'bold', 'italic', 'strike', 'underline', 'color', 'font'],['ul', 'ol', 'checklist', 'code', 'link', 'image', 'table'],'fullscreen']`|展示在toolbar工具栏处的按钮，用[]包起来的表示是同一组，不同组的会有线隔开。也可以自定义，自定义时需要配置参数custom-toolbars         ||
+| custom-toolbars        | {[IToolbarItemConfig](#itoolbaritemconfig)} |--|配置toolbar-config中对应按钮的具体设置 [自定义工具栏](#自定义工具栏) | |
 
 ### EditorMd 事件
 
@@ -695,4 +755,23 @@ export interface HintConfig {
   throttleTime: number;  // 触发提示事件debounceTime(ms)，默认300
   [key: string]: HintConfigItem;  // key为触发提示前缀配置
 }
+```
+
+
+### IToolbarItemConfig
+```ts
+export interface IToolbarItemConfig {
+  id: string;
+  name?: string;
+  exitName?: string;
+  type?: 'button' | 'dropDown';
+  icon?: string;
+  exitIcon?: string;
+  template?: any;
+  component?: any;
+  shortKey?: string;
+  params?: { [key: string]: any };
+  handler?(editor?: any, params?: any): void;
+}
+const toolbars = Record<string, IToolbarItemConfig>
 ```
