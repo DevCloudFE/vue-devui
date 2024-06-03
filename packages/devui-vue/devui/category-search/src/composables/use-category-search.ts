@@ -1,6 +1,6 @@
 import { ref, computed, toRefs, provide, watch, onMounted, reactive } from 'vue';
 import type { Ref, SetupContext } from 'vue';
-import { mergeWith, cloneDeep, merge } from 'lodash-es';
+import { mergeWith, cloneDeep, merge } from 'lodash';
 import RadioMenu from '../components/radio-menu';
 import CheckboxMenu from '../components/checkbox-menu';
 import LabelMenu from '../components/label-menu';

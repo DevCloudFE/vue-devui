@@ -8,6 +8,6 @@ export default {
   category: '数据录入',
   status: '50%',
   install(app: App): void {
-    app.component(InputNumber.name, InputNumber);
+    app.component(InputNumber.name as string, InputNumber);
   }
 };

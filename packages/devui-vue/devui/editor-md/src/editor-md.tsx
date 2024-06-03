@@ -17,6 +17,7 @@ export default defineComponent({
     const {
       mode,
       toolbarConfig,
+      customToolbars,
       editorContainerHeight,
       hidePreviewView,
       placeholder,
@@ -66,6 +67,7 @@ export default defineComponent({
       showFullscreen,
       toolbars,
       toolbarConfig,
+      customToolbars,
       getEditorIns,
       t: locale,
     });
