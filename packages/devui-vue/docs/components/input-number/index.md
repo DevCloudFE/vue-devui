@@ -223,6 +223,36 @@ export default defineComponent({
 
 :::
 
+### 允许空值
+
+:::demo 当 `allowEmpty` 为 `true` 的时候允许输入框的值为空，空值返回为 `null`，传入数据不为 `number` 类型且上一次输入没有值的时候都会返回null。
+
+```vue
+<template>
+  <div>
+    <d-input-number v-model="num" :allowEmpty="true" @change="onChange"></d-input-number>
+  </div>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup(props) {
+    const num = ref(undefined);
+    const onChange = (newVal, oldVal) => {
+      console.log(newVal, oldVal);
+    };
+    return {
+      num,
+      onChange
+    };
+  }
+})
+</script>
+```
+
+:::
+
 ### InputNumber 参数
 
 | 参数名         | 类型              | 默认值        | 说明                 | 跳转 Demo            |
@@ -235,7 +265,8 @@ export default defineComponent({
 | disabled    | `boolean`       | false      | 可选，文本框是否被禁用        | [禁用状态](#禁用状态)      |
 | precision   | `number`        | --         | 可选，数值精度            | [精度](#精度)          |
 | size        | [ISize](#isize) | 'md'       | 可选，文本框尺寸           | [尺寸](#尺寸)          |
-| reg         | `RegExp\| string`    |  --   | 可选，用于限制输入的正则或正则字符串 | [正则限制](#正则限制)|
+| reg         | `RegExp \| string`    |  --   | 可选，用于限制输入的正则或正则字符串 | [正则限制](#正则限制)|
+| allowEmpty	| `boolean \| false`	 |  --   | 可选，是否允许值为空	允许空值 | [允许空值](#允许空值) |
 |show-glow-style|`boolean`|true|可选，是否展示悬浮发光效果||
 
 ### InputNumber 事件

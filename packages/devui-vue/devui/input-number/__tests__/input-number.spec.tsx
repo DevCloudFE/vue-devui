@@ -279,3 +279,20 @@ describe('d-input-number', () => {
     expect(selectFn).toBeCalledTimes(2);
   });
 });
+
+
+it('allowEmpty', async () => {
+  const num = ref();
+  const wrapper = mount({
+    setup() {
+      return () => <DInputNumber v-model={num.value} allowEmpty={true} ></DInputNumber>;
+    },
+  });
+  num.value = undefined;
+  const inputInner = wrapper.find(ns.e('input-box'));
+  expect((inputInner.element as HTMLInputElement).value).toBeNull;
+  num.value = 51;
+  expect((inputInner.element as HTMLInputElement).value).toBe('51');
+  num.value = '';
+  expect((inputInner.element as HTMLInputElement).value).toBeNull;
+});
