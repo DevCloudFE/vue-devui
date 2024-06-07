@@ -27,30 +27,30 @@ export default defineComponent({
     const loading = computed(() => props.loading);
     const instance = getCurrentInstance();
 
-    const checkShouldShowSuggestions = (word: string) => {
-      if (word && props.trigger.includes(word[0])) {
-        // 需要以空格作为分割，单词尾部的 trigger 符号不生效
-        return word.length === 1 || !props.trigger.includes(word[word.length - 1]);
-      } else {
-        return false;
+    function getLastTriggerIndex(val: string) {
+      let lastTriggerIndex = -1;
+      for (const trigger of props.trigger) {
+        lastTriggerIndex = Math.max(lastTriggerIndex, val.lastIndexOf(trigger));
       }
-    };
+      return lastTriggerIndex;
+    }
 
-    const updateTextContentWithSuggestion = (suggestion: string | number) => {
-      const wordsWithoutSpace = textContext.value.split(' ');
-      const lastWordIndex = wordsWithoutSpace.length - 1;
-      const lastWord = wordsWithoutSpace[lastWordIndex];
-      wordsWithoutSpace[lastWordIndex] = `${lastWord[0]}${suggestion}`;
-      textContext.value = wordsWithoutSpace.join(' ');
-    };
+    function handleCompleteText(val: string | number) {
+      const lastTriggerIndex = getLastTriggerIndex(textContext.value);
+      textContext.value = textContext.value.substring(0, lastTriggerIndex + 1) + val.toLocaleString() + ' ';
+      showSuggestions.value = false;
+    }
 
     const handleUpdate = debounce((val: string) => {
-      const wordsWithoutSpace = val.split(' ');
-      const lastWordIndex = wordsWithoutSpace.length - 1;
-      const lastWord = wordsWithoutSpace[lastWordIndex];
-      const shouldBeActive = checkShouldShowSuggestions(lastWord);
-      if (shouldBeActive) {
+      const lastChar = val.charAt(val.length - 1);
+      if (props.trigger.includes(lastChar)) {
         showSuggestions.value = true;
+      }
+      if (lastChar === ' ') {
+        showSuggestions.value = false;
+      }
+      if (showSuggestions.value) {
+        const prefix = val.slice(getLastTriggerIndex(val) + 1, val.length - 1);
         if (props.position === 'top') {
           setTimeout(() => {
             const element = window.getComputedStyle(suggestionsDom.value as Element, null);
@@ -59,15 +59,12 @@ export default defineComponent({
             suggestionsLeft.value = Number(width.replace('px', ''));
           }, 0);
         }
-        filteredSuggestions.value = (suggestions.value as IMentionSuggestionItem[]).filter((item: IMentionSuggestionItem) =>
-          String(item[props.dmValueParse.value as keyof IMentionSuggestionItem])
-            .toLocaleLowerCase()
-            .includes(lastWord.slice(1).toLocaleLowerCase())
-        );
-      } else {
-        showSuggestions.value = false;
+        filteredSuggestions.value = (suggestions.value as IMentionSuggestionItem[]).filter((item: IMentionSuggestionItem) => {
+          const string = String(item[props.dmValueParse.value as keyof IMentionSuggestionItem]).toLocaleLowerCase();
+          return string.includes(prefix);
+        });
       }
-      emit('change', lastWord.slice(1));
+      emit('change', lastChar);
     }, 300);
 
     const handleBlur = (e: Event) => {
@@ -91,8 +88,7 @@ export default defineComponent({
       e.stopPropagation();
       e.preventDefault();
       showSuggestions.value = false;
-      const suggestion = item[props.dmValueParse.value as keyof IMentionSuggestionItem];
-      updateTextContentWithSuggestion(suggestion);
+      handleCompleteText(item[props.dmValueParse.value as keyof IMentionSuggestionItem]);
     };
 
     const arrowKeyDown = (e: KeyboardEvent) => {
@@ -127,8 +123,7 @@ export default defineComponent({
           e.stopPropagation();
           e.preventDefault();
           showSuggestions.value = false;
-          const suggestion = filteredSuggestions.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem];
-          updateTextContentWithSuggestion(suggestion);
+          handleCompleteText(filteredSuggestions.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem]);
           emit('select', filteredSuggestions.value[currentIndex.value]);
         }
       }
