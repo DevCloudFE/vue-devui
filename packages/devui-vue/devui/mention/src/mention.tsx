@@ -78,7 +78,9 @@ export default defineComponent({
     };
 
     const handleFocus = () => {
-      if (props.trigger.includes(textContext.value)) {
+      const val = textContext.value;
+      const lastChar = val.charAt(val.length - 1);
+      if (props.trigger.includes(lastChar)) {
         showSuggestions.value = true;
       }
     };
