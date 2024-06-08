@@ -46,7 +46,7 @@ export default defineComponent({
       if (props.trigger.includes(lastChar)) {
         showSuggestions.value = true;
       }
-      if (lastChar === ' ') {
+      if (lastChar === ' ' || lastChar === '') {
         showSuggestions.value = false;
       }
       if (showSuggestions.value) {
