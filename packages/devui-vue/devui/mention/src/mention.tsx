@@ -143,6 +143,7 @@ export default defineComponent({
     onUnmounted(() => {
       window.removeEventListener('keydown', arrowKeyDown);
       document.removeEventListener('click', handleBlur);
+      showSuggestions.value = false;
     });
 
     return () => {
