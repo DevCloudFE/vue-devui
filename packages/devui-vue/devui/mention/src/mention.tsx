@@ -95,6 +95,13 @@ export default defineComponent({
 
     const arrowKeyDown = (e: KeyboardEvent) => {
       if (showSuggestions.value && filteredSuggestions.value.length) {
+        if (e.key === 'Enter') {
+          e.stopPropagation();
+          e.preventDefault();
+          showSuggestions.value = false;
+          handleCompleteText(filteredSuggestions.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem]);
+          emit('select', filteredSuggestions.value[currentIndex.value]);
+        }
         if (e.key === 'ArrowDown') {
           currentIndex.value++;
           if (currentIndex.value === filteredSuggestions.value.length) {
@@ -119,18 +126,6 @@ export default defineComponent({
       }
     };
 
-    const enterKeyDown = (e: KeyboardEvent) => {
-      if (showSuggestions.value && filteredSuggestions.value.length) {
-        if (e.key === 'Enter') {
-          e.stopPropagation();
-          e.preventDefault();
-          showSuggestions.value = false;
-          handleCompleteText(filteredSuggestions.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem]);
-          emit('select', filteredSuggestions.value[currentIndex.value]);
-        }
-      }
-    };
-
     watch(
       () => props.suggestions,
       (val) => {
@@ -142,13 +137,11 @@ export default defineComponent({
 
     onMounted(() => {
       window.addEventListener('keydown', arrowKeyDown);
-      window.addEventListener('keydown', enterKeyDown);
       document.addEventListener('click', handleBlur);
     });
 
     onUnmounted(() => {
       window.removeEventListener('keydown', arrowKeyDown);
-      window.removeEventListener('keydown', enterKeyDown);
       document.removeEventListener('click', handleBlur);
     });
 
