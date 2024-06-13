@@ -1,4 +1,5 @@
-import { defineComponent, onMounted, provide, toRefs } from 'vue';
+/* @jsxImportSource vue */
+import { defineComponent, onMounted, provide, toRefs, onBeforeUnmount } from 'vue';
 import type { SetupContext } from 'vue';
 import CodeReviewHeader from './components/code-review-header';
 import { CommentIcon } from './components/code-review-icons';
@@ -19,13 +20,20 @@ export default defineComponent({
     const { diffType } = toRefs(props);
     const { renderHtml, reviewContentRef, diffFile, onContentClick } = useCodeReview(props, ctx);
     const { isFold, toggleFold } = useCodeReviewFold(props, ctx);
-    const { commentLeft, commentTop, mouseEvent, onCommentMouseLeave, onCommentIconClick, insertComment, removeComment } =
-      useCodeReviewComment(reviewContentRef, props, ctx);
+    const { commentLeft, commentTop,
+      mouseEvent, onCommentMouseLeave,
+      onCommentIconClick, onCommentKeyDown,
+      unCommentKeyDown, insertComment,
+      removeComment, updateCheckedLineClass } = useCodeReviewComment(reviewContentRef, props, ctx);
 
     onMounted(() => {
-      ctx.emit('afterViewInit', { toggleFold, insertComment, removeComment });
+      ctx.emit('afterViewInit', { toggleFold, insertComment, removeComment, updateCheckedLineClass });
+      onCommentKeyDown();
     });
-
+    // 销毁
+    onBeforeUnmount(() => {
+      unCommentKeyDown();
+    });
     provide(CodeReviewInjectionKey, { diffType, reviewContentRef, diffInfo: diffFile.value[0], isFold, rootCtx: ctx });
 
     return () => (
@@ -51,7 +59,8 @@ export default defineComponent({
             class="comment-icon"
             style={{ left: commentLeft.value + 'px', top: commentTop.value + 'px' }}
             onClick={onCommentIconClick}
-            onMouseleave={onCommentMouseLeave}>
+            onMouseleave={onCommentMouseLeave}
+          >
             <CommentIcon />
           </div>
         )}
