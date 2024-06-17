@@ -1,3 +1,4 @@
+/* @jsxImportSource vue */
 import { defineComponent, inject } from 'vue';
 import type { SetupContext } from 'vue';
 import { Popover } from '../../../popover';

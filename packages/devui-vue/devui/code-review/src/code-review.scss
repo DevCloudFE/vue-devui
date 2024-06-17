@@ -223,6 +223,53 @@
         display: table-cell;
       }
     }
+
+    .d2h-file-diff {
+      // 单栏
+      .comment-checked {
+        &.d2h-cntx {
+          background-color: #fff8c5; // 通常选中
+        }
+
+        &.d2h-del {
+          background-color: #ffe5b4; // 删除行选中
+
+          &.d2h-code-linenumber {
+            background-color: #ffc89d; // 删除行中的number
+          }
+        }
+
+        &.d2h-ins {
+          background-color: #d1f1a8; // 增加行选中
+
+          &.d2h-code-linenumber {
+            background-color: #daf4ae; // 增加行中的number
+          }
+        }
+      }
+    }
+
+    .comment-checked {
+      &.d2h-cntx {
+        background-color: #fff8c5; // 通常选中
+      }
+
+      &.d2h-del {
+        background-color: #ffe5b4; // 删除行选中
+
+        &.d2h-code-side-linenumber {
+          background-color: #ffc89d; // 删除行中的number
+        }
+      }
+
+      &.d2h-ins {
+        background-color: #d1f1a8; // 增加行选中
+
+        &.d2h-code-side-linenumber {
+          background-color: #daf4ae; // 增加行中的number
+        }
+      }
+    }
   }
 
   .comment-icon {
