@@ -30,6 +30,10 @@ export const codeReviewProps = {
     type: Boolean,
     default: true,
   },
+  allowChecked: {
+    type: Boolean,
+    default: false,
+  },
   allowExpand: {
     type: Boolean,
     default: true,

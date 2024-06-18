@@ -145,6 +145,19 @@ export function updateExpandLineCount(expandDom: HTMLElement, newExpandDom: HTML
   },${newChangedNumRight} @@`;
 }
 
+// 左右分栏时增加额外的class来区分左右模块
+function addClassToDiffCode(codeStrArr: RegExpMatchArray | null, theClassName: string) {
+  if (!codeStrArr || codeStrArr.length === 0) {
+    return null;
+  }
+  const newArray = codeStrArr.map((item: string) => {
+    const classNames = item?.match(/class="([^"]+)"/)[1].split(' ');
+    classNames.push(theClassName);
+    return item.replace(/class="([^"]+)"/, `class="${classNames.join(' ')}"`);
+  });
+  return newArray as RegExpMatchArray;
+}
+
 // 解析diff
 export function parseDiffCode(container: HTMLElement, code: string, outputFormat: OutputFormat, isAddCode = false) {
   const diff2HtmlUi = new Diff2HtmlUI(container, code, {
@@ -164,8 +177,10 @@ export function parseDiffCode(container: HTMLElement, code: string, outputFormat
     let newTrStr = '';
     const offset = trListLength / 2;
     for (let i = 0; i < trListLength / 2; i++) {
-      const leftTdList = trList[i].match(TableTdReg);
-      const rightTdList = trList[i + offset].match(TableTdReg);
+      let leftTdList = trList[i].match(TableTdReg);
+      let rightTdList = trList[i + offset].match(TableTdReg);
+      leftTdList = addClassToDiffCode(leftTdList, 'd-code-left');
+      rightTdList = addClassToDiffCode(rightTdList, 'd-code-right');
       newTrStr += `<tr>${leftTdList?.join('')}${rightTdList?.join('')}</tr>`;
     }
     const tbodyAttr = diffHtmlStr.match(TableTbodyAttrReg)?.[1] || '';

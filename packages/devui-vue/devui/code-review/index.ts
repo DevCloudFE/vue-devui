@@ -9,6 +9,6 @@ export default {
   category: '演进中',
   status: '100%',
   install(app: App): void {
-    app.component(CodeReview.name, CodeReview);
+    app.component(CodeReview.name as string, CodeReview);
   },
 };

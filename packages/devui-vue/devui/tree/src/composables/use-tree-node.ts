@@ -20,7 +20,7 @@ export interface IUseTreeNode {
 }
 
 export function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTreeNode {
-  const nodeClass = computed(() => [ns.e('node'), data.value?.expanded && ns.em('node', 'open')]);
+  const nodeClass = computed(() => [ns.e('node'), data.value?.expanded && ns.em('node', 'open'), data.value?.selected && 'active']);
   const nodeStyle = computed(() => {
     return { paddingLeft: `${NODE_INDENT * (data.value?.level - 1)}px` };
   });
