@@ -1,5 +1,7 @@
 import { Plugin } from 'vite';
+
 const hasDemoBlock = (str: string) => /:::demo/gim.test(str);
+
 export function MdTransformer(): Plugin {
   return {
     name: 'devui-markdown-demo-transformer',
@@ -12,15 +14,29 @@ export function MdTransformer(): Plugin {
       if (id.split('/').at(-3) !== 'components') {
         return code;
       }
-      const setup = markdownStringArray.some(hasDemoBlock)
-        ? `
+
+      const tag = '<script setup>';
+      if (code.includes(tag)) {
+        console.log("!!!!!!")
+        code = code.replace(
+          tag,
+          `
 <script setup lang="ts">
-const demoList = import.meta.globEager('../../components/${componentName}/*.vue') ?? []
+const demoList = import.meta.glob('../../components/${componentName}/*.vue') ?? []
+console.log(demoList);
+`
+        );
+      } else {
+        code = `
+<script setup lang="ts">
+const demoList = import.meta.glob('../../components/${componentName}/*.vue') ?? []
 </script>
-      `
-        : '';
+${code}
+`;
+      }
+      console.log(code);
       return {
-        code: `${setup}\n${code}`,
+        code,
       };
     },
   };
