@@ -2,13 +2,17 @@
 
 一种呈现嵌套结构的组件。
 
-#### 何时使用
-
+:::tip 何时使用
 文件夹、组织架构、生物分类、国家地区等等，世间万物的大多数结构都是树形结构。使用树组件可以完整展现其中的层级关系，并具有展开/收起、选择等交互功能。
+:::
+
+## 用法
 
 ### 基本用法
 
-:::demo 展示嵌套树形结构的呈现、连接线、展开/收起、点击选择等功能。动画效果依赖树节点的高度，默认高度为`30px`，自定义树节点时，为了保证动画效果正常显示，建议显式设置树节点高度。
+展示嵌套树形结构的呈现、连接线、展开/收起、点击选择等功能。动画效果依赖树节点的高度，默认高度为`30px`，自定义树节点时，为了保证动画效果正常显示，建议显式设置树节点高度。
+
+:::demo
 
 ```vue
 <template>
@@ -45,7 +49,9 @@ export default defineComponent({
 
 ### 节点懒加载
 
-:::demo 通过设置该节点 `isLeaf` 参数为 `false`, 组件回调 `lazyLoad` 方法实现节点懒加载。
+通过设置该节点 `isLeaf` 参数为 `false`, 组件回调 `lazyLoad` 方法实现节点懒加载。
+
+:::demo
 
 ```vue
 <template>
@@ -114,7 +120,9 @@ export default defineComponent({
 
 ### 可勾选
 
-:::demo 通过`check`开启勾选功能。
+通过`check`开启勾选功能。
+
+:::demo
 
 ```vue
 <template>
@@ -214,7 +222,9 @@ export default defineComponent({
 
 ### 默认状态
 
-:::demo 通过`expanded`/`selected`/`checked`分别设置默认展开/收起、点击选择、勾选状态。
+通过`expanded`/`selected`/`checked`分别设置默认展开/收起、点击选择、勾选状态。
+
+:::demo
 
 ```vue
 <template>
@@ -259,7 +269,9 @@ export default defineComponent({
 
 ### 禁用状态
 
-:::demo 通过`disableToggle`/`disableSelect`/`disableCheck`分别禁用展开/收起、点击选择、勾选状态。
+通过`disableToggle`/`disableSelect`/`disableCheck`分别禁用展开/收起、点击选择、勾选状态。
+
+:::demo
 
 ```vue
 <template>
@@ -307,7 +319,9 @@ export default defineComponent({
 
 ### 自定义图标
 
-:::demo 通过`content`插槽可以自定义节点内容，比如在节点内容前面增加一个图标；通过`icon`插槽可以自定义展开/收起的图标。
+通过`content`插槽可以自定义节点内容，比如在节点内容前面增加一个图标；通过`icon`插槽可以自定义展开/收起的图标。
+
+:::demo
 
 ```vue
 <template>
@@ -470,7 +484,9 @@ export default defineComponent({
 
 ### 操作按钮
 
-:::demo 可定义外部操作按钮、悬浮按钮。
+可定义外部操作按钮、悬浮按钮。
+
+:::demo
 
 ```vue
 <template>
@@ -545,7 +561,9 @@ export default defineComponent({
 
 ### 搜索过滤
 
-:::demo 通过 `treeFactory` 中的`searchTree`方法可以搜索节点或者过滤节点。
+通过 `treeFactory` 中的`searchTree`方法可以搜索节点或者过滤节点。
+
+:::demo
 
 ```vue
 <template>
@@ -710,7 +728,9 @@ export default defineComponent({
 
 ### 虚拟滚动
 
-:::demo 使用虚拟滚动处理大数据量的加载问题。
+使用虚拟滚动处理大数据量的加载问题。
+
+:::demo
 
 ```vue
 <template>
@@ -769,7 +789,9 @@ export default defineComponent({
 
 ### 可拖拽树
 
-:::demo 通过 OperableTree 的 dragdrop 属性配置节点的拖拽功能，并支持外部元素拖拽入树。
+通过 OperableTree 的 dragdrop 属性配置节点的拖拽功能，并支持外部元素拖拽入树。
+
+:::demo
 
 ```vue
 <template>

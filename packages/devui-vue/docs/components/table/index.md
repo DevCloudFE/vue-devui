@@ -2,14 +2,20 @@
 
 展示行列数据。
 
-#### 何时使用
+:::tip 何时使用
 
 1. 当有大量结构化的数据需要展现时；
 2. 当需要对数据进行排序、过滤、自定义操作等复杂行为时。
 
+:::
+
+## 用法
+
 ### 基本用法
 
-:::demo 简单表格，`d-table`组件上的`data`属性传入要展示的数据，`d-column`组件上通过`field`传入对应列内容的字段名，`header`传入对应列的标题。
+简单表格，`d-table`组件上的`data`属性传入要展示的数据，`d-column`组件上通过`field`传入对应列内容的字段名，`header`传入对应列的标题。
+
+:::demo
 
 ```vue
 <template>
@@ -63,7 +69,9 @@ export default defineComponent({
 
 ### 表格样式
 
-:::demo `table-layout`参数设置表格的布局方式，目前支持`fixed`和`auto`两种类型；`striped`参数设置是否显示斑马纹；`header-bg`参数设置是否显示表头背景色；`size`参数设置表格大小；`border-type`设置表格边框样式。
+`table-layout`参数设置表格的布局方式，目前支持`fixed`和`auto`两种类型；`striped`参数设置是否显示斑马纹；`header-bg`参数设置是否显示表头背景色；`size`参数设置表格大小；`border-type`设置表格边框样式。
+
+:::demo
 
 ```vue
 <template>
@@ -216,7 +224,9 @@ export default defineComponent({
 
 ### 表格交互
 
-:::demo 通过添加一个`d-column`并且设置`type`属性为`checkable`即可实现表格的多选功能。`getCheckedRows`方法可以获取已选择的列表。`toggleRowSelection`方法可以切换某一行的选中状态。通过`cell-click`事件监听单元格点击，事件回调参数包含行索引、列索引、行数据、列数据。在列上配置`resizeable`属性，可实现该列拖动改变宽度，`min-width`和`max-width`设置可拖动范围，事件`resize-start`、`resizing`、`resize-end`分别在拖动开始时、进行中、结束后触发。
+通过添加一个`d-column`并且设置`type`属性为`checkable`即可实现表格的多选功能。`getCheckedRows`方法可以获取已选择的列表。`toggleRowSelection`方法可以切换某一行的选中状态。通过`cell-click`事件监听单元格点击，事件回调参数包含行索引、列索引、行数据、列数据。在列上配置`resizeable`属性，可实现该列拖动改变宽度，`min-width`和`max-width`设置可拖动范围，事件`resize-start`、`resizing`、`resize-end`分别在拖动开始时、进行中、结束后触发。
+
+:::demo
 
 ```vue
 <template>
@@ -368,7 +378,9 @@ export default defineComponent({
 
 ### 索引列
 
-:::demo 通过添加一个`d-column`并且设置`type`参数为`index`即可给表格添加索引。索引列的表头默认展示`#`，可通过`header`参数传入指定内容。
+通过添加一个`d-column`并且设置`type`参数为`index`即可给表格添加索引。索引列的表头默认展示`#`，可通过`header`参数传入指定内容。
+
+:::demo
 
 ```vue
 <template>
@@ -425,7 +437,9 @@ export default defineComponent({
 
 ### 自定义列
 
-:::demo 通过`d-column`子组件提供的`default`插槽可以实现自定义列，插槽提供`row`和`rowIndex`两个参数，分别代表行数据和行索引值。
+通过`d-column`子组件提供的`default`插槽可以实现自定义列，插槽提供`row`和`rowIndex`两个参数，分别代表行数据和行索引值。
+
+:::demo
 
 ```vue
 <template>
@@ -492,7 +506,9 @@ export default defineComponent({
 
 ### 编辑单元格
 
-:::demo 通过`d-column`子组件提供的`cell`、`cellEdit`插槽以及属性`type`设置为`editable`实现编辑单元格。此功能需配合`row-key`属性使用。
+通过`d-column`子组件提供的`cell`、`cellEdit`插槽以及属性`type`设置为`editable`实现编辑单元格。此功能需配合`row-key`属性使用。
+
+:::demo
 
 ```vue
 <template>
@@ -601,7 +617,9 @@ export default defineComponent({
 
 ### 自定义表头
 
-:::demo 通过`d-column`子组件提供的`header`插槽可以实现自定义表头。
+通过`d-column`子组件提供的`header`插槽可以实现自定义表头。
+
+:::demo
 
 ```vue
 <template>
@@ -664,7 +682,9 @@ export default defineComponent({
 
 ### 空数据模板
 
-:::demo 当传入的数据为空时，默认展示空数据模板。
+当传入的数据为空时，默认展示空数据模板。
+
+:::demo
 
 ```vue
 <template>
@@ -732,7 +752,9 @@ export default defineComponent({
 
 ### 固定表头
 
-:::demo `fix-header`参数可以设置是否固定表头，使之不随内容滚动。
+`fix-header`参数可以设置是否固定表头，使之不随内容滚动。
+
+:::demo
 
 ```vue
 <template>
@@ -810,7 +832,9 @@ export default defineComponent({
 
 ### 固定列
 
-:::demo 当表格列过多时，固定列有利于用户在左右滑动时，能够便捷的进行数据定位与对比，通过`fixed-left`和`fixed-right`来配置。
+当表格列过多时，固定列有利于用户在左右滑动时，能够便捷的进行数据定位与对比，通过`fixed-left`和`fixed-right`来配置。
+
+:::demo
 
 ```vue
 <template>
@@ -889,7 +913,9 @@ export default defineComponent({
 
 ### 合并单元格
 
-:::demo 通过`span-method`方法可以自定义合并单元格，方法参数是一个对象，对象包含属性如下：当前行`row`、当前列`column`、当前行索引`rowIndex`、当前列索引`columnIndex`。该方法可以返回包含两个元素的数组，第一个元素是`rowspan`，第二个元素是`colspan`；也可以返回一个对象，属性为`rowspan`和`colspan`。
+通过`span-method`方法可以自定义合并单元格，方法参数是一个对象，对象包含属性如下：当前行`row`、当前列`column`、当前行索引`rowIndex`、当前列索引`columnIndex`。该方法可以返回包含两个元素的数组，第一个元素是`rowspan`，第二个元素是`colspan`；也可以返回一个对象，属性为`rowspan`和`colspan`。
+
+:::demo
 
 ```vue
 <template>
@@ -954,7 +980,9 @@ export default defineComponent({
 
 ### 表头分组
 
-:::demo `d-column`嵌套`d-column`即可实现表头分组。
+`d-column`嵌套`d-column`即可实现表头分组。
+
+:::demo
 
 ```vue
 <template>
@@ -1010,7 +1038,9 @@ export default defineComponent({
 
 ### 列排序
 
-:::demo `sortable`参数设置为`true`可以支持列排序；`sort-direction`设置初始化时的排序方式；`sort-method`用来定义每一列的排序方法；`sort-change`是排序的回调事件，返回该列的排序信息：`field`排序字段和`direction`排序方向。
+`sortable`参数设置为`true`可以支持列排序；`sort-direction`设置初始化时的排序方式；`sort-method`用来定义每一列的排序方法；`sort-change`是排序的回调事件，返回该列的排序信息：`field`排序字段和`direction`排序方向。
+
+:::demo
 
 ```vue
 <template>
@@ -1074,7 +1104,9 @@ export default defineComponent({
 
 ### 列筛选
 
-:::demo `filterable`参数设置为`true`可以支持列筛选；`filter-multiple`设置筛选列表是否可多选，默认为`true`；`filter-list`用来定义筛选列表；`filter-change`是筛选的回调事件，返回该列选中的数据：单选时返回选中项，多选时返回选中项数组。
+`filterable`参数设置为`true`可以支持列筛选；`filter-multiple`设置筛选列表是否可多选，默认为`true`；`filter-list`用来定义筛选列表；`filter-change`是筛选的回调事件，返回该列选中的数据：单选时返回选中项，多选时返回选中项数组。
+
+:::demo
 
 ```vue
 <template>
@@ -1248,7 +1280,9 @@ export default defineComponent({
 
 ### 树形表格
 
-:::demo 支持树类型的数据展示。当 row 中包含`children`字段时，被视为树形数据。渲染嵌套数据需要`row-key`。使用`indent`可以控制子节点的缩进。暂不支持树形表格和展开行同时使用，展开行优先级较高。
+支持树类型的数据展示。当 row 中包含`children`字段时，被视为树形数据。渲染嵌套数据需要`row-key`。使用`indent`可以控制子节点的缩进。暂不支持树形表格和展开行同时使用，展开行优先级较高。
+
+:::demo
 
 ```vue
 <template>
@@ -1367,7 +1401,9 @@ export default defineComponent({
 
 ### 懒加载
 
-:::demo 使用 lazy 启用懒加载，当滚动表格底部时到触发 loadMore 事件实现懒加载。
+使用 lazy 启用懒加载，当滚动表格底部时到触发 loadMore 事件实现懒加载。
+
+:::demo
 
 ```vue
 <template>

@@ -2,15 +2,21 @@
 
 模态框。
 
-#### 何时使用
+:::tip 何时使用
 
-1.需要用户处理事务，又不希望跳转页面以致打断工作流程时，可以使用 Modal 在当前页面正中打开一个浮层，承载相应的操作。
+1. 需要用户处理事务，又不希望跳转页面以致打断工作流程时，可以使用 Modal 在当前页面正中打开一个浮层，承载相应的操作。
 
-2.Modal 起到与用户进行交互的作用，用户可以在 Modal 中输入信息、阅读提示、设置选项等操作。
+2. Modal 起到与用户进行交互的作用，用户可以在 Modal 中输入信息、阅读提示、设置选项等操作。
+
+:::
+
+## 用法
 
 ### 基础用法
 
-:::demo `v-model`双向绑定，控制 Modal 是否显示；`title`参数设置 Modal 标题。
+`v-model`双向绑定，控制 Modal 是否显示；`title`参数设置 Modal 标题。
+
+:::demo
 
 ```vue
 <template>
@@ -47,7 +53,9 @@ export default defineComponent({
 
 ### 保留最后一次关闭位置
 
-:::demo `keep-last`可使当前 modal 再次打开时保留上次关闭位置。
+`keep-last`可使当前 modal 再次打开时保留上次关闭位置。
+
+:::demo
 
 ```vue
 <template>
@@ -84,7 +92,9 @@ export default defineComponent({
 
 ### 自定义标题和操作按钮
 
-:::demo `header`插槽可以自定义 Modal 顶部区域，子组件`d-modal-header`为顶部区域提供了默认样式，自定义样式可通过在子组件设置`style/class`实现。`footer`插槽同理。
+`header`插槽可以自定义 Modal 顶部区域，子组件`d-modal-header`为顶部区域提供了默认样式，自定义样式可通过在子组件设置`style/class`实现。`footer`插槽同理。
+
+:::demo
 
 ```vue
 <template>
@@ -134,7 +144,9 @@ export default defineComponent({
 
 ### 信息提示
 
-:::demo 各种类型的信息提示框。
+各种类型的信息提示框。
+
+:::demo
 
 ```vue
 <template>
@@ -176,7 +188,10 @@ export default defineComponent({
 
 ### 关闭前回调
 
-:::demo `before-close`在用户点击关闭按钮或者遮罩层时会被调用，可在完成某些异步操作后，通过`done`参数关闭。`close`在Modal关闭时触发。
+`before-close`在用户点击关闭按钮或者遮罩层时会被调用，可在完成某些异步操作后，通过`done`参数关闭。`close`在 Modal 关闭时触发。
+
+:::demo
+
 ```vue
 <template>
   <d-button @click="handleClick">打开 modal</d-button>
@@ -216,8 +231,8 @@ export default defineComponent({
       }).then(done);
     };
     const handleClose = () => {
-      console.log("Modal关闭")
-    }
+      console.log('Modal关闭');
+    };
 
     return { visible, data, handleClick, hidden, beforeClose, handleClose };
   },
@@ -229,7 +244,9 @@ export default defineComponent({
 
 ### 弹窗中的按钮配置 autofocus 自动获取焦点
 
-::: demo `button` 配置 `autofocus` 可以自动获取焦点，可以通过回车 `enter` 触发按钮按钮点击
+`button` 配置 `autofocus` 可以自动获取焦点，可以通过回车 `enter` 触发按钮按钮点击。
+
+::: demo
 
 ```vue
 <template>
@@ -291,8 +308,8 @@ export default defineComponent({
 
 ### Modal 事件
 
-| 事件名 | 类型 | 说明              |
-| :----- | :--- | :---------------- |
+| 事件名 | 类型 | 说明             |
+| :----- | :--- | :--------------- |
 | close  | `-`  | Modal 关闭时触发 |
 
 ### Modal 插槽

@@ -1,13 +1,23 @@
 # Markdown MD 编辑器
 
+## 用法
+
 ### 基本用法
 
-:::demo `v-model`双向绑定输入容器内的值；当内容发生变化时，出发`content-change`事件，返回当前内容。
+`v-model`双向绑定输入容器内的值；当内容发生变化时，出发`content-change`事件，返回当前内容。
+
+:::demo
 
 ```vue
 <template>
   <input v-model="content" />
-  <d-editor-md v-model="content" :md-rules="mdRules" base-url="https://test-base-url" @content-change="valueChange" @preview-content-change="previewChange"></d-editor-md>
+  <d-editor-md
+    v-model="content"
+    :md-rules="mdRules"
+    base-url="https://test-base-url"
+    @content-change="valueChange"
+    @preview-content-change="previewChange"
+  ></d-editor-md>
 </template>
 
 <script>
@@ -40,7 +50,9 @@ export default defineComponent({
 
 ### 自定义渲染
 
-:::demo 自定义从 md 到 html 的渲染规则，也可自定义XSS过滤规则，放开指定标签。
+自定义从 md 到 html 的渲染规则，也可自定义 XSS 过滤规则，放开指定标签。
+
+:::demo
 
 ```vue
 <template>
@@ -61,8 +73,8 @@ export default defineComponent({
       {
         key: 'input',
         value: null, // value值为null，则对应标签不会被渲染
-      }
-    ])
+      },
+    ]);
     const customRendererRules = ref([
       {
         key: 'link_open',
@@ -88,11 +100,14 @@ export default defineComponent({
 });
 </script>
 ```
+
 :::
 
 ### 自定义工具栏
 
-:::demo 自定义编辑器的工具栏
+自定义编辑器的工具栏。
+
+:::demo
 
 ```vue
 <template>
@@ -105,7 +120,8 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     const content = ref('');
-    const toolbarConfig = ['add',
+    const toolbarConfig = [
+      'add',
       ['undo', 'redo'],
       ['h1', 'h2', 'bold', 'italic', 'strike', 'underline', 'color', 'font'],
       ['ul', 'ol', 'checklist', 'code', 'link', 'image', 'table'],
@@ -139,7 +155,7 @@ export default defineComponent({
         handler: () => {
           console.log('覆盖原有工具栏功能事件');
         },
-      }
+      },
     };
     return { content, toolbarConfig, customToolbars };
   },
@@ -151,7 +167,9 @@ export default defineComponent({
 
 ### 纯渲染模式
 
-:::demo 使用 MDRender 进行单独渲染
+使用 MDRender 进行单独渲染。
+
+:::demo
 
 ```vue
 <template>
@@ -180,7 +198,9 @@ export default defineComponent({
 
 ### 单列渲染模式
 
-:::demo 通过 mode 控制不同的显示模式
+通过 mode 控制不同的显示模式。
+
+:::demo
 
 ```vue
 <template>
@@ -230,7 +250,9 @@ export default defineComponent({
 
 ### 配置图片文件上传
 
-:::demo 设置 imageUploadToServer 后，编辑器对粘贴操作也将进行监听，若有图片也将触发 imageUpload 事件。
+设置 imageUploadToServer 后，编辑器对粘贴操作也将进行监听，若有图片也将触发 imageUpload 事件。
+
+:::demo
 
 ```vue
 <template>
@@ -299,21 +321,72 @@ export default defineComponent({
 
 ### checkbox 渲染
 
-:::demo 通过配置md-plugins checkbox插件，进行checkbox渲染于checked变更响应。
+通过配置 md-plugins checkbox 插件，进行 checkbox 渲染于 checked 变更响应。
 
-editor-md/checkbox
-:::
-
-### 数学公式 渲染
-
-:::demo 通过配置md-plugins katex插件，进行数学公式渲染。
+:::demo
 
 ```vue
 <template>
   <d-editor-md
     v-model="content"
-  >
-  </d-editor-md>
+    :md-rules="mdRules"
+    base-url="https://test-base-url"
+    @content-change="valueChange"
+    @checked-change="onCheckedEvent"
+  />
+  <!-- <d-editor-md
+    v-model="content"
+    :md-rules="mdRules"
+    :md-plugins="plugins"
+    base-url="https://test-base-url"
+    @content-change="valueChange"
+    @checked-change="onCheckedEvent"
+  /> -->
+</template>
+
+<script setup lang="ts">
+import { reactive, ref } from 'vue';
+// import { checkbox } from 'vue-devui/editor-md'; // demo无法进行import，使用时请放开注释
+
+const content = ref('[x] checked \n[ ] unchecked // demo无法进行import，使用时请放开代码中注释');
+const mdRules = reactive({
+  linkify: {
+    fuzzyLink: false,
+  },
+});
+
+const valueChange = (val) => {
+  console.log(val);
+};
+
+const plugins = reactive([
+  {
+    // plugin: checkbox,
+    opts: {
+      idPrefix: 'devui',
+      disable: false,
+    },
+  },
+]);
+
+const onCheckedEvent = (val) => {
+  console.log('demo', val);
+  content.value = val;
+};
+</script>
+```
+
+:::
+
+### 数学公式 渲染
+
+通过配置 md-plugins katex 插件，进行数学公式渲染。
+
+:::demo
+
+```vue
+<template>
+  <d-editor-md v-model="content"> </d-editor-md>
   <!-- <d-editor-md
     v-model="content"
     :md-plugins="plugins"
@@ -331,9 +404,11 @@ export default defineComponent({
 $\\sqrt{3x-1}+(1+x)^2$  // DEMO无法进行import，使用时请放开代码中注释
     `);
 
-    const mdPlugins = [{
-      // plugin: mk
-    }];
+    const mdPlugins = [
+      {
+        // plugin: mk
+      },
+    ];
 
     return { content, mdPlugins };
   },
@@ -341,7 +416,7 @@ $\\sqrt{3x-1}+(1+x)^2$  // DEMO无法进行import，使用时请放开代码中�
 </script>
 
 <style>
-@import 'katex/dist/katex.min.css';  /* 请首先安装 katex 依赖 */
+@import 'katex/dist/katex.min.css'; /* 请首先安装 katex 依赖 */
 </style>
 ```
 
@@ -349,14 +424,13 @@ $\\sqrt{3x-1}+(1+x)^2$  // DEMO无法进行import，使用时请放开代码中�
 
 ### PlantUML 渲染
 
-:::demo 通过配置md-plugins plantuml插件，进行plantuml图渲染。
+通过配置 md-plugins plantuml 插件，进行 plantuml 图渲染。
+
+:::demo
 
 ```vue
 <template>
-  <d-editor-md
-    v-model="content"
-  >
-  </d-editor-md>
+  <d-editor-md v-model="content"> </d-editor-md>
   <!-- <d-editor-md
     v-model="content"
     :md-plugins="plugins"
@@ -379,10 +453,12 @@ Alice -> "Bob()" : Hello
 Long --> "Bob()" : ok
 @enduml`);
 
-    const mdPlugins = [{
-      // plugin: PlantUml,
-      // opts: {server: 'https://www/plantuml.com/plantuml'} // 自定义server可参考plantuml官方文档进行搭建
-    }];
+    const mdPlugins = [
+      {
+        // plugin: PlantUml,
+        // opts: {server: 'https://www/plantuml.com/plantuml'} // 自定义server可参考plantuml官方文档进行搭建
+      },
+    ];
 
     return { content, mdPlugins };
   },
@@ -392,9 +468,9 @@ Long --> "Bob()" : ok
 
 :::
 
-### emoji渲染
+### emoji 渲染
 
-通过配置`md-plugins` emoji插件，进行emoji表情渲染。具体使用方式参考示例代码。
+通过配置`md-plugins` emoji 插件，进行 emoji 表情渲染。具体使用方式参考示例代码。
 
 :::demo
 
@@ -404,21 +480,20 @@ Long --> "Bob()" : ok
 </template>
 
 <script>
-import { defineComponent,ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 // import { full as emoji } from 'markdown-it-emoji'; // 请首先安装 markdown-it-emoji 依赖
 
 export default defineComponent({
-  setup(){
+  setup() {
     const content = ref(':joy:');
     const plugins = [];
     /* const plugins = [{
       plugin: emoji,
     }]; */
 
-    return {content,plugins}
-  }
-})
-
+    return { content, plugins };
+  },
+});
 </script>
 ```
 
@@ -426,7 +501,9 @@ export default defineComponent({
 
 ### 配置快速提示
 
-:::demo 设置 hintConfig 后，可用于支持@选择用户等场景。
+设置 hintConfig 后，可用于支持@选择用户等场景。
+
+:::demo
 
 ```vue
 <template>
@@ -439,7 +516,7 @@ export default defineComponent({
   >
     <template #hintTemplate>
       <ul class="list-menu" v-if="hintList && hintList.length">
-        <li class="menu-item" v-for="(item, index) of hintList" @click="hintItemClick(item)">{{ `${item.itemText}`}}</li>
+        <li class="menu-item" v-for="(item, index) of hintList" @click="hintItemClick(item)">{{ `${item.itemText}` }}</li>
       </ul>
     </template>
   </d-editor-md>
@@ -466,44 +543,44 @@ export default defineComponent({
 
     const hintConfig = {
       '#': (e) => {
-          const { callback, cursorHint, prefix } = e;
-          const numberList = [
-            {
-              itemText: '00001',
-              insertText: '[00001](#00001)'
-            },
-            {
-              itemText: '00002',
-              insertText: '[00002](#00002)'
-            },
-            {
-              itemText: '00003',
-              insertText: '[00003](#00003)'
-            },
-            {
-              itemText: '00004',
-              insertText: '[00004](#00004)'
-            }
-          ];
-          hintList.value = numberList.filter((item) => item.itemText.indexOf(cursorHint) !== -1);
-          hintCallback.value = callback;
+        const { callback, cursorHint, prefix } = e;
+        const numberList = [
+          {
+            itemText: '00001',
+            insertText: '[00001](#00001)',
+          },
+          {
+            itemText: '00002',
+            insertText: '[00002](#00002)',
+          },
+          {
+            itemText: '00003',
+            insertText: '[00003](#00003)',
+          },
+          {
+            itemText: '00004',
+            insertText: '[00004](#00004)',
+          },
+        ];
+        hintList.value = numberList.filter((item) => item.itemText.indexOf(cursorHint) !== -1);
+        hintCallback.value = callback;
       },
       '@': {
         handler: (e) => {
           const { callback, cursorHint, prefix } = e;
           const userList = [
             {
-              itemText: 'User1'
+              itemText: 'User1',
             },
             {
-              itemText: 'User2'
+              itemText: 'User2',
             },
             {
-              itemText: 'User3'
+              itemText: 'User3',
             },
             {
-              itemText: 'User4'
-            }
+              itemText: 'User4',
+            },
           ];
           hintList.value = userList.filter((item) => item.itemText.indexOf(cursorHint) !== -1);
           hintCallback.value = callback;
@@ -539,9 +616,11 @@ export default defineComponent({
 
 :::
 
-### TOC目录渲染
+### TOC 目录渲染
 
-:::demo 支持TOC目录生成
+支持 TOC 目录生成。
+
+:::demo
 
 ```vue
 <template>
@@ -577,9 +656,11 @@ This is a Level-1 directory.
 
 ### mermaid 渲染
 
-:::demo 支持mermaid流程图、甘特图、时序图等图表渲染
+支持 mermaid 流程图、甘特图、时序图等图表渲染。
 
-```vue
+:::demo
+
+````vue
 <template>
   <d-editor-md v-model="content" :fullscreen-z-index="1000"></d-editor-md>
 </template>
@@ -668,64 +749,42 @@ Bob-->>John: Jolly good!
 });
 </script>
 
-:::
-
-### EditorMd 参数
-
-| 参数名                 | 类型                                      | 默认值   | 说明                                                                                                               |
-| :--------------------- | :---------------------------------------- | :------- | :----------------------------------------------------------------------------------------------------------------- |
-| v-model                | `string`                                  | ''       | 编辑器内容双向绑定                                                                                                 |
-| options                | `object`                                  | {}       | 编辑器初始化时，自定义配置，可参考[CodeMirror Options](https://codemirror.net/doc/manual.html#config)              |
-| base-url               | `string`                                  | --       | 设置渲染到 html 时，为相对 url 添加的 baseUrl                                                                      |
-| custom-parse           | `(html: string) => string`                | --       | 自定义对渲染后的 html 处理，需要接收渲染后的 html，返回自定义处理后的 html                                         |
-| md-rules               | `object`                                  | {}       | 设置 markdown 对字符串的处理方式， 可参考[markdown-it](https://www.npmjs.com/package/markdown-it?activeTab=readme) |
-| md-plugins             | [MdPlugin[]](#mdplugin)                   | --       | 设置 markdown-it 插件 |
-| hintConfig             | [MdHintConfig[]](#hintconfig)             | --       | 设置 快速提示 配置 |
-| mode                   | `'editonly' \| 'readonly' \| 'normal'`    | 'normal' | 只写/只读/双栏显示模式选择，默认 'normal' 双栏模式显示                                                             |
-| custom-renderer-rules  | [ICustomRenderRule[]](#icustomrenderrule) | []       | 自定义 markdown 对节点的渲染方式，每条规则需要指定对应节点 key,并自定义渲染函数                                    |
-| custom-xss-rules       | [ICustomXssRule[]](#icustomxssrule)       | []       | 自定义 xss 对某种 tag 的过滤方式，每条规则需要指定 tag, 并给出需要加入白名单的属性数组                             |
-| placeholder            | `string`                                  | ''       | 编辑器无内容是的提示信息                                                                                           |
-| fullscreen-z-index     | `number`                                  | 10       | 编辑器全屏状态的 z-index                                                                                           |
-| image-upload-to-server | `boolean`                                 | false    | 是否打开图片自定义上传开关（打开后将将监听图片的复制，toolbar 图片功能上传，传出事件回调）                         |
-| editor-container-height| `number`|--|可选，编辑器内容区高度          ||
-| toolbar-config         | `Array(string)`                                   |`[['undo', 'redo'],['h1', 'h2', 'bold', 'italic', 'strike', 'underline', 'color', 'font'],['ul', 'ol', 'checklist', 'code', 'link', 'image', 'table'],'fullscreen']`|展示在toolbar工具栏处的按钮，用[]包起来的表示是同一组，不同组的会有线隔开。也可以自定义，自定义时需要配置参数custom-toolbars         ||
-| custom-toolbars        | {[IToolbarItemConfig](#itoolbaritemconfig)} |--|配置toolbar-config中对应按钮的具体设置 [自定义工具栏](#自定义工具栏) | |
-
-### EditorMd 事件
-
-| 事件名                 | 回调参数                     | 说明                                                               | 跳转 Demo |
-| :--------------------- | :--------------------------- | :----------------------------------------------------------------- | :-------- |
-| after-editor-init      | `Function(instance: object)` | 编辑器初始化事件，返回编辑器对象                                   |           |
-| content-change         | `Function(content: string)`  | 编辑器内容改变事件，返回当前内容                                   |           |
-| preview-content-change | `Function(string)`                 | 预览内容改变时触发，返回对应的html字段                                                 |           |
-| image-upload           | `Function({file, callback})` | 打开图片上传开关后，图片上传事件回调，返回文件内容与 callback 函数 |           |
-| checked-change           | `Function(content: string)` | plugins添加checkbox后，预览checkbox checked状态改变回调 |           |
-
-### MdRender 参数
-
-| 参数名                | 类型                                      | 默认值 | 说明                                                                                                              | 跳转 Demo |
-| :-------------------- | :---------------------------------------- | :----- | :---------------------------------------------------------------------------------------------------------------- | :-------- |
-| base-url              | `string`                                  | --     | 设置渲染到 html 时，为相对 url 添加 baseUrl                                                                       |           |
-| custom-parse          | `(html: string) => string`                | --     | 自定义对渲染后的 html 处理，需要接受渲染后的 html，返回自定义处理后的 html                                        |           |
-| md-rules              | `object`                                  | {}     | 设置 markdown 对字符串的处理方式, 可参考[markdown-it](https://www.npmjs.com/package/markdown-it?activeTab=readme) |           |
-| custom-renderer-rules | [ICustomRenderRule[]](#icustomrenderrule) | []     | 设置 markdown 对字符串的处理方式, 可参考[markdown-it](https://www.npmjs.com/package/markdown-it?activeTab=readme) |           |
-| custom-xss-rules      | [ICustomXssRule[]](#icustomxssrule)       | []     | 自定义 xss 对某种 tag 的过滤方式，每条规则需要指定 tag，并给出需要加入白名单的属性数组                            |           |
-
-### MdRender 事件
-
-| 事件名           | 回调参数           | 说明                                       | 跳转 Demo |
-| :--------------- | :----------------- | :----------------------------------------- | :-------- |
-| md-render-change | `Function(string)` | 内容改变时触发，返回对应 html 渲染结果字段 |           |
-| checked-change   | `Function(content: string)` | plugins添加checkbox后，预览checkbox checked状态改变回调 |           |
-
-#### ICustomRenderRule
-
-```ts
-interface ICustomRenderRule {
-  key: string;
-  value: Function;
-}
-```
+::: ### EditorMd 参数 | 参数名 | 类型 | 默认值 | 说明 | | :--------------------- | :---------------------------------------- | :------- |
+:----------------------------------------------------------------------------------------------------------------- | | v-model | `string` |
+'' | 编辑器内容双向绑定 | | options | `object` | {} | 编辑器初始化时，自定义配置，可参考[CodeMirror
+Options](https://codemirror.net/doc/manual.html#config) | | base-url | `string` | -- | 设置渲染到 html 时，为相对 url 添加的 baseUrl | |
+custom-parse | `(html: string) => string` | -- | 自定义对渲染后的 html 处理，需要接收渲染后的 html，返回自定义处理后的 html | | md-rules |
+`object` | {} | 设置 markdown 对字符串的处理方式， 可参考[markdown-it](https://www.npmjs.com/package/markdown-it?activeTab=readme) | |
+md-plugins | [MdPlugin[]](#mdplugin) | -- | 设置 markdown-it 插件 | | hintConfig | [MdHintConfig[]](#hintconfig) | -- | 设置 快速提示 配置 |
+| mode | `'editonly' \| 'readonly' \| 'normal'` | 'normal' | 只写/只读/双栏显示模式选择，默认 'normal' 双栏模式显示 | |
+custom-renderer-rules | [ICustomRenderRule[]](#icustomrenderrule) | [] | 自定义 markdown 对节点的渲染方式，每条规则需要指定对应节点
+key,并自定义渲染函数 | | custom-xss-rules | [ICustomXssRule[]](#icustomxssrule) | [] | 自定义 xss 对某种 tag 的过滤方式，每条规则需要指定
+tag, 并给出需要加入白名单的属性数组 | | placeholder | `string` | '' | 编辑器无内容是的提示信息 | | fullscreen-z-index | `number` | 10 |
+编辑器全屏状态的 z-index | | image-upload-to-server | `boolean` | false | 是否打开图片自定义上传开关（打开后将将监听图片的复制，toolbar
+图片功能上传，传出事件回调） | | editor-container-height| `number`|--|可选，编辑器内容区高度 || | toolbar-config | `Array(string)`
+|`[['undo', 'redo'],['h1', 'h2', 'bold', 'italic', 'strike', 'underline', 'color', 'font'],['ul', 'ol', 'checklist', 'code', 'link',
+'image',
+'table'],'fullscreen']`|展示在toolbar工具栏处的按钮，用[]包起来的表示是同一组，不同组的会有线隔开。也可以自定义，自定义时需要配置参数custom-toolbars
+|| | custom-toolbars | {[IToolbarItemConfig](#itoolbaritemconfig)} |--|配置toolbar-config中对应按钮的具体设置 [自定义工具栏](#自定义工具栏)
+| | ### EditorMd 事件 | 事件名 | 回调参数 | 说明 | 跳转 Demo | | :--------------------- | :--------------------------- |
+:----------------------------------------------------------------- | :-------- | | after-editor-init | `Function(instance: object)` |
+编辑器初始化事件，返回编辑器对象 | | | content-change | `Function(content: string)` | 编辑器内容改变事件，返回当前内容 | | |
+preview-content-change | `Function(string)` | 预览内容改变时触发，返回对应的html字段 | | | image-upload | `Function({file, callback})` |
+打开图片上传开关后，图片上传事件回调，返回文件内容与 callback 函数 | | | checked-change | `Function(content: string)` |
+plugins添加checkbox后，预览checkbox checked状态改变回调 | | ### MdRender 参数 | 参数名 | 类型 | 默认值 | 说明 | 跳转 Demo | |
+:-------------------- | :---------------------------------------- | :----- |
+:---------------------------------------------------------------------------------------------------------------- | :-------- | | base-url |
+`string` | -- | 设置渲染到 html 时，为相对 url 添加 baseUrl | | | custom-parse | `(html: string) => string` | -- | 自定义对渲染后的 html
+处理，需要接受渲染后的 html，返回自定义处理后的 html | | | md-rules | `object` | {} | 设置 markdown 对字符串的处理方式,
+可参考[markdown-it](https://www.npmjs.com/package/markdown-it?activeTab=readme) | | | custom-renderer-rules |
+[ICustomRenderRule[]](#icustomrenderrule) | [] | 设置 markdown 对字符串的处理方式,
+可参考[markdown-it](https://www.npmjs.com/package/markdown-it?activeTab=readme) | | | custom-xss-rules | [ICustomXssRule[]](#icustomxssrule)
+| [] | 自定义 xss 对某种 tag 的过滤方式，每条规则需要指定 tag，并给出需要加入白名单的属性数组 | | ### MdRender 事件 | 事件名 | 回调参数 |
+说明 | 跳转 Demo | | :--------------- | :----------------- | :----------------------------------------- | :-------- | | md-render-change |
+`Function(string)` | 内容改变时触发，返回对应 html 渲染结果字段 | | | checked-change | `Function(content: string)` |
+plugins添加checkbox后，预览checkbox checked状态改变回调 | | #### ICustomRenderRule ```ts interface ICustomRenderRule { key: string; value:
+Function; }
+````
 
 #### ICustomXssRule
 
@@ -752,13 +811,13 @@ export interface HintConfigItem {
   handler: (obj: { callback: (replaceText: string) => void; cursorHint: string; prefix: string }) => void;
 }
 export interface HintConfig {
-  throttleTime: number;  // 触发提示事件debounceTime(ms)，默认300
-  [key: string]: HintConfigItem;  // key为触发提示前缀配置
+  throttleTime: number; // 触发提示事件debounceTime(ms)，默认300
+  [key: string]: HintConfigItem; // key为触发提示前缀配置
 }
 ```
 
-
 ### IToolbarItemConfig
+
 ```ts
 export interface IToolbarItemConfig {
   id: string;
@@ -773,5 +832,5 @@ export interface IToolbarItemConfig {
   params?: { [key: string]: any };
   handler?(editor?: any, params?: any): void;
 }
-const toolbars = Record<string, IToolbarItemConfig>
+const toolbars = Record<string, IToolbarItemConfig>;
 ```

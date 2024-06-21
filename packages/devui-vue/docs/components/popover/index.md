@@ -2,13 +2,17 @@
 
 简单的文字提示气泡框。
 
-#### 何时使用
-
+:::tip 何时使用
 用来通知用户非关键性问题或提示某控件处于某特殊情况。
+:::
+
+## 用法
 
 ### 基本用法
 
-:::demo 当 Popover 弹出时，会基于`default`插槽的内容进行定位。
+当 Popover 弹出时，会基于`default`插槽的内容进行定位。
+
+:::demo
 
 ```vue
 <template>
@@ -48,7 +52,9 @@
 
 ### 自定义内容
 
-:::demo 自定义`default`插槽的内容与弹出提示内容。
+自定义`default`插槽的内容与弹出提示内容。
+
+:::demo
 
 ```vue
 <template>
@@ -67,7 +73,9 @@
 
 ### 弹出位置
 
-:::demo 总共支持 12 个弹出位置。
+Popover 总共支持 12 个弹出位置。
+
+:::demo
 
 ```vue
 <template>
@@ -213,7 +221,9 @@
 
 ### 延时触发
 
-:::demo 仅需要在 trigger 为 hover 的时候，鼠标移入的时长超过 `mouse-enter-delay` 毫秒之后才会触发，以防止用户无意划过导致的闪现，默认值是 150 毫秒；鼠标移出之后，再经过`mouse-leave-delay`毫秒后，Popover 组件才会隐藏，默认值是 100 毫秒。
+仅需要在 trigger 为 hover 的时候，鼠标移入的时长超过 `mouse-enter-delay` 毫秒之后才会触发，以防止用户无意划过导致的闪现，默认值是 150 毫秒；鼠标移出之后，再经过`mouse-leave-delay`毫秒后，Popover 组件才会隐藏，默认值是 100 毫秒。
+
+:::demo
 
 ```vue
 <template>
@@ -239,7 +249,9 @@
 
 ### 手动触发
 
-:::demo `trigger`参数设置为`manually`，可通过`is-open`参数设置是否弹出.
+`trigger`参数设置为`manually`，可通过`is-open`参数设置是否弹出。
+
+:::demo
 
 ```vue
 <template>
@@ -266,7 +278,9 @@ export default defineComponent({
 
 ### 事件
 
-:::demo 当 Popover 弹出、隐藏时，可以触发自定义事件。
+当 Popover 弹出、隐藏时，可以触发自定义事件。
+
+:::demo
 
 ```vue
 <template>

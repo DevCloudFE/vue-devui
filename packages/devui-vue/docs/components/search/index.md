@@ -2,13 +2,17 @@
 
 搜索框。
 
-#### 何时使用
-
+:::tip 何时使用
 当用户需要在数据集中搜索所需数据时，输入所需数据的内容（或部分内容），返回所有匹配内容的搜索结果。
+:::
+
+## 用法
 
 ### 基本用法
 
-:::demo 使用`sm`，`''`，`lg`来定义`Search`基本类型
+使用`sm`，`''`，`lg`来定义`Search`基本类型。
+
+:::demo
 
 ```vue
 <template>
@@ -42,7 +46,9 @@ export default defineComponent({
 
 ### 搜索图标左置
 
-:::demo 使用`left`，`right`来定义`Search`搜索图标位置， 默认`right`
+使用`left`，`right`来定义`Search`搜索图标位置， 默认`right`。
+
+:::demo
 
 ```vue
 <template>
@@ -56,7 +62,9 @@ export default defineComponent({
 
 ### 无边框
 
-:::demo 使用`no-border`来定义`Search`无边框
+使用`no-border`来定义`Search`无边框。
+
+:::demo
 
 ```vue
 <template>
@@ -70,7 +78,9 @@ export default defineComponent({
 
 ### 双向绑定
 
-:::demo 使用`v-model`双向绑定
+使用`v-model`双向绑定。
+
+:::demo
 
 ```vue
 <template>
@@ -95,19 +105,19 @@ export default defineComponent({
 
 ### Search 参数
 
-| 参数名          | 类型                                    | 默认    | 说明                                           | 跳转 Demo                     |
-| :-------------- |:--------------------------------------| :------ | :--------------------------------------------- | :---------------------------- |
-| size            | [SearchSizeType](#searchsizetype)     | 'md'| 可选，搜索框尺寸| [基本用法](#基本用法) |
-| placeholder     | `string`                              | --      | 可选，输入框 placeholder                       | [搜索图标左置](#搜索图标左置) |
-| max-length      | `number`                              | --      | 可选，输入框的 max-length                      | [双向绑定](#双向绑定)         |
-| delay           | `number`                              | 300     | 可选，debounceTime 的延迟                      | [基本用法](#基本用法)         |
-| disabled        | `boolean`                             | false   | 可选，输入框是否被禁用                         | [基本用法](#基本用法)         |
-| auto-focus      | `boolean`                             | false   | 可选，输入框是否自动对焦                       | [基本用法](#基本用法)         |
-| is-keyup-search | `boolean`                             | false   | 可选，是否支持输入值立即触发 `search`          | [基本用法](#基本用法)         |
-| icon-position   | [IconPositionType](#iconpositiontype) | 'right' | 可选，搜索图标位置 | [搜索图标左置](#搜索图标左置) |
-| no-border       | `boolean`                             | false   | 可选，是否显示边框                             | [无边框](#无边框)             |
-| css-class       | `string`                              | ''      | 可选，支持传入类名到输入框上                   | [双向绑定](#双向绑定)         |
-|show-glow-style|`boolean`|true|可选，是否显示悬浮发光效果||
+| 参数名          | 类型                                  | 默认    | 说明                                  | 跳转 Demo                     |
+| :-------------- | :------------------------------------ | :------ | :------------------------------------ | :---------------------------- |
+| size            | [SearchSizeType](#searchsizetype)     | 'md'    | 可选，搜索框尺寸                      | [基本用法](#基本用法)         |
+| placeholder     | `string`                              | --      | 可选，输入框 placeholder              | [搜索图标左置](#搜索图标左置) |
+| max-length      | `number`                              | --      | 可选，输入框的 max-length             | [双向绑定](#双向绑定)         |
+| delay           | `number`                              | 300     | 可选，debounceTime 的延迟             | [基本用法](#基本用法)         |
+| disabled        | `boolean`                             | false   | 可选，输入框是否被禁用                | [基本用法](#基本用法)         |
+| auto-focus      | `boolean`                             | false   | 可选，输入框是否自动对焦              | [基本用法](#基本用法)         |
+| is-keyup-search | `boolean`                             | false   | 可选，是否支持输入值立即触发 `search` | [基本用法](#基本用法)         |
+| icon-position   | [IconPositionType](#iconpositiontype) | 'right' | 可选，搜索图标位置                    | [搜索图标左置](#搜索图标左置) |
+| no-border       | `boolean`                             | false   | 可选，是否显示边框                    | [无边框](#无边框)             |
+| css-class       | `string`                              | ''      | 可选，支持传入类名到输入框上          | [双向绑定](#双向绑定)         |
+| show-glow-style | `boolean`                             | true    | 可选，是否显示悬浮发光效果            |                               |
 
 ### Search 事件
 

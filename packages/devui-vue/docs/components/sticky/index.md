@@ -2,13 +2,17 @@
 
 便签组件。
 
-#### 何时使用
-
+:::tip 何时使用
 当用户在滚动屏幕时，需要某个区域内容在段落或者浏览器可视区域可见时。
+:::
+
+## 用法
 
 ### 基本用法
 
-:::demo 默认容器为父元素
+默认容器为父元素。
+
+:::demo
 
 ```vue
 <template>
@@ -24,21 +28,21 @@ export default {
   setup(props) {
     const view = {
       top: 100,
-      bottom: 0
-    }
-    const zIndex = 1000
+      bottom: 0,
+    };
+    const zIndex = 1000;
 
     function statusChangeHandler(status) {
-      console.log('status =', status)
+      console.log('status =', status);
     }
 
     return {
       view,
       zIndex,
-      statusChangeHandler
-    }
-  }
-}
+      statusChangeHandler,
+    };
+  },
+};
 </script>
 ```
 
@@ -58,25 +62,25 @@ export default {
 </template>
 
 <script>
-import { reactive, onMounted, toRefs } from 'vue'
+import { reactive, onMounted, toRefs } from 'vue';
 export default {
   setup(props) {
     let state = reactive({
-      container: null
-    })
+      container: null,
+    });
     const view = {
       top: 100,
-      bottom: 0
-    }
+      bottom: 0,
+    };
     onMounted(() => {
-      state.container = document.getElementsByClassName('container')[0]
-    })
+      state.container = document.getElementsByClassName('container')[0];
+    });
     return {
       view,
-      ...toRefs(state)
-    }
-  }
-}
+      ...toRefs(state),
+    };
+  },
+};
 </script>
 ```
 
@@ -98,26 +102,26 @@ export default {
 </template>
 
 <script>
-import { reactive, onMounted, toRefs } from 'vue'
+import { reactive, onMounted, toRefs } from 'vue';
 
 export default {
   setup(props) {
     let state = reactive({
-      scrollTarget: null
-    })
+      scrollTarget: null,
+    });
     const view = {
       top: 100,
-      bottom: 0
-    }
+      bottom: 0,
+    };
     onMounted(() => {
-      state.scrollTarget = document.getElementsByClassName('scrollTarget')[0]
-    })
+      state.scrollTarget = document.getElementsByClassName('scrollTarget')[0];
+    });
     return {
       view,
-      ...toRefs(state)
-    }
-  }
-}
+      ...toRefs(state),
+    };
+  },
+};
 </script>
 ```
 

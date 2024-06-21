@@ -2,13 +2,18 @@
 
 标签展示组件。
 
-#### 何时使用
+:::tip 何时使用
 
 用户需要展示多个标签时。
+:::
+
+## 用法
 
 ### 基本用法
 
-:::demo 由`type`属性来选择 tag 的类型，也可以通过`color`属性来自定义主题色
+由`type`属性来选择 tag 的类型，也可以通过`color`属性来自定义主题色。
+
+:::demo
 
 ```vue
 <template>
@@ -55,7 +60,9 @@ export default defineComponent({
 
 ### 自定义
 
-:::demo 使用默认插槽可自由定制你的 tag
+使用默认插槽可自由定制你的 tag。
+
+:::demo
 
 ```vue
 <template>
@@ -84,7 +91,9 @@ export default defineComponent({
 
 ### 可被选中
 
-:::demo 由`checked`属性来设置 tag 选中的状态，可通过点击来改变`checked`的值
+由`checked`属性来设置 tag 选中的状态，可通过点击来改变`checked`的值
+
+:::demo
 
 ```vue
 <template>
@@ -112,7 +121,9 @@ export default defineComponent({
 
 ### 可移除的
 
-:::demo 由`deletable`属性来设置标签是否可删除
+由`deletable`属性来设置标签是否可删除。
+
+:::demo
 
 ```vue
 <template>
@@ -142,7 +153,9 @@ export default defineComponent({
 
 ### 不同尺寸
 
-:::demo Tag 默认的是 md 尺寸，有 lg、md、sm 三种尺寸可选
+Tag 默认的是 md 尺寸，有 lg、md、sm 三种尺寸可选。
+
+:::demo
 
 ```vue
 <template>
