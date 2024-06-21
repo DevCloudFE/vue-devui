@@ -14,8 +14,8 @@ const { isReadyToRelease } = require('../shared/utils');
 //   return { text, link: `/${SITES_COMPONENTS_DIR_NAME}/${kebabCase(name)}/`, status }
 // }
 
-function buildCategoryOptions(text, children = []) {
-  return { text, children };
+function buildCategoryOptions(text, items = []) {
+  return { text, items };
 }
 
 function generateZhMenus(componentsInfo) {
@@ -72,7 +72,7 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
         },
         {
           "text": "Design Token",
-          "children": DESIGN_TOKENS_INFO
+          "items": DESIGN_TOKENS_INFO
         },
       ],
       handler: generateZhMenus,
@@ -94,7 +94,7 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
         },
         {
           "text": "Design Token",
-          "children": DESIGN_TOKENS_INFO
+          "items": DESIGN_TOKENS_INFO
         },
       ],
       handler: generateEnMenus,
