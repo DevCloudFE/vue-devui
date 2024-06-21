@@ -38,7 +38,7 @@ export const SideBarLink = (props) => {
   }
 
   const link = resolveLink(site.value.base, props.item.link);
-  const children = props.item.children;
+  const children = props.item.items;
   const active = isActive(route, props.item.link);
   const childItems = depth < maxDepth ? createChildren(active, children, headers, depth + 1) : null;
   return h('li', { class: 'sidebar-link' }, [

@@ -1,136 +1,116 @@
-import { onMounted, onUnmounted, onUpdated } from 'vue'
+import { onMounted, onUnmounted, onUpdated } from 'vue';
 
-import type { Ref } from 'vue'
+import type { Ref } from 'vue';
 
 // 防抖节流控制
 export const throttleAndDebounce = (fn: () => any, delay: number) => {
-  let timeout: ReturnType<typeof setTimeout>
-  let called = false
+  let timeout: ReturnType<typeof setTimeout>;
+  let called = false;
   return () => {
     if (timeout) {
-      clearTimeout(timeout)
+      clearTimeout(timeout);
     }
     if (!called) {
-      fn()
-      called = true
+      fn();
+      called = true;
       setTimeout(() => {
-        called = false
-      }, delay)
+        called = false;
+      }, delay);
     } else {
-      timeout = setTimeout(fn, delay)
+      timeout = setTimeout(fn, delay);
     }
-  }
-}
+  };
+};
 
-export function useActiveSidebarLinks(
-  container: Ref<HTMLElement>,
-  marker: Ref<HTMLElement>
-) {
-  const onScroll = throttleAndDebounce(setActiveLink, 150)
+export function useActiveSidebarLinks(container: Ref<HTMLElement>, marker: Ref<HTMLElement>) {
+  const onScroll = throttleAndDebounce(setActiveLink, 150);
   function setActiveLink() {
-    const sidebarLinks = getSidebarLinks()
-    const anchors = getAnchors(sidebarLinks)
+    const sidebarLinks = getSidebarLinks();
+    const anchors = getAnchors(sidebarLinks);
 
-    if (
-      anchors.length &&
-      window.scrollY + window.innerHeight === document.body.offsetHeight
-    ) {
-      activateLink(anchors[anchors.length - 1].hash)
-      return
+    if (anchors.length && window.scrollY + window.innerHeight === document.body.offsetHeight) {
+      activateLink(anchors[anchors.length - 1].hash);
+      return;
     }
     for (let i = 0; i < anchors.length; i++) {
-      const anchor = anchors[i]
-      const nextAnchor = anchors[i + 1]
-      const [isActive, hash] = isAnchorActive(i, anchor, nextAnchor)
+      const anchor = anchors[i];
+      const nextAnchor = anchors[i + 1];
+      const [isActive, hash] = isAnchorActive(i, anchor, nextAnchor);
       if (isActive) {
-        history.replaceState(
-          null,
-          document.title,
-          hash ? (hash as string) : ' '
-        )
-        activateLink(hash as string)
-        return
+        history.replaceState(null, document.title, hash ? (hash as string) : ' ');
+        activateLink(hash as string);
+        return;
       }
     }
   }
 
-  let prevActiveLink: HTMLAnchorElement | null = null
+  let prevActiveLink: HTMLAnchorElement | null = null;
 
   function activateLink(hash: string) {
-    deactiveLink(prevActiveLink)
+    deactiveLink(prevActiveLink);
 
-    const activeLink = (prevActiveLink =
-      hash == null
-        ? null
-        : (container.value.querySelector(
-            `.devui-item a[href="${decodeURIComponent(hash)}"]`
-          ) as HTMLAnchorElement))
-    if (activeLink) {
-      activeLink.classList.add('active')
-      marker.value.style.opacity = '1'
-      marker.value.style.top = `${activeLink.offsetTop}px`
-    } else {
-      marker.value.style.opacity = '0'
-      marker.value.style.top = '33px'
-    }
+    // const activeLink = (prevActiveLink =
+    //   hash == null
+    //     ? null
+    //     : (container.value.querySelector(
+    //         `.devui-item a[href="${decodeURIComponent(hash)}"]`
+    //       ) as HTMLAnchorElement))
+    // if (activeLink) {
+    //   activeLink.classList.add('active')
+    //   marker.value.style.opacity = '1'
+    //   marker.value.style.top = `${activeLink.offsetTop}px`
+    // } else {
+    //   marker.value.style.opacity = '0'
+    //   marker.value.style.top = '33px'
+    // }
   }
 
   function deactiveLink(link: HTMLElement) {
-    link && link.classList.remove('active')
+    link && link.classList.remove('active');
   }
 
   onMounted(() => {
-    window.requestAnimationFrame(setActiveLink)
-    window.addEventListener('scroll', onScroll)
-  })
+    window.requestAnimationFrame(setActiveLink);
+    window.addEventListener('scroll', onScroll);
+  });
 
   onUpdated(() => {
-    activateLink(location.hash)
-  })
+    activateLink(location.hash);
+  });
 
   onUnmounted(() => {
-    window.removeEventListener('scroll', onScroll)
-  })
+    window.removeEventListener('scroll', onScroll);
+  });
 }
 function getSidebarLinks() {
-  return Array.from(
-    document.querySelectorAll('.devui-content-nav .devui-link')
-  ) as HTMLAnchorElement[]
+  return Array.from(document.querySelectorAll('.devui-content-nav .devui-link')) as HTMLAnchorElement[];
 }
 function getAnchors(sidebarLinks: HTMLAnchorElement[]) {
-  return (
-    Array.from(
-      document.querySelectorAll('.content .header-anchor')
-    ) as HTMLAnchorElement[]
-  ).filter((anchor) =>
+  return (Array.from(document.querySelectorAll('.content .header-anchor')) as HTMLAnchorElement[]).filter((anchor) =>
     sidebarLinks.some((sidebarLink) => sidebarLink.hash === anchor.hash)
-  )
+  );
 }
 function getPageOffset() {
-  return (document.querySelector('.nav-bar') as HTMLElement).offsetHeight
+  return (document.querySelector('.nav-bar') as HTMLElement).offsetHeight;
 }
 function getAnchorTop(anchor: HTMLAnchorElement) {
-  const pageOffset = getPageOffset()
+  const pageOffset = getPageOffset();
   try {
-    return anchor.parentElement.offsetTop - pageOffset - 15
+    return anchor.parentElement.offsetTop - pageOffset - 15;
   } catch (e) {
-    return 0
+    return 0;
   }
 }
-function isAnchorActive(
-  index: number,
-  anchor: HTMLAnchorElement,
-  nextAnchor: HTMLAnchorElement
-) {
-  const scrollTop = window.scrollY
+function isAnchorActive(index: number, anchor: HTMLAnchorElement, nextAnchor: HTMLAnchorElement) {
+  const scrollTop = window.scrollY;
   if (index === 0 && scrollTop === 0) {
-    return [true, null]
+    return [true, null];
   }
   if (scrollTop < getAnchorTop(anchor)) {
-    return [false, null]
+    return [false, null];
   }
   if (!nextAnchor || scrollTop < getAnchorTop(nextAnchor)) {
-    return [true, decodeURIComponent(anchor.hash)]
+    return [true, decodeURIComponent(anchor.hash)];
   }
-  return [false, null]
+  return [false, null];
 }

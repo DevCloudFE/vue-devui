@@ -39,7 +39,7 @@ if (typeof window !== 'undefined') {
 export default {
   extends: DevUITheme,
   Layout: () => {
-    return h(DefaultTheme.Layout, null, {
+    return h(DevUITheme.Layout ?? DefaultTheme.Layout, null, {
       // https://vitepress.dev/guide/extending-default-theme#layout-slots
     });
   },
