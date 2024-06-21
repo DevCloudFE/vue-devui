@@ -17,7 +17,6 @@ export function MdTransformer(): Plugin {
 
       const tag = '<script setup>';
       if (code.includes(tag)) {
-        console.log("!!!!!!")
         code = code.replace(
           tag,
           `
@@ -34,7 +33,6 @@ const demoList = import.meta.glob('../../components/${componentName}/*.vue') ?? 
 ${code}
 `;
       }
-      console.log(code);
       return {
         code,
       };
