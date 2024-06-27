@@ -27,7 +27,6 @@ const router = useRouter();
 // custom layout
 const isCustomLayout = computed(() => !!frontmatter.value.customLayout);
 // home
-console.table(frontmatter.value);
 const enableHome = computed(() => !!frontmatter.value.layout);
 
 // automatic multilang check for AlgoliaSearchBox

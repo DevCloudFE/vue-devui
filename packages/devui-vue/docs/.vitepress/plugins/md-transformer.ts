@@ -22,7 +22,6 @@ export function MdTransformer(): Plugin {
           `
 <script setup lang="ts">
 const demoList = import.meta.glob('../../components/${componentName}/*.vue') ?? []
-console.log(demoList);
 `
         );
       } else {
