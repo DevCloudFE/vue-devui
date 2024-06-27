@@ -47,22 +47,21 @@ export function useActiveSidebarLinks(container: Ref<HTMLElement>, marker: Ref<H
   let prevActiveLink: HTMLAnchorElement | null = null;
 
   function activateLink(hash: string) {
-    deactiveLink(prevActiveLink);
+    prevActiveLink && deactiveLink(prevActiveLink);
 
-    // const activeLink = (prevActiveLink =
-    //   hash == null
-    //     ? null
-    //     : (container.value.querySelector(
-    //         `.devui-item a[href="${decodeURIComponent(hash)}"]`
-    //       ) as HTMLAnchorElement))
-    // if (activeLink) {
-    //   activeLink.classList.add('active')
-    //   marker.value.style.opacity = '1'
-    //   marker.value.style.top = `${activeLink.offsetTop}px`
-    // } else {
-    //   marker.value.style.opacity = '0'
-    //   marker.value.style.top = '33px'
-    // }
+    const activeLink = (prevActiveLink =
+      hash == null
+        ? null
+        : container.value && (container.value.querySelector(`.devui-item a[href="${decodeURIComponent(hash)}"]`) as HTMLAnchorElement));
+    if (marker.value)
+      if (activeLink) {
+        activeLink.classList.add('active');
+        marker.value.style.opacity = '1';
+        marker.value.style.top = `${activeLink.offsetTop}px`;
+      } else {
+        marker.value.style.opacity = '0';
+        marker.value.style.top = '33px';
+      }
   }
 
   function deactiveLink(link: HTMLElement) {
@@ -96,7 +95,7 @@ function getPageOffset() {
 function getAnchorTop(anchor: HTMLAnchorElement) {
   const pageOffset = getPageOffset();
   try {
-    return anchor.parentElement.offsetTop - pageOffset - 15;
+    return anchor.parentElement?.offsetTop ? anchor.parentElement.offsetTop - pageOffset - 15 : 0;
   } catch (e) {
     return 0;
   }
