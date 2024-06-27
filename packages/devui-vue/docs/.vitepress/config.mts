@@ -13,7 +13,7 @@ export default defineConfig({
   markdown: {
     config: (md) => {
       md.use(demoblockPlugin as any);
-    }
+    },
   },
   vite: {
     plugins: [demoblockVitePlugin() as any],
@@ -51,4 +51,6 @@ export default defineConfig({
       copyright: 'Copyright © 2021-present DevCloudFE',
     },
   },
+
+  ignoreDeadLinks: 'localhostLinks',
 });
