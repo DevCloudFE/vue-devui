@@ -10,6 +10,7 @@ import HomeFooter from './components/HomeFooter.vue';
 import DevuiFooter from './components/DevuiFooter.vue';
 import { CONTRIBUTORS_MAP } from './components/PageContributorConfig';
 import PageContributor from './components/PageContributor.vue';
+// @ts-ignore - @devui/button sometimes unable to resolve by editor
 import { Button } from '@devui/button';
 import { LANG_KEY, ZH_CN, EN_US } from './const';
 
@@ -29,7 +30,7 @@ const isCustomLayout = computed(() => !!frontmatter.value.customLayout);
 // home
 const enableHome = computed(() => !!frontmatter.value.layout);
 
-// automatic multilang check for AlgoliaSearchBox
+// automatic multi-lang check for AlgoliaSearchBox
 const isMultiLang = computed(() => Object.keys(theme.value.locales || {}).length > 0);
 
 // navbar
