@@ -152,8 +152,6 @@ importers:
         specifier: ^0.29.8
         version: 0.29.8(typescript@4.9.5)
 
-  packages/devui-theme/build: {}
-
   packages/devui-vue:
     dependencies:
       '@babel/helper-hoist-variables':
@@ -383,239 +381,6 @@ importers:
         specifier: 2.0.21
         version: 2.0.21(typescript@4.9.5)
 
-  packages/devui-vue/build:
-    dependencies:
-      '@babel/helper-hoist-variables':
-        specifier: ^7.22.5
-        version: 7.24.6
-      '@devui-design/icons':
-        specifier: ^1.3.0
-        version: 1.4.0
-      '@floating-ui/dom':
-        specifier: 1.2.5
-        version: 1.2.5
-      '@iktakahiro/markdown-it-katex':
-        specifier: ^4.0.1
-        version: 4.0.1
-      '@types/codemirror':
-        specifier: 0.0.97
-        version: 0.0.97
-      '@types/lodash-es':
-        specifier: ^4.17.4
-        version: 4.17.12
-      '@vue/shared':
-        specifier: ^3.2.33
-        version: 3.4.27
-      '@vueuse/core':
-        specifier: 8.9.4
-        version: 8.9.4(vue@3.4.27(typescript@4.9.5))
-      async-validator:
-        specifier: ^4.0.7
-        version: 4.2.5
-      clipboard:
-        specifier: ^2.0.11
-        version: 2.0.11
-      clipboard-copy:
-        specifier: ^4.0.1
-        version: 4.0.1
-      codemirror:
-        specifier: 5.63.3
-        version: 5.63.3
-      dayjs:
-        specifier: ^1.11.3
-        version: 1.11.11
-      devui-theme:
-        specifier: ^0.0.1
-        version: 0.0.1
-      diff2html:
-        specifier: ^3.4.35
-        version: 3.4.48
-      echarts:
-        specifier: 5.3.3
-        version: 5.3.3
-      fs-extra:
-        specifier: ^10.0.0
-        version: 10.1.0
-      highlight.js:
-        specifier: ^11.6.0
-        version: 11.9.0
-      katex:
-        specifier: ^0.12.0
-        version: 0.12.0
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
-      lodash-es:
-        specifier: ^4.17.20
-        version: 4.17.21
-      markdown-it:
-        specifier: 12.2.0
-        version: 12.2.0
-      markdown-it-emoji:
-        specifier: ^3.0.0
-        version: 3.0.0
-      markdown-it-plantuml:
-        specifier: ^1.4.1
-        version: 1.4.1
-      mermaid:
-        specifier: 9.1.1
-        version: 9.1.1
-      mitt:
-        specifier: ^3.0.0
-        version: 3.0.1
-      monaco-editor:
-        specifier: 0.34.0
-        version: 0.34.0
-      rxjs:
-        specifier: ^7.8.1
-        version: 7.8.1
-      uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
-      vue:
-        specifier: ^3.3
-        version: 3.4.27(typescript@4.9.5)
-      vue-router:
-        specifier: ^4.0.3
-        version: 4.3.2(vue@3.4.27(typescript@4.9.5))
-      xss:
-        specifier: ^1.0.14
-        version: 1.0.15
-
-  packages/devui-vue/build/action-timeline: {}
-
-  packages/devui-vue/build/alert: {}
-
-  packages/devui-vue/build/auto-complete: {}
-
-  packages/devui-vue/build/avatar: {}
-
-  packages/devui-vue/build/badge: {}
-
-  packages/devui-vue/build/breadcrumb: {}
-
-  packages/devui-vue/build/button: {}
-
-  packages/devui-vue/build/card: {}
-
-  packages/devui-vue/build/carousel: {}
-
-  packages/devui-vue/build/category-search: {}
-
-  packages/devui-vue/build/checkbox: {}
-
-  packages/devui-vue/build/code-editor: {}
-
-  packages/devui-vue/build/code-review: {}
-
-  packages/devui-vue/build/collapse: {}
-
-  packages/devui-vue/build/countdown: {}
-
-  packages/devui-vue/build/data-grid: {}
-
-  packages/devui-vue/build/date-picker-pro: {}
-
-  packages/devui-vue/build/dragdrop: {}
-
-  packages/devui-vue/build/dragdrop-new: {}
-
-  packages/devui-vue/build/drawer: {}
-
-  packages/devui-vue/build/dropdown: {}
-
-  packages/devui-vue/build/echarts: {}
-
-  packages/devui-vue/build/editable-select: {}
-
-  packages/devui-vue/build/editor-md: {}
-
-  packages/devui-vue/build/form: {}
-
-  packages/devui-vue/build/fullscreen: {}
-
-  packages/devui-vue/build/git-graph: {}
-
-  packages/devui-vue/build/grid: {}
-
-  packages/devui-vue/build/icon: {}
-
-  packages/devui-vue/build/image-preview: {}
-
-  packages/devui-vue/build/input: {}
-
-  packages/devui-vue/build/input-number: {}
-
-  packages/devui-vue/build/layout: {}
-
-  packages/devui-vue/build/loading: {}
-
-  packages/devui-vue/build/mention: {}
-
-  packages/devui-vue/build/menu: {}
-
-  packages/devui-vue/build/message: {}
-
-  packages/devui-vue/build/modal: {}
-
-  packages/devui-vue/build/notification: {}
-
-  packages/devui-vue/build/overlay: {}
-
-  packages/devui-vue/build/pagination: {}
-
-  packages/devui-vue/build/panel: {}
-
-  packages/devui-vue/build/popover: {}
-
-  packages/devui-vue/build/progress: {}
-
-  packages/devui-vue/build/radio: {}
-
-  packages/devui-vue/build/rate: {}
-
-  packages/devui-vue/build/result: {}
-
-  packages/devui-vue/build/ripple: {}
-
-  packages/devui-vue/build/search: {}
-
-  packages/devui-vue/build/select: {}
-
-  packages/devui-vue/build/skeleton: {}
-
-  packages/devui-vue/build/slider: {}
-
-  packages/devui-vue/build/splitter: {}
-
-  packages/devui-vue/build/statistic: {}
-
-  packages/devui-vue/build/status: {}
-
-  packages/devui-vue/build/steps: {}
-
-  packages/devui-vue/build/switch: {}
-
-  packages/devui-vue/build/table: {}
-
-  packages/devui-vue/build/tabs: {}
-
-  packages/devui-vue/build/tag: {}
-
-  packages/devui-vue/build/textarea: {}
-
-  packages/devui-vue/build/time-picker: {}
-
-  packages/devui-vue/build/time-select: {}
-
-  packages/devui-vue/build/timeline: {}
-
-  packages/devui-vue/build/tooltip: {}
-
-  packages/devui-vue/build/tree: {}
-
-  packages/devui-vue/build/upload: {}
-
 packages:
 
   '@algolia/autocomplete-core@1.9.3':
@@ -757,10 +522,6 @@ packages:
 
   '@babel/helper-function-name@7.24.7':
     resolution: {integrity: sha512-FyoJTsj/PEUWu1/TYRiXTIHc8lbw+TDYkZuoE43opPS5TrI7MyONBE1oNvfguEXAD9yhQRrVBnXdXzSLQl9XnA==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/helper-hoist-variables@7.24.6':
-    resolution: {integrity: sha512-SF/EMrC3OD7dSta1bLJIlrsVxwtd0UpjRJqLno6125epQMJ/kyFmpTT4pbvPbdQHzCHg+biQ7Syo8lnDtbR+uA==}
     engines: {node: '>=6.9.0'}
 
   '@babel/helper-hoist-variables@7.24.7':
@@ -2337,9 +2098,6 @@ packages:
   '@vue/compiler-ssr@3.4.29':
     resolution: {integrity: sha512-rFbwCmxJ16tDp3N8XCx5xSQzjhidYjXllvEcqX/lopkoznlNPz3jyy0WGJCyhAaVQK677WWFt3YO/WUEkMMUFQ==}
 
-  '@vue/devtools-api@6.6.1':
-    resolution: {integrity: sha512-LgPscpE3Vs0x96PzSSB4IGVSZXZBZHpfxs+ZA1d+VEPwHdOXowy/Y2CsvCAIFrf+ssVU1pD1jidj505EpUnfbA==}
-
   '@vue/devtools-api@6.6.3':
     resolution: {integrity: sha512-0MiMsFma/HqA6g3KLKn+AGpL1kgKhFWszC9U29NfpWK5LE7bjeXxySWJrOJ77hBz+TBrBQ7o4QJqbPbqbs8rJw==}
 
@@ -3520,9 +3278,6 @@ packages:
 
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
-
-  devui-theme@0.0.1:
-    resolution: {integrity: sha512-5nF6fChlsXKeAtvkaAF4bZ0NMiEAbzwqQ9XZQiNuM0RRFz5lW29nnbhfDCNPkmnw5ZyCVyXqYwVRBIZrwZHXrA==}
 
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
@@ -6976,17 +6731,6 @@ packages:
   vue-component-type-helpers@2.0.21:
     resolution: {integrity: sha512-3NaicyZ7N4B6cft4bfb7dOnPbE9CjLcx+6wZWAg5zwszfO4qXRh+U52dN5r5ZZfc6iMaxKCEcoH9CmxxoFZHLg==}
 
-  vue-demi@0.14.7:
-    resolution: {integrity: sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==}
-    engines: {node: '>=12'}
-    hasBin: true
-    peerDependencies:
-      '@vue/composition-api': ^1.0.0-rc.1
-      vue: ^3.0.0-0 || ^2.6.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-
   vue-demi@0.14.8:
     resolution: {integrity: sha512-Uuqnk9YE9SsWeReYqK2alDI5YzciATE0r2SkA6iMAtuXvNTMNACJLJEXNXaEy94ECuBe4Sk6RzRU80kjdbIo1Q==}
     engines: {node: '>=12'}
@@ -7003,11 +6747,6 @@ packages:
     engines: {node: '>=8.10'}
     peerDependencies:
       eslint: '>=5.0.0'
-
-  vue-router@4.3.2:
-    resolution: {integrity: sha512-hKQJ1vDAZ5LVkKEnHhmm1f9pMiWIBNGF5AwU67PdH7TyXCj/a4hTccuUuYCAMgJK6rO/NVYtQIEN3yL8CECa7Q==}
-    peerDependencies:
-      vue: ^3.2.0
 
   vue-router@4.3.3:
     resolution: {integrity: sha512-8Q+u+WP4N2SXY38FDcF2H1dUEbYVHVPtPCPZj/GTZx8RCbiB8AtJP9+YIxn4Vs0svMTNQcLIzka4GH7Utkx9xQ==}
@@ -7482,10 +7221,6 @@ snapshots:
     dependencies:
       '@babel/template': 7.24.7
       '@babel/types': 7.24.7
-
-  '@babel/helper-hoist-variables@7.24.6':
-    dependencies:
-      '@babel/types': 7.24.6
 
   '@babel/helper-hoist-variables@7.24.7':
     dependencies:
@@ -9314,8 +9049,6 @@ snapshots:
       '@vue/compiler-dom': 3.4.29
       '@vue/shared': 3.4.29
 
-  '@vue/devtools-api@6.6.1': {}
-
   '@vue/devtools-api@6.6.3': {}
 
   '@vue/devtools-api@7.3.2':
@@ -9488,15 +9221,6 @@ snapshots:
       - '@vue/composition-api'
       - vue
 
-  '@vueuse/core@8.9.4(vue@3.4.27(typescript@4.9.5))':
-    dependencies:
-      '@types/web-bluetooth': 0.0.14
-      '@vueuse/metadata': 8.9.4
-      '@vueuse/shared': 8.9.4(vue@3.4.27(typescript@4.9.5))
-      vue-demi: 0.14.7(vue@3.4.27(typescript@4.9.5))
-    optionalDependencies:
-      vue: 3.4.27(typescript@4.9.5)
-
   '@vueuse/core@8.9.4(vue@3.4.29(typescript@4.9.5))':
     dependencies:
       '@types/web-bluetooth': 0.0.14
@@ -9528,12 +9252,6 @@ snapshots:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
-
-  '@vueuse/shared@8.9.4(vue@3.4.27(typescript@4.9.5))':
-    dependencies:
-      vue-demi: 0.14.7(vue@3.4.27(typescript@4.9.5))
-    optionalDependencies:
-      vue: 3.4.27(typescript@4.9.5)
 
   '@vueuse/shared@8.9.4(vue@3.4.29(typescript@4.9.5))':
     dependencies:
@@ -10816,8 +10534,6 @@ snapshots:
   devlop@1.1.0:
     dependencies:
       dequal: 2.0.3
-
-  devui-theme@0.0.1: {}
 
   didyoumean@1.2.2: {}
 
@@ -14964,10 +14680,6 @@ snapshots:
 
   vue-component-type-helpers@2.0.21: {}
 
-  vue-demi@0.14.7(vue@3.4.27(typescript@4.9.5)):
-    dependencies:
-      vue: 3.4.27(typescript@4.9.5)
-
   vue-demi@0.14.8(vue@3.4.29(typescript@4.9.5)):
     dependencies:
       vue: 3.4.29(typescript@4.9.5)
@@ -14984,11 +14696,6 @@ snapshots:
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
-
-  vue-router@4.3.2(vue@3.4.27(typescript@4.9.5)):
-    dependencies:
-      '@vue/devtools-api': 6.6.1
-      vue: 3.4.27(typescript@4.9.5)
 
   vue-router@4.3.3(vue@3.4.29(typescript@4.9.5)):
     dependencies:
