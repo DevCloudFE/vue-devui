@@ -23,7 +23,6 @@ export const resolveHeaders = (_headers: PageData['headers']) => {
 
   let headers = Array<Header>();
   _headers.forEach((h: Header) => {
-    console.log(h, h.level);
     if (h.level === 2) {
       headers.push(h);
       h.children.forEach((h: Header) => {
