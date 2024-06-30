@@ -61,7 +61,9 @@ export default defineComponent({
       onPreviewMouseover,
     } = useEditorMd(props, ctx);
 
-    const { isDarkMode } = useEditorMdTheme(() => {});
+    const { isDarkMode } = useEditorMdTheme(() => {
+      return;
+    });
 
     provide(EditorMdInjectionKey, {
       showFullscreen,
@@ -97,7 +99,7 @@ export default defineComponent({
                 origin={cursorRef.value || undefined}
                 align="start"
                 position={['bottom-start']}
-                onClick={withModifiers(() => {}, ['stop'])}>
+                onClick={withModifiers(() => {return ;}, ['stop'])}>
                 {ctx.slots?.hintTemplate?.()}
               </FlexibleOverlay>
               {Boolean(maxlength?.value) && (
