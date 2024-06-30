@@ -47,7 +47,7 @@ export function useActiveSidebarLinks(container: Ref<HTMLElement>, marker: Ref<H
   let prevActiveLink: HTMLAnchorElement | null = null;
 
   function activateLink(hash: string) {
-    prevActiveLink && deactiveLink(prevActiveLink);
+    prevActiveLink && deactivateLink(prevActiveLink);
 
     const activeLink = (prevActiveLink =
       hash == null
@@ -64,7 +64,7 @@ export function useActiveSidebarLinks(container: Ref<HTMLElement>, marker: Ref<H
       }
   }
 
-  function deactiveLink(link: HTMLElement) {
+  function deactivateLink(link: HTMLElement) {
     link && link.classList.remove('active');
   }
 

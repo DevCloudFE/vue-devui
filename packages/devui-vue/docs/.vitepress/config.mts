@@ -11,6 +11,7 @@ export default defineConfig({
 
   head,
   markdown: {
+    headers: true,
     config: (md) => {
       md.use(demoblockPlugin as any);
     },
