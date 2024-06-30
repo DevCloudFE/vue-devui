@@ -2,26 +2,27 @@
 
 象限图。
 
-#### 何时使用
-
+:::tip 何时使用
 根据需求对事务进行区域划分与价值排序，可用于管理事务的优先级。
+:::
+
+## 用法
 
 ### 基本用法
 
-<h4>Basic Usage</h4>
+#### Basic Usage
 
 :::demo
 
 ```vue
 <template>
-  <d-quadrant-diagram :view='view'/>
+  <d-quadrant-diagram :view="view" />
 </template>
 
-
 <script>
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive } from 'vue';
 
-export default ({
+export default {
   setup() {
     const view = reactive({
       height: 500,
@@ -29,9 +30,9 @@ export default ({
     });
     return {
       view,
-    }
-  }
-})
+    };
+  },
+};
 </script>
 ```
 

@@ -10,16 +10,15 @@ import HomeFooter from './components/HomeFooter.vue';
 import DevuiFooter from './components/DevuiFooter.vue';
 import { CONTRIBUTORS_MAP } from './components/PageContributorConfig';
 import PageContributor from './components/PageContributor.vue';
+// @ts-ignore - @devui/button sometimes unable to resolve by editor
 import { Button } from '@devui/button';
 import { LANG_KEY, ZH_CN, EN_US } from './const';
 
 const Home = defineAsyncComponent(() => import('./components/Home.vue'));
 
-const NoopComponent = () => null;
-
-const CarbonAds = __CARBON__ ? defineAsyncComponent(() => import('./components/CarbonAds.vue')) : NoopComponent;
-const BuySellAds = __BSA__ ? defineAsyncComponent(() => import('./components/BuySellAds.vue')) : NoopComponent;
-const AlgoliaSearchBox = __ALGOLIA__ ? defineAsyncComponent(() => import('./components/AlgoliaSearchBox.vue')) : NoopComponent;
+const CarbonAds = defineAsyncComponent(() => import('./components/CarbonAds.vue'));
+const BuySellAds = defineAsyncComponent(() => import('./components/BuySellAds.vue'));
+const AlgoliaSearchBox = defineAsyncComponent(() => import('./components/AlgoliaSearchBox.vue'));
 
 // generic state
 const route = useRoute();
@@ -29,9 +28,9 @@ const router = useRouter();
 // custom layout
 const isCustomLayout = computed(() => !!frontmatter.value.customLayout);
 // home
-const enableHome = computed(() => !!frontmatter.value.home);
+const enableHome = computed(() => !!frontmatter.value.layout);
 
-// automatic multilang check for AlgoliaSearchBox
+// automatic multi-lang check for AlgoliaSearchBox
 const isMultiLang = computed(() => Object.keys(theme.value.locales || {}).length > 0);
 
 // navbar
@@ -47,7 +46,7 @@ const showNavbar = computed(() => {
 const openSideBar = ref(false);
 
 const showSidebar = computed(() => {
-  if (frontmatter.value.home || frontmatter.value.sidebar === false) {
+  if (frontmatter.value.layout || frontmatter.value.sidebar === false) {
     return false;
   }
 
@@ -182,7 +181,8 @@ const contributors = computed(() => {
           <template #top>
             <slot name="page-top-ads">
               <div id="ads-container" v-if="theme.carbonAds && theme.carbonAds.carbon">
-                <CarbonAds :key="'carbon' + page.relativePath" :code="theme.carbonAds.carbon" :placement="theme.carbonAds.placement" />
+                <CarbonAds :key="'carbon' + page.relativePath" :code="theme.carbonAds.carbon"
+                  :placement="theme.carbonAds.placement" />
               </div>
             </slot>
             <slot name="page-top" />
@@ -190,12 +190,8 @@ const contributors = computed(() => {
           <template #bottom>
             <slot name="page-bottom" />
             <slot name="page-bottom-ads">
-              <BuySellAds
-                v-if="theme.carbonAds && theme.carbonAds.custom"
-                :key="'custom' + page.relativePath"
-                :code="theme.carbonAds.custom"
-                :placement="theme.carbonAds.placement"
-              />
+              <BuySellAds v-if="theme.carbonAds && theme.carbonAds.custom" :key="'custom' + page.relativePath"
+                :code="theme.carbonAds.custom" :placement="theme.carbonAds.placement" />
             </slot>
           </template>
         </Page>
@@ -204,14 +200,15 @@ const contributors = computed(() => {
       <div class="container-contributors" v-if="enableHome">
         <div class="contributors-inner">
           <h2>✨贡献者✨</h2>
-          <PageContributor v-if="contributors && contributors.length > 0" :contributors="contributors" :spacing="20" :avatarSize="48" />
-          <a href="/contributing/"><Button class="btn-become-contributor" variant="solid" color="primary">成为贡献者</Button></a>
+          <PageContributor v-if="contributors && contributors.length > 0" :contributors="contributors" :spacing="20"
+            :avatarSize="48" />
+          <a href="/contributing/"><Button class="btn-become-contributor" variant="solid"
+              color="primary">成为贡献者</Button></a>
         </div>
       </div>
     </div>
 
     <DevuiFooter class="footer" v-if="enableHome" />
-    <Debug v-if="false" />
   </div>
 </template>
 
@@ -313,21 +310,21 @@ body[ui-theme='galaxy-theme'] {
     }
 
     .page-contributor {
-      & > a > span {
+      &>a>span {
         margin: 0 12px 8px 0 !important;
 
-        & > img,
+        &>img,
         & svg {
           width: 40px !important;
           height: 40px !important;
         }
       }
 
-      & > a:nth-child(8n) > span {
+      &>a:nth-child(8n)>span {
         margin: 0 12px 8px 0 !important;
       }
 
-      & > a:nth-child(7n) > span {
+      &>a:nth-child(7n)>span {
         margin: 0 !important;
       }
     }
@@ -338,11 +335,11 @@ body[ui-theme='galaxy-theme'] {
 @media (max-width: 385px) {
   .container-contributors .contributors-inner {
     .page-contributor {
-      & > a:nth-child(7n) > span {
+      &>a:nth-child(7n)>span {
         margin: 0 12px 8px 0 !important;
       }
 
-      & > a:nth-child(6n) > span {
+      &>a:nth-child(6n)>span {
         margin: 0 !important;
       }
     }
@@ -353,11 +350,11 @@ body[ui-theme='galaxy-theme'] {
 @media (max-width: 330px) {
   .container-contributors .contributors-inner {
     .page-contributor {
-      & > a:nth-child(6n) > span {
+      &>a:nth-child(6n)>span {
         margin: 0 12px 8px 0 !important;
       }
 
-      & > a:nth-child(5n) > span {
+      &>a:nth-child(5n)>span {
         margin: 0 !important;
       }
     }

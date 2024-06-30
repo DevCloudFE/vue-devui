@@ -2,13 +2,17 @@
 
 具有数据收集、校验和提交功能的表单，包含复选框、单选框、输入框、下拉选择框等元素。
 
-#### 何时使用
-
+:::tip 何时使用
 需要进行数据收集、数据校验、数据提交功能时。
+:::
+
+## 用法
 
 ### 基础用法
 
-:::demo 默认提供水平布局，`data`参数用于设置表单数据。
+默认提供水平布局，`data`参数用于设置表单数据。
+
+:::demo
 
 ```vue
 <template>
@@ -84,7 +88,9 @@ export default defineComponent({
 
 ### 表单样式
 
-:::demo 水平排列模式下，`label-size`可以设置`label`的宽度，提供`sm`、`md`、`lg`三种大小，分别对应`80px`、`100px`、`150px`，默认为`md`；`label-align`可以设置`label`的对齐方式，可选值为`start`、`center`、`end`，默认为`start`。
+水平排列模式下，`label-size`可以设置`label`的宽度，提供`sm`、`md`、`lg`三种大小，分别对应`80px`、`100px`、`150px`，默认为`md`；`label-align`可以设置`label`的对齐方式，可选值为`start`、`center`、`end`，默认为`start`。
+
+:::demo
 
 ```vue
 <template>
@@ -202,7 +208,9 @@ export default defineComponent({
 
 ### 垂直排列
 
-:::demo 设置`layout`参数为`vertical`可启用垂直布局，即`label`在输入控件的上方。
+设置`layout`参数为`vertical`可启用垂直布局，即`label`在输入控件的上方。
+
+:::demo
 
 ```vue
 <template>
@@ -272,7 +280,9 @@ export default defineComponent({
 
 ### 多列表单
 
-:::demo 搭配`Grid`栅格布局方案，即可方便的实现多列表单布局效果。
+搭配`Grid`栅格布局方案，即可方便的实现多列表单布局效果。
+
+:::demo
 
 ```vue
 <template>
@@ -355,7 +365,9 @@ export default defineComponent({
 
 ### 尺寸控制
 
-:::demo 通过`size`属性可控制所有控件的尺寸。
+通过`size`属性可控制所有控件的尺寸。
+
+:::demo
 
 ```vue
 <template>
@@ -666,7 +678,7 @@ export default defineComponent({
 | hide-required-mark             | `boolean`                                                 | false              | 可选，是否隐藏所有表单项的必选标记                                                              |                       |
 | style-type                     | [StyleType](#styletype)                                   | 'default'          | 可选，设置表单为灰色表单                                                                        |                       |
 | append-to-body-scroll-strategy | [AppendToBodyScrollStrategy](#appendtobodyscrollstrategy) | 'reposition'       | 可选，消息显示为 popover 时，滚动时 popover 处理策略，默认策略跟随宿主移动；`close`为滚动时关闭 |                       |
-|require-position|`string`|'left'|可选，必填型号的位置，可选值为`left`和`right`||
+| require-position               | `string`                                                  | 'left'             | 可选，必填型号的位置，可选值为`left`和`right`                                                   |                       |
 
 ### Form 事件
 

@@ -23,7 +23,6 @@ div[class*='language-'] {
   margin: 1rem -1.5rem;
   background-color: $devui-area !important;
   overflow-x: auto;
-  border-radius: 20px !important;
 }
 
 li > div[class*='language-'] {
@@ -38,7 +37,7 @@ li > div[class*='language-'] {
   }
 
   li > div[class*='language-'] {
-    margin: 1rem 0 1rem 0rem;
+    margin: 1rem 0 1rem 0;
     border-radius: 6px;
   }
 }
@@ -72,11 +71,10 @@ li > div[class*='language-'] {
   padding: 0;
   line-height: var(--code-line-height);
   font-size: var(--code-font-size);
-  color: #eee;
+  color: #eeeeee;
 }
 
 /* Line highlighting */
-
 .highlight-lines {
   position: absolute;
   top: 0;
@@ -96,7 +94,6 @@ li > div[class*='language-'] {
 }
 
 /* Line numbers mode */
-
 div[class*='language-'].line-numbers-mode {
   padding-left: 3.5rem;
 }
@@ -114,108 +111,107 @@ div[class*='language-'].line-numbers-mode {
   line-height: var(--code-line-height);
   font-family: var(--code-font-family);
   font-size: var(--code-font-size);
-  color: #888;
+  color: #888888;
 }
 
 /* Language marker */
-
-div[class*='language-']:before {
+div[class*='language-']::before {
   position: absolute;
   top: 0.6em;
   right: 1em;
   z-index: 2;
   font-size: 0.8rem;
-  color: #888;
+  color: #888888;
 }
 
-div[class~='language-html']:before,
-div[class~='language-markup']:before {
+div[class~='language-html']::before,
+div[class~='language-markup']::before {
   content: 'html';
 }
 
-div[class~='language-md']:before,
-div[class~='language-markdown']:before {
+div[class~='language-md']::before,
+div[class~='language-markdown']::before {
   content: 'md';
 }
 
-div[class~='language-css']:before {
+div[class~='language-css']::before {
   content: 'css';
 }
 
-div[class~='language-sass']:before {
+div[class~='language-sass']::before {
   content: 'sass';
 }
 
-div[class~='language-scss']:before {
+div[class~='language-scss']::before {
   content: 'scss';
 }
 
-div[class~='language-less']:before {
+div[class~='language-less']::before {
   content: 'less';
 }
 
-div[class~='language-stylus']:before {
+div[class~='language-stylus']::before {
   content: 'styl';
 }
 
-div[class~='language-js']:before,
-div[class~='language-javascript']:before {
+div[class~='language-js']::before,
+div[class~='language-javascript']::before {
   content: 'js';
 }
 
-div[class~='language-ts']:before,
-div[class~='language-typescript']:before {
+div[class~='language-ts']::before,
+div[class~='language-typescript']::before {
   content: 'ts';
 }
 
-div[class~='language-json']:before {
+div[class~='language-json']::before {
   content: 'json';
 }
 
-div[class~='language-rb']:before,
-div[class~='language-ruby']:before {
+div[class~='language-rb']::before,
+div[class~='language-ruby']::before {
   content: 'rb';
 }
 
-div[class~='language-py']:before,
-div[class~='language-python']:before {
+div[class~='language-py']::before,
+div[class~='language-python']::before {
   content: 'py';
 }
 
-div[class~='language-sh']:before,
-div[class~='language-bash']:before {
+div[class~='language-sh']::before,
+div[class~='language-bash']::before {
   content: 'sh';
 }
 
-div[class~='language-php']:before {
+div[class~='language-php']::before {
   content: 'php';
 }
 
-div[class~='language-go']:before {
+div[class~='language-go']::before {
   content: 'go';
 }
 
-div[class~='language-rust']:before {
+div[class~='language-rust']::before {
   content: 'rust';
 }
 
-div[class~='language-java']:before {
+div[class~='language-java']::before {
   content: 'java';
 }
 
-div[class~='language-c']:before {
+div[class~='language-c']::before {
   content: 'c';
 }
 
-div[class~='language-yaml']:before {
+div[class~='language-yaml']::before {
   content: 'yaml';
 }
 
-div[class~='language-dockerfile']:before {
+div[class~='language-dockerfile']::before {
   content: 'dockerfile';
 }
 
-div[class~='language-vue']:before {
+div[class~='language-vue']::before {
   content: 'vue';
 }
 
@@ -225,16 +221,17 @@ div[class~='language-vue']:before {
  *
  * @author Rose Pritchard
  */
+
 .token.comment,
 .token.block-comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: #999;
+  color: #999999;
 }
 
 .token.punctuation {
-  color: #ccc;
+  color: #cccccc;
 }
 
 .token.tag,
@@ -298,4 +295,9 @@ div[class~='language-vue']:before {
 
 .token.inserted {
   color: green;
+}
+
+// Remove default language marker
+.lang {
+  display: none;
 }
