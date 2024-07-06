@@ -34,9 +34,17 @@ If the screen size is too small, an ellipsis appears.
   <d-slider :min="0" :max="480" v-model="width"></d-slider>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-let width = ref(480);
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const width = ref(480);
+    return {
+      width,
+    };
+  },
+});
 </script>
 ```
 
@@ -133,43 +141,53 @@ You can modify the expanded submenu items by setting 'open keys'
 :::demo
 
 ```vue
-<d-button @click="changeCollapsed">
-  Collapsed
-</d-button>
 <template>
-  <d-menu :collapsed-indent="48" mode="vertical" width="256px" :default-select-keys="['item1']" :collapsed="collapsed">
-    <d-menu-item key="item1" :disabled="isDisabled">
-      <template #icon>
-        <i class="icon-homepage"></i>
-      </template>
-      <span>Home</span>
-    </d-menu-item>
-    <d-sub-menu title="System" key="system">
-      <template #icon>
-        <i class="icon-system"></i>
-      </template>
-      <d-menu-item key="system-item">
-        <span>System item</span>
-      </d-menu-item>
-      <d-sub-menu title="Setting" key="setting">
+  <d-button @click="changeCollapsed"> Collapsed </d-button>
+  <template>
+    <d-menu :collapsed-indent="48" mode="vertical" width="256px" :default-select-keys="['item1']" :collapsed="collapsed">
+      <d-menu-item key="item1" :disabled="isDisabled">
         <template #icon>
-          <i class="icon-setting"></i>
+          <i class="icon-homepage"></i>
         </template>
-        <d-menu-item key="setting-item">
-          <span>Setting item</span>
+        <span>Home</span>
+      </d-menu-item>
+      <d-sub-menu title="System" key="system">
+        <template #icon>
+          <i class="icon-system"></i>
+        </template>
+        <d-menu-item key="system-item">
+          <span>System item</span>
         </d-menu-item>
+        <d-sub-menu title="Setting" key="setting">
+          <template #icon>
+            <i class="icon-setting"></i>
+          </template>
+          <d-menu-item key="setting-item">
+            <span>Setting item</span>
+          </d-menu-item>
+        </d-sub-menu>
       </d-sub-menu>
-    </d-sub-menu>
-  </d-menu>
+    </d-menu>
+  </template>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue';
-let collapsed = ref(false);
-const isDisabled = ref(true);
-const changeCollapsed = () => {
-  collapsed.value = !collapsed.value;
-};
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    let collapsed = ref(false);
+    const isDisabled = ref(true);
+    const changeCollapsed = () => {
+      collapsed.value = !collapsed.value;
+    };
+    return {
+      collapsed,
+      isDisabled,
+      changeCollapsed,
+    };
+  },
+});
 </script>
 ```
 
@@ -340,15 +358,37 @@ eg. `width`, `open-keys`, `default-select-keys`
   <d-slider :min="0" :max="480" v-model="width"></d-slider>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue';
-let collapsed = ref(false);
-let isDisabled = ref(false);
-let width = ref(256);
-const changeDisabled = () => {
-  isDisabled.value = !isDisabled.value;
-  console.log(isDisabled.value);
-};
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    let collapsed = ref(false);
+    let isDisabled = ref(false);
+    let selectKeys = ref([]);
+    let width = ref(256);
+    const changeDisabled = () => {
+      isDisabled.value = !isDisabled.value;
+      console.log(isDisabled.value);
+    };
+    const addSelect = () => {
+      if (selectKeys.value.includes('system-item')) {
+        selectKeys.value.pop();
+      } else {
+        selectKeys.value.push('system-item');
+      }
+      console.log(selectKeys.value);
+    };
+    return {
+      collapsed,
+      isDisabled,
+      selectKeys,
+      width,
+      changeDisabled,
+      addSelect,
+    };
+  },
+});
 </script>
 ```
 
@@ -358,10 +398,10 @@ const changeDisabled = () => {
 
 | Attribute           | Type                  | Default Value | Description                                                                                                                           | Demo                                          |
 | ------------------- | --------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| width               | String                | ''            | Used to control menu width                                                                                                            | [Reactivity-Attribute](#Reactivity-Attribute) |
-| collapsed           | Boolean               | false         | Used to decide whether to collapse the menu                                                                                           | [Collapsed](#Collapsed)                       |
-| collapsed-indent    | Number                | 24            | The distance between the starting icon and the left and right borders                                                                 | [Collapsed](#Collapsed)                       |
-| multiple            | Boolean               | false         | Can I select more than one                                                                                                            | [Deselect](#Deselect)                         |
+| width               | String                | ''            | Used to control menu width                                                                                                            | [Reactivity-Attribute](#reactivity-attribute) |
+| collapsed           | Boolean               | false         | Used to decide whether to collapse the menu                                                                                           | [Collapsed](#collapsed)                       |
+| collapsed-indent    | Number                | 24            | The distance between the starting icon and the left and right borders                                                                 | [Collapsed](#collapsed)                       |
+| multiple            | Boolean               | false         | Can I select more than one                                                                                                            | [Deselect](#deselect)                         |
 | mode                | [menuMode](#menumode) | 'vertical'    | menu type                                                                                                                             | [Basic-Use](#Basic-Use)                       |
 | open-keys           | Array                 | []            | default open key of menu item                                                                                                         | [默认展开](#默认展开)                         |
 | default-select-keys | Array                 | []            | default select key of menu item item                                                                                                  | [Basic-Use](#Basic-Use)                       |
@@ -371,9 +411,9 @@ const changeDisabled = () => {
 
 | Event          | Type                                                                                | Description                                                                                              | Demo                  |
 | -------------- | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | --------------------- |
-| select         | `(e: {type: 'select', key: string, el: HTMLElement, e: PointerEvent})=>void`        | if select will trigger this event. if is disabled will not trigger                                       | [Deselect](#Deselect) |
-| deselect       | `(e: {type: 'deselect', key: string, el: HTMLElement, e: PointerEvent})=>void`      | This event will be triggered when deselecting. If the menu is not multi select, it will not be triggered | [Deselect](#Deselect) |
-| submenu-change | `(e: {type: 'submenu-change', state: boolean, key: string, el: HTMLElement})=>void` | Triggered when the submenu state is changed                                                              | [Deselect](#Deselect) |
+| select         | `(e: {type: 'select', key: string, el: HTMLElement, e: PointerEvent})=>void`        | if select will trigger this event. if is disabled will not trigger                                       | [Deselect](#deselect) |
+| deselect       | `(e: {type: 'deselect', key: string, el: HTMLElement, e: PointerEvent})=>void`      | This event will be triggered when deselecting. If the menu is not multi select, it will not be triggered | [Deselect](#deselect) |
+| submenu-change | `(e: {type: 'submenu-change', state: boolean, key: string, el: HTMLElement})=>void` | Triggered when the submenu state is changed                                                              | [Deselect](#deselect) |
 
 ### d-menu-item
 
