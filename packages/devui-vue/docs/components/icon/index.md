@@ -2,15 +2,21 @@
 
 用于显示图标。
 
-#### 何时使用
+:::tip 何时使用
 
 需要显示图标时。
 
+:::
+
 所有内置的图标可在 DevUI 官网进行查看：[https://devui.design/icon/ruleResource](https://devui.design/icon/ruleResource)
+
+## 用法
 
 ### 基本用法
 
-:::demo 通过`name`属性，指定需要显示的图标，支持 DevUI 图标库图标和 URL 形式的图标。
+通过`name`属性，指定需要显示的图标，支持 DevUI 图标库图标和 URL 形式的图标。
+
+:::demo
 
 ```vue
 <template>
@@ -25,7 +31,9 @@
 
 ### 附带描述信息
 
-:::demo 利用`prefix`和`suffix`可分别设置图标的前置和后置内容，`operable`设置可交互图标，`disabled`设置禁用态，`rotate`设置图标旋转角度或自动旋转。
+利用`prefix`和`suffix`可分别设置图标的前置和后置内容，`operable`设置可交互图标，`disabled`设置禁用态，`rotate`设置图标旋转角度或自动旋转。
+
+:::demo
 
 ```vue
 <template>
@@ -76,7 +84,9 @@
 
 ### 颜色
 
-:::demo 通过`color`属性指定图标的颜色。
+通过`color`属性指定图标的颜色。
+
+:::demo
 
 ```vue
 <template>
@@ -91,7 +101,9 @@
 
 ### 尺寸
 
-:::demo 通过`size`属性，设置图标尺寸。
+通过`size`属性，设置图标尺寸。
+
+:::demo
 
 ```vue
 <template>
@@ -106,7 +118,9 @@
 
 ### 图标组
 
-:::demo 常用图标组使用场景
+常用图标组使用场景
+
+:::demo
 
 ```vue
 <template>

@@ -6,36 +6,36 @@ Reading notification component.
 
 When you need to prompt for specific content in the html document.
 
-
 ### Basic Usage
+
 Set selector to select the element to be displayed in the readtip, and transfer title and content to set the content to be displayed.
-:::demo 
+:::demo
 
 ```vue
 <template>
-  <d-read-tip :readTipOptions="readTipOptions" >
+  <d-read-tip :readTipOptions="readTipOptions">
     <h1>Let's see how to use ReadTip</h1>
     <p class="readtip-content">Set selector to display readtip</p>
     <p>The following is the target you want to show readtip</p>
     <span class="readtip-target">@Jack</span>
-  </d-read-tip >
+  </d-read-tip>
 </template>
 
 <script setup>
-const readTipOptions =  {
+const readTipOptions = {
+  trigger: 'hover',
+  rules: {
     trigger: 'hover',
-    rules: {
-      trigger: 'hover',
-      position:'top',
-      selector: '.readtip-target',
-      title: 'Name: Jack',
-      content: 'This is Jack\'s profile',
-    },
-  };
+    position: 'top',
+    selector: '.readtip-target',
+    title: 'Name: Jack',
+    content: "This is Jack's profile",
+  },
+};
 </script>
 
 <style>
-.source{
+.source {
   overflow: visible;
 }
 .readtip-container {
@@ -51,73 +51,72 @@ const readTipOptions =  {
 .readtip-target:hover {
   text-decoration: underline;
 }
-
 </style>
 ```
 
 :::
 
 ### Include Multiple Readtip
+
 Set the readtip display mode for different elements when multiple rules are transferred.
-:::demo 
+:::demo
 
 ```vue
 <template>
-  <d-read-tip :readTipOptions="readTipOptions" >
+  <d-read-tip :readTipOptions="readTipOptions">
     <h1>Multiple Readtips</h1>
     <h2 class="introduction">You can pass in multiple rules to display different readtips</h2>
     <p class="first-content">Click here to display first content</p>
     <p class="second-content">Click here to display second content</p>
     <h3 class="third-content">Hover here to display third content</h3>
     <h3 class="third-content">Hover here to display third content</h3>
-  </d-read-tip >
+  </d-read-tip>
 </template>
 
 <script setup>
-const readTipOptions =  {
-    trigger: 'click',
-    showAnimate: false,
-    mouseenterTime: 100,
-    mouseleaveTime: 100,
-    position: 'top',
-    overlayClassName: 'read-tip-container',
-    appendToBody: false,
-    rules: [
-      {
-        selector: '.first-content',
-        position: 'top',
-        title: 'This Is the First Title',
-        content: 'Lorem ipsum dolor sit amet, consectetur ad.',
-        overlayClassName:'red',
-      },
-      {
-        selector: '.second-content',
-        position: 'left',
-        title: 'This Is the Second Title',
-        content: 'Class aptent taciti sociosqu ad litora torquent per conubia nostra',
-        overlayClassName:'red',
-      },
-      {
-        trigger: 'hover',
-        selector: '.third-content',
-        position: 'bottom',
-        title: 'This Is the Third Title',
-        content: 'Aenean libero urna, scelerisque tincidunt',
-      }, 
-      {
-        trigger: 'hover',
-        selector: '.four-content',
-        position: 'right',
-        title: 'This Is the Third Title',
-        content: 'Aenean libero urna, scelerisque tincidunt',
-      },
-    ],
-  };
-
+const readTipOptions = {
+  trigger: 'click',
+  showAnimate: false,
+  mouseenterTime: 100,
+  mouseleaveTime: 100,
+  position: 'top',
+  overlayClassName: 'read-tip-container',
+  appendToBody: false,
+  rules: [
+    {
+      selector: '.first-content',
+      position: 'top',
+      title: 'This Is the First Title',
+      content: 'Lorem ipsum dolor sit amet, consectetur ad.',
+      overlayClassName: 'red',
+    },
+    {
+      selector: '.second-content',
+      position: 'left',
+      title: 'This Is the Second Title',
+      content: 'Class aptent taciti sociosqu ad litora torquent per conubia nostra',
+      overlayClassName: 'red',
+    },
+    {
+      trigger: 'hover',
+      selector: '.third-content',
+      position: 'bottom',
+      title: 'This Is the Third Title',
+      content: 'Aenean libero urna, scelerisque tincidunt',
+    },
+    {
+      trigger: 'hover',
+      selector: '.four-content',
+      position: 'right',
+      title: 'This Is the Third Title',
+      content: 'Aenean libero urna, scelerisque tincidunt',
+    },
+  ],
+};
 </script>
 
 <style>
-.source{
+.source {
   overflow: visible;
 }
 .readtip-container {
@@ -150,23 +149,21 @@ const readTipOptions =  {
 }
 
 .red {
-  color: red
+  color: red;
 }
 </style>
 ```
 
 :::
 
-
-
-
 ### Display Content with Template
+
 You can specify the content to be displayed by importing template. When importing template, you do not need to specify title and content.
-:::demo 
+:::demo
 
 ```vue
 <template>
-  <d-read-tip :readTipOptions="readTipOptions" >
+  <d-read-tip :readTipOptions="readTipOptions">
     <h1>You can also pass in template</h1>
     <p class="readtip-content">Write your own template</p>
     <p>The following is the target you want to show readtip</p>
@@ -177,42 +174,33 @@ You can specify the content to be displayed by importing template. When importin
         <template #cardAvatar>
           <d-avatar name="DevUI"></d-avatar>
         </template>
-        <template #cardTitle>
-          DEVUI Course
-        </template>
-        <template #cardSubtitle class="read-tip-demo-icon">
-          <d-icon name="company-member"></d-icon><span>DevUI</span>
-        </template>
+        <template #cardTitle> DEVUI Course </template>
+        <template #cardSubtitle class="read-tip-demo-icon"> <d-icon name="company-member"></d-icon><span>DevUI</span> </template>
         <template #cardContent>
-          DEVUI is a free open-source and common solution for the front end of enterprise mid- and back-end products. Its design values are basedon...
+          DEVUI is a free open-source and common solution for the front end of enterprise mid- and back-end products. Its design values are
+          basedon...
         </template>
         <template #cardActions>
-          <div class="card-block">
-            <d-icon name="like"></d-icon ><span>12</span>
-          </div>
-          <div class="card-block">
-            <d-icon name="star-o"></d-icon ><span>8</span>
-          </div>
-          <div class="card-block">
-            <d-icon name="message"></d-icon ><span>8</span>
-          </div>
+          <div class="card-block"><d-icon name="like"></d-icon><span>12</span></div>
+          <div class="card-block"><d-icon name="star-o"></d-icon><span>8</span></div>
+          <div class="card-block"><d-icon name="message"></d-icon><span>8</span></div>
         </template>
-      </d-card>  
+      </d-card>
     </template>
-  </d-read-tip >
+  </d-read-tip>
 </template>
 
 <script setup>
-const readTipOptions =  {
-    trigger: 'click',    
-    rules: {
-      trigger: 'click',
-      position:'top',
-      selector: '.readtip-target2',
-      title: 'Name: Jack',
-      content: 'This is Jack\'s profile',
-    },
-  };
+const readTipOptions = {
+  trigger: 'click',
+  rules: {
+    trigger: 'click',
+    position: 'top',
+    selector: '.readtip-target2',
+    title: 'Name: Jack',
+    content: "This is Jack's profile",
+  },
+};
 </script>
 
 <style lang="scss">
@@ -227,7 +215,7 @@ const readTipOptions =  {
 }
 .card-block {
   margin-right: 16px;
-  i{
+  i {
     cursor: pointer;
     font-size: 16px;
     margin-right: 8px;
@@ -239,11 +227,9 @@ const readTipOptions =  {
 }
 .d-card {
   cursor: pointer;
-  transition:
-    box-shadow .3s cubic-bezier(.645,.045,.355,1),
-    transform .3s cubic-bezier(.645,.045,.355,1);
+  transition: box-shadow 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   &:hover {
-    box-shadow: 0 4px 16px 0 rgba(0,0,0,.1);
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);
     transform: translateY(-5px);
   }
 }
@@ -260,30 +246,31 @@ const readTipOptions =  {
 
 ### Get Data Asynchronous
 
-:::demo 
+:::demo
 
 ```vue
 <template>
-  <d-read-tip :readTipOptions="readTipOptions" >
+  <d-read-tip :readTipOptions="readTipOptions">
     <h1>You can pass data asynchronously</h1>
-  <p class="readtip-content">Using function fullElement to pass data</p>
-  <p>The following is the target you want to show readtip</p>
-  <h4 class="readtip-target">Display readtip</h4>
+    <p class="readtip-content">Using function fullElement to pass data</p>
+    <p>The following is the target you want to show readtip</p>
+    <h4 class="readtip-target">Display readtip</h4>
   </d-read-tip>
 </template>
 
 <script setup>
-const readTipOptions =   {
+const readTipOptions = {
+  trigger: 'click',
+  rules: {
+    selector: 'h4',
     trigger: 'click',
-    rules: { 
-      selector: 'h4',
-      trigger: 'click', 
-      dataFn: getDataFromDB,
-      key: 'GetData' },
-  };
-function getDataFromDB ({ element, rule }) {
-    return { content: element.innerHTML, title: rule.key }
-  }
+    dataFn: getDataFromDB,
+    key: 'GetData',
+  },
+};
+function getDataFromDB({ element, rule }) {
+  return { content: element.innerHTML, title: rule.key };
+}
 </script>
 
 <style>
@@ -301,7 +288,7 @@ function getDataFromDB ({ element, rule }) {
   text-decoration: underline;
 }
 .red {
-  color: red
+  color: red;
 }
 </style>
 ```
@@ -312,13 +299,11 @@ function getDataFromDB ({ element, rule }) {
 
 d-read-tip parameters
 
-| Parameter                 | Parameter               | Parameter | Parameter                            | Jump to Demo             | 	Global Config |
-| -------------------- | ------------------ | ---- | ------------------------------- | ---------------------- | ---------- |
-| readTipOptions       | ReadTipOptions     | --   | Required. Set readtip options.             | [Basic Usage](#basic-usage)               | --         |
-| readTipOptions.rules | ReadTipRules       | --   | 	Option. Set the content of readtip         |  [Include Multiple Readtip](#include-multiple-readtip) | --         |
-| contentTemplate      | `TemplateRef<any>` | --   | Options. Using template to customize content |  [Display Content with Template](#display-content-with-template)      | --         |
-
-
+| Parameter            | Parameter          | Parameter | Parameter                                    | Jump to Demo                                                    | Global Config |
+| -------------------- | ------------------ | --------- | -------------------------------------------- | --------------------------------------------------------------- | ------------- |
+| readTipOptions       | ReadTipOptions     | --        | Required. Set readtip options.               | [Basic Usage](#basic-usage)                                     | --            |
+| readTipOptions.rules | ReadTipRules       | --        | Option. Set the content of readtip           | [Include Multiple Readtip](#include-multiple-readtip)           | --            |
+| contentTemplate      | `TemplateRef<any>` | --        | Options. Using template to customize content | [Display Content with Template](#display-content-with-template) | --            |
 
 ```
 export interface ReadTipOptions {
@@ -352,4 +337,3 @@ export interface ReadTipRule {
   }) => Observable<{ title?: string; content?: string; template?: TemplateRef<any>; customData?: any }>;
 }
 ```
-

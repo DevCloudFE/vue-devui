@@ -195,7 +195,9 @@ export default {
 
 ### 任意区域上传
 
-:::demo 用户可通过默认 slot 支持文件任意区域上传。
+用户可通过默认 slot 支持文件任意区域上传。
+
+:::demo
 
 ```vue
 <template>

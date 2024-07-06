@@ -78,7 +78,9 @@
 
 ### 禁用状态
 
-:::demo 通过`disabled`参数设置按钮禁用状态。
+通过`disabled`参数设置按钮禁用状态。
+
+:::demo
 
 ```vue
 <template>
