@@ -1,9 +1,11 @@
 import hljs from 'highlight.js';
 import MarkdownIt from 'markdown-it';
-import { filterXSS, getDefaultCSSWhiteList, getDefaultWhiteList, IWhiteList } from 'xss';
+import pkg from 'xss';
 import { mermaidRender, refreshMermaid } from '../plugins/mermaid';
 import tocAndAnchor from '../plugins/toc';
 import type { MdPlugin, ICustomXssRule, ICustomRenderRule } from '../editor-md-types';
+
+const { filterXSS, getDefaultWhiteList, getDefaultCSSWhiteList, IWhiteList } = pkg;
 
 export class MDRenderService {
   private xssWhiteList = getDefaultWhiteList();
@@ -19,7 +21,7 @@ export class MDRenderService {
       }
       return '';
     },
-  }) as any;
+  });
   private baseUrl = '';
   private breaks = true;
   private renderParse: Function | undefined;
@@ -50,27 +52,27 @@ export class MDRenderService {
     this.xssWhiteList['td'] = ['style'];
   }
 
-  setBaseUrl(url: string) {
+  setBaseUrl(url: string): void {
     this.baseUrl = url;
   }
 
-  setBreaks(breaks: boolean) {
+  setBreaks(breaks: boolean): void {
     this.breaks = breaks;
   }
 
-  setRenderParse(func: Function) {
+  setRenderParse(func: Function): void {
     this.renderParse = func;
   }
 
-  getXssWhiteList() {
+  getXssWhiteList(): IWhiteList {
     return this.xssWhiteList;
   }
 
-  setXssWhiteList(list: IWhiteList) {
+  setXssWhiteList(list: IWhiteList): void {
     this.xssWhiteList = list;
   }
 
-  setCustomXssRules(rules: ICustomXssRule[]) {
+  setCustomXssRules(rules: ICustomXssRule[]): void {
     if (rules) {
       rules.forEach((rule) => {
         if (rule['value'] === null) {
@@ -82,7 +84,7 @@ export class MDRenderService {
     }
   }
 
-  setCustomRendererRules(rules: ICustomRenderRule[]) {
+  setCustomRendererRules(rules: ICustomRenderRule[]): void {
     if (rules) {
       rules.forEach((rule) => {
         this.mdt.renderer.rules[rule['key']] = rule['value'];
@@ -90,11 +92,11 @@ export class MDRenderService {
     }
   }
 
-  setOptions(options = {}) {
+  setOptions(options = {}): void {
     this.mdt.set(options);
   }
 
-  setPlugins(plugins: Array<MdPlugin>) {
+  setPlugins(plugins: Array<MdPlugin>): void {
     plugins.forEach((item) => {
       const { plugin, opts } = item;
       this.mdt.use(plugin, opts);
@@ -125,7 +127,7 @@ export class MDRenderService {
     });
   }
 
-  generateHTML(text: string) {
+  generateHTML(text: string): string {
     this.mdt.set({
       breaks: this.breaks,
     });
@@ -156,7 +158,7 @@ export class MDRenderService {
     return this.replaceInternalUrl(html);
   }
 
-  public setRules(mdRules: Record<string, any>): void {
+  public setRules(mdRules: Record<string, unknown>): void {
     if (mdRules) {
       Object.keys(mdRules).forEach((rule) => {
         this.mdt[rule].set(mdRules[rule]);
