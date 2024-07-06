@@ -297,7 +297,8 @@ div[class~='language-vue']::before {
   color: green;
 }
 
-// Remove default language marker
-.lang {
+// Remove default language marker and copy button
+.lang,
+.copy {
   display: none;
 }
