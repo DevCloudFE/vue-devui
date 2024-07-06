@@ -17,6 +17,9 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lodash-es', 'mitt', 'async-validator', 'css-vars-ponyfill', 'rxjs', '@vueuse/core', '@floating-ui/dom', 'vue-router'],
   },
+  ssr: {
+    noExternal: ['echarts']
+  },
   server: {
     open: '/site.html',
     fs: {

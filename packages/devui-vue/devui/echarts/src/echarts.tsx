@@ -1,9 +1,7 @@
-import { defineComponent, onMounted, onUnmounted, ref } from "vue";
-import { DevuiChartProps, devuiChartProps } from "./echarts-types";
-import * as echarts from 'echarts';
-import { DEVUI_ECHART_THEME } from "./echarts-theme";
-import { toRefs } from "@vueuse/core";
-
+import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
+import { DevuiChartProps, devuiChartProps } from './echarts-types';
+import { DEVUI_ECHART_THEME } from './echarts-theme';
+import { toRefs } from '@vueuse/core';
 
 export default defineComponent({
   name: 'DChart',
@@ -18,6 +16,12 @@ export default defineComponent({
     let timer: NodeJS.Timeout;
 
     const chartRef = ref();
+
+    // dynamic import echarts
+    let echarts: unknown;
+    if (typeof window !== 'undefined') {
+      echarts = import('echarts');
+    }
 
     const themeChange = () => {
       isDark = !!themeService?.currentTheme?.isDark;
@@ -44,7 +48,7 @@ export default defineComponent({
       theme = isDark ? DEVUI_ECHART_THEME.defaultDarkTheme : DEVUI_ECHART_THEME.defaultLightTheme;
       echartInstacne = echarts.init(chartRef.value, theme);
 
-      if(themeService) {
+      if (themeService) {
         themeService.eventBus.add('themeChanged', themeChange);
       }
 
@@ -56,14 +60,12 @@ export default defineComponent({
 
     onUnmounted(() => {
       echartInstacne?.dispatchAction({
-        type: 'hideTip'
+        type: 'hideTip',
       });
 
       themeService.eventBus.remove('themeChanged', themeChange);
     });
 
-    return () => (
-      <div ref={chartRef} class="devui-charts"></div>
-    );
-  }
+    return () => <div ref={chartRef} class="devui-charts"></div>;
+  },
 });
