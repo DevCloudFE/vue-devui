@@ -266,7 +266,7 @@ class ToolBarHandler {
   };
 
   static table = (editor: any) => {
-    const table = `|  |  |  |\n|--|--|--|\n|  |  |  |`;
+    const table = `\n|  |  |  |\n|--|--|--|\n|  |  |  |`;
     editor.replaceSelection(table);
   };
 
