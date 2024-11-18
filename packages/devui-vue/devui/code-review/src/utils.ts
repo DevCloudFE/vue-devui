@@ -165,6 +165,7 @@ export function parseDiffCode(container: HTMLElement, code: string, outputFormat
     matching: 'lines',
     outputFormat: outputFormat,
     highlight: true,
+    diffStyle: 'char',
     rawTemplates: TemplateMap[outputFormat],
   });
   if (outputFormat === 'side-by-side') {

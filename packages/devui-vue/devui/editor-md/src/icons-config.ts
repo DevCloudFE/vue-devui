@@ -54,14 +54,9 @@ export const STRIKE_ICON = `<svg width="16px" height="16px" viewBox="0 0 16 16">
 </g>
 </svg>`;
 
-export const COLOR_ICON = `<svg width="16px" height="16px" viewBox="0 0 16 16">
-<g id="edit-icon/background-color" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-    <g fill="#293040">
-        <g>
-            <path d="M10.4761905,8 L5.52380952,8 L4,12 L3,12 L7.5,-3.84581256e-13 L8.5,-3.84581256e-13 L13,12 L12,12 L10.4761905,8 L10.4761905,8 Z M10.0952381,7 L8,1.5 L5.9047619,7 L10.0952381,7 Z M2,14 L14,14 L14,16 L2,16 L2,14 Z" id="形状"></path>
-        </g>
-    </g>
-</g>
+export const COLOR_ICON = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.05597 9.5L4.05895 12H2.94092L7.55273 0.776367H8.44716L13.059 12H11.9409L10.9439 9.5H5.05597ZM5.45477 8.5H10.5451L7.99995 2.11801L5.45477 8.5Z" fill="#3B3E55"/>
+    <path d="M1 13H15V16H1V13Z" fill="#3B3E55"/>
 </svg>`;
 
 export const BACKGROUND_COLOR_ICON = `<svg width="16px" height="16px" viewBox="0 0 16 16">
