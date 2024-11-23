@@ -338,6 +338,13 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     }
   };
 
+  const clearCheckedLines = () => {
+    currentLeftLineNumbers = [];
+    currentRightLineNumbers = [];
+    checkedLineCodeString = [];
+    resetCommentClass();
+  };
+
   const mouseEvent = allowComment.value ? { onMousemove: onMouseMove, onMouseleave: onMouseleave } : {};
 
   window.addEventListener('scroll', resetLeftTop);
@@ -353,6 +360,7 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     // currentLeftLineNumbers,
     // currentRightLineNumbers,
     updateCheckedLineClass,
+    clearCheckedLines,
     onCommentMouseLeave,
     onCommentIconClick,
     onCommentKeyDown,

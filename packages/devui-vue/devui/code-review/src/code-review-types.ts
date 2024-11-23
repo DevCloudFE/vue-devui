@@ -58,6 +58,10 @@ export const codeReviewProps = {
   expandLoader: {
     type: Function as PropType<(interval: Array<number | undefined>, update: (code: string) => void) => void>,
   },
+  options: {
+    type: Object as PropType<Record<string, any>>,
+    default: () => ({}),
+  },
 };
 export type CodeReviewProps = ExtractPropTypes<typeof codeReviewProps>;
 
