@@ -8,7 +8,9 @@ The badge is appeared at the upper right corner of the icon or the right of a li
 
 ### Basic Badge
 
-::: demo Basic badge type. When there is a package element, the badge and number are displayed in the upper right corner.
+Basic badge type. When there is a package element, the badge and number are displayed in the upper right corner.
+
+::: demo
 
 ```vue
 <template>
@@ -34,7 +36,9 @@ The badge is appeared at the upper right corner of the icon or the right of a li
 
 ### Dotted Badge
 
-:::demo Point badge type. When there is a package element and `show-dot` is set to true, the dot is displayed in the upper right corner by default.
+Point badge type. When there is a package element and `show-dot` is set to true, the dot is displayed in the upper right corner by default.
+
+:::demo
 
 ```vue
 <template>
@@ -63,7 +67,9 @@ The badge is appeared at the upper right corner of the icon or the right of a li
 
 ### Count Badge
 
-:::demo When the badge is used independently and does not enclose any elements, only the badge status color and number are displayed.
+When the badge is used independently and does not enclose any elements, only the badge status color and number are displayed.
+
+:::demo
 
 ```vue
 <template>
@@ -99,7 +105,9 @@ The badge is appeared at the upper right corner of the icon or the right of a li
 
 ### Status Badge
 
-:::demo When the badge is used independently, does not contain any elements, and the `show-dot` parameter is set to true, the badge is a status badge. Different color dots are displayed for different statuses.
+When the badge is used independently, does not contain any elements, and the `show-dot` parameter is set to true, the badge is a status badge. Different color dots are displayed for different statuses.
+
+:::demo
 
 ```vue
 <template>
@@ -125,7 +133,9 @@ The badge is appeared at the upper right corner of the icon or the right of a li
 
 ### Badge Position
 
-:::demo Set badgePos to set the badge position.
+Set badgePos to set the badge position.
+
+:::demo
 
 ```vue
 <template>
@@ -144,7 +154,9 @@ The badge is appeared at the upper right corner of the icon or the right of a li
 
 ### Custom
 
-:::demo The bgColor parameter is used to set the badge status color (the badge status color specified by status is invalid). The offsetXY parameter is used to set the badge offset relative to the badgePos.Customizing text and background colors using textColor and bgColor.
+The bgColor parameter is used to set the badge status color (the badge status color specified by status is invalid). The offsetXY parameter is used to set the badge offset relative to the badgePos.Customizing text and background colors using textColor and bgColor.
+
+:::demo
 
 ```vue
 <template>
@@ -164,15 +176,15 @@ The badge is appeared at the upper right corner of the icon or the right of a li
 
 ### d-badge Parameter
 
-| Parameter       | Type                | Default        | Description                                                                                                                   |
-| ---------- | ------------------- | ----------- | :--------------------------------------------------------------------------------------------------------------------- |
-| count      | `Number`            | --          | Optional. Set the number of basic badges to be displayed.                                                                     |
-| max-count  | `Number`            | 99          | Optional. Sets the maximum number of basic and counting badges that can be displayed.When count is greater than maxCount, maxCount+ is displayed.                                  |
-| show-dot   | `Boolean`           | false       | Optional. The value true indicates the dot badge (with package) or status badge (without package). The value false indicates the basic badge (with package) or count badge (without package).                        |
-| status     | `BadgeStatusType`   | --          | Optional. The status color is danger\| warning \| waiting \| success \| info.	                                                            |
-| position   | `BadgePositionType` | 'top-right' | Optional. The logo position is top-left\| top-right \| bottom-left \| bottom-right                                                      |
-| bg-color   | `String`            | --          | Optional. The badge color can be customized. In this case, the badge status color specified by status is invalid.                                                               |
-| text-color | `String`            | --          | Optional. You can customize the logo text color.                                                                                           |
+| Parameter  | Type                | Default     | Description                                                                                                                                                                                                            |
+| ---------- | ------------------- | ----------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| count      | `Number`            | --          | Optional. Set the number of basic badges to be displayed.                                                                                                                                                              |
+| max-count  | `Number`            | 99          | Optional. Sets the maximum number of basic and counting badges that can be displayed.When count is greater than maxCount, maxCount+ is displayed.                                                                      |
+| show-dot   | `Boolean`           | false       | Optional. The value true indicates the dot badge (with package) or status badge (without package). The value false indicates the basic badge (with package) or count badge (without package).                          |
+| status     | `BadgeStatusType`   | --          | Optional. The status color is danger\| warning \| waiting \| success \| info.                                                                                                                                          |
+| position   | `BadgePositionType` | 'top-right' | Optional. The logo position is top-left\| top-right \| bottom-left \| bottom-right                                                                                                                                     |
+| bg-color   | `String`            | --          | Optional. The badge color can be customized. In this case, the badge status color specified by status is invalid.                                                                                                      |
+| text-color | `String`            | --          | Optional. You can customize the logo text color.                                                                                                                                                                       |
 | offset     | `[number, number]`  | --          | Optional. Indicates the logo position offset when there is a package. The format is [x,y], in px. This parameter is optional. x is the relative right offset (right: -x px), y is the relative top offset (top: y px). |
 
 ### BadgeStatusType

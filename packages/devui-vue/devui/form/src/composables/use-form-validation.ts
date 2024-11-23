@@ -1,4 +1,4 @@
-import { castArray } from 'lodash';
+import { castArray } from 'lodash-es';
 import type { ValidateFieldsError } from 'async-validator';
 import { UseFormValidation } from '../form-types';
 import { FormItemContext, FormValidateCallback, FormValidateResult } from '../components/form-item/form-item-types';

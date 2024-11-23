@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "lodash-es";
 import { CommitInfo, GitGraphData } from "./git-graph-types";
 
 export class GitGraph {
