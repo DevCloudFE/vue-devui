@@ -58,7 +58,12 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     attachExpandUpDownButton(loadMoreLine.children[0] as HTMLElement, 'down');
   };
 
-  const insertIncrementCodeForDoubleColumn = (code: string, direction: 'up' | 'down', referenceDom: HTMLElement | null | undefined) => {
+  const insertIncrementCodeForDoubleColumn = (
+    code: string,
+    direction: 'up' | 'down',
+    referenceDom: HTMLElement | null | undefined,
+    options: Record<string, any>
+  ) => {
     if (!referenceDom) {
       return;
     }
@@ -69,7 +74,7 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     const prefix = '--- updated_at\tJan 1, 2019, 0:0:0 AM\n+++ updated_at\tJan 1, 2019, 0:0:0 AM\n';
     const container = document.createElement('div');
     // 解析code
-    parseDiffCode(container, prefix + code, outputFormat.value, true);
+    parseDiffCode(container, prefix + code, outputFormat.value, options, true);
 
     const trNodes = Array.from(container.querySelectorAll('tr'));
     const expandLine = trNodes.find((element) => (element.children[1] as HTMLElement)?.innerText.trim().match(ExpandLineReg));
@@ -158,7 +163,12 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     attachExpandUpDownButton(loadMoreLine.children[0] as HTMLElement, 'down');
   };
 
-  const insertIncrementCode = (code: string, direction: 'up' | 'down', referenceDom: HTMLElement | null | undefined) => {
+  const insertIncrementCode = (
+    code: string,
+    direction: 'up' | 'down',
+    referenceDom: HTMLElement | null | undefined,
+    options: Record<string, any>
+  ) => {
     if (!referenceDom) {
       return;
     }
@@ -169,7 +179,7 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     const prefix = '--- updated_at\tJan 1, 2019, 0:0:0 AM\n+++ updated_at\tJan 1, 2019, 0:0:0 AM\n';
     const container = document.createElement('div');
     // 解析code
-    parseDiffCode(container, prefix + code, outputFormat.value, true);
+    parseDiffCode(container, prefix + code, outputFormat.value, options, true);
 
     const trNodes = Array.from(container.querySelectorAll('tr'));
     const expandLine = trNodes.find((element) => (element.children[1] as HTMLElement)?.innerText.trim().match(ExpandLineReg));
@@ -213,7 +223,7 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     }
   };
 
-  const onExpandButtonClick = (e: Event) => {
+  const onExpandButtonClick = (e: Event, options: Record<string, any>) => {
     const composedPath = e.composedPath() as HTMLElement[];
     const expandIconDom = composedPath.find((element) => element.classList?.contains('expand-icon'));
     if (expandIconDom) {
@@ -224,8 +234,8 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
       const [leftLineStart, leftLineEnd, rightLineStart, rightLineEnd] = getLineNumberFromDataset(expandIconDom, expandThreshold.value);
       expandLoader?.value?.([leftLineStart, leftLineEnd, rightLineStart, rightLineEnd], (code: string) => {
         outputFormat.value === 'line-by-line'
-          ? insertIncrementCode(code, direction, expandIconDom.parentElement?.parentElement)
-          : insertIncrementCodeForDoubleColumn(code, direction, expandIconDom.parentElement?.parentElement);
+          ? insertIncrementCode(code, direction, expandIconDom.parentElement?.parentElement, options)
+          : insertIncrementCodeForDoubleColumn(code, direction, expandIconDom.parentElement?.parentElement, options);
       });
     }
   };
