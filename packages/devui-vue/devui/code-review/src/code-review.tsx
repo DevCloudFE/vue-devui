@@ -24,10 +24,10 @@ export default defineComponent({
       mouseEvent, onCommentMouseLeave,
       onCommentIconClick, onCommentKeyDown,
       unCommentKeyDown, insertComment,
-      removeComment, updateCheckedLineClass } = useCodeReviewComment(reviewContentRef, props, ctx);
+      removeComment, updateCheckedLineClass, clearCheckedLines } = useCodeReviewComment(reviewContentRef, props, ctx);
 
     onMounted(() => {
-      ctx.emit('afterViewInit', { toggleFold, insertComment, removeComment, updateCheckedLineClass });
+      ctx.emit('afterViewInit', { toggleFold, insertComment, removeComment, updateCheckedLineClass, clearCheckedLines });
       onCommentKeyDown();
     });
     // 销毁

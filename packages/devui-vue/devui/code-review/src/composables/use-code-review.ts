@@ -18,7 +18,7 @@ export function useCodeReview(props: CodeReviewProps, ctx: SetupContext) {
     diffFile.value = Diff2Html.parse(diff.value);
     nextTick(() => {
       if (inBrowser && !showBlob.value) {
-        parseDiffCode(reviewContentRef.value, diff.value, outputFormat.value);
+        parseDiffCode(reviewContentRef.value, diff.value, outputFormat.value, props.options);
         allowExpand.value && insertExpandButton();
         ctx.emit('contentRefresh', JSON.parse(JSON.stringify(diffFile.value)));
       }
@@ -26,7 +26,7 @@ export function useCodeReview(props: CodeReviewProps, ctx: SetupContext) {
   };
 
   const onContentClick = (e: Event) => {
-    onExpandButtonClick(e);
+    onExpandButtonClick(e, props.options);
   };
 
   watch(showBlob, initDiffContent);

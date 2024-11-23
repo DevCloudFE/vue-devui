@@ -587,6 +587,7 @@ export default defineComponent({
 | allow-expand     | `boolean`                                                           | true           | 可选，是否支持展开非 diff 折叠代码                                                 |
 | expand-threshold | `number`                                                            | 50             | 可选，展开所有代码行的阈值，低于此阈值全部展开，高于此阈值分向上和向下两个操作展开 |
 | expand-loader    | `(interval: Array<number>, update: (code: string) => void) => void` | --             | 可选，展开代码回调函数，interval 为展开边界，获取展开代码后，执行 update 更新视图  |
+|options|`object`|{}|可选，传给`diff2html`的配置项|
 
 ### CodeReview 事件
 
@@ -667,5 +668,8 @@ interface CodeReviewMethods {
 
   // 更新选中行样式，直接调用一般用于展开时更新选中行样式，像示例中一样使用
   updateCheckedLineClass: ();
+
+  // 清除选中行样式
+  clearCheckedLines: () => void;
 }
 ```

@@ -159,14 +159,20 @@ function addClassToDiffCode(codeStrArr: RegExpMatchArray | null, theClassName: s
 }
 
 // 解析diff
-export function parseDiffCode(container: HTMLElement, code: string, outputFormat: OutputFormat, isAddCode = false) {
+export function parseDiffCode(
+  container: HTMLElement,
+  code: string,
+  outputFormat: OutputFormat,
+  options: Record<string, any>,
+  isAddCode = false
+) {
   const diff2HtmlUi = new Diff2HtmlUI(container, code, {
     drawFileList: false,
     matching: 'lines',
     outputFormat: outputFormat,
     highlight: true,
-    diffStyle: 'char',
     rawTemplates: TemplateMap[outputFormat],
+    ...options,
   });
   if (outputFormat === 'side-by-side') {
     let diffHtmlStr = diff2HtmlUi.diffHtml;
