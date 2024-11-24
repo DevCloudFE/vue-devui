@@ -517,3 +517,14 @@ export function findReferenceDomForDoubleColumn(parentNode: HTMLElement, lineNum
     }
   }
 }
+
+/* 多行选中，根据当前dom节点，向上寻找tr节点 */
+export function findParentTrNode(node: HTMLElement | null) {
+  if (!node) {
+    return null;
+  }
+  if (node.tagName === 'TR') {
+    return node;
+  }
+  return findParentTrNode(node.parentElement);
+}
