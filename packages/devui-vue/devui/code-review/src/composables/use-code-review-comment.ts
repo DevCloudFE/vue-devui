@@ -14,7 +14,7 @@ import {
 export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: CodeReviewProps, ctx: SetupContext) {
   const { outputFormat, allowComment, allowChecked } = toRefs(props);
   const ns = useNamespace('code-review');
-  const { onMousedown } = useCodeReviewLineSelection(reviewContentRef, props, updateLineNumbers, updateLineNumbers, afterCheckLines);
+  const { onMousedown } = useCodeReviewLineSelection(reviewContentRef, props, updateLineNumbers, afterCheckLines);
   const commentLeft = ref(-100);
   const commentTop = ref(-100);
   let currentLeftLineNumber = -1;

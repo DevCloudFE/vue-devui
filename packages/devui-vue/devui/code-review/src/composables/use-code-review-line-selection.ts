@@ -6,7 +6,6 @@ import { findParentTrNode } from '../utils';
 export function useCodeReviewLineSelection(
   reviewContentRef: Ref<HTMLElement>,
   props: CodeReviewProps,
-  mouseDownCb: () => void,
   mouseMoveCb: () => void,
   mouseupCb: () => void
 ) {
@@ -45,7 +44,6 @@ export function useCodeReviewLineSelection(
       dragging = true;
       shouldClear = true;
       isMouseMoved = false;
-      mouseDownCb();
       e.preventDefault();
       e.stopPropagation();
       document.addEventListener('mousemove', onMousemove);
