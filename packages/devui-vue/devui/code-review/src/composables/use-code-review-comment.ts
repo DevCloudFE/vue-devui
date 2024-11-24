@@ -14,7 +14,7 @@ import {
 export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: CodeReviewProps, ctx: SetupContext) {
   const { outputFormat, allowComment, allowChecked } = toRefs(props);
   const ns = useNamespace('code-review');
-  const { onMousedown } = useCodeReviewLineSelection(reviewContentRef, props, updateLineNumbers, updateLineNumbers);
+  const { onMousedown } = useCodeReviewLineSelection(reviewContentRef, props, updateLineNumbers, updateLineNumbers, afterCheckLines);
   const commentLeft = ref(-100);
   const commentTop = ref(-100);
   let currentLeftLineNumber = -1;
@@ -24,6 +24,8 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
   let currentLeftLineNumbers: Array<number> = [];
   let currentRightLineNumbers: Array<number> = [];
   let checkedLineCodeString: Array<string> | Record<string, Array<string>> = {};
+  let allTrNodes: NodeListOf<Element> = [];
+  let afterCheckLinesEmitData: Record<string, any>;
   watch(
     () => outputFormat.value,
     () => {
@@ -137,11 +139,9 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
   };
   // 获取一些公共类和判断
   const getCommonClassAndJudge = () => {
-    const lineClassName = props.outputFormat === 'line-by-line' ? '.d2h-code-linenumber' : '.d2h-code-side-linenumber';
-    const linenumberDom = reviewContentRef.value.querySelectorAll(lineClassName);
     const checkedLine = [currentLeftLineNumbers, currentRightLineNumbers];
     return {
-      linenumberDom,
+      linenumberDom: allTrNodes,
       checkedLine,
     };
   };
@@ -217,6 +217,15 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     currentRightLineNumbers =
       currentRightLineNumber === -1 ? currentRightLineNumbers : getLineNumbers(currentRightLineNumber, currentRightLineNumbers);
     getCheckedLineCode(false);
+    afterCheckLinesEmitData = {
+      left: currentLeftLineNumber,
+      right: currentRightLineNumber,
+      details: {
+        lefts: currentLeftLineNumbers,
+        rights: currentRightLineNumbers,
+        codes: checkedLineCodeString,
+      },
+    };
   }
   const updateCheckedLineClass = () => {
     getCheckedLineCode(true);
@@ -266,6 +275,9 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     // 点击添加评论图标触发的事件
     ctx.emit('addComment', obj);
   };
+  function afterCheckLines() {
+    ctx.emit('afterCheckLines', afterCheckLinesEmitData);
+  }
   // 图标或者单行的点击
   const onCommentIconClick = (e: Event) => {
     if (e) {
@@ -327,13 +339,19 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     resetCommentClass();
   };
 
+  const handleMouseDown = (e: MouseEvent) => {
+    const lineClassName = props.outputFormat === 'line-by-line' ? '.d2h-code-linenumber' : '.d2h-code-side-linenumber';
+    allTrNodes = reviewContentRef.value.querySelectorAll(lineClassName);
+    onMousedown(e);
+  };
+
   const mouseEvent: Record<string, (e: MouseEvent) => void> = {};
   if (allowComment.value) {
     mouseEvent.onMousemove = onMouseMove;
     mouseEvent.onMouseleave = onMouseleave;
   }
   if (props.allowChecked) {
-    mouseEvent.onMousedown = onMousedown;
+    mouseEvent.onMousedown = handleMouseDown;
   }
 
   window.addEventListener('scroll', resetLeftTop);

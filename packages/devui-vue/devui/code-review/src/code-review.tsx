@@ -14,7 +14,7 @@ import './code-review.scss';
 export default defineComponent({
   name: 'DCodeReview',
   props: codeReviewProps,
-  emits: ['foldChange', 'addComment', 'afterViewInit', 'contentRefresh'],
+  emits: ['foldChange', 'addComment', 'afterViewInit', 'contentRefresh', 'afterCheckLines'],
   setup(props: CodeReviewProps, ctx: SetupContext) {
     const ns = useNamespace('code-review');
     const { diffType } = toRefs(props);

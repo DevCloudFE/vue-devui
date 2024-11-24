@@ -7,6 +7,7 @@ export function useCodeReviewLineSelection(
   reviewContentRef: Ref<HTMLElement>,
   props: CodeReviewProps,
   mouseDownCb: () => void,
+  mouseMoveCb: () => void,
   mouseupCb: () => void
 ) {
   const ns = useNamespace('code-review');
@@ -14,6 +15,7 @@ export function useCodeReviewLineSelection(
   let startTrNode: HTMLElement;
   let trNodes: HTMLElement[];
   let isClickedLeft: boolean | undefined;
+  let shouldClear: boolean;
   let isMouseMoved: boolean;
 
   const onMousedown = (e: MouseEvent) => {
@@ -41,6 +43,7 @@ export function useCodeReviewLineSelection(
       }
 
       dragging = true;
+      shouldClear = true;
       isMouseMoved = false;
       mouseDownCb();
       e.preventDefault();
@@ -55,6 +58,10 @@ export function useCodeReviewLineSelection(
       return;
     }
     isMouseMoved = true;
+    if (shouldClear) {
+      clearCommentChecked();
+      shouldClear = false;
+    }
     const composedPath = e.composedPath() as HTMLElement[];
     const inReviewContent = composedPath.some((item) => item.classList?.contains(ns.e('content')));
     if (!inReviewContent) {
@@ -69,6 +76,7 @@ export function useCodeReviewLineSelection(
     if (endIndex === -1) {
       return;
     }
+    mouseMoveCb();
     if (startIndex > endIndex) {
       [startIndex, endIndex] = [endIndex, startIndex];
     }
@@ -99,6 +107,13 @@ export function useCodeReviewLineSelection(
     document.removeEventListener('mousemove', onMousemove);
   }
 
+  // 清除上次的选中
+  function clearCommentChecked() {
+    for (let i = 0; i < trNodes.length; i++) {
+      toggleCommentCheckedClass(trNodes[i], false, 'all');
+    }
+  }
+
   function toggleCommentCheckedClass(trNode: HTMLElement, isAddClass: boolean, position: 'left' | 'right' | 'all') {
     const tdNodes = Array.from(trNode.children);
     let toDoNodes;
@@ -109,7 +124,7 @@ export function useCodeReviewLineSelection(
     } else {
       toDoNodes = tdNodes.slice(2);
     }
-    if ((position === 'left' || position === 'right') && isNaN(parseInt(toDoNodes[0].innerHTML))) {
+    if ((position === 'left' || position === 'right') && isNaN(parseInt(toDoNodes[0]?.innerHTML))) {
       return;
     }
     toDoNodes.forEach((item) => {

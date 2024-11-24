@@ -597,6 +597,7 @@ export default defineComponent({
 | add-comment     | `Function(position: CommentPosition)`  | 点击添加评论图标时触发的事件，参数内容详见[CommentPosition](#commentposition)                                                               |
 | after-view-init | `Function(methods: CodeReviewMethods)` | 初始化完成后触发的事件，返回相关操作方法，参数内容详见[CodeReviewMethods](#codereviewmethods)                                               |
 | content-refresh | `Function(diffFile: DiffFile)`         | 内容刷新后触发的事件，返回解析后的相关文件信息，参数内容详见[DiffFile](https://github.com/rtfpessoa/diff2html/blob/master/src/types.ts#L49) |
+|after-check-lines|`Function(position: CommentPosition)`|多行选中后触发的事件，参数内容详见[CommentPosition](#commentposition)|
 
 ### CodeReview 插槽
 
