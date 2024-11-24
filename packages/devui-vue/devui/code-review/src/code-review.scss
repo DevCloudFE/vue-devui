@@ -183,6 +183,10 @@
       content: '';
     }
 
+    .d2h-code-linenumber {
+      border-right: 2px solid transparent;
+    }
+
     .d2h-code-line-ctn {
       word-break: break-all;
       word-wrap: break-word !important;
@@ -221,6 +225,11 @@
       .d2h-code-side-linenumber {
         position: static;
         display: table-cell;
+      }
+
+      .d-code-left:nth-of-type(2) > .d2h-code-side-line,
+      .d-code-right:nth-of-type(4) > .d2h-code-side-line {
+        border-left: 2px solid transparent;
       }
     }
 
@@ -268,6 +277,15 @@
         &.d2h-code-side-linenumber {
           background-color: #daf4ae; // 增加行中的number
         }
+      }
+
+      &.d2h-code-linenumber {
+        border-right: 2px solid #fe7300;
+      }
+
+      &.d-code-left:nth-of-type(2) > .d2h-code-side-line,
+      &.d-code-right:nth-of-type(4) > .d2h-code-side-line {
+        border-left: 2px solid #fe7300;
       }
     }
   }
