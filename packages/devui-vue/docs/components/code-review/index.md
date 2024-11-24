@@ -580,7 +580,7 @@ export default defineComponent({
 | diff             | `string`                                                            | ''             | 必选，diff 内容                                                                    |
 | fold             | `boolean`                                                           | false          | 可选，是否折叠显示                                                                 |
 | allow-comment    | `boolean`                                                           | true           | 可选，是否支持评论                                                                 |
-| allow-checked    | `boolean`                                                           | false          | 可选，是否支持代码行选中，开启后可以按住 shift 点击鼠标选中多行代码，只能按照从小到大的顺序选择，可以跨行选择，开启后add-comment事件的反回值会发生变化。参数内容详见[CommentPosition](#commentposition) |
+| allow-checked    | `boolean`                                                           | false          | 可选，是否支持代码行选中，开启后可以通过拖拽选中多行代码，可以跨行选择，开启后add-comment事件的返回值会发生变化。参数内容详见[CommentPosition](#commentposition) |
 | show-blob        | `boolean`                                                           | false          | 可选，是否展示缩略内容，一般大文件或二进制文件等需要展示缩略内容时使用             |
 | output-format    | [OutputFormat](#outputformat)                                       | 'line-by-line' | 可选，diff 展示格式，单栏展示或者分栏展示                                          |
 | diff-type        | [DiffType](#difftype)                                               | 'modify'       | 可选，文件 diff 类型                                                               |
