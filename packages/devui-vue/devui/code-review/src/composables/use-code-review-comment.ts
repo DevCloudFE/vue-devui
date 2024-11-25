@@ -118,7 +118,7 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     }
   };
   // 获代码行 取值方法
-  const getLineNumbers = (currentNumber: number, currentNumbers: Array<number>) => {
+  const getLineNumbers = (currentNumber: number, currentNumbers: Array<number>, moveDirection: 'up' | 'down') => {
     if (currentNumber === -1) {
       // 当前行没数据不代表之前选中的没数据，此时返回原来的
       return currentNumbers;
@@ -129,11 +129,11 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     const numbers = [...currentNumbers];
     let max = Math.max(...numbers);
     let min = Math.min(...numbers);
-    if (currentNumber < min) {
-      min = currentNumber;
-    }
-    if (currentNumber > max) {
+    if (moveDirection === 'down') {
       max = currentNumber;
+    }
+    if (moveDirection === 'up') {
+      min = currentNumber;
     }
     return Array.from({ length: max - min + 1 }, (_, i) => i + min);
   };
@@ -211,11 +211,13 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     }
     getDoubleCheckedLineCode(shouldRenderClass);
   }
-  function updateLineNumbers() {
+  function updateLineNumbers(moveDirection: 'up' | 'down') {
     currentLeftLineNumbers =
-      currentLeftLineNumber === -1 ? currentLeftLineNumbers : getLineNumbers(currentLeftLineNumber, currentLeftLineNumbers);
+      currentLeftLineNumber === -1 ? currentLeftLineNumbers : getLineNumbers(currentLeftLineNumber, currentLeftLineNumbers, moveDirection);
     currentRightLineNumbers =
-      currentRightLineNumber === -1 ? currentRightLineNumbers : getLineNumbers(currentRightLineNumber, currentRightLineNumbers);
+      currentRightLineNumber === -1
+        ? currentRightLineNumbers
+        : getLineNumbers(currentRightLineNumber, currentRightLineNumbers, moveDirection);
     getCheckedLineCode(false);
     afterCheckLinesEmitData = {
       left: currentLeftLineNumber,

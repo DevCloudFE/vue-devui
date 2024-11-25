@@ -6,7 +6,7 @@ import { findParentTrNode } from '../utils';
 export function useCodeReviewLineSelection(
   reviewContentRef: Ref<HTMLElement>,
   props: CodeReviewProps,
-  mouseMoveCb: () => void,
+  mouseMoveCb: (moveDirection: 'up' | 'down') => void,
   mouseupCb: () => void
 ) {
   const ns = useNamespace('code-review');
@@ -16,6 +16,7 @@ export function useCodeReviewLineSelection(
   let isClickedLeft: boolean | undefined;
   let shouldClear: boolean;
   let isMouseMoved: boolean;
+  let startClientY: number;
 
   const onMousedown = (e: MouseEvent) => {
     // 鼠标左键按下
@@ -44,6 +45,7 @@ export function useCodeReviewLineSelection(
       dragging = true;
       shouldClear = true;
       isMouseMoved = false;
+      startClientY = e.clientY;
       e.preventDefault();
       e.stopPropagation();
       document.addEventListener('mousemove', onMousemove);
@@ -74,7 +76,7 @@ export function useCodeReviewLineSelection(
     if (endIndex === -1) {
       return;
     }
-    mouseMoveCb();
+    mouseMoveCb(e.clientY > startClientY ? 'down' : 'up');
     if (startIndex > endIndex) {
       [startIndex, endIndex] = [endIndex, startIndex];
     }
