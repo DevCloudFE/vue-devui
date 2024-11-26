@@ -1,5 +1,6 @@
 import type { PropType, ExtractPropTypes, InjectionKey, Ref } from 'vue';
 import { DEFAULT_TOOLBAR_CONFIG, IToolbarItemConfig } from './toolbar-config';
+import { RenderRule } from 'markdown-it/lib/renderer';
 
 export interface MDThemeToolbarConfig {
   icons: { [key: string]: string };
@@ -11,7 +12,7 @@ export interface MDThemeConfig {
 
 export interface MdPlugin {
   plugin: any;
-  opts?: Object;
+  opts?: Record<string, unknown>;
 }
 
 export interface ICustomXssRule {
@@ -21,7 +22,7 @@ export interface ICustomXssRule {
 
 export interface ICustomRenderRule {
   key: string;
-  value: Function;
+  value: RenderRule;
 }
 
 export type Mode = 'editonly' | 'readonly' | 'normal';
@@ -112,7 +113,7 @@ export const editorMdProps = {
   },
   toolbarConfig: {
     type: Array as PropType<ToolbarConfigProp>,
-    default: () => DEFAULT_TOOLBAR_CONFIG,
+    default: (): (string[] | string)[] => DEFAULT_TOOLBAR_CONFIG,
   },
   fullscreenZIndex: {
     type: Number,
