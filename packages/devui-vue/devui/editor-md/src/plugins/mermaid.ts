@@ -1,4 +1,4 @@
-import Mermaid from 'mermaid/dist/mermaid.js';
+import Mermaid from 'mermaid/dist/mermaid.min.js';
 
 const DEFAULT_CONFIG = {
   startOnLoad: false,
