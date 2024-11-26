@@ -4,7 +4,7 @@ import { FORM_ITEM_TOKEN } from '../../../form';
 import { OptionObjectItem } from '../select-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { className } from '../utils';
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import { createI18nTranslate } from '../../../locale/create';
 
 export default function useSelectContent() {

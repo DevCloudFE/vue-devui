@@ -6,7 +6,9 @@
 
 ### 基本用法
 
-:::demo 从一个container拖动到另外一个container，并支持排序。
+从一个 container 拖动到另外一个 container，并支持排序。
+
+:::demo
 
 ```vue
 <script>
@@ -15,12 +17,7 @@ import { defineComponent, reactive } from 'vue';
 export default defineComponent({
   setup() {
     const data = reactive({
-      list1: [
-        { name: 'Visual Studio Code' },
-        { name: 'WebStorm' },
-        { name: 'Sublime' },
-        { name: 'Atom (disabled)', disabled: true }
-      ],
+      list1: [{ name: 'Visual Studio Code' }, { name: 'WebStorm' }, { name: 'Sublime' }, { name: 'Atom (disabled)', disabled: true }],
       list2: [],
       list3: [],
     });
@@ -44,9 +41,11 @@ export default defineComponent({
     }
 
     function removeItem(item, list) {
-      const index = list.map(function (e) {
-        return e.name;
-      }).indexOf(item.name);
+      const index = list
+        .map(function (e) {
+          return e.name;
+        })
+        .indexOf(item.name);
       list.splice(index, 1);
     }
 
@@ -60,95 +59,99 @@ export default defineComponent({
 </script>
 
 <template>
-<div class="demo1">
-<div class="row">
-  <div class="col-sm-3">
-    <div class="card">
-      <div class="card-header">Draggable Item</div>
-      <div class="card-block">
-        <ul class="list-group">
-          <li
-            v-dDraggable="{
-              dragScope: 'default-css',
-              dragData:{ item: item, parent: data.list1 },
-              disabled: item.disabled,
-              '@dragStartEvent': log,
-              '@dragEndEvent': log,
-              '@dragEndEvent': log,
-            }"
-            v-for="item in data.list1"
-            :class="['list-group-item over-flow-ellipsis', { disabled: item.disabled }]"
-          >
-            {{ item.name }}
-          </li>
-        </ul>
+  <div class="demo1">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-header">Draggable Item</div>
+          <div class="card-block">
+            <ul class="list-group">
+              <li
+                v-dDraggable="{
+                  dragScope: 'default-css',
+                  dragData: { item: item, parent: data.list1 },
+                  disabled: item.disabled,
+                  '@dragStartEvent': log,
+                  '@dragEndEvent': log,
+                  '@dragEndEvent': log,
+                }"
+                v-for="item in data.list1"
+                :class="['list-group-item over-flow-ellipsis', { disabled: item.disabled }]"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div
+          class="card card-outline-primary mb-3"
+          v-dDroppable="{
+            dropScope: 'default-css',
+            '@dropEvent': function (e) {
+              onDrop(e, data.list2);
+            },
+            '@dragEnterEvent': log,
+            '@dragOverEvent': log,
+            '@dragLeaveEvent': log,
+          }"
+        >
+          <div class="card-header">Drop Area With Sortable Function</div>
+          <div class="card-block">
+            <ul class="list-group d-drop-el" v-dSortable>
+              <li
+                v-dDraggable="{
+                  dragScope: 'default-css',
+                  dragData: { item: item, parent: data.list2 },
+                  disabled: item.disabled,
+                }"
+                v-for="item in data.list2"
+                :class="['list-group-item over-flow-ellipsis', { disabled: item.disabled }]"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div
+          class="card card-outline-primary mb-3"
+          v-dDroppable="{
+            dropScope: 'default-css',
+            '@dropEvent': function (e) {
+              onDrop(e, data.list3);
+            },
+            '@dragEnterEvent': log,
+            '@dragOverEvent': log,
+            '@dragLeaveEvent': log,
+          }"
+        >
+          <div class="card-header">Drop Area Without Sortable Function</div>
+          <div class="card-block">
+            <ul class="list-group drop-el">
+              <li
+                v-dDraggable="{
+                  dragScope: 'default-css',
+                  dragData: { item: item, parent: data.list3 },
+                  disabled: item.disabled,
+                }"
+                v-for="item in data.list3"
+                :class="['list-group-item over-flow-ellipsis', { disabled: item.disabled }]"
+              >
+                <div>
+                  {{ item.name }}
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-sm-3">
-    <div
-      class="card card-outline-primary mb-3"
-      v-dDroppable="{
-        dropScope: 'default-css',
-        '@dropEvent': function (e) {onDrop(e, data.list2)},
-        '@dragEnterEvent': log,
-        '@dragOverEvent': log,
-        '@dragLeaveEvent': log,
-      }"
-    >
-      <div class="card-header">Drop Area With Sortable Function</div>
-      <div class="card-block">
-        <ul class="list-group d-drop-el" v-dSortable>
-          <li
-            v-dDraggable="{
-              dragScope:'default-css',
-              dragData:{ item: item, parent: data.list2 },
-              disabled: item.disabled,
-            }"
-            v-for="item in data.list2"
-            :class="['list-group-item over-flow-ellipsis', { disabled: item.disabled }]"
-          >
-            {{ item.name }}
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-   <div class="col-sm-3">
-    <div
-      class="card card-outline-primary mb-3"
-      v-dDroppable="{
-        dropScope: 'default-css',
-        '@dropEvent': function (e) {onDrop(e, data.list3)},
-        '@dragEnterEvent': log,
-        '@dragOverEvent': log,
-        '@dragLeaveEvent': log,
-      }"
-    >
-      <div class="card-header">Drop Area Without Sortable Function</div>
-      <div class="card-block">
-        <ul class="list-group drop-el">
-          <li
-            v-dDraggable="{
-              dragScope:'default-css',
-              dragData:{ item: item, parent: data.list3 },
-              disabled: item.disabled,
-            }"
-            v-for="item in data.list3"
-            :class="['list-group-item over-flow-ellipsis', { disabled: item.disabled }]"
-          >
-            <div>
-              {{ item.name }}
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
 </template>
-<style lang='scss'>
+<style lang="scss">
 .demo1 {
   .row {
     overflow: hidden;
@@ -227,7 +230,6 @@ export default defineComponent({
     background-color: var(--devui-disabled-bg);
   }
 }
-
 </style>
 ```
 
@@ -235,7 +237,9 @@ export default defineComponent({
 
 ### 多层树状拖拽
 
-:::demo 排序允许拖拽到元素上，支持层级嵌套。
+排序允许拖拽到元素上，支持层级嵌套。
+
+:::demo
 
 ```vue
 <script>
@@ -248,14 +252,8 @@ export default defineComponent({
   },
   setup() {
     const data = reactive({
-      list1: [
-        { name: 'Visual Studio Code' },
-        { name: 'Sublime' },
-        { name: 'Atom' }
-      ],
-      list2: [
-        { name: 'WebStorm' , children: [{ name: 'notepad++'}]},
-      ],
+      list1: [{ name: 'Visual Studio Code' }, { name: 'Sublime' }, { name: 'Atom' }],
+      list2: [{ name: 'WebStorm', children: [{ name: 'notepad++' }] }],
     });
 
     function onDrop(e, list) {
@@ -292,76 +290,80 @@ export default defineComponent({
 });
 </script>
 <template>
-<div class="demo2" v-if="!parentItem">
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="card">
-        <div class="card-header">Draggable Items</div>
-        <div class="card-block">
-          <ul class="list-group">
-            <li
-              v-for="(item, i) in data.list1"
-              v-dDraggable="{
-                dragScope: 'drop-area',
-                dragData: { item: item, parentList: data.list1, index: i },
-              }"
-              class="list-group-item"
-            >
-              <div class="name">{{ item.name }}</div>
-            </li>
-          </ul>
+  <div class="demo2" v-if="!parentItem">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-header">Draggable Items</div>
+          <div class="card-block">
+            <ul class="list-group">
+              <li
+                v-for="(item, i) in data.list1"
+                v-dDraggable="{
+                  dragScope: 'drop-area',
+                  dragData: { item: item, parentList: data.list1, index: i },
+                }"
+                class="list-group-item"
+              >
+                <div class="name">{{ item.name }}</div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-sm-3">
-      <div
-        class="card card-outline-primary mb-3"
-        v-dDroppable="{
-          dropScope: 'drop-area',
-          allowDropOnItem: true,
-          nestingTargetRect: { height: 30 },
-          dragOverItemClass: 'drag-over-item',
-          '@dropEvent': (e) => { onDrop(e, data.list2) },
-        }"
-      >
-        <div class="card-header">Tree Sortable Area</div>
-        <div class="card-block">
-          <ul class="list-group d-drop-el" v-dSortable>
-            <li
-              v-for="(item, i) of data.list2"
-              v-dDraggable="{
-                dragScope: 'drop-area',
-                dragHandleClass: 'drag-handle',
-                dragData: { item: item, parentList: data.list2, index: i },
-              }"
-            >
-              <div class="name">
-                {{ item.name }}
-              </div>
-              <demo-item v-if="item.children && item.children.length > 0" :parentItem="item"></demo-item>
-            </li>
-          </ul>
+      <div class="col-sm-3">
+        <div
+          class="card card-outline-primary mb-3"
+          v-dDroppable="{
+            dropScope: 'drop-area',
+            allowDropOnItem: true,
+            nestingTargetRect: { height: 30 },
+            dragOverItemClass: 'drag-over-item',
+            '@dropEvent': (e) => {
+              onDrop(e, data.list2);
+            },
+          }"
+        >
+          <div class="card-header">Tree Sortable Area</div>
+          <div class="card-block">
+            <ul class="list-group d-drop-el" v-dSortable>
+              <li
+                v-for="(item, i) of data.list2"
+                v-dDraggable="{
+                  dragScope: 'drop-area',
+                  dragHandleClass: 'drag-handle',
+                  dragData: { item: item, parentList: data.list2, index: i },
+                }"
+              >
+                <div class="name">
+                  {{ item.name }}
+                </div>
+                <demo-item v-if="item.children && item.children.length > 0" :parentItem="item"></demo-item>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<ul class="list-group list-group-child" v-if="parentItem"
-    v-dSortable 
+  <ul
+    class="list-group list-group-child"
+    v-if="parentItem"
+    v-dSortable
     v-dDroppable="{
       dropScope: 'drop-area',
       allowDropOnItem: true,
       nestingTargetRect: { height: 30 },
       dragOverItemClass: 'drag-over-item',
       '@dropEvent': (e) => onDrop(e, parentItem.children),
-    }" 
+    }"
   >
-    <li 
-      v-for="(item, i) of parentItem.children" 
+    <li
+      v-for="(item, i) of parentItem.children"
       v-dDraggable="{
         dragHandleClass: 'drag-handle',
         dragScope: 'drop-area',
-        dragData:{ item: item, parentList: parentItem.children, index: i },
+        dragData: { item: item, parentList: parentItem.children, index: i },
       }"
     >
       <div class="name">
@@ -371,7 +373,7 @@ export default defineComponent({
     </li>
   </ul>
 </template>
-<style lang='scss'>
+<style lang="scss">
 .demo2 {
   .row {
     overflow: hidden;
@@ -473,7 +475,6 @@ export default defineComponent({
     color: var(--devui-list-item-active-text);
   }
 }
-
 </style>
 ```
 
@@ -481,7 +482,9 @@ export default defineComponent({
 
 ### 拖拽实体元素跟随
 
-:::demo 允许拖拽时候非半透明元素跟随。也可以使用appendToBody：当拖拽离开后源位置的父对象会被销毁的话，需要把克隆体附着到body上防止被销毁。 默认会通过复制样式保证克隆到body的实体的样式是正确的，但部分深度依赖DOM节点位置的样式和属性可能会失败，需要手动调整部分样式。
+允许拖拽时候非半透明元素跟随。也可以使用 appendToBody：当拖拽离开后源位置的父对象会被销毁的话，需要把克隆体附着到 body 上防止被销毁。 默认会通过复制样式保证克隆到 body 的实体的样式是正确的，但部分深度依赖 DOM 节点位置的样式和属性可能会失败，需要手动调整部分样式。
+
+:::demo
 
 ```vue
 <script>
@@ -489,13 +492,8 @@ import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const data= reactive({
-      list1: [
-        { name: 'Visual Studio Code' },
-        { name: 'WebStorm' },
-        { name: 'Sublime' },
-        { name: 'Atom' }
-      ],
+    const data = reactive({
+      list1: [{ name: 'Visual Studio Code' }, { name: 'WebStorm' }, { name: 'Sublime' }, { name: 'Atom' }],
       list2: [],
     });
 
@@ -519,9 +517,11 @@ export default defineComponent({
     }
 
     function removeItem(item, list) {
-      const index = list.map(function (e) {
-        return e.name;
-      }).indexOf(item.name);
+      const index = list
+        .map(function (e) {
+          return e.name;
+        })
+        .indexOf(item.name);
       list.splice(index, 1);
     }
     return { onDrop, data, appendToBody };
@@ -529,71 +529,70 @@ export default defineComponent({
 });
 </script>
 <template>
-<div class="demo3">
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="card">
-        <div class="card-header">Draggable Items</div>
-        <div class="card-block">
-          <ul class="list-group">
-            <li
-              v-dDraggable="{
-                enableDragFollow: true,
-                dragFollowOptions: {appendToBody: appendToBody},
-                dragOverClass: 'box-shadow',
-                dragScope: 'default-css',
-                dragData: item,
-              }"
-              v-for="item in data.list1"
-              class="list-group-item over-flow-ellipsis"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
+  <div class="demo3">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-header">Draggable Items</div>
+          <div class="card-block">
+            <ul class="list-group">
+              <li
+                v-dDraggable="{
+                  enableDragFollow: true,
+                  dragFollowOptions: { appendToBody: appendToBody },
+                  dragOverClass: 'box-shadow',
+                  dragScope: 'default-css',
+                  dragData: item,
+                }"
+                v-for="item in data.list1"
+                class="list-group-item over-flow-ellipsis"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div
+          class="card card-outline-primary mb-3"
+          v-dDroppable="{
+            dropScope: 'default-css',
+            '@dropEvent': ($event) => onDrop($event),
+          }"
+        >
+          <div class="card-header">Drop Area with Sortable</div>
+          <div class="card-block">
+            <ul class="list-group d-drop-el" v-dSortable>
+              <li
+                v-dDraggable="{
+                  enableDragFollow: true,
+                  dragFollowOptions: { appendToBody: appendToBody },
+                  dragOverClass: 'box-shadow',
+                  dragScope: 'default-css',
+                  dragHandleClass: 'drag-handle',
+                  dragData: item,
+                }"
+                v-for="item in data.list2"
+                class="list-group-item over-flow-ellipsis"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-3">
-      <div class="card card-outline-primary mb-3"
-        v-dDroppable="{
-          dropScope: 'default-css',
-          '@dropEvent': ($event) => onDrop($event),
-        }">
-        <div class="card-header">Drop Area with Sortable</div>
-        <div class="card-block">
-          <ul class="list-group d-drop-el" v-dSortable>
-            <li
-              v-dDraggable="{
-                enableDragFollow: true,
-                dragFollowOptions: {appendToBody: appendToBody},
-                dragOverClass: 'box-shadow',
-                dragScope: 'default-css',
-                dragHandleClass: 'drag-handle',
-                dragData: item,
-              }"
-              v-for="item in data.list2"
-              class="list-group-item over-flow-ellipsis"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
-        </div>
+    <div class="option">
+      <div class="option-toggle">
+        <d-switch v-model="appendToBody"></d-switch>
+        <span style="margin-left: 8px">appendToBody</span>
       </div>
     </div>
   </div>
-  <div class="option">
-    <div class="option-toggle">
-      <d-switch v-model="appendToBody"></d-switch>
-      <span style="margin-left: 8px">appendToBody</span>
-    </div>
-  </div>
-
-</div>
-
 </template>
-<style lang='scss'>
+<style lang="scss">
 .demo3 {
-  
   .row {
     overflow: hidden;
   }
@@ -684,9 +683,7 @@ export default defineComponent({
     display: inline-block;
     transform: translateY(3px);
   }
-
 }
-
 </style>
 ```
 
@@ -694,7 +691,9 @@ export default defineComponent({
 
 ### 越边交换
 
-:::demo 设置switchWhileCrossEdge允许越过边缘的时候交换。注意：不可与dropOnItem一起用，dropOnItem为true的时候无效。
+设置 switchWhileCrossEdge 允许越过边缘的时候交换。注意：不可与 dropOnItem 一起用，dropOnItem 为 true 的时候无效。
+
+:::demo
 
 ```vue
 <script>
@@ -702,13 +701,8 @@ import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const data= reactive({
-      list: [
-        { name: 'Visual Studio Code' },
-        { name: 'WebStorm' },
-        { name: 'Sublime' },
-        { name: 'Atom' }
-      ],
+    const data = reactive({
+      list: [{ name: 'Visual Studio Code' }, { name: 'WebStorm' }, { name: 'Sublime' }, { name: 'Atom' }],
     });
 
     function onDrop(e) {
@@ -729,42 +723,39 @@ export default defineComponent({
 });
 </script>
 <template>
-<div class="demo4">
-  <div class="row">
-    <div class="col-sm-3">
-      <div
-        class="card card-outline-primary mb-3"
-        v-dDroppable="{
-          switchWhileCrossEdge: true,
-          dropScope: 'default-switch',
-          '@dropEvent': onDrop,
-        }"
-      >
-        <div class="card-header">Drag Drop Sort Area</div>
-        <div class="card-block">
-          <ul class="list-group drop-el" v-dSortable>
-            <li
-              v-dDraggable="{
-                dragScope: 'default-switch',
-                dragHandleClass: 'drag-handle',
-                dragData: item,
-              }"
-              v-for="item in data.list"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
+  <div class="demo4">
+    <div class="row">
+      <div class="col-sm-3">
+        <div
+          class="card card-outline-primary mb-3"
+          v-dDroppable="{
+            switchWhileCrossEdge: true,
+            dropScope: 'default-switch',
+            '@dropEvent': onDrop,
+          }"
+        >
+          <div class="card-header">Drag Drop Sort Area</div>
+          <div class="card-block">
+            <ul class="list-group drop-el" v-dSortable>
+              <li
+                v-dDraggable="{
+                  dragScope: 'default-switch',
+                  dragHandleClass: 'drag-handle',
+                  dragData: item,
+                }"
+                v-for="item in data.list"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-</div>
-
 </template>
-<style lang='scss'>
+<style lang="scss">
 .demo4 {
-  
   .row {
     overflow: hidden;
   }
@@ -835,7 +826,6 @@ export default defineComponent({
     align-items: center;
   }
 }
-
 </style>
 ```
 
@@ -843,7 +833,9 @@ export default defineComponent({
 
 ### 外部放置位置：就近，前面，后面
 
-:::demo 使用defaultDropPostion配置排序器之外的区域拖拽元素放下的时候默认加到列表的前面或者后面，默认为就近('closest')。
+使用 defaultDropPostion 配置排序器之外的区域拖拽元素放下的时候默认加到列表的前面或者后面，默认为就近('closest')。
+
+:::demo
 
 ```vue
 <script>
@@ -851,8 +843,8 @@ import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const data= reactive({
-      list1: [{ name: 'Visual Studio Code' } ],
+    const data = reactive({
+      list1: [{ name: 'Visual Studio Code' }],
       list2: [{ name: 'WebStorm' }],
       list3: [{ name: 'Sublime' }],
       list4: [{ name: 'Atom' }],
@@ -864,7 +856,9 @@ export default defineComponent({
       const parentArray = e.dragData.parent;
       const item = e.dragData.item;
       if (-1 !== index) {
-        if (-1 !== fromIndex && index > fromIndex) { index--; }
+        if (-1 !== fromIndex && index > fromIndex) {
+          index--;
+        }
         targetArray.splice(index, 0, fromIndex === -1 ? item : targetArray.splice(fromIndex, 1)[0]);
       } else {
         targetArray.push(item);
@@ -875,9 +869,11 @@ export default defineComponent({
     }
 
     function removeItem(item, list) {
-      const index = list.map(function (e) {
-        return e.name;
-      }).indexOf(item.name);
+      const index = list
+        .map(function (e) {
+          return e.name;
+        })
+        .indexOf(item.name);
       list.splice(index, 1);
     }
     return { onDrop, data };
@@ -885,120 +881,118 @@ export default defineComponent({
 });
 </script>
 <template>
-<div class="demo5">
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="card">
-        <div class="card-header">Items</div>
-        <div class="card-block">
-          <ul class="list-group">
-            <li
-              v-dDraggable="{
-                dragScope: 'default-position',
-                dragHandleClass: 'drag-handle',
-                dragData: { item: item, parent: data.list1 },
-              }"
-              v-for="item in data.list1"
-              class="list-group-item over-flow-ellipsis"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
+  <div class="demo5">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-header">Items</div>
+          <div class="card-block">
+            <ul class="list-group">
+              <li
+                v-dDraggable="{
+                  dragScope: 'default-position',
+                  dragHandleClass: 'drag-handle',
+                  dragData: { item: item, parent: data.list1 },
+                }"
+                v-for="item in data.list1"
+                class="list-group-item over-flow-ellipsis"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-sm-3">
-      <div
-        class="card card-outline-primary mb-3"
-        v-dDroppable="{
-          switchWhileCrossEdge: true,
-          dropScope: 'default-position',
-          defaultDropPosition: 'before',
-          '@dropEvent': (e) => onDrop(e, data.list2),
-        }"
-      >
-        <div class="card-header">Drop here to add to the top</div>
-        <div class="card-block">
-          <ul class="list-group drop-el" v-dSortable>
-            <li
-              v-dDraggable="{
-                dragScope: 'default-position',
-                dragHandleClass: 'drag-handle',
-                dragData: { item: item, parent: data.list2 },
-              }"
-              v-for="item in data.list2"
-              class="list-group-item over-flow-ellipsis"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
+      <div class="col-sm-3">
+        <div
+          class="card card-outline-primary mb-3"
+          v-dDroppable="{
+            switchWhileCrossEdge: true,
+            dropScope: 'default-position',
+            defaultDropPosition: 'before',
+            '@dropEvent': (e) => onDrop(e, data.list2),
+          }"
+        >
+          <div class="card-header">Drop here to add to the top</div>
+          <div class="card-block">
+            <ul class="list-group drop-el" v-dSortable>
+              <li
+                v-dDraggable="{
+                  dragScope: 'default-position',
+                  dragHandleClass: 'drag-handle',
+                  dragData: { item: item, parent: data.list2 },
+                }"
+                v-for="item in data.list2"
+                class="list-group-item over-flow-ellipsis"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-sm-3">
-      <div
-        class="card card-outline-primary mb-3"
-        v-dDroppable="{
-          switchWhileCrossEdge: true,
-          dropScope: 'default-position',
-          defaultDropPosition: 'after',
-          '@dropEvent': (e) => onDrop(e, data.list3),
-        }"
-      >
-        <div class="card-header">Drop here to add to the bottom</div>
-        <div class="card-block">
-          <ul class="list-group drop-el" v-dSortable>
-            <li
-              v-dDraggable="{
-                dragScope: 'default-position',
-                dragHandleClass: 'drag-handle',
-                dragData: { item: item, parent: data.list3 },
-              }"
-              v-for="item in data.list3"
-              class="list-group-item over-flow-ellipsis"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
+      <div class="col-sm-3">
+        <div
+          class="card card-outline-primary mb-3"
+          v-dDroppable="{
+            switchWhileCrossEdge: true,
+            dropScope: 'default-position',
+            defaultDropPosition: 'after',
+            '@dropEvent': (e) => onDrop(e, data.list3),
+          }"
+        >
+          <div class="card-header">Drop here to add to the bottom</div>
+          <div class="card-block">
+            <ul class="list-group drop-el" v-dSortable>
+              <li
+                v-dDraggable="{
+                  dragScope: 'default-position',
+                  dragHandleClass: 'drag-handle',
+                  dragData: { item: item, parent: data.list3 },
+                }"
+                v-for="item in data.list3"
+                class="list-group-item over-flow-ellipsis"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-sm-3">
-      <div
-        class="card card-outline-primary mb-3"
-        v-dDroppable="{
-          switchWhileCrossEdge: true,
-          dropScope: 'default-position',
-          defaultDropPosition: 'closest',
-          '@dropEvent': (e) => onDrop(e, data.list4),
-        }"  
-      >
-        <div class="card-header">Drop here to add to the nearest place (top)</div>
-        <div class="card-block">
-          <ul class="list-group drop-el" v-dSortable>
-            <li
-              v-dDraggable="{
-                dragScope: 'default-position',
-                dragHandleClass: 'drag-handle',
-                dragData: { item: item, parent: data.list4 },
-              }"
-              v-for="item in data.list4"
-              class="list-group-item over-flow-ellipsis"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
+      <div class="col-sm-3">
+        <div
+          class="card card-outline-primary mb-3"
+          v-dDroppable="{
+            switchWhileCrossEdge: true,
+            dropScope: 'default-position',
+            defaultDropPosition: 'closest',
+            '@dropEvent': (e) => onDrop(e, data.list4),
+          }"
+        >
+          <div class="card-header">Drop here to add to the nearest place (top)</div>
+          <div class="card-block">
+            <ul class="list-group drop-el" v-dSortable>
+              <li
+                v-dDraggable="{
+                  dragScope: 'default-position',
+                  dragHandleClass: 'drag-handle',
+                  dragData: { item: item, parent: data.list4 },
+                }"
+                v-for="item in data.list4"
+                class="list-group-item over-flow-ellipsis"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
+          <div class="card-footer">Drop here to add to the nearest place (bottom)</div>
         </div>
-        <div class="card-footer">Drop here to add to the nearest place (bottom)</div>
       </div>
     </div>
   </div>
-</div>
-
 </template>
-<style lang='scss'>
+<style lang="scss">
 .demo5 {
-  
   .row {
     overflow: hidden;
   }
@@ -1069,7 +1063,6 @@ export default defineComponent({
     align-items: center;
   }
 }
-
 </style>
 ```
 
@@ -1077,7 +1070,9 @@ export default defineComponent({
 
 ### 拖拽滚动容器增强
 
-:::demo 搭配使用dDropScrollEnhanced指令允许拖拽到边缘的时候加速滚动条向两边滚动。
+搭配使用 dDropScrollEnhanced 指令允许拖拽到边缘的时候加速滚动条向两边滚动。
+
+:::demo
 
 ```vue
 <script>
@@ -1088,63 +1083,46 @@ export default defineComponent({
     const lists = reactive([
       {
         name: 'IDE',
-        list:   [
-          { name: 'Visual Studio Code' },
-          { name: 'WebStorm' },
-          { name: 'Sublime Text' },
-          { name: 'Atom' },
-          { name: 'Notepad++' },
-        ]
+        list: [{ name: 'Visual Studio Code' }, { name: 'WebStorm' }, { name: 'Sublime Text' }, { name: 'Atom' }, { name: 'Notepad++' }],
       },
       {
         name: 'Browser',
-        list:   [
+        list: [
           { name: 'Chrome' },
           { name: 'Firefox' },
           { name: 'Opera' },
           { name: 'Edge' },
           { name: 'Internet Explorer' },
           { name: 'Safari' },
-        ]
+        ],
       },
       {
         name: 'OS',
-        list: [
-          {name: 'Linux'},
-          {name: 'Windows'},
-          {name: 'Mac OS'},
-          {name: 'DOS'},
-          {name: 'Chrome OS'},
-        ]
+        list: [{ name: 'Linux' }, { name: 'Windows' }, { name: 'Mac OS' }, { name: 'DOS' }, { name: 'Chrome OS' }],
       },
       {
         name: 'Mobile OS',
-        list:  [
-          {name: 'Android'},
-          {name: 'IOS'},
-          {name: 'BlackBerry'},
-          {name: 'Symbian'},
-        ]
+        list: [{ name: 'Android' }, { name: 'IOS' }, { name: 'BlackBerry' }, { name: 'Symbian' }],
       },
       {
         name: 'Website',
-        list: []
+        list: [],
       },
       {
         name: 'Search Engine',
-        list: []
+        list: [],
       },
       {
         name: 'Technology Stack',
-        list: []
+        list: [],
       },
       {
         name: 'Language',
-        list: []
+        list: [],
       },
       {
         name: 'Whatever',
-        list: []
+        list: [],
       },
     ]);
 
@@ -1156,7 +1134,9 @@ export default defineComponent({
       const parentArray = e.dragData.parent;
       const item = e.dragData.item;
       if (-1 !== index) {
-        if (-1 !== fromIndex && index > fromIndex) { index--; }
+        if (-1 !== fromIndex && index > fromIndex) {
+          index--;
+        }
         targetArray.splice(index, 0, fromIndex === -1 ? item : targetArray.splice(fromIndex, 1)[0]);
       } else {
         targetArray.push(item);
@@ -1167,9 +1147,11 @@ export default defineComponent({
     }
 
     function removeItem(item, list) {
-      const index = list.map(function (e) {
-        return e.name;
-      }).indexOf(item.name);
+      const index = list
+        .map(function (e) {
+          return e.name;
+        })
+        .indexOf(item.name);
       list.splice(index, 1);
     }
     return { onDrop, lists, showDropScrollArea };
@@ -1177,68 +1159,70 @@ export default defineComponent({
 });
 </script>
 <template>
-<div class="demo6">
-  <div :class="{ 'show-drop-area': showDropScrollArea }">
-    <div class="drop-row devui-scrollbar" 
-      v-dDropScrollEnhanced="{
-        direction: 'h',
-        dropScrollScope: ['multiple-group', 'drag-follow'],
-      }">
-      <div class="drop-col" v-for="group in lists">
-        <div class="card card-outline-primary mb-3"
-          v-dDroppable="{
-            dropScope: 'multiple-group',
-            '@dropEvent': (e) => onDrop(e, group.list),
-          }">
-          <div class="card-header">{{ group.name }}</div>
-          <div class="card-block">
-            <ul
-              class="list-group drop-el devui-scrollbar"
-              v-dSortable
-              v-dDropScrollEnhanced="{
-                direction: 'v',
-                responseEdgeWidth: '20px',
-                dropScrollScope: 'multiple-group',
-              }"
-            >
-              <li
-                v-dDraggable="{
-                  dragScope: 'multiple-group',
-                  dragHandleClass: 'drag-handle',
-                  dragData: { item: item, parent: group.list },
+  <div class="demo6">
+    <div :class="{ 'show-drop-area': showDropScrollArea }">
+      <div
+        class="drop-row devui-scrollbar"
+        v-dDropScrollEnhanced="{
+          direction: 'h',
+          dropScrollScope: ['multiple-group', 'drag-follow'],
+        }"
+      >
+        <div class="drop-col" v-for="group in lists">
+          <div
+            class="card card-outline-primary mb-3"
+            v-dDroppable="{
+              dropScope: 'multiple-group',
+              '@dropEvent': (e) => onDrop(e, group.list),
+            }"
+          >
+            <div class="card-header">{{ group.name }}</div>
+            <div class="card-block">
+              <ul
+                class="list-group drop-el devui-scrollbar"
+                v-dSortable
+                v-dDropScrollEnhanced="{
+                  direction: 'v',
+                  responseEdgeWidth: '20px',
+                  dropScrollScope: 'multiple-group',
                 }"
-                v-for="item in group.list"
-                class="list-group-item over-flow-ellipsis"
               >
-                {{ item.name }}
-              </li>
-            </ul>
+                <li
+                  v-dDraggable="{
+                    dragScope: 'multiple-group',
+                    dragHandleClass: 'drag-handle',
+                    dragData: { item: item, parent: group.list },
+                  }"
+                  v-for="item in group.list"
+                  class="list-group-item over-flow-ellipsis"
+                >
+                  {{ item.name }}
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="option-toggle">
-      <d-switch v-model="showDropScrollArea"></d-switch>
-      <span>Show drop scroll response area</span>
-    </div>
-    <template v-if="showDropScrollArea">
-      <div>
-        <span class="color-example active" style="display: inline-block; width: 25px; height: 14px; margin-right: 4px"></span>
-        Active area, dragging over it to trigger scroll and show more.
+      <div class="option-toggle">
+        <d-switch v-model="showDropScrollArea"></d-switch>
+        <span>Show drop scroll response area</span>
       </div>
-      <div>
-        <span class="color-example inactive" style="display: inline-block; width: 25px; height: 14px; margin-right: 4px"></span>
-        Inactive area, dragging over it will be able to drop to element under the cover.
-      </div>
-    </template>
+      <template v-if="showDropScrollArea">
+        <div>
+          <span class="color-example active" style="display: inline-block; width: 25px; height: 14px; margin-right: 4px"></span>
+          Active area, dragging over it to trigger scroll and show more.
+        </div>
+        <div>
+          <span class="color-example inactive" style="display: inline-block; width: 25px; height: 14px; margin-right: 4px"></span>
+          Inactive area, dragging over it will be able to drop to element under the cover.
+        </div>
+      </template>
+    </div>
   </div>
-
-</div>
-
 </template>
-<style lang='scss'>
-.demo6 {
 
+<style lang="scss">
+.demo6 {
   .row {
     overflow: hidden;
   }
@@ -1354,7 +1338,6 @@ export default defineComponent({
     }
   }
 }
-
 </style>
 ```
 
@@ -1362,7 +1345,9 @@ export default defineComponent({
 
 ### 源占位符
 
-:::demo 使用originPlaceholder显示源位置的占位符，示例为消失动画。
+使用 originPlaceholder 显示源位置的占位符，示例为消失动画。
+
+:::demo
 
 ```vue
 <script>
@@ -1371,13 +1356,7 @@ import { defineComponent, reactive, ref } from 'vue';
 export default defineComponent({
   setup() {
     const data = reactive({
-      list1: [
-        { name: 'Visual Studio Code' },
-        { name: 'WebStorm' },
-        { name: 'Sublime Text' },
-        { name: 'Atom' },
-        { name: 'Notepad++' },
-      ],
+      list1: [{ name: 'Visual Studio Code' }, { name: 'WebStorm' }, { name: 'Sublime Text' }, { name: 'Atom' }, { name: 'Notepad++' }],
       list2: [
         { name: 'Chrome' },
         { name: 'Firefox' },
@@ -1386,13 +1365,7 @@ export default defineComponent({
         { name: 'Internet Explorer' },
         { name: 'Safari' },
       ],
-      list3: [
-        {name: 'Linux'},
-        {name: 'Windows'},
-        {name: 'Mac OS'},
-        {name: 'DOS'},
-        {name: 'Chrome OS'},
-      ],
+      list3: [{ name: 'Linux' }, { name: 'Windows' }, { name: 'Mac OS' }, { name: 'DOS' }, { name: 'Chrome OS' }],
     });
 
     const showDropScrollArea = ref(false);
@@ -1424,105 +1397,111 @@ export default defineComponent({
 });
 </script>
 <template>
-<div class="demo7">
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="card"
-        v-dDroppable="{
-          dropScope: 'default-css',
-          '@dropEvent': (e) => { onDrop(e, data.list1) },
-        }">
-        <div class="card-header">Drag from here，origin placeholder disappear <strong>directly</strong> after dropped</div>
-        <div class="card-block">
-          <ul class="list-group drop-el" v-dSortable>
-            <li
-              v-dDraggable="{
-                dragScope: 'default-css',
-                dragData: { item: item, parent: data.list1 },
-                originPlaceholder: {
-                  text: 'custom text and style',
-                  style: { backgroundColor: '#ffe6e6', textAlign: 'center' }
-                },
-              }"
-              v-for="item in data.list1"
-              class="list-group-item over-flow-ellipsis"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
+  <div class="demo7">
+    <div class="row">
+      <div class="col-sm-3">
+        <div
+          class="card"
+          v-dDroppable="{
+            dropScope: 'default-css',
+            '@dropEvent': (e) => {
+              onDrop(e, data.list1);
+            },
+          }"
+        >
+          <div class="card-header">Drag from here，origin placeholder disappear <strong>directly</strong> after dropped</div>
+          <div class="card-block">
+            <ul class="list-group drop-el" v-dSortable>
+              <li
+                v-dDraggable="{
+                  dragScope: 'default-css',
+                  dragData: { item: item, parent: data.list1 },
+                  originPlaceholder: {
+                    text: 'custom text and style',
+                    style: { backgroundColor: '#ffe6e6', textAlign: 'center' },
+                  },
+                }"
+                v-for="item in data.list1"
+                class="list-group-item over-flow-ellipsis"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-sm-3">
-      <div
-        class="card card-outline-primary mb-3"
-        v-dDroppable="{
-          dropScope: 'default-css',
-          placeholderStyle: {},
-          '@dropEvent': (e) => { onDrop(e, data.list2) },
-        }"
-      >
-        <div class="card-header">Drag from here，origin placeholder <strong>delay to</strong> disappear after dropped</div>
-        <div class="card-block">
-          <ul class="list-group drop-el" v-dSortable>
-            <li
-              v-dDraggable="{
-                dragScope: 'default-css',
-                dragHandleClass: 'drag-handle',
-                dragData: { item: item, parent: data.list2 },
-                originPlaceholder: {
-                  removeDelay: 100,
-                },
-              }"
-              v-for="item in data.list2"
-              class="list-group-item over-flow-ellipsis"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
+      <div class="col-sm-3">
+        <div
+          class="card card-outline-primary mb-3"
+          v-dDroppable="{
+            dropScope: 'default-css',
+            placeholderStyle: {},
+            '@dropEvent': (e) => {
+              onDrop(e, data.list2);
+            },
+          }"
+        >
+          <div class="card-header">Drag from here，origin placeholder <strong>delay to</strong> disappear after dropped</div>
+          <div class="card-block">
+            <ul class="list-group drop-el" v-dSortable>
+              <li
+                v-dDraggable="{
+                  dragScope: 'default-css',
+                  dragHandleClass: 'drag-handle',
+                  dragData: { item: item, parent: data.list2 },
+                  originPlaceholder: {
+                    removeDelay: 100,
+                  },
+                }"
+                v-for="item in data.list2"
+                class="list-group-item over-flow-ellipsis"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-sm-3">
-      <div
-        class="card card-outline-primary mb-3"
-        v-dDroppable="{
-          dropScope: 'default-css',
-          placeholderStyle: {},
-          '@dropEvent': (e) => { onDrop(e, data.list3) },
-        }"
-      >
-        <div class="card-header">
-          Drag from here，origin placeholder <strong>delay to</strong> disappear after dropped <strong>with animation</strong>
-        </div>
-        <div class="card-block">
-          <ul class="list-group drop-el list-3" v-dSortable>
-            <li
-              v-dDraggable="{
-                dragScope: 'default-css',
-                dragHandleClass: 'drag-handle',
-                dragData: { item: item, parent: data.list3 },
-                originPlaceholder: {
-                  removeDelay: 300,
-                },
-              }"
-              v-for="item in data.list3"
-              class="list-group-item over-flow-ellipsis"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
+      <div class="col-sm-3">
+        <div
+          class="card card-outline-primary mb-3"
+          v-dDroppable="{
+            dropScope: 'default-css',
+            placeholderStyle: {},
+            '@dropEvent': (e) => {
+              onDrop(e, data.list3);
+            },
+          }"
+        >
+          <div class="card-header">
+            Drag from here，origin placeholder <strong>delay to</strong> disappear after dropped <strong>with animation</strong>
+          </div>
+          <div class="card-block">
+            <ul class="list-group drop-el list-3" v-dSortable>
+              <li
+                v-dDraggable="{
+                  dragScope: 'default-css',
+                  dragHandleClass: 'drag-handle',
+                  dragData: { item: item, parent: data.list3 },
+                  originPlaceholder: {
+                    removeDelay: 300,
+                  },
+                }"
+                v-for="item in data.list3"
+                class="list-group-item over-flow-ellipsis"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-</div>
-
 </template>
-<style lang='scss'>
-.demo7 {
 
+<style lang="scss">
+.demo7 {
   .row {
     overflow: hidden;
   }
@@ -1622,7 +1601,6 @@ export default defineComponent({
     }
   }
 }
-
 </style>
 ```
 
@@ -1630,7 +1608,9 @@ export default defineComponent({
 
 ### 拖拽预览
 
-:::demo 允许拖拽的时候展示自定义拖拽元素样式
+允许拖拽的时候展示自定义拖拽元素样式
+
+:::demo
 
 ```vue
 <script>
@@ -1638,15 +1618,9 @@ import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const data= reactive({
-      list1: [
-        { name: 'Visual Studio Code' },
-        { name: 'WebStorm' },
-        { name: 'Sublime' },
-      ],
-      list2: [
-        { name: 'Atom' },
-      ],
+    const data = reactive({
+      list1: [{ name: 'Visual Studio Code' }, { name: 'WebStorm' }, { name: 'Sublime' }],
+      list2: [{ name: 'Atom' }],
     });
 
     function onDrop(e) {
@@ -1667,9 +1641,11 @@ export default defineComponent({
     }
 
     function removeItem(item, list) {
-      const index = list.map(function (e) {
-        return e.name;
-      }).indexOf(item.name);
+      const index = list
+        .map(function (e) {
+          return e.name;
+        })
+        .indexOf(item.name);
       list.splice(index, 1);
     }
 
@@ -1680,72 +1656,72 @@ export default defineComponent({
 });
 </script>
 <template>
-<div class="demo9">
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="card">
-        <div class="card-header">Draggable Items</div>
-        <div class="card-block">
-          <ul class="list-group">
-          <d-drag-preview-template ref="previewRef" v-slot="previewContext">
-            <div class='drag-preview-item'>
-              <span class='index'>{{previewContext.data.index + 1}}</span>
-              <span class='name'>{{previewContext.dragData.name}}</span>
-            </div>
-          </d-drag-preview-template>
-            <li
-              v-dDragPreview="{
-                dragPreview: previewRef,
-                dragPreviewData: { index: i },
-              }"
-              v-dDraggable="{
-                dragScope: 'drag-preview',
-                dragData: item,
-              }"
-              v-for="(item, i) in data.list1"
-              class="list-group-item over-flow-ellipsis"
-            >
-              {{ item.name }}
-            </li>
-          </ul>
+  <div class="demo9">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-header">Draggable Items</div>
+          <div class="card-block">
+            <ul class="list-group">
+              <d-drag-preview-template ref="previewRef" v-slot="previewContext">
+                <div class="drag-preview-item">
+                  <span class="index">{{ previewContext.data.index + 1 }}</span>
+                  <span class="name">{{ previewContext.dragData.name }}</span>
+                </div>
+              </d-drag-preview-template>
+              <li
+                v-dDragPreview="{
+                  dragPreview: previewRef,
+                  dragPreviewData: { index: i },
+                }"
+                v-dDraggable="{
+                  dragScope: 'drag-preview',
+                  dragData: item,
+                }"
+                v-for="(item, i) in data.list1"
+                class="list-group-item over-flow-ellipsis"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="card card-outline-primary mb-3"
-        v-dDroppable="{
-          dropScope: 'drag-preview',
-          '@dropEvent': ($event) => onDrop($event),
-        }">
-        <div class="card-header">Drop Area with Sortable</div>
-        <div class="card-block">
-          <ul class="list-group d-drop-el" v-dSortable>
-            <li
-              v-dDraggable="{
-                enableDragFollow: true,
-                dragFollowOptions: {appendToBody: true},
-                dragOverClass: 'box-shadow',
-                dragScope: 'drag-preview',
-                dragHandleClass: 'drag-handle',
-                dragData: item,
-              }"
-              v-for="(item, i) in data.list2"
-              class="list-group-item-new over-flow-ellipsis"
-            >
-              <span class='index'>{{ i + 1}}</span>
-              <span class='name'>{{ item.name }}</span>
-            </li>
-          </ul>
+      <div class="col-sm-3">
+        <div
+          class="card card-outline-primary mb-3"
+          v-dDroppable="{
+            dropScope: 'drag-preview',
+            '@dropEvent': ($event) => onDrop($event),
+          }"
+        >
+          <div class="card-header">Drop Area with Sortable</div>
+          <div class="card-block">
+            <ul class="list-group d-drop-el" v-dSortable>
+              <li
+                v-dDraggable="{
+                  enableDragFollow: true,
+                  dragFollowOptions: { appendToBody: true },
+                  dragOverClass: 'box-shadow',
+                  dragScope: 'drag-preview',
+                  dragHandleClass: 'drag-handle',
+                  dragData: item,
+                }"
+                v-for="(item, i) in data.list2"
+                class="list-group-item-new over-flow-ellipsis"
+              >
+                <span class="index">{{ i + 1 }}</span>
+                <span class="name">{{ item.name }}</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
 </template>
-<style lang='scss'>
+<style lang="scss">
 .demo9 {
-  
   .row {
     overflow: hidden;
   }
@@ -1851,7 +1827,6 @@ export default defineComponent({
     padding-left: 28px;
   }
 }
-
 </style>
 ```
 
@@ -1859,7 +1834,9 @@ export default defineComponent({
 
 ### 批量拖拽
 
-:::demo 使用batchDrag指令标记可以批量拖拽，请用ctrl按键和鼠标选中多个并进行拖拽
+使用 batchDrag 指令标记可以批量拖拽，请用 ctrl 按键和鼠标选中多个并进行拖拽。
+
+:::demo
 
 ```vue
 <script>
@@ -1875,7 +1852,7 @@ export default defineComponent({
           { name: 'WebStorm', isSelected: false },
           { name: 'Sublime Text', isSelected: false },
           { name: 'Atom', isSelected: false },
-          { name: 'Notepad++', isSelected: false }
+          { name: 'Notepad++', isSelected: false },
         ],
       },
       {
@@ -1896,7 +1873,7 @@ export default defineComponent({
           { name: 'Windows', isSelected: false },
           { name: 'Mac OS', isSelected: false },
           { name: 'DOS', isSelected: false },
-          { name: 'Chrome OS', isSelected: false }
+          { name: 'Chrome OS', isSelected: false },
         ],
       },
       {
@@ -1905,7 +1882,7 @@ export default defineComponent({
           { name: 'Android', isSelected: false },
           { name: 'IOS', isSelected: false },
           { name: 'BlackBerry', isSelected: false },
-          { name: 'Symbian', isSelected: false }
+          { name: 'Symbian', isSelected: false },
         ],
       },
       {
@@ -1975,7 +1952,11 @@ export default defineComponent({
     }
 
     function cleanBatch() {
-      data.forEach((list) => list.list.forEach((item) => {item['isSelected'] = false;}));
+      data.forEach((list) =>
+        list.list.forEach((item) => {
+          item['isSelected'] = false;
+        })
+      );
     }
 
     return { onDrop, data, showOriginPlaceholder, switchWhileCrossEdge, batchSelect, batchSelectCheck, cleanBatch };
@@ -1983,67 +1964,71 @@ export default defineComponent({
 });
 </script>
 <template>
-<div class="demo8">
-  <div class="drop-row devui-scrollbar"
-    v-dDropScrollEnhanced="{
-      direction: 'h',
-      dropScrollScope: ['multiple-group', 'drag-follow'],
-    }">
-    <div class="drop-col" v-for="list in data">
-      <div
-        class="card card-outline-primary mb-3"
-        v-dDroppable="{
-          dropScope: 'multiple-group',
-          switchWhileCrossEdge: switchWhileCrossEdge,
-          '@dropEvent': (e) => onDrop(e, list.list),
-        }"
-      >
-        <div class="card-header">{{ list.name }}</div>
-        <div class="card-block">
-          <ul
-            class="list-group drop-el devui-scrollbar"
-            v-dSortable
-            v-dDropScrollEnhanced="{
-              direction: 'v',
-              responseEdgeWidth: '20px',
-              dropScrollScope: 'multiple-group',
-            }"
-          >
-            <li
-              v-for="item in list.list" :key="item"
-              class="list-group-item over-flow-ellipsis"
-              v-dDraggable="{
-                dragIdentity: item, // 注意：由于使用了动态组合的dragData，批量拖拽需要使用dragIdentity标记唯一标识符， 否则每次刷新的dragData后会不一致，影响排序
-                dragScope: 'multiple-group',
-                dragHandleClass: 'drag-handle',
-                originPlaceholder: {
-                  show: showOriginPlaceholder,
-                  removeDelay: 300
-                },
-                dragData: { item: item, parent: list.list },
-                enableDragFollow: true,
+  <div class="demo8">
+    <div
+      class="drop-row devui-scrollbar"
+      v-dDropScrollEnhanced="{
+        direction: 'h',
+        dropScrollScope: ['multiple-group', 'drag-follow'],
+      }"
+    >
+      <div class="drop-col" v-for="list in data">
+        <div
+          class="card card-outline-primary mb-3"
+          v-dDroppable="{
+            dropScope: 'multiple-group',
+            switchWhileCrossEdge: switchWhileCrossEdge,
+            '@dropEvent': (e) => onDrop(e, list.list),
+          }"
+        >
+          <div class="card-header">{{ list.name }}</div>
+          <div class="card-block">
+            <ul
+              class="list-group drop-el devui-scrollbar"
+              v-dSortable
+              v-dDropScrollEnhanced="{
+                direction: 'v',
+                responseEdgeWidth: '20px',
+                dropScrollScope: 'multiple-group',
               }"
-              @click="(e) => batchSelectCheck(e, item)"
-              v-dDraggableBatchDrag="{
-                batchDragActive: item.isSelected,
-                '@batchDragActiveEvent': () => {batchSelect(item)},
-              }"
-              :class="{ 'selected': item.isSelected }"
             >
-              {{ item.name }}
-            </li>
-          </ul>
+              <li
+                v-for="item in list.list"
+                :key="item"
+                class="list-group-item over-flow-ellipsis"
+                v-dDraggable="{
+                  dragIdentity: item, // 注意：由于使用了动态组合的dragData，批量拖拽需要使用dragIdentity标记唯一标识符， 否则每次刷新的dragData后会不一致，影响排序
+                  dragScope: 'multiple-group',
+                  dragHandleClass: 'drag-handle',
+                  originPlaceholder: {
+                    show: showOriginPlaceholder,
+                    removeDelay: 300,
+                  },
+                  dragData: { item: item, parent: list.list },
+                  enableDragFollow: true,
+                }"
+                @click="(e) => batchSelectCheck(e, item)"
+                v-dDraggableBatchDrag="{
+                  batchDragActive: item.isSelected,
+                  '@batchDragActiveEvent': () => {
+                    batchSelect(item);
+                  },
+                }"
+                :class="{ selected: item.isSelected }"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
+    <d-switch v-model="showOriginPlaceholder"></d-switch> show origin placeholder <d-switch v-model="switchWhileCrossEdge"></d-switch> cross
+    edge switch
+    <d-button variant="solid" @click="cleanBatch"> clean all selected </d-button>
   </div>
-  <d-switch v-model="showOriginPlaceholder"></d-switch> show origin placeholder
-  <d-switch v-model="switchWhileCrossEdge"></d-switch> cross edge switch
-  <d-button variant="solid" @click="cleanBatch"> clean all selected </d-button>
-</div>
-
 </template>
-<style lang='scss'>
+<style lang="scss">
 .demo8 {
   .row {
     overflow: hidden;
@@ -2178,7 +2163,6 @@ export default defineComponent({
 .show-origin .drop-el li:first-child + .drag-origin-placeholder {
   margin-top: 0;
 }
-
 </style>
 ```
 
@@ -2186,7 +2170,9 @@ export default defineComponent({
 
 ### 二维拖拽和组合拖拽预览
 
-:::demo 使用dDragDropSyncBox指令、dDragSync指令、dDropSync指令协同拖拽，实现二维拖拽；使用dDragPreview配置拖拽预览，使用d-drag-preview-clone-dom-ref 完成拖拽节点预览的克隆。
+使用 dDragDropSyncBox 指令、dDragSync 指令、dDropSync 指令协同拖拽，实现二维拖拽；使用 dDragPreview 配置拖拽预览，使用 d-drag-preview-clone-dom-ref 完成拖拽节点预览的克隆。
+
+:::demo
 
 ```vue
 <script>
@@ -2196,14 +2182,8 @@ export default defineComponent({
   setup() {
     const data = reactive({
       lists: {
-        listA1: [
-          { name: 'Visual Studio Code' },
-          { name: 'WebStorm' },
-          { name: 'Sublime Text' },
-          { name: 'Atom' },
-          { name: 'Notepad++' },
-        ],
-        listA2:   [
+        listA1: [{ name: 'Visual Studio Code' }, { name: 'WebStorm' }, { name: 'Sublime Text' }, { name: 'Atom' }, { name: 'Notepad++' }],
+        listA2: [
           { name: 'Chrome' },
           { name: 'Firefox' },
           { name: 'Opera' },
@@ -2212,50 +2192,45 @@ export default defineComponent({
           { name: 'Safari' },
         ],
         listA3: [],
-        listB1: [
-          {name: 'Linux'},
-          {name: 'Windows'},
-          {name: 'Mac OS'},
-          {name: 'DOS'},
-          {name: 'Chrome OS'},
-        ],
-        listB2:  [
-          {name: 'Android'},
-          {name: 'IOS'},
-          {name: 'BlackBerry'},
-          {name: 'Symbian'},
-        ],
+        listB1: [{ name: 'Linux' }, { name: 'Windows' }, { name: 'Mac OS' }, { name: 'DOS' }, { name: 'Chrome OS' }],
+        listB2: [{ name: 'Android' }, { name: 'IOS' }, { name: 'BlackBerry' }, { name: 'Symbian' }],
         listB3: [],
         listC1: [],
         listC2: [],
-        listC3: []
+        listC3: [],
       },
     });
     const meta = reactive({
-      owners:[ {
-        id: 'not-assign',
-        name: 'Not Assign',
-        collapse: false
-      }, {
-        id: 'available',
-        name: 'Available',
-        collapse: false
-      }, {
-        id: 'not-available',
-        name: 'Not Available',
-        collapse: false
-      }],
-      listCol:[
+      owners: [
+        {
+          id: 'not-assign',
+          name: 'Not Assign',
+          collapse: false,
+        },
+        {
+          id: 'available',
+          name: 'Available',
+          collapse: false,
+        },
+        {
+          id: 'not-available',
+          name: 'Not Available',
+          collapse: false,
+        },
+      ],
+      listCol: [
         {
           id: 'group1',
-          name: 'Group 1'
-        }, {
+          name: 'Group 1',
+        },
+        {
           id: 'group2',
-          name: 'Group 2'
-        }, {
+          name: 'Group 2',
+        },
+        {
           id: 'group3',
-          name: 'Group 3'
-        }
+          name: 'Group 3',
+        },
       ],
       ownerListMap: {
         'not-assign': {
@@ -2263,7 +2238,7 @@ export default defineComponent({
           group2: data.lists.listA2,
           group3: data.lists.listA3,
         },
-        'available': {
+        available: {
           group1: data.lists.listB1,
           group2: data.lists.listB2,
           group3: data.lists.listB3,
@@ -2273,7 +2248,7 @@ export default defineComponent({
           group2: data.lists.listC2,
           group3: data.lists.listC3,
         },
-      }
+      },
     });
 
     function onDrop(e, targetArray) {
@@ -2334,7 +2309,11 @@ export default defineComponent({
     }
 
     function cleanBatch() {
-      data.forEach((list) => list.list.forEach((item) => {item['isSelected'] = false;}));
+      data.forEach((list) =>
+        list.list.forEach((item) => {
+          item['isSelected'] = false;
+        })
+      );
     }
 
     const colTemplate = ref();
@@ -2344,129 +2323,141 @@ export default defineComponent({
 });
 </script>
 <template>
-<div class="demo10">
-  <div class="board" 
-    v-dDragDropSyncBox
-    v-dDropScrollEnhanced="{
-      direction: 'v',
-    }" 
-    v-dDropScrollEnhancedSide="{
-      direction: 'v',
-    }">
-    <div class="row row-group">
-      <div class="row title-row occupied-width">
-        <div class="col-group">
-          <div class="col title-col">Status</div>
-        </div>
-        <div
-          class="col-group"
-          v-dDroppable="{
-            dropScope: 'col',
-            switchWhileCrossEdge: true,
-            '@dropEvent': (e) => {onDrop(e, meta.listCol)},
-          }"
-          v-dSortable="{
-            dSortable: 'h'
-          }"
-          v-dDropSortSync="{
-            dropSortSync: 'col',
-          }"
-        >
+  <div class="demo10">
+    <div
+      class="board"
+      v-dDragDropSyncBox
+      v-dDropScrollEnhanced="{
+        direction: 'v',
+      }"
+      v-dDropScrollEnhancedSide="{
+        direction: 'v',
+      }"
+    >
+      <div class="row row-group">
+        <div class="row title-row occupied-width">
+          <div class="col-group">
+            <div class="col title-col">Status</div>
+          </div>
           <div
-            class="col"
-            v-dDragPreview="{
-              dragPreview: colTemplate,
+            class="col-group"
+            v-dDroppable="{
+              dropScope: 'col',
+              switchWhileCrossEdge: true,
+              '@dropEvent': (e) => {
+                onDrop(e, meta.listCol);
+              },
             }"
-            v-dDraggable="{
-              dragScope: 'col',
-              dragData:{ item: col, parent: meta.listCol },
+            v-dSortable="{
+              dSortable: 'h',
             }"
-            v-dDragSync="{
-              dragSync: 'col-' + col.id,
+            v-dDropSortSync="{
+              dropSortSync: 'col',
             }"
-            v-for="col in meta.listCol"
           >
-            {{ col.name }}
+            <div
+              class="col"
+              v-dDragPreview="{
+                dragPreview: colTemplate,
+              }"
+              v-dDraggable="{
+                dragScope: 'col',
+                dragData: { item: col, parent: meta.listCol },
+              }"
+              v-dDragSync="{
+                dragSync: 'col-' + col.id,
+              }"
+              v-for="col in meta.listCol"
+            >
+              {{ col.name }}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row row-group"
-      v-dSortable
-      v-dDroppable="{
-        dropScope: 'row',
-        switchWhileCrossEdge: true,
-        '@dropEvent': (e) => onDrop(e, meta.owners),
-      }">
       <div
-        class="row"
-        v-dDraggable="{
-          dragScope: 'row',
-          dragHandle: '.title-col',
-          enableDragFollow: true,
-          dragData: { item: owner, parent: meta.owners },
+        class="row row-group"
+        v-dSortable
+        v-dDroppable="{
+          dropScope: 'row',
+          switchWhileCrossEdge: true,
+          '@dropEvent': (e) => onDrop(e, meta.owners),
         }"
-        v-for="owner in meta.owners"
       >
-        <div class="col-group">
-          <div class="col title-col">{{ owner.name }}</div>
-        </div>
-        <div class="col-group"
-          v-dDropSortSync="{
-            dropSortSync: 'col',
-          }">
-          <div class="col"
-            v-dDragSync="{
-              dragSync: 'col-' + col.id,
-            }" 
-            v-for="col in meta.listCol"
+        <div
+          class="row"
+          v-dDraggable="{
+            dragScope: 'row',
+            dragHandle: '.title-col',
+            enableDragFollow: true,
+            dragData: { item: owner, parent: meta.owners },
+          }"
+          v-for="owner in meta.owners"
+        >
+          <div class="col-group">
+            <div class="col title-col">{{ owner.name }}</div>
+          </div>
+          <div
+            class="col-group"
+            v-dDropSortSync="{
+              dropSortSync: 'col',
+            }"
           >
-            <div class="card-container"
-              v-dDroppable="{
-                dropScope: 'card-container',
-                switchWhileCrossEdge: true,
-                '@dropEvent': (e) => onDrop(e, meta.ownerListMap[owner.id][col.id]),
-              }">
-              <ul class="list-group drop-el" v-dSortable>
-                <li
-                  v-for="item of meta.ownerListMap[owner.id][col.id]"
-                  class="list-group-item over-flow-ellipsis"
-                  v-dDraggable="{
-                    dragIdentity: item, // 批量脱欧拽必要
-                    dragScope: 'card-container',
-                    dragData: { item: item, parent: meta.ownerListMap[owner.id][col.id] },
-                    enableDragFollow: true,
-                  }"
-                  @click="(e) => batchSelectCheck(e, item)"
-                  v-dDraggableBatchDrag="{
-                    batchDragActive: item.isSelected,
-                    '@batchDragActiveEvent': () => { batchSelect(item) },
-                  }"
-                  :class="{ selected: item.isSelected }"
-                >
-                  {{ item.name }}
-                </li>
-              </ul>
+            <div
+              class="col"
+              v-dDragSync="{
+                dragSync: 'col-' + col.id,
+              }"
+              v-for="col in meta.listCol"
+            >
+              <div
+                class="card-container"
+                v-dDroppable="{
+                  dropScope: 'card-container',
+                  switchWhileCrossEdge: true,
+                  '@dropEvent': (e) => onDrop(e, meta.ownerListMap[owner.id][col.id]),
+                }"
+              >
+                <ul class="list-group drop-el" v-dSortable>
+                  <li
+                    v-for="item of meta.ownerListMap[owner.id][col.id]"
+                    class="list-group-item over-flow-ellipsis"
+                    v-dDraggable="{
+                      dragIdentity: item, // 批量脱欧拽必要
+                      dragScope: 'card-container',
+                      dragData: { item: item, parent: meta.ownerListMap[owner.id][col.id] },
+                      enableDragFollow: true,
+                    }"
+                    @click="(e) => batchSelectCheck(e, item)"
+                    v-dDraggableBatchDrag="{
+                      batchDragActive: item.isSelected,
+                      '@batchDragActiveEvent': () => {
+                        batchSelect(item);
+                      },
+                    }"
+                    :class="{ selected: item.isSelected }"
+                  >
+                    {{ item.name }}
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <d-drag-preview-template ref="colTemplate" v-slot="{ draggedEl, dragSyncDOMElements }">
+      <div class="board board-preview">
+        <div class="row title-row">
+          <d-drag-preview-clone-dom-ref :domRef="draggedEl"></d-drag-preview-clone-dom-ref>
+        </div>
+        <div class="row" v-for="dom in dragSyncDOMElements">
+          <d-drag-preview-clone-dom-ref :domRef="dom"></d-drag-preview-clone-dom-ref>
+        </div>
+      </div>
+    </d-drag-preview-template>
   </div>
-  <d-drag-preview-template ref="colTemplate" v-slot="{draggedEl, dragSyncDOMElements}">
-    <div class="board board-preview">
-      <div class="row title-row">
-        <d-drag-preview-clone-dom-ref :domRef="draggedEl"></d-drag-preview-clone-dom-ref>
-      </div>
-      <div class="row" v-for="dom in dragSyncDOMElements">
-        <d-drag-preview-clone-dom-ref :domRef="dom"></d-drag-preview-clone-dom-ref>
-      </div>
-    </div>
-  </d-drag-preview-template>
-</div>
-
 </template>
-<style lang='scss'>
+<style lang="scss">
 .board {
   width: 100%;
   max-height: 500px;
@@ -2645,8 +2636,6 @@ export default defineComponent({
     }
   }
 }
-
-
 </style>
 ```
 
@@ -2656,30 +2645,30 @@ export default defineComponent({
 
 ##### dDraggable 参数
 
-|             参数              | 类型                                                                                                             | 默认值        | 描述                                                                                                                                                                                                                        | 跳转 Demo                             |
-| :---------------------------: | :--------------------------------------------------------------------------------------------------------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------ |
-|           dragData            | `any`                                                                                                            | --            | 可选，转递给 `DropEvent`事件的数据.                                                                                                                                                                                         | [基本用法](#基本用法)                            |
-|           dragScope           | `string \| Array<string>`                                                                                        | 'default'     | 可选，限制 drop 的位置，必须匹配对应的 `dropScope`                                                                                                                                                                          | [基本用法](#基本用法)                            |
-|         dragOverClass         | `string`                                                                                                         | --            | 可选，拖动时被拖动元素的 css                                                                                                                                                                                                | [拖拽实体元素跟随](#拖拽实体元素跟随) |
-|          dragHandle           | `string`                                                                                                         | --            | 可选，可拖动拖动内容的 css 选择器，只有匹配 css 选择器的元素才能响应拖动事件, 注意是css选择器，示例：`'.title, .title > *'`,`'#header'`, `'.title *:not(input)'`                                                                 |                      |                        |
-|        dragHandleClass        | `string`                                                                                                         | 'drag-handle' | 可选， 会给可拖动内容的应用的 css 选择器命中的元素添加的 css 类名， 第一个匹配 css 选择器的会被加上该 css 类                                                                                                                | [基本用法](#基本用法)                            |
-|           disabled            | `boolean`                                                                                                        | false         | 可选，控制当前元素是否可拖动 false 为可以，true 为不可以                                                                                                                                                                    | [基本用法](#基本用法)                            |
-|       enableDragFollow        | `boolean`                                                                                                        | false         | 可选，是否启用实体元素跟随（可以添加更多特效，如阴影等）                                                                                                                                                                    | [拖拽实体元素跟随](#拖拽实体元素跟随) |
-|       dragFollowOptions        | `{appendToBody?: boolean}`                                                                                       | --            | 可选，用于控制实体拖拽的一些配置                                                                                                                                                                                            | [拖拽实体元素跟随](#拖拽实体元素跟随) |
-| dragFollowOptions.appendToBody | `boolean`                                                                                                        | false         | 可选，用于控制实体拖拽的克隆元素插入的位置。默认 false 会插入到源元素父元素所有子的最后，设置为 true 会附着到。见说明 1                                                                                                     | [拖拽实体元素跟随](#拖拽实体元素跟随) |
-|       originPlaceholder       | `{show?: boolean; tag?: string; style?: {cssProperties: string]: string}; text?: string; removeDelay?: number;}` | --            | 可选，设置源占位符号，用于被拖拽元素原始位置占位                                                                                                                                                                            | [源占位符](#源占位符)                     |
-|    originPlaceholder.show     | `boolean`                                                                                                        | true          | 可选，是否显示，默认 originPlaceholder 有 Input 则显示，特殊情况可以关闭                                                                                                                                                    |
-|     originPlaceholder.tag     | `string`                                                                                                         | 'div'         | 可选，使用 tag 名，默认 originPlaceholder 使用'div'，特殊情况可以置换                                                                                                                                                       |
-|    originPlaceholder.style    | `Object`                                                                                                         | --            | 可选，传 style 对象，key 为样式属性，value 为样式值                                                                                                                                                                         | [源占位符](#源占位符)                     |
-|    originPlaceholder.text     | `string`                                                                                                         | --            | 可选，placeholder 内的文字                                                                                                                                                                                                  | [源占位符](#源占位符)                     |
-| originPlaceholder.removeDelay | `number`                                                                                                         | --            | 可选，用于希望源占位符在拖拽之后的延时里再删除，方便做动画，单位为 ms 毫秒                                                                                                                                                  | [源占位符](#源占位符)                     |
+|               参数               |                                                       类型                                                       | 默认值        | 描述                                                                                                                                             | 跳转 Demo                             |
+| :------------------------------: | :--------------------------------------------------------------------------------------------------------------: | :------------ | :----------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------ |
+|            `dragData`            |                                                      `any`                                                       | --            | 可选，传递给 `DropEvent` 事件的数据。                                                                                                            | [基本用法](#基本用法)                 |
+|           `dragScope`            |                                            `string \| Array<string>`                                             | 'default'     | 可选，限制 drop 的位置，必须匹配对应的 `dropScope`。                                                                                             | [基本用法](#基本用法)                 |
+|         `dragOverClass`          |                                                     `string`                                                     | --            | 可选，拖动时被拖动元素的 CSS 类。                                                                                                                | [拖拽实体元素跟随](#拖拽实体元素跟随) |
+|           `dragHandle`           |                                                     `string`                                                     | --            | 可选，可拖动拖动内容的 CSS 选择器，只有匹配 CSS 选择器的元素才能响应拖动事件。示例：`'.title, .title > *'`, `'#header'`, `'.title *:not(input)'` |                                       |
+|        `dragHandleClass`         |                                                     `string`                                                     | 'drag-handle' | 可选，会给可拖动内容的应用的 CSS 选择器命中的元素添加的 CSS 类名，第一个匹配 CSS 选择器的会被加上该 CSS 类。                                     | [基本用法](#基本用法)                 |
+|            `disabled`            |                                                    `boolean`                                                     | false         | 可选，控制当前元素是否可拖动，false 为可以，true 为不可以。                                                                                      | [基本用法](#基本用法)                 |
+|        `enableDragFollow`        |                                                    `boolean`                                                     | false         | 可选，是否启用实体元素跟随（可以添加更多特效，如阴影等）。                                                                                       | [拖拽实体元素跟随](#拖拽实体元素跟随) |
+|       `dragFollowOptions`        |                                            `{appendToBody?: boolean}`                                            | --            | 可选，用于控制实体拖拽的一些配置。                                                                                                               | [拖拽实体元素跟随](#拖拽实体元素跟随) |
+| `dragFollowOptions.appendToBody` |                                                    `boolean`                                                     | false         | 可选，用于控制实体拖拽的克隆元素插入的位置。默认 false 会插入到源元素父元素所有子的最后，设置为 true 会附着到。见说明 1                          | [拖拽实体元素跟随](#拖拽实体元素跟随) |
+|       `originPlaceholder`        | `{show?: boolean; tag?: string; style?: {cssProperties: string]: string}; text?: string; removeDelay?: number;}` | --            | 可选，设置源占位符号，用于被拖拽元素原始位置占位。                                                                                               | [源占位符](#源占位符)                 |
+|     `originPlaceholder.show`     |                                                    `boolean`                                                     | true          | 可选，是否显示，默认 originPlaceholder 有 Input 则显示，特殊情况可以关闭。                                                                       |
+|     `originPlaceholder.tag`      |                                                     `string`                                                     | 'div'         | 可选，使用 tag 名，默认 originPlaceholder 使用 'div'，特殊情况可以置换。                                                                         |
+|    `originPlaceholder.style`     |                                                     `Object`                                                     | --            | 可选，传 style 对象，key 为样式属性，value 为样式值。                                                                                            | [源占位符](#源占位符)                 |
+|     `originPlaceholder.text`     |                                                     `string`                                                     | --            | 可选，placeholder 内的文字。                                                                                                                     | [源占位符](#源占位符)                 |
+| `originPlaceholder.removeDelay`  |                                                     `number`                                                     | --            | 可选，用于希望源占位符在拖拽之后的延时里再删除，方便做动画，单位为 ms 毫秒。                                                                     | [源占位符](#源占位符)                 |
 
 说明 1：dragFollowOptions 的 appendToBody 的使用场景：当拖拽离开后源位置的父对象会被销毁的话，需要把克隆体附着到 body 上防止被销毁。默认会通过复制样式保证克隆到 body 的实体的样式是正确的，但部分深度依赖 DOM 节点位置的样式和属性可能会失败，需要手动调整部分样式。
 
 ##### dDraggable 事件
 
-| 事件           | 类型                      | 描述                      | 跳转 Demo                    |
-| :------------- | :------------------------ | :------------------------ | :--------------------------- |
+| 事件           | 类型                      | 描述                      | 跳转 Demo             |
+| :------------- | :------------------------ | :------------------------ | :-------------------- |
 | dragStartEvent | `EventEmitter<DragEvent>` | 开始拖动的 DragStart 事件 | [基本用法](#基本用法) |
 | dragEndEvent   | `EventEmitter<DragEvent>` | 拖动结束的 DragEnd 事件   | [基本用法](#基本用法) |
 | dropEndEvent   | `EventEmitter<DragEvent>` | 放置结束的 Drop 事件      | [基本用法](#基本用法) |
@@ -2692,9 +2681,9 @@ Drag DOM Events 详情: [DragEvent](https://developer.mozilla.org/en-US/docs/Web
 
 ##### dDraggableBatchDrag 属性
 
-| 名字                                | 类型                      | 默认值             | 描述                                                                                           | 跳转 Demo                            |
-| :---------------------------------- | :------------------------ | :----------------- | :--------------------------------------------------------------------------------------------- | :----------------------------------- |
-| batchDragGroup \| batchDrag                      | `string`                  | 'default'          | 可选，批量拖拽分组组名，不同组名                                                               |
+| 名字                                | 类型                      | 默认值             | 描述                                                                                           | 跳转 Demo             |
+| :---------------------------------- | :------------------------ | :----------------- | :--------------------------------------------------------------------------------------------- | :-------------------- |
+| batchDragGroup \| batchDrag         | `string`                  | 'default'          | 可选，批量拖拽分组组名，不同组名                                                               |
 | batchDragActive                     | `boolean`                 | false              | 可选，是否把元素加入到批量拖拽组. 见说明 1。                                                   | [批量拖拽](#批量拖拽) |
 | batchDragLastOneAutoActiveEventKeys | `Array<key in DragEvent>` | ['ctrlKey']        | 可选，通过过拖拽可以激活批量选中的拖拽事件判断。见说明 2。                                     |
 | batchDragStyle                      | `Array<badge\|stack>`     | ['badge', 'stack'] | 可选，批量拖拽的效果，badge 代表右上角有统计数字，stack 代表有堆叠效果，数组里有该字符串则有效 | [批量拖拽](#批量拖拽) |
@@ -2702,35 +2691,35 @@ Drag DOM Events 详情: [DragEvent](https://developer.mozilla.org/en-US/docs/Web
 说明 1： `batchDragActive`为`true`的时候会把元素加入组里，加入顺序为变为 true 的顺序，先加入的在数组前面。第一个元素会确认批量的组名，如果后加入的组名和先加入的组名不一致，则后者无法加入。
 说明 2： `batchDragLastOneAutoActiveEventKeys`的默认值为['ctrlKey'], 即可以通过按住 ctrl 键拖动最后一个元素， 该元素自动加入批量拖拽的组，判断条件是 dragStart 事件里的 ctrlKey 事件为 true。目前仅支持判断 true/false。该参数为数组，可以判断任意一个属性值为 true 则生效，可用于不同操作系统的按键申明。
 
-##### dDraggableBatchDrag事件
+##### dDraggableBatchDrag 事件
 
-| 名字                 | 类型                                     | 描述                                               | 跳转 Demo                            |
-| :------------------- | :--------------------------------------- | :------------------------------------------------- | :----------------------------------- |
+| 名字                 | 类型                                     | 描述                                               | 跳转 Demo             |
+| :------------------- | :--------------------------------------- | :------------------------------------------------- | :-------------------- |
 | batchDragActiveEvent | `EventEmitter<{el: Element, data: any}>` | 通过拖拽把元素加入了批量拖拽组，通知外部选中该元素 | [批量拖拽](#批量拖拽) |
 
 #### dDroppable 指令
 
 ##### dDroppable 参数
 
-| 参数                        | 类型                                           | 默认值                                      | 描述                                                                                                                                                   | 跳转 Demo                                  |
-| :-------------------------- | :--------------------------------------------- | :------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------- |
-| dropScope                   | `string \| Array<string>`                      | 'default'                                   | 可选，限制 drop 的区域，对应 dragScope                                                                                                                 | [基本用法](#基本用法)               |
+| 参数                        | 类型                                           | 默认值                                      | 描述                                                                                                                                                   | 跳转 Demo                                       |
+| :-------------------------- | :--------------------------------------------- | :------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------- |
+| dropScope                   | `string \| Array<string>`                      | 'default'                                   | 可选，限制 drop 的区域，对应 dragScope                                                                                                                 | [基本用法](#基本用法)                           |
 | dragOverClass               | `string`                                       | --                                          | 可选，dragover 时 drop 元素上应用的 css                                                                                                                |
-| placeholderStyle            | `Object`                                       | {backgroundColor: '#6A98E3', opacity: '.4'} | 可选，允许 sort 时，用于占位显示                                                                                                                       | [源占位符](#源占位符)        |
+| placeholderStyle            | `Object`                                       | {backgroundColor: '#6A98E3', opacity: '.4'} | 可选，允许 sort 时，用于占位显示                                                                                                                       | [源占位符](#源占位符)                           |
 | placeholderText             | `string`                                       | ''                                          | 可选，允许 sort 时，用于占位显示内部的文字                                                                                                             |
-| allowDropOnItem             | `boolean`                                      | false                                       | 可选，允许 sort 时，用于允许拖动到元素上，方便树形结构的拖动可以成为元素的子节点                                                                       | [多层树状拖拽](#多层树状拖拽) |
-| dragOverItemClass           | `string`                                       | --                                          | 可选，`allowDropOnItem`为`true`时，才有效，用于允许拖动到元素上后，被命中的元素增加样式                                                                | [多层树状拖拽](#多层树状拖拽) |
-| nestingTargetRect           | `{height?: number, width?: number}`            | --                                          | 可选，用于修正有内嵌列表后，父项高度被撑大，此处 height，width 为父项自己的高度（用于纵向拖动），宽度（用于横向拖动）                                  | [多层树状拖拽](#多层树状拖拽) |
-| defaultDropPosition         | `'closest' \| 'before' \| 'after'`             | 'closest'                                   | 可选，设置拖拽到可放置区域但不在列表区域的放置位置，`'closest'` 为就近放下， `'before'`为加到列表头部， `'after'`为加到列表尾部                        | [外部放置位置](#外部放置位置：就近，前面，后面)     |
+| allowDropOnItem             | `boolean`                                      | false                                       | 可选，允许 sort 时，用于允许拖动到元素上，方便树形结构的拖动可以成为元素的子节点                                                                       | [多层树状拖拽](#多层树状拖拽)                   |
+| dragOverItemClass           | `string`                                       | --                                          | 可选，`allowDropOnItem`为`true`时，才有效，用于允许拖动到元素上后，被命中的元素增加样式                                                                | [多层树状拖拽](#多层树状拖拽)                   |
+| nestingTargetRect           | `{height?: number, width?: number}`            | --                                          | 可选，用于修正有内嵌列表后，父项高度被撑大，此处 height，width 为父项自己的高度（用于纵向拖动），宽度（用于横向拖动）                                  | [多层树状拖拽](#多层树状拖拽)                   |
+| defaultDropPosition         | `'closest' \| 'before' \| 'after'`             | 'closest'                                   | 可选，设置拖拽到可放置区域但不在列表区域的放置位置，`'closest'` 为就近放下， `'before'`为加到列表头部， `'after'`为加到列表尾部                        | [外部放置位置](#外部放置位置：就近，前面，后面) |
 | dropSortCountSelector       | `string`                                       | --                                          | 可选，带有 sortable 的容器的情况下排序，计数的内容的选择器名称，可以用于过滤掉不应该被计数的元素                                                       |
 | dropSortVirtualScrollOption | `{totalLength?: number; startIndex?: number;}` | --                                          | 可选，用于虚拟滚动列表中返回正确的 dropIndex 需要接收 totalLength 为列表的真实总长度， startIndex 为当前排序区域显示的第一个 dom 的在列表内的 index 值 |
-| switchWhileCrossEdge        | `boolean`                                      | false                                       | 可选，是否启用越过立即交换位置的算法, 不能与allowDropOnItem一起用，allowDropOnItem为true时，此规则无效                                               |
-| placeholderTag | `string` | 'div' | 可选，占位显示的元素标签 |
+| switchWhileCrossEdge        | `boolean`                                      | false                                       | 可选，是否启用越过立即交换位置的算法, 不能与 allowDropOnItem 一起用，allowDropOnItem 为 true 时，此规则无效                                            |
+| placeholderTag              | `string`                                       | 'div'                                       | 可选，占位显示的元素标签                                                                                                                               |
 
 ##### dDroppable 事件
 
-| 事件           | 类型                                        | 描述                                                                            | 跳转 Demo                    |
-| :------------- | :------------------------------------------ | :------------------------------------------------------------------------------ | :--------------------------- |
+| 事件           | 类型                                        | 描述                                                                            | 跳转 Demo             |
+| :------------- | :------------------------------------------ | :------------------------------------------------------------------------------ | :-------------------- |
 | dragEnterEvent | `EventEmitter<DragEvent>`                   | drag 元素进入的 dragenter 事件                                                  | [基本用法](#基本用法) |
 | dragOverEvent  | `EventEmitter<DragEvent>`                   | drag 元素在 drop 区域上的 dragover 事件                                         | [基本用法](#基本用法) |
 | dragLeaveEvent | `EventEmitter<DragEvent>`                   | drag 元素离开的 dragleave 事件                                                  | [基本用法](#基本用法) |
@@ -2746,7 +2735,7 @@ type DropEvent = {
   dropIndex?: number; // drop的位置在列表的index
   dragFromIndex?: number; // drag元素在原来的列表的index，注意使用虚拟滚动数据无效
   dropOnItem?: boolean; // 是否drop到了元素的上面，搭配allowDropOnItem使用
-}
+};
 ```
 
 #### dSortable 指令
@@ -2764,8 +2753,8 @@ type DropEvent = {
 
 ##### dDropScrollEnhanced 参数
 
-| 名字               | 类型                                                                                            | 默认值   | 描述                                                                                                                       | 跳转 Demo                                                    |
-| :----------------- | :---------------------------------------------------------------------------------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------- |
+| 名字               | 类型                                                                                            | 默认值   | 描述                                                                                                                       | 跳转 Demo                             |
+| :----------------- | :---------------------------------------------------------------------------------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------- | :------------------------------------ |
 | direction          | [`DropScrollDirection`](#dropscrolldirection)即`'v'\|'h'`                                       | 'v'      | 滚动方向，垂直滚动`'v'`, 水平滚动 `'h'`                                                                                    | [拖拽滚动容器增强](#拖拽滚动容器增强) |
 | responseEdgeWidth  | `string \| ((total: number) => string)`                                                         | '100px'  | 响应自动滚动边缘宽度, 函数的情况传入的为列表容器同个方向相对宽度                                                           | [拖拽滚动容器增强](#拖拽滚动容器增强) |
 | speedFn            | [`DropScrollSpeedFunction`](#dropscrolldirection)                                               | 内置函数 | 速率函数，见备注                                                                                                           |
@@ -2857,9 +2846,11 @@ export type DropScrollTriggerEdge = 'left' | 'right' | 'top' | 'bottom';
  提供 drag 和 drop 时的 hover 样式，注意是`字符串`
 
 ```html
-<div v-dDroppable="{
+<div
+  v-dDroppable="{
   dragOverClass: 'drag-target-border'
-}">
+}"
+>
   <p>Drop items here</p>
 </div>
 ```
@@ -2879,17 +2870,21 @@ export type DropScrollTriggerEdge = 'left' | 'right' | 'top' | 'bottom';
 ```
 
 ```html
-<div v-dDroppable="{
+<div
+  v-dDroppable="{
   dropScope: 'drink',
   dragOverClass: 'drag-target-border',
-}">
+}"
+>
   <p>只有 Drinks 可以放在这个container里</p>
 </div>
 
-<div v-dDroppable="{
+<div
+  v-dDroppable="{
   dropScope: ['drink', 'meal'],
   dragOverClass: 'drag-target-border'
-}">
+}"
+>
   <p>Meal 和 Drinks 可以放在这个container里</p>
 </div>
 ```
@@ -2934,9 +2929,11 @@ Drag 句柄可以指定实际响应 draggable 事件的元素，而不是 dragga
 这个参数必须是一个字符串，实际上是一个 css 选择器
 
 ```html
-<li v-dDraggable="{
+<li
+  v-dDraggable="{
   dragHandle: '.drag-handle'
-}">
+}"
+>
   只有.drag-handle可以响应拖动事件来拖起li
   <div class="pull-right"><i class="drag-handle fa fa-bars fa-lg" aria-hidden="true"></i></div>
 </li>
@@ -2948,10 +2945,15 @@ Drag 句柄可以指定实际响应 draggable 事件的元素，而不是 dragga
 
 ```html
 <ul class="list-group">
-  <li v-dDraggable="{
+  <li
+    v-dDraggable="{
     dragData: item,
     '@dropEndEvent': e => dropEnd(e, i)
-  }" v-for="(item, i) in items;">{{item.name}}</li>
+  }"
+    v-for="(item, i) in items;"
+  >
+    {{item.name}}
+  </li>
 </ul>
 
 <div class="panel panel-default" v-dDroppable="{'@dropEvent': e => onItemDrop(e)}">
@@ -2981,8 +2983,8 @@ setup() {
 
 ###### dDragSync 参数
 
-| 参数      | 类型     | 默认值 | 描述                                                             | 跳转 Demo                                           |
-| :-------- | :------- | :----- | :--------------------------------------------------------------- | :-------------------------------------------------- |
+| 参数      | 类型     | 默认值 | 描述                                                             | 跳转 Demo                                         |
+| :-------- | :------- | :----- | :--------------------------------------------------------------- | :------------------------------------------------ |
 | dDragSync | `string` | ''     | 必选，拖同步的组名，为空或者空字符串的时候无效，不与其他内容同步 | [二维拖拽和组合拖拽预览](#二维拖拽和组合拖拽预览) |
 
 ##### 协同放 dDropSortSync
@@ -2991,8 +2993,8 @@ setup() {
 
 ###### dDropSortSync 参数
 
-| 参数               | 类型        | 默认值 | 描述                                                             | 跳转 Demo                                           |
-| :----------------- | :---------- | :----- | :--------------------------------------------------------------- | :-------------------------------------------------- |
+| 参数               | 类型        | 默认值 | 描述                                                             | 跳转 Demo                                         |
+| :----------------- | :---------- | :----- | :--------------------------------------------------------------- | :------------------------------------------------ |
 | dDropSortSync      | `string`    | ''     | 必选，放同步的组名，为空或者空字符串的时候无效，不与其他内容同步 | [二维拖拽和组合拖拽预览](#二维拖拽和组合拖拽预览) |
 | dDropSyncDirection | `'v'\| 'h'` | 'v'    | 可选，与 dSortable 的方向正交                                    |
 
@@ -3009,8 +3011,8 @@ setup() {
 
 ###### dDragPreview 参数
 
-| 参数                                | 类型                            | 默认值 | 描述                                                                               | 跳转 Demo                                           |
-| :---------------------------------- | :------------------------------ | :----- | :--------------------------------------------------------------------------------- | :-------------------------------------------------- |
+| 参数                                | 类型                            | 默认值 | 描述                                                                               | 跳转 Demo                                         |
+| :---------------------------------- | :------------------------------ | :----- | :--------------------------------------------------------------------------------- | :------------------------------------------------ |
 | dDragPreview                        | `TemplateRef<any>`              | --     | 必选，预览的模板引用                                                               | [二维拖拽和组合拖拽预览](#二维拖拽和组合拖拽预览) |
 | dragPreviewData                     | `any`                           | --     | 可选，自定义数据，将由模板变量获得                                                 |
 | dragPreviewOptions                  | `{ skipBatchPreview : boolean}` | --     | 可选，预览选项                                                                     |
@@ -3030,7 +3032,7 @@ setup() {
 
 可以从节点的引用中恢复 DOM 的克隆对象作为预览
 
-| 参数      | 类型          | 默认值 | 描述                                       | 跳转 Demo |
-| :-------- | :------------ | :----- | :----------------------------------------- | :-------- |
-| domRef    | `HTMLElement` | --     | 必选，否则无意义，克隆节点的 DOM 引用      | [二维拖拽和组合拖拽预览](#二维拖拽和组合拖拽预览)|
-| copyStyle | `boolean`     | true   | 可选，是否克隆节点的时候对节点依次克隆样式 |[二维拖拽和组合拖拽预览](#二维拖拽和组合拖拽预览)|
+| 参数      | 类型          | 默认值 | 描述                                       | 跳转 Demo                                         |
+| :-------- | :------------ | :----- | :----------------------------------------- | :------------------------------------------------ |
+| domRef    | `HTMLElement` | --     | 必选，否则无意义，克隆节点的 DOM 引用      | [二维拖拽和组合拖拽预览](#二维拖拽和组合拖拽预览) |
+| copyStyle | `boolean`     | true   | 可选，是否克隆节点的时候对节点依次克隆样式 | [二维拖拽和组合拖拽预览](#二维拖拽和组合拖拽预览) |

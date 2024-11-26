@@ -4,14 +4,16 @@
 
 ### When to Use
 
-:::demo User can be use Basic ripple functionality can be enabled just by using v-ripple directive on a component or an HTML element <span color="#409EFF">`v-ripple`</span>Basic ripple functionality <span color="#409EFF">`v-ripple`</span> Directive `v-ripple` Accept an object
+User can be use Basic ripple functionality can be enabled just by using v-ripple directive on a component or an HTML element <span color="#409EFF">`v-ripple`</span>Basic ripple functionality <span color="#409EFF">`v-ripple`</span> Directive `v-ripple` Accept an object
+
+:::demo
 
 ```vue
 <template>
   <d-row :gutter="50">
     <d-col :span="12">
       <div class="ripple-button">
-        <div class="ripple-htmlElement" v-ripple="{ color: '#5e7ce0',duration: 300 }">HTML element with v-ripple</div>
+        <div class="ripple-htmlElement" v-ripple="{ color: '#5e7ce0', duration: 300 }">HTML element with v-ripple</div>
       </div>
     </d-col>
     <d-col :span="12">
@@ -47,7 +49,7 @@
             { color: '#67C23A', text: 'Item with Success ripple' },
             { color: '#E6A23C', text: 'Item with Warning ripple' },
             { color: '#F56C6C', text: 'Item with Danger ripple' },
-            { color: '#909399', text: 'Item with Info ripple' }
+            { color: '#909399', text: 'Item with Info ripple' },
           ]"
           :style="{ color: item.color }"
         >
@@ -65,14 +67,11 @@
             { color: '#67C23A', text: 'Item with Success ripple' },
             { color: '#E6A23C', text: 'Item with Warning ripple' },
             { color: '#F56C6C', text: 'Item with Danger ripple' },
-            { color: '#909399', text: 'Item with Info ripple' }
+            { color: '#909399', text: 'Item with Info ripple' },
           ]"
           :style="{ color: item.color }"
         >
-          <div
-            class="ripple-changeTextColor"
-            v-ripple="{ duration: 300, color: `${item.color.slice(0, 4)}` }"
-          >
+          <div class="ripple-changeTextColor" v-ripple="{ duration: 300, color: `${item.color.slice(0, 4)}` }">
             {{ item.text }}
           </div>
         </li>
@@ -83,7 +82,6 @@
 ```
 
 :::
-
 
 ### Ripple in components
 
@@ -102,7 +100,7 @@ Button Component
     <d-col :span="6">
       <d-button v-ripple="{ duration: 300 }" variant="text-dark" style="margin-right: 20px">Text dark</d-button>
     </d-col>
-        <d-col :span="6">
+    <d-col :span="6">
       <d-button v-ripple="{ duration: 300 }" icon="add" variant="text-dark" title="add"></d-button>
     </d-col>
     <d-col :span="6">
@@ -114,68 +112,58 @@ Button Component
 
 :::
 
-Card Component 
+Card Component
 
 :::demo
+
 ```vue
 <template>
   <d-card v-ripple="{ duration: 300 }" class="d-card" :src="'https://devui.design/components/assets/image1.png'">
     <template #cardAvatar>
       <d-avatar name="DevUI"></d-avatar>
     </template>
-    <template #cardTitle>
-      DEVUI Course
-    </template>
-    <template #cardSubtitle class="icon">
-      <d-icon name="company-member"></d-icon><span>DevUI</span>
-    </template>
+    <template #cardTitle> DEVUI Course </template>
+    <template #cardSubtitle class="icon"> <d-icon name="company-member"></d-icon><span>DevUI</span> </template>
     <template #cardContent>
-      DEVUI is a free open-source and common solution for the front end of enterprise mid- and back-end products. Its design values are basedon...
+      DEVUI is a free open-source and common solution for the front end of enterprise mid- and back-end products. Its design values are
+      basedon...
     </template>
     <template #cardActions>
-      <div class="card-block">
-        <d-icon name="like"></d-icon ><span>12</span>
-      </div>
-      <div class="card-block">
-        <d-icon name="star-o"></d-icon ><span>8</span>
-      </div>
-      <div class="card-block">
-        <d-icon name="message"></d-icon ><span>8</span>
-      </div>
+      <div class="card-block"><d-icon name="like"></d-icon><span>12</span></div>
+      <div class="card-block"><d-icon name="star-o"></d-icon><span>8</span></div>
+      <div class="card-block"><d-icon name="message"></d-icon><span>8</span></div>
     </template>
   </d-card>
 </template>
 <style lang="scss">
-  .card-block {
-    margin-right: 16px;
-    i{
-      cursor: pointer;
-      font-size: 16px;
-      vertical-align: middle;
-    }
-    i + span {
-      vertical-align: middle;
-    }
-  }
-  .d-card {
+.card-block {
+  margin-right: 16px;
+  i {
     cursor: pointer;
-    transition:
-      box-shadow .3s cubic-bezier(.645,.045,.355,1),
-      transform .3s cubic-bezier(.645,.045,.355,1);
-    &:hover {
-      box-shadow: 0 4px 16px 0 rgba(0,0,0,.1);
-      transform: translateY(-5px);
-    }
+    font-size: 16px;
+    vertical-align: middle;
   }
-  .card-container {
-    width: 350px;
+  i + span {
+    vertical-align: middle;
   }
-  img {
-    max-width: none;
+}
+.d-card {
+  cursor: pointer;
+  transition: box-shadow 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  &:hover {
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
   }
-  .action-text {
-    color: #8a8e99;
-  }
+}
+.card-container {
+  width: 350px;
+}
+img {
+  max-width: none;
+}
+.action-text {
+  color: #8a8e99;
+}
 </style>
 ```
 
@@ -200,12 +188,12 @@ Card Component
 
 ### API
 
-|      parameter       |   type    |    default     | introduce                                                                          |
-| :---: | :---: | :---: | :---: |
-|      color      | `string`  | `#00000050` | Choose Default current text color                                             |
-| initial-opacity | `number`  |    `0.1`    | Choose Initial interaction Opacity size                                       |
+|    parameter    |   type    |   default   |                                   introduce                                   |
+| :-------------: | :-------: | :---------: | :---------------------------------------------------------------------------: |
+|      color      | `string`  | `#00000050` |                       Choose Default current text color                       |
+| initial-opacity | `number`  |    `0.1`    |                    Choose Initial interaction Opacity size                    |
 |  final-opacity  | `number`  |    `0.1`    | Choose, end the interactive effect and press the Opacity size for a long time |
-|    duration     | `number`  |    `400`    | Choose, duration                                                              |
-|     easing      | `string`  | `ease-out`  | Choose, animation easing                                                      |
-|     delay       | `number`  |    `75`     | Choose, slow animation is delayed after debouceTime time.                     |
-|    disabled     | `boolean` |   `false`   | Choose, disabled ripple effect                                                |
+|    duration     | `number`  |    `400`    |                               Choose, duration                                |
+|     easing      | `string`  | `ease-out`  |                           Choose, animation easing                            |
+|      delay      | `number`  |    `75`     |           Choose, slow animation is delayed after debouceTime time.           |
+|    disabled     | `boolean` |   `false`   |                        Choose, disabled ripple effect                         |

@@ -1,5 +1,5 @@
 import { computed, Ref, SetupContext } from 'vue';
-import { debounce, isFunction } from 'lodash';
+import { debounce, isFunction } from 'lodash-es';
 import { EditableSelectProps } from '../editable-select-types';
 import { States } from './use-select';
 

@@ -1,4 +1,4 @@
-# Button 
+# Button
 
 Button is used to start an instant operation.
 
@@ -8,7 +8,9 @@ It marks (or encapsulates a group of) operation commands, responds to user click
 
 ### Basic Usage
 
-:::demo Use `variant` to set button shape. Three types are supported: `solid`, `outline` and `text`, default  `outline`.
+Use `variant` to set button shape. Three types are supported: `solid`, `outline` and `text`, default `outline`.
+
+:::demo
 
 ```vue
 <template>
@@ -24,7 +26,9 @@ It marks (or encapsulates a group of) operation commands, responds to user click
 
 ### Theme Color
 
-:::demo Use `color` to set `Button` theme color. Three types of theme colors are supported: `primary`, `secondary`, and `danger`.<br>Note: If the `variant` is set to `solid`, the `primar` theme color will be used by default.
+Use `color` to set `Button` theme color. Three types of theme colors are supported: `primary`, `secondary`, and `danger`.<br>Note: If the `variant` is set to `solid`, the `primar` theme color will be used by default.
+
+:::demo
 
 ```vue
 <template>
@@ -52,7 +56,9 @@ It marks (or encapsulates a group of) operation commands, responds to user click
 
 ### Size
 
-:::demo Use `size` to set `Button` size. Three types of sizes are supported: `sm`, `md`, and `lg`, default `md`.
+Use `size` to set `Button` size. Three types of sizes are supported: `sm`, `md`, and `lg`, default `md`.
+
+:::demo
 
 ```vue
 <template>
@@ -68,7 +74,9 @@ It marks (or encapsulates a group of) operation commands, responds to user click
 
 ### Disabled
 
-:::demo Use the `disabled` parameter to set the status of the button to Disabled. 
+Use the `disabled` parameter to set the status of the button to Disabled.
+
+:::demo
 
 ```vue
 <template>
@@ -90,7 +98,9 @@ It marks (or encapsulates a group of) operation commands, responds to user click
 
 ### Loading
 
-:::demo Use the `loading` parameter to set the status of the button to Loading. 
+Use the `loading` parameter to set the status of the button to Loading.
+
+:::demo
 
 ```vue
 <template>
@@ -143,6 +153,7 @@ export default {
 ### Button group
 
 Buttons can be grouped. The size of the button group can be set by `size` and mixed with the dropdown menu.
+
 :::demo
 
 ```vue
@@ -151,7 +162,7 @@ Buttons can be grouped. The size of the button group can be set by `size` and mi
     <d-button variant="solid">Button Name</d-button>
     <d-button icon="icon-select-arrow" variant="solid"></d-button>
   </d-button-group>
-  
+
   <p>Size：sm</p>
   <d-button-group size="sm">
     <d-button color="primary" variant="solid">Shanghai</d-button>
@@ -229,15 +240,15 @@ export default defineComponent({
 
 ### Button Props
 
-| Parameter   | Type                              | Default        | Description                      | Jump to Demo                 |
-| :------- | :-------------------------------- | :---------- | :------------------------ | :------------------------ |
-| variant  | [IButtonVariant](#ibuttonvariant) | 'outline'   | Optional. Button style.            | [Basic Usage](#basic-usage)             |
-| color    | [IButtonColor](#ibuttoncolor)     | 'secondary' | Optional. Button theme.            | [theme color](#theme-color)         |
-| size     | [IButtonSize](#ibuttonsize)       | 'md'        | Optional. Button size.            | [size](#size)             |
-| icon     | `string`                          | --          | Optional. Customize icons in buttons.      | [icon](#icon)     |
-| shape    | [IButtonShape](#ibuttonshape)     | --          | Optional. Button shape(round/rounded). | [shape](#icon)     |
-| disabled | `boolean`                         | false       | Optional. Disable button.     | [disabled](#disabled)     |
-| loading  | `boolean`                         | false       | Optional. Set status in loading.      | [loading](#loading) |
+| Parameter | Type                              | Default     | Description                            | Jump to Demo                |
+| :-------- | :-------------------------------- | :---------- | :------------------------------------- | :-------------------------- |
+| variant   | [IButtonVariant](#ibuttonvariant) | 'outline'   | Optional. Button style.                | [Basic Usage](#basic-usage) |
+| color     | [IButtonColor](#ibuttoncolor)     | 'secondary' | Optional. Button theme.                | [theme color](#theme-color) |
+| size      | [IButtonSize](#ibuttonsize)       | 'md'        | Optional. Button size.                 | [size](#size)               |
+| icon      | `string`                          | --          | Optional. Customize icons in buttons.  | [icon](#icon)               |
+| shape     | [IButtonShape](#ibuttonshape)     | --          | Optional. Button shape(round/rounded). | [shape](#icon)              |
+| disabled  | `boolean`                         | false       | Optional. Disable button.              | [disabled](#disabled)       |
+| loading   | `boolean`                         | false       | Optional. Set status in loading.       | [loading](#loading)         |
 
 ### Button TypeDefine
 
@@ -267,9 +278,9 @@ type IButtonShape = 'circle' | 'round';
 
 ### ButtonGroup Props
 
-| Parameter | Type                             | Default | Description             | Jump to Demo         |
-| :----- | :------------------------------- | :--- | :--------------- | :---------------- |
-| size   | [IButtonSize](#iButtonGroupSize) | 'md' | Optional. Button group size. | [button group](#button-group) |
+| Parameter | Type                             | Default | Description                  | Jump to Demo                  |
+| :-------- | :------------------------------- | :------ | :--------------------------- | :---------------------------- |
+| size      | [IButtonSize](#iButtonGroupSize) | 'md'    | Optional. Button group size. | [button group](#button-group) |
 
 ### ButtonGroup TypeDefine
 

@@ -4,7 +4,7 @@ import { SelectProps, OptionObjectItem } from './select-types';
 import { className, KeyType } from './utils';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { onClickOutside } from '@vueuse/core';
-import { isFunction, debounce } from 'lodash';
+import { isFunction, debounce } from 'lodash-es';
 import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../form';
 
 export default function useSelect(
