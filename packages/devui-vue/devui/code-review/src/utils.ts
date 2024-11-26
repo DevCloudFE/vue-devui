@@ -547,7 +547,7 @@ export function getLineNumbers(trNodes: HTMLElement[], outputFormat: OutputForma
       const rightLineNumber = parseInt((lineNumberTdNode.children[1] as HTMLElement)?.innerText);
 
       leftLineNumber && leftNumbers.push(leftLineNumber);
-      rightLineNumber && rightNumbers.push(leftLineNumber);
+      rightLineNumber && rightNumbers.push(rightLineNumber);
     } else {
       const tdNodes = Array.from(itemTrNode.children) as HTMLElement[];
       const lineNumberTdNode: HTMLElement = tdNodes[side === 'left' ? 0 : 2];
