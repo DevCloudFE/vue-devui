@@ -14,7 +14,7 @@ import {
 export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: CodeReviewProps, ctx: SetupContext) {
   const { outputFormat, allowComment, allowChecked } = toRefs(props);
   const ns = useNamespace('code-review');
-  const { onMousedown } = useCodeReviewLineSelection(reviewContentRef, props, updateLineNumbers, afterCheckLines);
+  const { onMousedown } = useCodeReviewLineSelection(reviewContentRef, props, afterMouseup);
   const commentLeft = ref(-100);
   const commentTop = ref(-100);
   let currentLeftLineNumber = -1;
@@ -117,26 +117,6 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
       resetLeftTop();
     }
   };
-  // 获代码行 取值方法
-  const getLineNumbers = (currentNumber: number, currentNumbers: Array<number>, moveDirection: 'up' | 'down') => {
-    if (currentNumber === -1) {
-      // 当前行没数据不代表之前选中的没数据，此时返回原来的
-      return currentNumbers;
-    }
-    if (currentNumbers.length === 0) {
-      return [currentNumber];
-    }
-    const numbers = [...currentNumbers];
-    let max = Math.max(...numbers);
-    let min = Math.min(...numbers);
-    if (moveDirection === 'down') {
-      max = currentNumber;
-    }
-    if (moveDirection === 'up') {
-      min = currentNumber;
-    }
-    return Array.from({ length: max - min + 1 }, (_, i) => i + min);
-  };
   // 获取一些公共类和判断
   const getCommonClassAndJudge = () => {
     const checkedLine = [currentLeftLineNumbers, currentRightLineNumbers];
@@ -211,13 +191,9 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     }
     getDoubleCheckedLineCode(shouldRenderClass);
   }
-  function updateLineNumbers(moveDirection: 'up' | 'down') {
-    currentLeftLineNumbers =
-      currentLeftLineNumber === -1 ? currentLeftLineNumbers : getLineNumbers(currentLeftLineNumber, currentLeftLineNumbers, moveDirection);
-    currentRightLineNumbers =
-      currentRightLineNumber === -1
-        ? currentRightLineNumbers
-        : getLineNumbers(currentRightLineNumber, currentRightLineNumbers, moveDirection);
+  function updateLineNumbers({ lefts, rights }: { lefts: number[]; rights: number[] }) {
+    currentLeftLineNumbers = lefts;
+    currentRightLineNumbers = rights;
     getCheckedLineCode(false);
     afterCheckLinesEmitData = {
       left: currentLeftLineNumber,
@@ -230,6 +206,8 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     };
   }
   const updateCheckedLineClass = () => {
+    const lineClassName = props.outputFormat === 'line-by-line' ? '.d2h-code-linenumber' : '.d2h-code-side-linenumber';
+    allTrNodes = reviewContentRef.value.querySelectorAll(lineClassName);
     getCheckedLineCode(true);
   };
   // 还原样式
@@ -279,6 +257,10 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
   };
   function afterCheckLines() {
     ctx.emit('afterCheckLines', afterCheckLinesEmitData);
+  }
+  function afterMouseup(lineNumbers: { lefts: number[]; rights: number[] }) {
+    updateLineNumbers(lineNumbers);
+    afterCheckLines();
   }
   // 图标或者单行的点击
   const onCommentIconClick = (e: Event) => {
