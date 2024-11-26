@@ -1,4 +1,4 @@
-import get from 'lodash.get'
+import { get } from 'lodash-es';
 
 export default (query, page, additionalStr = null) => {
   let domain = get(page, 'title', '')

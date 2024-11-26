@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 import type { Placement } from '../../../overlay';
 import type { InnerColumnConfig } from '../data-grid-types';
 

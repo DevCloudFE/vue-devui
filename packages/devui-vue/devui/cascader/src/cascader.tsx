@@ -1,5 +1,5 @@
 import { defineComponent, Transition, SetupContext, provide, Teleport, ref, computed } from 'vue';
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash-es';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import DCascaderList from '../components/cascader-list';
 import DMultipleBox from '../components/cascader-multiple/index';

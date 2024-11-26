@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 import { defineComponent, onMounted, computed, ref } from 'vue';
 export default defineComponent({
   name: 'BackToTop',
