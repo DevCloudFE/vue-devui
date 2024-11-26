@@ -1,13 +1,12 @@
 import type { Ref } from 'vue';
 import type { CodeReviewProps } from '../code-review-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
-import { findParentTrNode } from '../utils';
+import { findParentTrNode, getLineNumbers } from '../utils';
 
 export function useCodeReviewLineSelection(
   reviewContentRef: Ref<HTMLElement>,
   props: CodeReviewProps,
-  mouseMoveCb: (moveDirection: 'up' | 'down') => void,
-  mouseupCb: () => void
+  afterMouseup: (lineNumbers: { lefts: number[]; rights: number[] }) => void
 ) {
   const ns = useNamespace('code-review');
   let dragging = false;
@@ -16,7 +15,7 @@ export function useCodeReviewLineSelection(
   let isClickedLeft: boolean | undefined;
   let shouldClear: boolean;
   let isMouseMoved: boolean;
-  let startClientY: number;
+  let checkedTrNodes: HTMLElement[] = [];
 
   const onMousedown = (e: MouseEvent) => {
     // 鼠标左键按下
@@ -45,7 +44,6 @@ export function useCodeReviewLineSelection(
       dragging = true;
       shouldClear = true;
       isMouseMoved = false;
-      startClientY = e.clientY;
       e.preventDefault();
       e.stopPropagation();
       document.addEventListener('mousemove', onMousemove);
@@ -76,7 +74,6 @@ export function useCodeReviewLineSelection(
     if (endIndex === -1) {
       return;
     }
-    mouseMoveCb(e.clientY > startClientY ? 'down' : 'up');
     if (startIndex > endIndex) {
       [startIndex, endIndex] = [endIndex, startIndex];
     }
@@ -89,9 +86,11 @@ export function useCodeReviewLineSelection(
     } else {
       position = 'right';
     }
+    checkedTrNodes = [];
     for (let i = 0; i < trNodes.length; i++) {
       if (i >= startIndex && i <= endIndex) {
         toggleCommentCheckedClass(trNodes[i], true, position);
+        checkedTrNodes.push(trNodes[i]);
       } else {
         toggleCommentCheckedClass(trNodes[i], false, position);
       }
@@ -101,7 +100,7 @@ export function useCodeReviewLineSelection(
   function onMouseup() {
     dragging = false;
     if (isMouseMoved) {
-      mouseupCb();
+      afterMouseup(getLineNumbers(checkedTrNodes, props.outputFormat, isClickedLeft ? 'left' : 'right'));
     }
     document.removeEventListener('mouseup', onMouseup);
     document.removeEventListener('mousemove', onMousemove);

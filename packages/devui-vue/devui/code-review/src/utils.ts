@@ -528,3 +528,40 @@ export function findParentTrNode(node: HTMLElement | null) {
   }
   return findParentTrNode(node.parentElement);
 }
+
+/* 根据最大最小行号，获取从小到大的完整行号列表 */
+function getFullNumberList(min: number, max: number) {
+  return Array.from({ length: max - min + 1 }, (_, i) => i + min);
+}
+
+/* 多行选中，返回选中行的左右侧行号 */
+export function getLineNumbers(trNodes: HTMLElement[], outputFormat: OutputFormat, side: LineSide) {
+  const leftNumbers: number[] = [];
+  const rightNumbers: number[] = [];
+
+  for (let i = 0; i < trNodes.length; i++) {
+    const itemTrNode = trNodes[i];
+    if (outputFormat === 'line-by-line') {
+      const lineNumberTdNode = Array.from(itemTrNode.children)[0] as HTMLElement;
+      const leftLineNumber = parseInt((lineNumberTdNode.children[0] as HTMLElement)?.innerText);
+      const rightLineNumber = parseInt((lineNumberTdNode.children[1] as HTMLElement)?.innerText);
+
+      leftLineNumber && leftNumbers.push(leftLineNumber);
+      rightLineNumber && rightNumbers.push(leftLineNumber);
+    } else {
+      const tdNodes = Array.from(itemTrNode.children) as HTMLElement[];
+      const lineNumberTdNode: HTMLElement = tdNodes[side === 'left' ? 0 : 2];
+      if (lineNumberTdNode && notEmptyNode(lineNumberTdNode)) {
+        const lineNumber = parseInt(lineNumberTdNode.innerText);
+        if (lineNumber) {
+          side === 'left' ? leftNumbers.push(lineNumber) : rightNumbers.push(lineNumber);
+        }
+      }
+    }
+  }
+
+  const lefts = leftNumbers.length ? getFullNumberList(leftNumbers[0], leftNumbers[leftNumbers.length - 1]) : leftNumbers;
+  const rights = rightNumbers.length ? getFullNumberList(rightNumbers[0], rightNumbers[rightNumbers.length - 1]) : rightNumbers;
+
+  return { lefts, rights };
+}
