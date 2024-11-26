@@ -236,10 +236,6 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
       }
     }
     if (cursorHintStart > -1 && hint[0]) {
-      const spacePosition = value.lastIndexOf(' ', cursor.ch);
-      if (spacePosition > cursorHintStart) {
-        return;
-      }
       /* cursor元素将动态变更，设置settimeout保持其可以获取到值 */
       setTimeout(() => {
         showHint();
