@@ -119,9 +119,9 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     // 多行选中
     if (checkedLineDetails && allowChecked.value) {
       const { lefts, rights } = checkedLineDetails;
-      const maxCurrentLeftLineNumber = lefts[lefts.length - 1];
-      const maxCurrentRightLineNumber = rights[rights.length - 1];
-      if (maxCurrentLeftLineNumber === currentLeftLineNumber || maxCurrentRightLineNumber === currentRightLineNumber) {
+      const maxCheckedLeftLineNumber = lefts[lefts.length - 1];
+      const maxCheckedRightLineNumber = rights[rights.length - 1];
+      if (maxCheckedLeftLineNumber === currentLeftLineNumber || maxCheckedRightLineNumber === currentRightLineNumber) {
         obj.details = checkedLineDetails;
       } else {
         clearCommentClass();

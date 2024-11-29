@@ -8,7 +8,7 @@ import {
   parseCodeToSingle,
   getLineNumberMap,
   getLineNumberTdMap,
-  getDoubleCheckNumberAndCode,
+  getDoubleCheckedNumberAndCodes,
   getSingleCheckedNumberAndCode,
   addCommentCheckedForDouble,
   addCommentCheckedForSingle,
@@ -50,7 +50,7 @@ export function useCodeReviewLineSelection(
       }
       const parentTrNode = findParentTrNode(e.target as HTMLElement);
       // 判断点击的是否是展开图标
-      if (parentTrNode && parentTrNode?.classList.contains('expand-line')) {
+      if (parentTrNode && parentTrNode?.classList?.contains('expand-line')) {
         return;
       }
       startTrNode = parentTrNode as HTMLElement;
@@ -62,7 +62,7 @@ export function useCodeReviewLineSelection(
         const { left, right } = getLineNumberTdMap(trNodes);
         leftNumberTdMap = left;
         rightNumberTdMap = right;
-        startPosition = composedPath.some((item) => item.classList.contains('d-code-left')) ? 'left' : 'right';
+        startPosition = composedPath.some((item) => item.classList?.contains('d-code-left')) ? 'left' : 'right';
       }
 
       dragging = true;
@@ -91,10 +91,10 @@ export function useCodeReviewLineSelection(
     const endTrNode = findParentTrNode(e.target as HTMLElement);
     let endPosition: 'left' | 'right';
     if (props.outputFormat === 'side-by-side') {
-      if (composedPath.some((item) => item.classList.contains('d-code-left'))) {
+      if (composedPath.some((item) => item.classList?.contains('d-code-left'))) {
         endPosition = 'left';
       }
-      if (composedPath.some((item) => item.classList.contains('d-code-right'))) {
+      if (composedPath.some((item) => item.classList?.contains('d-code-right'))) {
         endPosition = 'right';
       }
     }
@@ -164,7 +164,7 @@ export function useCodeReviewLineSelection(
     if (isMouseMoved) {
       let details: ICheckedLineDetails;
       if (props.outputFormat === 'side-by-side') {
-        details = getDoubleCheckNumberAndCode(checkedTdNodes);
+        details = getDoubleCheckedNumberAndCodes(checkedTdNodes);
       } else {
         details = getSingleCheckedNumberAndCode(checkedTdNodes);
       }
@@ -183,7 +183,7 @@ export function useCodeReviewLineSelection(
   const getCheckedLineDetails = () => {
     if (checkedTdNodes.length) {
       return props.outputFormat === 'side-by-side'
-        ? getDoubleCheckNumberAndCode(checkedTdNodes)
+        ? getDoubleCheckedNumberAndCodes(checkedTdNodes)
         : getSingleCheckedNumberAndCode(checkedTdNodes);
     }
   };
@@ -197,7 +197,7 @@ export function useCodeReviewLineSelection(
   /* 点击展开行后，更新左右行号映射关系 */
   const updateLineNumberMap = (expandLineNumberInfo: IExpandLineNumberInfo, newCode: string, direction: 'down' | 'up') => {
     const container = document.createElement('div');
-    parseCodeToSingle(container, newCode, props.option);
+    parseCodeToSingle(container, newCode, props.options);
     const { prevL, prevR, nextL, nextR } = expandLineNumberInfo;
     const arr = getLineNumberMap(Array.from(container.querySelectorAll('tr')));
     if (direction === 'down') {

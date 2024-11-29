@@ -597,7 +597,7 @@ export function getLineNumberMap(trNodes: HTMLElement[]) {
 }
 
 /* 获取双栏模式下，选中行的左右行号和代码 */
-export function getDoubleCheckNumberAndCode(checkedTdNodes: HTMLElement[]) {
+export function getDoubleCheckedNumberAndCodes(checkedTdNodes: HTMLElement[]) {
   const lefts: number[] = [];
   const rights: number[] = [];
   const leftCode: string[] = [];
@@ -608,7 +608,7 @@ export function getDoubleCheckNumberAndCode(checkedTdNodes: HTMLElement[]) {
   for (let i = 0; i < checkedTdNodes.length; i++) {
     const itemTdNode = checkedTdNodes[i];
     if (itemTdNode.classList.contains('d-code-left')) {
-      if (itemTdNode.classList.contains('d2h-code-size-linenumber')) {
+      if (itemTdNode.classList.contains('d2h-code-side-linenumber')) {
         leftNumberNodes.push(itemTdNode);
       } else {
         leftCode.push(itemTdNode.innerText);
