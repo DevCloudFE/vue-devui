@@ -10,6 +10,18 @@ export interface CommentPosition {
   left: number;
   right: number;
 }
+export type ILineNumberTdMap = Record<number, HTMLElement[]>;
+export interface IExpandLineNumberInfo {
+  nextL: string;
+  nextR: string;
+  prevL: string;
+  prevR: string;
+}
+export interface ICheckedLineDetails {
+  lefts: number[];
+  rights: number[];
+  codes: Record<string, string[]> | string[];
+}
 export interface CodeReviewMethods {
   toggleFold: (status?: boolean) => void;
   insertComment: (lineNumber: number, lineSide: LineSide, commentDom: HTMLElement) => void;

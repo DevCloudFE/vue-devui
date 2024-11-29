@@ -279,7 +279,6 @@ export default defineComponent({
 
 :::
 
-
 ### 多选代码行用法
 
 本示例将展示在开启多选代码行，多选后单击最后一个选中的行，添加评论，并且将选中代码行和代码块放入评论内容中。
@@ -501,7 +500,6 @@ export default defineComponent({
         ' @@\n ' +
         code.slice(0, Math.min(Math.abs(lStart - lEnd - 1), 10)).join(' ');
       update(content);
-      codeReviewIns.updateCheckedLineClass();
     };
 
     return { diff, outputFormat, isFullscreen, onChange, onAddComment, afterViewInit, onContentRefresh, codeLoader };
@@ -571,6 +569,7 @@ export default defineComponent({
 }
 </style>
 ```
+
 :::
 
 ### CodeReview 参数
@@ -634,6 +633,7 @@ line-by-line 模式，left 表示左侧一栏的行号，right 表示右侧一�
 interface CommentPosition {
   left: number;
   right: number;
+  position?: 'left'|'right'  // 双栏模式，点击的左侧还是右侧
 }
 ```
 
@@ -666,9 +666,6 @@ interface CodeReviewMethods {
 
   // 删除评论的方法，传入行号、left/right
   removeComment: (lineNumber: number, lineSide: LineSide) => void;
-
-  // 更新选中行样式，直接调用一般用于展开时更新选中行样式，像示例中一样使用
-  updateCheckedLineClass: ();
 
   // 清除选中行样式
   clearCheckedLines: () => void;

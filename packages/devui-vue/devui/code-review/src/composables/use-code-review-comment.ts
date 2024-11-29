@@ -1,7 +1,7 @@
-import { ref, toRefs, onUnmounted, watch } from 'vue';
+import { ref, toRefs, onUnmounted } from 'vue';
 import type { SetupContext, Ref } from 'vue';
 import { useCodeReviewLineSelection } from './use-code-review-line-selection';
-import type { LineSide, CodeReviewProps } from '../code-review-types';
+import type { LineSide, CodeReviewProps, ICheckedLineDetails } from '../code-review-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import {
   notEmptyNode,
@@ -14,28 +14,18 @@ import {
 export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: CodeReviewProps, ctx: SetupContext) {
   const { outputFormat, allowComment, allowChecked } = toRefs(props);
   const ns = useNamespace('code-review');
-  const { onMousedown } = useCodeReviewLineSelection(reviewContentRef, props, afterMouseup);
+  const { onMousedown, updateLineNumberMap, getCheckedLineDetails, clearCommentClass, updateCheckedLine } = useCodeReviewLineSelection(
+    reviewContentRef,
+    props,
+    afterMouseup
+  );
   const commentLeft = ref(-100);
   const commentTop = ref(-100);
   let currentLeftLineNumber = -1;
   let currentRightLineNumber = -1;
+  let currentPosition: 'left' | 'right';
   let lastLineNumberContainer: HTMLElement | null;
-  let checkedLineNumberContainer: Array<Element> = [];
-  let currentLeftLineNumbers: Array<number> = [];
-  let currentRightLineNumbers: Array<number> = [];
-  let checkedLineCodeString: Array<string> | Record<string, Array<string>> = {};
-  let allTrNodes: NodeListOf<Element> = [];
-  let afterCheckLinesEmitData: Record<string, any>;
-  watch(
-    () => outputFormat.value,
-    () => {
-      // 如果出现单栏双栏切换则需要重置选中
-      checkedLineNumberContainer = [];
-      currentLeftLineNumbers = [];
-      currentRightLineNumbers = [];
-      checkedLineCodeString = [];
-    }
-  );
+
   const resetLeftTop = () => {
     commentLeft.value = -100;
     commentTop.value = -100;
@@ -85,6 +75,8 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
             commentLeft.value = left;
             commentTop.value = top;
             currentLeftLineNumber = parseInt(leftLineNumberContainer.innerText);
+            currentRightLineNumber = parseInt(rightLineNumberContainer.innerText || '-1');
+            currentPosition = 'left';
           } else {
             resetLeftTop();
           }
@@ -98,7 +90,9 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
             const { top, left } = rightLineNumberContainer.getBoundingClientRect();
             commentLeft.value = left;
             commentTop.value = top;
+            currentLeftLineNumber = parseInt(leftLineNumberContainer.innerText || '-1');
             currentRightLineNumber = parseInt(rightLineNumberContainer.innerText);
+            currentPosition = 'right';
           } else {
             resetLeftTop();
           }
@@ -117,150 +111,27 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
       resetLeftTop();
     }
   };
-  // 获取一些公共类和判断
-  const getCommonClassAndJudge = () => {
-    const checkedLine = [currentLeftLineNumbers, currentRightLineNumbers];
-    return {
-      linenumberDom: allTrNodes,
-      checkedLine,
-    };
-  };
-  // 之前每次都先移出所有选中的方法过于浪费性能，增加具体dom节点选中方法(防重复添加)
-  const addCommentCheckedClass = (Dom: Element) => {
-    !Dom.classList.contains('comment-checked') && Dom.classList.add('comment-checked');
-  };
-  // 单栏
-  function getSingleCheckedLineCode(shouldRenderClass: boolean) {
-    const { linenumberDom, checkedLine } = getCommonClassAndJudge();
-    const checkedCodeContent = [];
-    for (let i = 0; i < linenumberDom.length; i++) {
-      const lineNumberDomLeft = linenumberDom[i].children[0];
-      const lineNumberDomRight = linenumberDom[i].children[1];
-      if (lineNumberDomLeft || lineNumberDomRight) {
-        const codeLineNumberLeft = parseInt((lineNumberDomLeft as HTMLElement)?.innerText);
-        const codeLineNumberRight = parseInt((lineNumberDomRight as HTMLElement)?.innerText);
-        // 因为存在左边或者右边为空的num所以两边都要循环，但是同一个dom已经过就不需要再赋予
-        if (checkedLine[0].includes(codeLineNumberLeft) || checkedLine[1].includes(codeLineNumberRight)) {
-          checkedLineNumberContainer.push(linenumberDom[i]);
-          // 两个节点之间可能间隔文本节点
-          const codeNode = linenumberDom[i].nextElementSibling as HTMLElement;
-          checkedCodeContent.push(codeNode?.innerText);
-          if (shouldRenderClass) {
-            addCommentCheckedClass(linenumberDom[i]);
-            addCommentCheckedClass(codeNode);
-          }
-        }
-      }
-    }
-    checkedLineCodeString = checkedCodeContent;
-  }
-  // 双栏
-  function getDoubleCheckedLineCode(shouldRenderClass: boolean) {
-    const { linenumberDom, checkedLine } = getCommonClassAndJudge();
-    const checkedCodeContentLeft = [];
-    const checkedCodeContentRight = [];
 
-    function checkedFunc(Dom: Element) {
-      checkedLineNumberContainer.push(Dom);
-      const codeNode = Dom.nextElementSibling as HTMLElement;
-      if (shouldRenderClass) {
-        addCommentCheckedClass(Dom);
-        addCommentCheckedClass(codeNode);
-      }
-      return codeNode?.innerText;
-    }
-
-    for (let i = 0; i < linenumberDom.length; i++) {
-      // 左右双栏一起遍历
-      const codeLineNumber = parseInt(linenumberDom[i]?.innerHTML);
-      if (linenumberDom[i].classList.contains('d-code-left') && checkedLine[0].includes(codeLineNumber)) {
-        const lineNumText = checkedFunc(linenumberDom[i]);
-        checkedCodeContentLeft.push(lineNumText);
-        continue;
-      }
-      if (linenumberDom[i].classList.contains('d-code-right') && checkedLine[1].includes(codeLineNumber)) {
-        const lineNumText = checkedFunc(linenumberDom[i]);
-        checkedCodeContentRight.push(lineNumText);
-      }
-    }
-    checkedLineCodeString = { leftCode: checkedCodeContentLeft, rightCode: checkedCodeContentRight };
-  }
-  function getCheckedLineCode(shouldRenderClass: boolean) {
-    if (props.outputFormat === 'line-by-line') {
-      return getSingleCheckedLineCode(shouldRenderClass);
-    }
-    getDoubleCheckedLineCode(shouldRenderClass);
-  }
-  function updateLineNumbers({ lefts, rights }: { lefts: number[]; rights: number[] }) {
-    currentLeftLineNumbers = lefts;
-    currentRightLineNumbers = rights;
-    getCheckedLineCode(false);
-    afterCheckLinesEmitData = {
-      left: currentLeftLineNumber,
-      right: currentRightLineNumber,
-      details: {
-        lefts: currentLeftLineNumbers,
-        rights: currentRightLineNumbers,
-        codes: checkedLineCodeString,
-      },
-    };
-  }
-  const updateCheckedLineClass = () => {
-    const lineClassName = props.outputFormat === 'line-by-line' ? '.d2h-code-linenumber' : '.d2h-code-side-linenumber';
-    allTrNodes = reviewContentRef.value.querySelectorAll(lineClassName);
-    getCheckedLineCode(true);
-  };
-  // 还原样式
-  const resetCommentClass = () => {
-    for (let i = 0; i < checkedLineNumberContainer.length; i++) {
-      checkedLineNumberContainer[i].classList.remove('comment-checked');
-      const codeNode = checkedLineNumberContainer[i].nextElementSibling;
-      (codeNode as HTMLElement)?.classList.remove('comment-checked');
-    }
-    checkedLineNumberContainer = [];
-  };
   // 点击
   const commentClick = () => {
-    interface recordType {
-      left: number;
-      right: number;
-      details?: {
-        lefts: Array<number>;
-        rights: Array<number>;
-        codes: Record<string, Array<string>> | Record<string, Array<number>>;
-      };
-    }
-    let obj: recordType = { left: currentLeftLineNumber, right: currentRightLineNumber };
-    if ((currentLeftLineNumbers.length >= 1 || currentRightLineNumbers.length >= 1) && allowChecked.value) {
-      // 选中模式
-      const maxCurrentLeftLineNumber = currentLeftLineNumbers[currentLeftLineNumbers.length - 1];
-      const maxCurrentRightLineNumber = currentRightLineNumbers[currentRightLineNumbers.length - 1];
+    let obj = { left: currentLeftLineNumber, right: currentRightLineNumber, position: currentPosition };
+    const checkedLineDetails = getCheckedLineDetails();
+    // 多行选中
+    if (checkedLineDetails && allowChecked.value) {
+      const { lefts, rights } = checkedLineDetails;
+      const maxCurrentLeftLineNumber = lefts[lefts.length - 1];
+      const maxCurrentRightLineNumber = rights[rights.length - 1];
       if (maxCurrentLeftLineNumber === currentLeftLineNumber || maxCurrentRightLineNumber === currentRightLineNumber) {
-        // 点击添加评论图标触发的事件
-        obj = {
-          left: currentLeftLineNumber,
-          right: currentRightLineNumber,
-          details: {
-            lefts: currentLeftLineNumbers,
-            rights: currentRightLineNumbers,
-            codes: checkedLineCodeString,
-          },
-        };
+        obj.details = checkedLineDetails;
       } else {
-        currentLeftLineNumbers = [];
-        currentRightLineNumbers = [];
-        resetCommentClass();
+        clearCommentClass();
       }
     }
     // 点击添加评论图标触发的事件
     ctx.emit('addComment', obj);
   };
-  function afterCheckLines() {
-    ctx.emit('afterCheckLines', afterCheckLinesEmitData);
-  }
-  function afterMouseup(lineNumbers: { lefts: number[]; rights: number[] }) {
-    updateLineNumbers(lineNumbers);
-    afterCheckLines();
+  function afterMouseup(details: ICheckedLineDetails) {
+    ctx.emit('afterCheckLines', { left: currentLeftLineNumber, right: currentRightLineNumber, position: currentPosition, details });
   }
   // 图标或者单行的点击
   const onCommentIconClick = (e: Event) => {
@@ -317,16 +188,7 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
   };
 
   const clearCheckedLines = () => {
-    currentLeftLineNumbers = [];
-    currentRightLineNumbers = [];
-    checkedLineCodeString = [];
-    resetCommentClass();
-  };
-
-  const handleMouseDown = (e: MouseEvent) => {
-    const lineClassName = props.outputFormat === 'line-by-line' ? '.d2h-code-linenumber' : '.d2h-code-side-linenumber';
-    allTrNodes = reviewContentRef.value.querySelectorAll(lineClassName);
-    onMousedown(e);
+    clearCommentClass();
   };
 
   const mouseEvent: Record<string, (e: MouseEvent) => void> = {};
@@ -335,7 +197,7 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     mouseEvent.onMouseleave = onMouseleave;
   }
   if (props.allowChecked) {
-    mouseEvent.onMousedown = handleMouseDown;
+    mouseEvent.onMousedown = onMousedown;
   }
 
   window.addEventListener('scroll', resetLeftTop);
@@ -348,11 +210,12 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     commentLeft,
     commentTop,
     mouseEvent,
-    updateCheckedLineClass,
     clearCheckedLines,
     onCommentMouseLeave,
     onCommentIconClick,
     insertComment,
     removeComment,
+    updateLineNumberMap,
+    updateCheckedLine,
   };
 }

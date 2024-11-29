@@ -1,6 +1,6 @@
 import { toRefs } from 'vue';
 import type { Ref } from 'vue';
-import type { CodeReviewProps, ExpandDirection } from '../code-review-types';
+import type { CodeReviewProps, ExpandDirection, IExpandLineNumberInfo } from '../code-review-types';
 import { ExpandLineReg, FirstLineReg } from '../const';
 import {
   attachExpandUpDownButton,
@@ -14,7 +14,12 @@ import {
   ifRemoveExpandLineForDoubleColumn,
 } from '../utils';
 
-export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: CodeReviewProps) {
+export function useCodeReviewExpand(
+  reviewContentRef: Ref<HTMLElement>,
+  props: CodeReviewProps,
+  updateLineNumberMap: (expandLineNumberInfo: IExpandLineNumberInfo, newCode: string, direction: 'up' | 'down') => void,
+  updateCheckedLine: (expandLineNumberInfo: IExpandLineNumberInfo, direction: 'up' | 'down') => void
+) {
   const { outputFormat, expandThreshold, expandLoader } = toRefs(props);
 
   const processSideBySide = () => {
@@ -85,8 +90,12 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
 
     // 过滤有效行
     const trNodesToBeInserted = trNodes.filter((element) => element !== expandLine);
+    /* 更新左右行号映射关系 */
+    updateLineNumberMap(referenceDom.dataset as unknown as IExpandLineNumberInfo, prefix + code, direction);
     // 将有效代码行插入页面
     insertIncrementLineToPage(referenceDom, trNodesToBeInserted, direction);
+    /* 若新增行在选中区间，则将新增行高亮 */
+    updateCheckedLine(referenceDom.dataset as unknown as IExpandLineNumberInfo, direction);
 
     // 判断是否需要移除展开行，代码若已全部展开，不再需要展开行
     const removedExpandLine = ifRemoveExpandLineForDoubleColumn(referenceDom, expandLine, direction);
@@ -192,6 +201,8 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     const trNodesToBeInserted = trNodes.filter((element) => element.children[0].children.length === 2);
     // 将有效代码行插入页面
     insertIncrementLineToPage(referenceDom, trNodesToBeInserted, direction);
+    /* 若新增行在选中区间，则将新增行高亮 */
+    updateCheckedLine(referenceDom.dataset as unknown as IExpandLineNumberInfo, direction);
 
     // 判断是否需要移除展开行，代码若已全部展开，不再需要展开行
     const removedExpandLine = ifRemoveExpandLine(referenceDom, expandLine, direction);

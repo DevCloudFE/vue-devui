@@ -1,21 +1,40 @@
+import { watch } from 'vue';
 import type { Ref } from 'vue';
-import type { CodeReviewProps } from '../code-review-types';
+import type { CodeReviewProps, CommentPosition, ICheckedLineDetails, IExpandLineNumberInfo, ILineNumberTdMap } from '../code-review-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
-import { findParentTrNode, getLineNumbers } from '../utils';
+import {
+  findParentTrNode,
+  clearCommentChecked,
+  parseCodeToSingle,
+  getLineNumberMap,
+  getLineNumberTdMap,
+  getDoubleCheckNumberAndCode,
+  getSingleCheckedNumberAndCode,
+  addCommentCheckedForDouble,
+  addCommentCheckedForSingle,
+} from '../utils';
 
 export function useCodeReviewLineSelection(
   reviewContentRef: Ref<HTMLElement>,
   props: CodeReviewProps,
-  afterMouseup: (lineNumbers: { lefts: number[]; rights: number[] }) => void
+  afterMouseup: (details: ICheckedLineDetails) => void
 ) {
   const ns = useNamespace('code-review');
   let dragging = false;
   let startTrNode: HTMLElement;
   let trNodes: HTMLElement[];
-  let isClickedLeft: boolean | undefined;
+  let allTdNodes: HTMLElement[] = [];
   let shouldClear: boolean;
   let isMouseMoved: boolean;
-  let checkedTrNodes: HTMLElement[] = [];
+  let leftRightLineNumberArr: CommentPosition[] = [];
+  let leftNumberTdMap: ILineNumberTdMap = {};
+  let rightNumberTdMap: ILineNumberTdMap = {};
+  let checkedTdNodes: HTMLElement[] = [];
+  let startPosition: 'left' | 'right';
+  let leftMinNum: number;
+  let leftMaxNum: number;
+  let rightMinNum: number;
+  let rightMaxNum: number;
 
   const onMousedown = (e: MouseEvent) => {
     // 鼠标左键按下
@@ -35,10 +54,15 @@ export function useCodeReviewLineSelection(
         return;
       }
       startTrNode = parentTrNode as HTMLElement;
+      allTdNodes = [];
+      for (let i = 0; i < trNodes.length; i++) {
+        allTdNodes.push(...trNodes[i].children);
+      }
       if (props.outputFormat === 'side-by-side') {
-        isClickedLeft = composedPath.some((item) => item.classList?.contains('d-code-left'));
-      } else {
-        isClickedLeft = undefined;
+        const { left, right } = getLineNumberTdMap(trNodes);
+        leftNumberTdMap = left;
+        rightNumberTdMap = right;
+        startPosition = composedPath.some((item) => item.classList.contains('d-code-left')) ? 'left' : 'right';
       }
 
       dragging = true;
@@ -55,9 +79,8 @@ export function useCodeReviewLineSelection(
     if (!dragging) {
       return;
     }
-    isMouseMoved = true;
     if (shouldClear) {
-      clearCommentChecked();
+      clearCommentChecked(checkedTdNodes);
       shouldClear = false;
     }
     const composedPath = e.composedPath() as HTMLElement[];
@@ -66,33 +89,72 @@ export function useCodeReviewLineSelection(
       return;
     }
     const endTrNode = findParentTrNode(e.target as HTMLElement);
+    let endPosition: 'left' | 'right';
+    if (props.outputFormat === 'side-by-side') {
+      if (composedPath.some((item) => item.classList.contains('d-code-left'))) {
+        endPosition = 'left';
+      }
+      if (composedPath.some((item) => item.classList.contains('d-code-right'))) {
+        endPosition = 'right';
+      }
+    }
     if (!endTrNode) {
       return;
     }
-    let startIndex = trNodes.indexOf(startTrNode);
-    let endIndex = trNodes.indexOf(endTrNode);
-    if (endIndex === -1) {
+    isMouseMoved = true;
+    const endTrChildren = endTrNode.children;
+    if (
+      (endPosition === 'left' && isNaN(parseInt(endTrChildren[0]?.innerText))) ||
+      (endPosition === 'right' && isNaN(parseInt(endTrChildren[2]?.innerText)))
+    ) {
       return;
     }
-    if (startIndex > endIndex) {
-      [startIndex, endIndex] = [endIndex, startIndex];
+
+    checkedTdNodes = [];
+
+    if (props.outputFormat === 'line-by-line') {
+      let startIndex = trNodes.indexOf(startTrNode);
+      let endIndex = trNodes.indexOf(endTrNode);
+      if (endIndex === -1) {
+        return;
+      }
+      if (startIndex > endIndex) {
+        [startIndex, endIndex] = [endIndex, startIndex];
+      }
+      for (let i = 0; i < trNodes.length; i++) {
+        const tdNodes = Array.from(trNodes[i].children) as HTMLElement[];
+        if (i >= startIndex && i <= endIndex) {
+          checkedTdNodes.push(...tdNodes);
+        }
+      }
     }
 
-    let position: 'left' | 'right' | 'all';
-    if (isClickedLeft === undefined) {
-      position = 'all';
-    } else if (isClickedLeft) {
-      position = 'left';
-    } else {
-      position = 'right';
+    if (props.outputFormat === 'side-by-side') {
+      const startNum = parseInt((startTrNode.children[startPosition === 'left' ? 0 : 2] as HTMLElement).innerText);
+      let sIndex = leftRightLineNumberArr.findIndex((item) => item[startPosition] === startNum);
+      const endNum = parseInt((endTrNode.children[endPosition === 'left' ? 0 : 2] as HTMLElement).innerText);
+      let eIndex = leftRightLineNumberArr.findIndex((item) => item[endPosition] === endNum);
+      if (sIndex > eIndex) {
+        [sIndex, eIndex] = [eIndex, sIndex];
+      }
+      const tempArr = leftRightLineNumberArr.slice(sIndex, eIndex + 1);
+      for (let i = 0; i < tempArr.length; i++) {
+        const { left, right } = tempArr[i];
+        if (left !== -1) {
+          checkedTdNodes.push(...leftNumberTdMap[left]);
+        }
+        if (right !== -1) {
+          checkedTdNodes.push(...rightNumberTdMap[right]);
+        }
+      }
     }
-    checkedTrNodes = [];
-    for (let i = 0; i < trNodes.length; i++) {
-      if (i >= startIndex && i <= endIndex) {
-        toggleCommentCheckedClass(trNodes[i], true, position);
-        checkedTrNodes.push(trNodes[i]);
+
+    /* 更新节点选中状态 */
+    for (let i = 0; i < allTdNodes.length; i++) {
+      if (checkedTdNodes.includes(allTdNodes[i])) {
+        allTdNodes[i].classList.add('comment-checked');
       } else {
-        toggleCommentCheckedClass(trNodes[i], false, position);
+        allTdNodes[i].classList.remove('comment-checked');
       }
     }
   }
@@ -100,42 +162,90 @@ export function useCodeReviewLineSelection(
   function onMouseup() {
     dragging = false;
     if (isMouseMoved) {
-      afterMouseup(getLineNumbers(checkedTrNodes, props.outputFormat, isClickedLeft ? 'left' : 'right'));
+      let details: ICheckedLineDetails;
+      if (props.outputFormat === 'side-by-side') {
+        details = getDoubleCheckNumberAndCode(checkedTdNodes);
+      } else {
+        details = getSingleCheckedNumberAndCode(checkedTdNodes);
+      }
+      leftMinNum = details.lefts[0];
+      leftMaxNum = details.lefts[details.lefts.length - 1];
+      rightMinNum = details.rights[0];
+      rightMaxNum = details.rights[details.rights.length - 1];
+      afterMouseup(details);
     }
+
     document.removeEventListener('mouseup', onMouseup);
     document.removeEventListener('mousemove', onMousemove);
   }
 
-  // 清除上次的选中
-  function clearCommentChecked() {
-    for (let i = 0; i < trNodes.length; i++) {
-      toggleCommentCheckedClass(trNodes[i], false, 'all');
+  /* 点击评论时，获取选中行的数据 */
+  const getCheckedLineDetails = () => {
+    if (checkedTdNodes.length) {
+      return props.outputFormat === 'side-by-side'
+        ? getDoubleCheckNumberAndCode(checkedTdNodes)
+        : getSingleCheckedNumberAndCode(checkedTdNodes);
     }
-  }
+  };
 
-  function toggleCommentCheckedClass(trNode: HTMLElement, isAddClass: boolean, position: 'left' | 'right' | 'all') {
-    const tdNodes = Array.from(trNode.children);
-    let toDoNodes;
-    if (position === 'all') {
-      toDoNodes = tdNodes;
-    } else if (position === 'left') {
-      toDoNodes = tdNodes.slice(0, 2);
+  /* 清除选中行 */
+  const clearCommentClass = () => {
+    clearCommentChecked(checkedTdNodes);
+    checkedTdNodes = [];
+  };
+
+  /* 点击展开行后，更新左右行号映射关系 */
+  const updateLineNumberMap = (expandLineNumberInfo: IExpandLineNumberInfo, newCode: string, direction: 'down' | 'up') => {
+    const container = document.createElement('div');
+    parseCodeToSingle(container, newCode, props.option);
+    const { prevL, prevR, nextL, nextR } = expandLineNumberInfo;
+    const arr = getLineNumberMap(Array.from(container.querySelectorAll('tr')));
+    if (direction === 'down') {
+      const preLeft = Number(prevL) - 1;
+      const preRight = Number(prevR) - 1;
+      const index = leftRightLineNumberArr.findIndex((item) => item.left === preLeft && item.right === preRight);
+      leftRightLineNumberArr.splice(index + 1, 0, ...arr);
     } else {
-      toDoNodes = tdNodes.slice(2);
+      const nextLeft = Number(nextL) + 1;
+      const nextRight = Number(nextR) + 1;
+      const index = leftRightLineNumberArr.findIndex((item) => item.left === nextLeft && item.right === nextRight);
+      leftRightLineNumberArr.splice(index, 0, ...arr);
     }
-    if ((position === 'left' || position === 'right') && isNaN(parseInt(toDoNodes[0]?.innerHTML))) {
+  };
+
+  /* 点击展开行后，更新选中行的数据 */
+  const updateCheckedLine = (expandLineNumberInfo: IExpandLineNumberInfo, direction: 'down' | 'up') => {
+    const allTrNodes = Array.from(reviewContentRef.value.querySelectorAll('tr')).filter((item) => !item.classList?.contains('expand-line'));
+    const { prevL, nextL } = expandLineNumberInfo;
+    const num = direction === 'down' ? Number(prevL) : Number(nextL);
+
+    if (!checkedTdNodes.length || num < leftMinNum || num > leftMaxNum) {
       return;
     }
-    toDoNodes.forEach((item) => {
-      if (item.tagName === 'TD') {
-        if (isAddClass) {
-          item.classList.add('comment-checked');
-        } else {
-          item.classList.remove('comment-checked');
-        }
-      }
-    });
-  }
 
-  return { onMousedown };
+    checkedTdNodes = [];
+
+    for (let i = 0; i < allTrNodes.length; i++) {
+      const itemTrNode = allTrNodes[i];
+      if (props.outputFormat === 'side-by-side') {
+        checkedTdNodes.push(...addCommentCheckedForDouble(itemTrNode, leftMinNum, leftMaxNum, rightMinNum, rightMaxNum));
+      } else {
+        checkedTdNodes.push(...addCommentCheckedForSingle(itemTrNode, leftMinNum, leftMaxNum, rightMinNum, rightMaxNum));
+      }
+    }
+  };
+
+  watch(
+    [() => props.outputFormat, () => props.allowChecked],
+    () => {
+      if (props.allowChecked && props.outputFormat === 'side-by-side') {
+        const container = document.createElement('div');
+        parseCodeToSingle(container, props.diff, props.options);
+        leftRightLineNumberArr = getLineNumberMap(Array.from(container.querySelectorAll('tr')));
+      }
+    },
+    { immediate: true }
+  );
+
+  return { onMousedown, updateLineNumberMap, getCheckedLineDetails, clearCommentClass, updateCheckedLine };
 }
