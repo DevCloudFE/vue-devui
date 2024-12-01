@@ -316,6 +316,24 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     setTimeout(() => {
       ctx.emit('contentChange', editorIns.getValue());
     }, 100);
+
+    containerRef.value.addEventListener('keydown', (e: KeyboardEvent) => {
+      let keyCombination = '';
+      if (e.ctrlKey) {
+        keyCombination += 'Ctrl-';
+      }
+      if (e.altKey) {
+        keyCombination += 'Alt-';
+      }
+      if (e.shiftKey) {
+        keyCombination += 'Shift-';
+      }
+      keyCombination += e.key.toUpperCase();
+      if (shortKeys[keyCombination] && typeof shortKeys[keyCombination] === 'function') {
+        e.preventDefault();
+        shortKeys[keyCombination]();
+      }
+    });
   };
 
   const onPaste = (e: ClipboardEvent) => {
