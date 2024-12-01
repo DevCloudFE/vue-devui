@@ -1,5 +1,12 @@
 import { Diff2HtmlUI } from 'diff2html/lib/ui/js/diff2html-ui';
-import type { OutputFormat, ExpandDirection, LineSide, IncrementCodeInsertDirection } from './code-review-types';
+import type {
+  OutputFormat,
+  ExpandDirection,
+  LineSide,
+  IncrementCodeInsertDirection,
+  CommentPosition,
+  ILineNumberTdMap,
+} from './code-review-types';
 import { UpExpandIcon, DownExpandIcon, AllExpandIcon } from './components/code-review-icons';
 import { ExpandLineReg, TemplateMap, TableTrReg, TableTdReg, TableTbodyReg, TableTbodyAttrReg, EmptyDataLangReg } from './const';
 
@@ -534,34 +541,183 @@ function getFullNumberList(min: number, max: number) {
   return Array.from({ length: max - min + 1 }, (_, i) => i + min);
 }
 
-/* 多行选中，返回选中行的左右侧行号 */
-export function getLineNumbers(trNodes: HTMLElement[], outputFormat: OutputFormat, side: LineSide) {
-  const leftNumbers: number[] = [];
-  const rightNumbers: number[] = [];
+/* 拖拽开始时，清除上次的选中行 */
+export function clearCommentChecked(checkedTdNodes: HTMLElement[]) {
+  for (let i = 0; i < checkedTdNodes.length; i++) {
+    checkedTdNodes[i].classList.remove('comment-checked');
+  }
+}
+
+/* 渲染为单栏模式，用于后续获取左右行号映射 */
+export function parseCodeToSingle(container: HTMLElement, code: string, options: Record<string, any>) {
+  const diff2HtmlUi = new Diff2HtmlUI(container, code, {
+    drawFileList: false,
+    outputFormat: 'line-by-line',
+    highlight: true,
+    rawTemplates: TemplateMap['line-by-line'],
+    ...options,
+  });
+  diff2HtmlUi.draw();
+}
+
+function generateNumberTdObj(tdNodes: HTMLElement[]) {
+  const lineNumber = parseInt(tdNodes[0].innerText) || -1;
+  if (lineNumber !== -1) {
+    return { [lineNumber]: tdNodes };
+  }
+}
+
+/* 获取行号和对应td的映射关系 */
+export function getLineNumberTdMap(trNodes: HTMLElement[]) {
+  const left: ILineNumberTdMap = {};
+  const right: ILineNumberTdMap = {};
+  for (let i = 0; i < trNodes.length; i++) {
+    const tdNodes = Array.from(trNodes[i].children) as HTMLElement[];
+    Object.assign(left, generateNumberTdObj(tdNodes.slice(0, 2)));
+    Object.assign(right, generateNumberTdObj(tdNodes.slice(2)));
+  }
+
+  return { left, right };
+}
+
+/* 获取左右行号映射关系 */
+export function getLineNumberMap(trNodes: HTMLElement[]) {
+  const result: CommentPosition[] = [];
 
   for (let i = 0; i < trNodes.length; i++) {
-    const itemTrNode = trNodes[i];
-    if (outputFormat === 'line-by-line') {
-      const lineNumberTdNode = Array.from(itemTrNode.children)[0] as HTMLElement;
-      const leftLineNumber = parseInt((lineNumberTdNode.children[0] as HTMLElement)?.innerText);
-      const rightLineNumber = parseInt((lineNumberTdNode.children[1] as HTMLElement)?.innerText);
+    const lineNumberNodes = trNodes[i].children[0].children; // 行号所在的div
+    if (lineNumberNodes.length === 2) {
+      const left = parseInt((lineNumberNodes[0] as HTMLElement)?.innerText) || -1;
+      const right = parseInt((lineNumberNodes[1] as HTMLElement)?.innerText) || -1;
+      result.push({ left, right });
+    }
+  }
 
-      leftLineNumber && leftNumbers.push(leftLineNumber);
-      rightLineNumber && rightNumbers.push(rightLineNumber);
+  return result;
+}
+
+/* 获取双栏模式下，选中行的左右行号和代码 */
+export function getDoubleCheckedNumberAndCodes(checkedTdNodes: HTMLElement[]) {
+  const lefts: number[] = [];
+  const rights: number[] = [];
+  const leftCode: string[] = [];
+  const rightCode: string[] = [];
+  const leftNumberNodes: HTMLElement[] = [];
+  const rightNumberNodes: HTMLElement[] = [];
+
+  for (let i = 0; i < checkedTdNodes.length; i++) {
+    const itemTdNode = checkedTdNodes[i];
+    if (itemTdNode.classList.contains('d-code-left')) {
+      if (itemTdNode.classList.contains('d2h-code-side-linenumber')) {
+        leftNumberNodes.push(itemTdNode);
+      } else {
+        leftCode.push(itemTdNode.innerText);
+      }
     } else {
-      const tdNodes = Array.from(itemTrNode.children) as HTMLElement[];
-      const lineNumberTdNode: HTMLElement = tdNodes[side === 'left' ? 0 : 2];
-      if (lineNumberTdNode && notEmptyNode(lineNumberTdNode)) {
-        const lineNumber = parseInt(lineNumberTdNode.innerText);
-        if (lineNumber) {
-          side === 'left' ? leftNumbers.push(lineNumber) : rightNumbers.push(lineNumber);
-        }
+      if (itemTdNode.classList.contains('d2h-code-side-linenumber')) {
+        rightNumberNodes.push(itemTdNode);
+      } else {
+        rightCode.push(itemTdNode.innerText);
       }
     }
   }
 
-  const lefts = leftNumbers.length ? getFullNumberList(leftNumbers[0], leftNumbers[leftNumbers.length - 1]) : leftNumbers;
-  const rights = rightNumbers.length ? getFullNumberList(rightNumbers[0], rightNumbers[rightNumbers.length - 1]) : rightNumbers;
+  if (leftNumberNodes.length) {
+    const leftMinNum = parseInt(leftNumberNodes[0].innerText);
+    const leftMaxNum = parseInt(leftNumberNodes[leftNumberNodes.length - 1].innerText);
+    lefts.push(...getFullNumberList(leftMinNum, leftMaxNum));
+  }
+  if (rightNumberNodes.length) {
+    const rightMinNum = parseInt(rightNumberNodes[0].innerText);
+    const rightMaxNum = parseInt(rightNumberNodes[rightNumberNodes.length - 1].innerText);
+    rights.push(...getFullNumberList(rightMinNum, rightMaxNum));
+  }
 
-  return { lefts, rights };
+  return { lefts, rights, codes: { leftCode, rightCode } };
+}
+
+/* 获取单栏模式下，选中行的左右行号和代码 */
+export function getSingleCheckedNumberAndCode(checkedTdNodes: HTMLElement[]) {
+  const lefts: number[] = [];
+  const rights: number[] = [];
+  const codes: string[] = [];
+  const leftNumbers: number[] = [];
+  const rightNumbers: number[] = [];
+
+  for (let i = 0; i < checkedTdNodes.length; i++) {
+    const itemTdNode = checkedTdNodes[i];
+    if (itemTdNode.classList.contains('d2h-code-linenumber')) {
+      const numberChildren = itemTdNode.children as unknown as HTMLElement[];
+      const leftNum = parseInt(numberChildren[0].innerText);
+      const rightNum = parseInt(numberChildren[1].innerText);
+      !isNaN(leftNum) && leftNumbers.push(leftNum);
+      !isNaN(rightNum) && rightNumbers.push(rightNum);
+    } else {
+      codes.push(itemTdNode.innerText);
+    }
+  }
+
+  lefts.push(...getFullNumberList(leftNumbers[0], leftNumbers[leftNumbers.length - 1]));
+  rights.push(...getFullNumberList(rightNumbers[0], rightNumbers[rightNumbers.length - 1]));
+
+  return { lefts, rights, codes };
+}
+
+/* 双栏模式，点击展开行后，为新增的行设置选中样式 */
+export function addCommentCheckedForDouble(
+  trNode: HTMLElement,
+  leftMinNum: number,
+  leftMaxNum: number,
+  rightMinNum: number,
+  rightMaxNum: number
+) {
+  const [leftNumTd, leftCodeTd, rightNumTd, rightCodeTd] = trNode.children as unknown as HTMLElement[];
+  const leftNum = parseInt(leftNumTd.innerText);
+  const rightNum = parseInt(rightNumTd.innerText);
+  const result: HTMLElement[] = [];
+
+  if (!isNaN(leftNum) && leftNum >= leftMinNum && leftNum <= leftMaxNum) {
+    if (!leftNumTd.classList.contains('comment-checked')) {
+      leftNumTd.classList.add('comment-checked');
+      leftCodeTd.classList.add('comment-checked');
+    }
+    result.push(leftNumTd, leftCodeTd);
+  }
+  if (!isNaN(rightNum) && rightNum >= rightMinNum && rightNum <= rightMaxNum) {
+    if (!rightNumTd.classList.contains('comment-checked')) {
+      rightNumTd.classList.add('comment-checked');
+      rightCodeTd.classList.add('comment-checked');
+    }
+    result.push(rightNumTd, rightCodeTd);
+  }
+
+  return result;
+}
+
+/* 单栏模式，点击展开行后，为新增的行设置选中样式 */
+export function addCommentCheckedForSingle(
+  trNode: HTMLElement,
+  leftMinNum: number,
+  leftMaxNum: number,
+  rightMinNum: number,
+  rightMaxNum: number
+) {
+  const [numTd, codeTd] = trNode.children as unknown as HTMLElement[];
+  const [leftNumNode, rightNumNode] = numTd.children as unknown as HTMLElement[];
+  const leftNum = parseInt(leftNumNode.innerText);
+  const rightNum = parseInt(rightNumNode.innerText);
+  const result: HTMLElement[] = [];
+
+  if (
+    (!isNaN(leftNum) && leftNum >= leftMinNum && leftNum <= leftMaxNum) ||
+    (!isNaN(rightNum) && rightNum >= rightMinNum && rightNum <= rightMaxNum)
+  ) {
+    if (!numTd.classList.contains('comment-checked')) {
+      numTd.classList.add('comment-checked');
+      codeTd.classList.add('comment-checked');
+    }
+    result.push(numTd, codeTd);
+  }
+
+  return result;
 }
