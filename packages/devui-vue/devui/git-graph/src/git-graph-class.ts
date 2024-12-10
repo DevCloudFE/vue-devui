@@ -72,12 +72,12 @@ export class GitGraph {
     this.graphHeight = (this.element as HTMLElement).getBoundingClientRect().height;
     this.graphWidth = (this.element as HTMLElement).getBoundingClientRect().width;
 
-    // 按提交数据计算画布高度，并留出下方150，右边300空白，保证悬浮框不超出画布
+    // 按提交数据计算画布高度，并留出下方150，右边500空白，保证悬浮框不超出画布
     const ch = Math.max(this.graphHeight, this.offsetY + this.unitTime * this.mtime + 150);
-    const cw = Math.max(this.graphWidth, this.offsetX + this.unitSpace * this.mspace + 300);
+    const cw = Math.max(this.graphWidth, this.offsetX + this.unitSpace * this.mspace + 500);
     this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     this.svg.setAttribute('height', ch + '');
-    this.svg.setAttribute('width', '100%');
+    this.svg.setAttribute('width', cw + '');
     this.element?.appendChild(this.svg);
     this.barHeight = Math.max(this.graphHeight, this.unitTime * this.commits.length + 320);
 
@@ -237,7 +237,7 @@ export class GitGraph {
       r: 4,
       fill: '#fff',
       strokeWidth: 1,
-      stroke: this.colors[commit.space],
+      stroke: this.colors[commit.space % 20],
       style: 'cursor: pointer;'
     };
     this.setNodeAttr(circle, attrs);
@@ -265,7 +265,7 @@ export class GitGraph {
     this.svg.appendChild(img);
 
     if (!this.messageBoxWidth) {
-      this.messageBoxWidth = this.svg.getBoundingClientRect.width - (avatar_box_x + 40);
+      this.messageBoxWidth = this.svg.getBoundingClientRect().width - (avatar_box_x + 40);
     }
     // 画竖线
     let route = ['M', avatar_box_x + 15, avatar_box_y - 20, 'L', avatar_box_x + 15, avatar_box_y];
@@ -292,16 +292,29 @@ export class GitGraph {
       commit.author.name = commit.author.name.substr(0, this.maxNameLength) + '...';
     }
 
-    const commitText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    const commitText = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
     const commitAttrs = {
       x: avatar_box_x + 40,
-      y: y + 4,
+      y: y - 8,
       'text-anchor': 'start',
       style: 'cursor: pointer;text-anchor: start;',
-      fill: isdark ? '#e8e8e8' : '#2e2e2e',
-      'font-size': 14,
+      width: this.messageBoxWidth,
+      height: 20,
     };
     this.setNodeAttr(commitText, commitAttrs);
+
+    const textArr = {
+      style: 'width: 100%; height: 20px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;',
+      title: commit.message,
+    };
+
+    const text = document.createElement('div');
+    this.setNodeAttr(text, textArr);
+
+    text.innerText = commit.message.replace(/\n/g, ' ');
+    commitText.appendChild(text);
+
+    this.svg.appendChild(commitText);
 
     const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
     tspan.appendChild(document.createTextNode(commit.message.replace(/\n/g, ' ')));
@@ -339,9 +352,9 @@ export class GitGraph {
       parentX1 = this.offsetX + this.unitSpace * (this.mspace - parentCommit.space);
       parentX2 = this.offsetX + this.unitSpace * (this.mspace - parent[1]);
       if (parentCommit.space <= commit.space) {
-        color = this.colors[commit.space];
+        color = this.colors[commit.space % 20];
       } else {
-        color = this.colors[parentCommit.space];
+        color = this.colors[parentCommit.space % 20];
       }
       if (parent[1] === commit.space) {
         offset = [0, 5];
@@ -438,7 +451,7 @@ export class GitGraph {
 
       const rectAttrs = {
         fill: this.isDark ? '#4C4C4C' : '#fff',
-        stroke: this.colors[commit.space],
+        stroke: this.colors[commit.space % 20],
         'stroke-width': '1px',
         d: path.join(' '),
         transform: `matrix(1,0,0,1,-${textbox.width + 26},0)`,
@@ -446,7 +459,7 @@ export class GitGraph {
 
       const newAttrs = {
         transform: `matrix(1,0,0,1,-${textbox.width + 26},0)`,
-        fill: this.colors[commit.space],
+        fill: this.colors[commit.space % 20],
       };
 
       this.setNodeAttr(text, newAttrs);
