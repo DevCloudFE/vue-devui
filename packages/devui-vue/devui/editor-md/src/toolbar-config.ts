@@ -31,6 +31,7 @@ export interface IToolbarItemConfig {
   template?: any;
   component?: any;
   shortKey?: string;
+  shortKeyWithCode?: string;
   params?: { [key: string]: any };
   handler?(editor?: any, params?: any): void;
 }
@@ -277,13 +278,17 @@ class ToolBarHandler {
   static color = (): void => {};
 }
 
+export const CTRL_KEY = navigator?.platform?.indexOf('Mac') !== -1 ? '⌘' : 'Ctrl';
+export const ALT_KEY = navigator?.platform?.indexOf('Mac') !== -1 ? '⌥' : 'Alt';
+
 export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
   undo: {
     id: 'undo',
     name: 'undo',
     type: 'button',
     icon: UNDO_ICON,
-    shortKey: 'Ctrl+Z',
+    shortKey: `${CTRL_KEY}+Z`,
+    shortKeyWithCode: `${CTRL_KEY}+90`,
     handler: ToolBarHandler.undo,
   },
   redo: {
@@ -291,7 +296,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     name: 'redo',
     type: 'button',
     icon: REDO_ICON,
-    shortKey: 'Ctrl+Y',
+    shortKey: `${CTRL_KEY}+Y`,
+    shortKeyWithCode: `${CTRL_KEY}+89`,
     handler: ToolBarHandler.redo,
   },
   bold: {
@@ -299,7 +305,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     name: 'bold',
     type: 'button',
     icon: BOLD_ICON,
-    shortKey: 'Ctrl+B',
+    shortKey: `${CTRL_KEY}+B`,
+    shortKeyWithCode: `${CTRL_KEY}+66`,
     handler: ToolBarHandler.bold,
   },
   italic: {
@@ -307,7 +314,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     name: 'italic',
     type: 'button',
     icon: ITALIC_ICON,
-    shortKey: 'Ctrl+I',
+    shortKey: `${CTRL_KEY}+I`,
+    shortKeyWithCode: `${CTRL_KEY}+73`,
     handler: ToolBarHandler.italic,
   },
   strike: {
@@ -315,7 +323,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     name: 'strike',
     type: 'button',
     icon: STRIKE_ICON,
-    shortKey: 'Ctrl+D',
+    shortKey: `${CTRL_KEY}+D`,
+    shortKeyWithCode: `${CTRL_KEY}+68`,
     handler: ToolBarHandler.strike,
   },
   h1: {
@@ -323,7 +332,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     name: 'h1',
     type: 'button',
     icon: H1_ICON,
-    shortKey: 'Ctrl+1',
+    shortKey: `${CTRL_KEY}+1`,
+    shortKeyWithCode: `${CTRL_KEY}+49`,
     handler: ToolBarHandler.h1,
   },
   h2: {
@@ -331,7 +341,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     name: 'h2',
     type: 'button',
     icon: H2_ICON,
-    shortKey: 'Ctrl+2',
+    shortKey: `${CTRL_KEY}+2`,
+    shortKeyWithCode: `${CTRL_KEY}+50`,
     handler: ToolBarHandler.h2,
   },
   ul: {
@@ -339,7 +350,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     name: 'unorderedlist',
     type: 'button',
     icon: LIST_UNORDERED_ICON,
-    shortKey: 'Ctrl+U',
+    shortKey: `${CTRL_KEY}+U`,
+    shortKeyWithCode: `${CTRL_KEY}+85`,
     handler: ToolBarHandler.ul,
   },
   ol: {
@@ -347,7 +359,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     name: 'orderedlist',
     type: 'button',
     icon: LIST_ORDERED_ICON,
-    shortKey: 'Ctrl+O',
+    shortKey: `${CTRL_KEY}+O`,
+    shortKeyWithCode: `${CTRL_KEY}+79`,
     handler: ToolBarHandler.ol,
   },
   checklist: {
@@ -355,7 +368,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     name: 'checklist',
     type: 'button',
     icon: LIST_CHECK_ICON,
-    shortKey: 'Ctrl+Alt+C',
+    shortKey: `${CTRL_KEY}+${ALT_KEY}+C`,
+    shortKeyWithCode: `${CTRL_KEY}+${ALT_KEY}+67`,
     handler: ToolBarHandler.checkList,
   },
   underline: {
@@ -363,7 +377,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     name: 'underline',
     type: 'button',
     icon: UNDERLINE_ICON,
-    shortKey: 'Ctrl+R',
+    shortKey: `${CTRL_KEY}+R`,
+    shortKeyWithCode: `${CTRL_KEY}+82`,
     handler: ToolBarHandler.underline,
   },
   font: {
@@ -379,7 +394,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     name: 'link',
     type: 'button',
     icon: LINK_ICON,
-    shortKey: 'Ctrl+L',
+    shortKey: `${CTRL_KEY}+L`,
+    shortKeyWithCode: `${CTRL_KEY}+76`,
     handler: ToolBarHandler.link,
   },
   image: {
@@ -387,7 +403,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     name: 'image',
     type: 'button',
     icon: IMAGE_ICON,
-    shortKey: 'Ctrl+G',
+    shortKey: `${CTRL_KEY}+G`,
+    shortKeyWithCode: `${CTRL_KEY}+71`,
     params: { imageUploadToServer: false },
     handler: ToolBarHandler.image,
   },
@@ -397,7 +414,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: FILE_ICON,
     params: {},
-    shortKey: 'Ctrl+F',
+    shortKey: `${CTRL_KEY}+F`,
+    shortKeyWithCode: `${CTRL_KEY}+70`,
     handler: ToolBarHandler.file,
   },
   code: {
@@ -405,7 +423,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     name: 'code',
     type: 'button',
     icon: CODE_ICON,
-    shortKey: 'Ctrl+K',
+    shortKey: `${CTRL_KEY}+K`,
+    shortKeyWithCode: `${CTRL_KEY}+75`,
     handler: ToolBarHandler.code,
   },
   table: {
@@ -413,7 +432,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     name: 'table',
     type: 'button',
     icon: TABLE_ICON,
-    shortKey: 'Ctrl+Alt+T',
+    shortKey: `${CTRL_KEY}+${ALT_KEY}+T`,
+    shortKeyWithCode: `${CTRL_KEY}+${ALT_KEY}+84`,
     handler: ToolBarHandler.table,
   },
   fullscreen: {
