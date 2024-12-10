@@ -3,16 +3,21 @@ import type { SetupContext, Ref } from 'vue';
 import type { DiffFile } from 'diff2html/lib/types';
 import * as Diff2Html from 'diff2html';
 import { inBrowser } from '../../../shared/utils/common-var';
-import type { CodeReviewProps } from '../code-review-types';
+import type { CodeReviewProps, IExpandLineNumberInfo } from '../code-review-types';
 import { useCodeReviewExpand } from './use-code-review-expand';
 import { parseDiffCode } from '../utils';
 
-export function useCodeReview(props: CodeReviewProps, ctx: SetupContext) {
+export function useCodeReview(
+  props: CodeReviewProps,
+  ctx: SetupContext,
+  reviewContentRef: Ref<HTMLElement>,
+  updateLineNumberMap: (expandLineNumberInfo: IExpandLineNumberInfo, newCode: string, direction: 'up' | 'down') => void,
+  updateCheckedLine: (expandLineNumberInfo: IExpandLineNumberInfo, direction: 'up' | 'down') => void
+) {
   const { diff, outputFormat, allowExpand, showBlob } = toRefs(props);
   const renderHtml = ref('');
-  const reviewContentRef = ref();
   const diffFile: Ref<DiffFile[]> = ref([]);
-  const { insertExpandButton, onExpandButtonClick } = useCodeReviewExpand(reviewContentRef, props);
+  const { insertExpandButton, onExpandButtonClick } = useCodeReviewExpand(reviewContentRef, props, updateLineNumberMap, updateCheckedLine);
 
   const initDiffContent = () => {
     diffFile.value = Diff2Html.parse(diff.value);
@@ -35,5 +40,5 @@ export function useCodeReview(props: CodeReviewProps, ctx: SetupContext) {
 
   watch(diff, initDiffContent, { immediate: true });
 
-  return { renderHtml, reviewContentRef, diffFile, onContentClick };
+  return { renderHtml, diffFile, onContentClick };
 }

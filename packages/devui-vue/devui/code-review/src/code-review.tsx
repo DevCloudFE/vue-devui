@@ -1,5 +1,5 @@
 /* @jsxImportSource vue */
-import { defineComponent, onMounted, provide, toRefs } from 'vue';
+import { defineComponent, onMounted, provide, toRefs, ref } from 'vue';
 import type { SetupContext } from 'vue';
 import CodeReviewHeader from './components/code-review-header';
 import { CommentIcon } from './components/code-review-icons';
@@ -18,8 +18,7 @@ export default defineComponent({
   setup(props: CodeReviewProps, ctx: SetupContext) {
     const ns = useNamespace('code-review');
     const { diffType } = toRefs(props);
-    const { renderHtml, reviewContentRef, diffFile, onContentClick } = useCodeReview(props, ctx);
-    const { isFold, toggleFold } = useCodeReviewFold(props, ctx);
+    const reviewContentRef = ref();
     const {
       commentLeft,
       commentTop,
@@ -28,16 +27,18 @@ export default defineComponent({
       onCommentIconClick,
       insertComment,
       removeComment,
-      updateCheckedLineClass,
       clearCheckedLines,
+      updateLineNumberMap,
+      updateCheckedLine,
     } = useCodeReviewComment(reviewContentRef, props, ctx);
+    const { renderHtml, diffFile, onContentClick } = useCodeReview(props, ctx, reviewContentRef, updateLineNumberMap, updateCheckedLine);
+    const { isFold, toggleFold } = useCodeReviewFold(props, ctx);
 
     onMounted(() => {
       ctx.emit('afterViewInit', {
         toggleFold,
         insertComment,
         removeComment,
-        updateCheckedLineClass,
         clearCheckedLines,
       });
     });

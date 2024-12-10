@@ -2,7 +2,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import { computed, nextTick, onMounted, reactive, Ref, ref, SetupContext, toRefs, watch, onBeforeUnmount } from 'vue';
 import { debounce } from '../../../shared/utils';
 import { EditorMdProps, Mode } from '../editor-md-types';
-import { DEFAULT_TOOLBARS } from '../toolbar-config';
+import { ALT_KEY, DEFAULT_TOOLBARS } from '../toolbar-config';
 import { parseHTMLStringToDomList } from '../utils';
 import { refreshEditorCursor, _enforceMaxLength } from './helper';
 import { throttle } from 'lodash';
@@ -289,8 +289,8 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     const tempToolbars = { ...toolbars, ...customToolbars?.value };
     for (const key of Object.keys(tempToolbars)) {
       const toolbarItem = tempToolbars[key];
-      if (toolbarItem.shortKey && flatToolbarConfig.includes(toolbarItem.id)) {
-        shortKeys[toolbarItem.shortKey.replace(/\+/g, '-')] = toolbarItem.handler?.bind(null, editorIns, toolbarItem.params);
+      if (toolbarItem.shortKeyWithCode && flatToolbarConfig.includes(toolbarItem.id)) {
+        shortKeys[toolbarItem.shortKeyWithCode.replace(/\+/g, '-')] = toolbarItem.handler?.bind(null, editorIns, toolbarItem.params);
       }
     }
 
@@ -316,6 +316,28 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     setTimeout(() => {
       ctx.emit('contentChange', editorIns.getValue());
     }, 100);
+
+    containerRef.value.addEventListener('keydown', (e: KeyboardEvent) => {
+      let keyCombination = '';
+      if (e.ctrlKey) {
+        keyCombination += 'Ctrl-';
+      }
+      if (e.metaKey) {
+        keyCombination += '⌘-';
+      }
+      if (e.altKey) {
+        keyCombination += `${ALT_KEY}-`;
+      }
+      if (e.shiftKey) {
+        keyCombination += 'Shift-';
+      }
+      
+      keyCombination += e.keyCode;
+      if (shortKeys[keyCombination] && typeof shortKeys[keyCombination] === 'function') {
+        e.preventDefault();
+        shortKeys[keyCombination]();
+      }
+    });
   };
 
   const onPaste = (e: ClipboardEvent) => {

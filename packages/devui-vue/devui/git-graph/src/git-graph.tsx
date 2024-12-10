@@ -1,7 +1,7 @@
 import { defineComponent, onMounted, ref, SetupContext, nextTick } from "vue";
 import { GitGraphProps, gitGraphProps } from "./git-graph-types";
 import useGitGraph from "./use-git-graph";
-
+import './git-graph.scss';
 
 export default defineComponent({
   name: 'DGitGraph',
