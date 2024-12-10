@@ -561,7 +561,7 @@ export function parseCodeToSingle(container: HTMLElement, code: string, options:
 }
 
 function generateNumberTdObj(tdNodes: HTMLElement[]) {
-  const lineNumber = parseInt(tdNodes[0].innerText) || -1;
+  const lineNumber = tdNodes[0]?.innerText ? parseInt(tdNodes[0].innerText) : -1;
   if (lineNumber !== -1) {
     return { [lineNumber]: tdNodes };
   }
