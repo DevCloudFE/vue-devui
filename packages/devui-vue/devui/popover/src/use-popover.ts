@@ -1,6 +1,6 @@
 import { toRefs, ref, computed, watch, onUnmounted, onMounted } from 'vue';
 import type { Ref, ComputedRef } from 'vue';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 import { PopoverProps, UsePopoverEvent } from './popover-types';
 
 const TransformOriginMap: Record<string, string> = {

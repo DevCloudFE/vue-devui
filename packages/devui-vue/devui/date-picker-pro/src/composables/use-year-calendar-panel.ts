@@ -1,6 +1,6 @@
 import { ref, onBeforeMount, nextTick, watch } from 'vue';
 import type { SetupContext } from 'vue';
-import { chunk } from 'lodash';
+import { chunk } from 'lodash-es';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { DatePickerProPanelProps, UseYearCalendarPanelReturnType } from '../date-picker-pro-types';
 import dayjs from 'dayjs';

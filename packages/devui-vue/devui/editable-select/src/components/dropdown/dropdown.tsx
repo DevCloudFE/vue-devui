@@ -4,7 +4,7 @@ import { EditableSelectContext, Option as O, SELECT_KEY } from '../../editable-s
 import Option from '../option/option';
 import Loading from '../../../../loading/src/loading-directive';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 
 export default defineComponent({
   name: 'DEditableSelectDropdown',
