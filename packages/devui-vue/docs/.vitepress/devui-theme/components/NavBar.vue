@@ -64,7 +64,6 @@ const LANG_MAP = {
 }
 
 const currentLang = ref(CURRENT_LANG);
-// const app = getCurrentInstance();
 const switchLang = () => {
   if (currentLang.value === ZH_CN) {
     Locale.use(EN_US);
