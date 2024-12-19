@@ -1,11 +1,11 @@
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep } from 'lodash-es';
 import { computed, nextTick, onMounted, reactive, Ref, ref, SetupContext, toRefs, watch, onBeforeUnmount } from 'vue';
 import { debounce } from '../../../shared/utils';
 import { EditorMdProps, Mode } from '../editor-md-types';
 import { DEFAULT_TOOLBARS, GET_ALT_KEY } from '../toolbar-config';
 import { parseHTMLStringToDomList } from '../utils';
 import { refreshEditorCursor, _enforceMaxLength } from './helper';
-import { throttle } from 'lodash';
+import { throttle } from 'lodash-es';
 
 export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
   const {

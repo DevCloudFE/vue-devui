@@ -1,4 +1,4 @@
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep } from 'lodash-es';
 import Token from 'markdown-it/lib/token';
 
 const TOC = '[toc]';

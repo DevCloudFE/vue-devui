@@ -2,7 +2,7 @@ import { defineComponent, toRefs, onMounted, reactive, ref, watch } from 'vue';
 import { IAxisConfigs, IViewConfigs } from '../../../type';
 import { AXIS_TITLE_SPACE } from '../../../config';
 import { quadrantDiagramAxisProps, QuadrantDiagramAxisProps } from './types';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 
 import './index.scss';
 

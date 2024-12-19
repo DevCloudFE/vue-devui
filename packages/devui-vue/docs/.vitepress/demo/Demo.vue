@@ -52,7 +52,7 @@
 
 <script>
 import { useRoute, useData } from 'vitepress';
-import { throttle } from 'lodash';
+import { throttle } from 'lodash-es';
 import copy from 'clipboard-copy';
 import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, defineAsyncComponent } from 'vue';
 export default {
