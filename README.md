@@ -1,4 +1,4 @@
-[![star](https://gitcode.com/GitCode-official-team/EssayCompetition/star/badge.svg)](https://gitcode.com/DevCloudFE/vue-devui/issues) 
+[![star](https://gitcode.com/DevCloudFE/vue-devui/star/badge.svg)](https://gitcode.com/DevCloudFE/vue-devui/issues) 
 
 <p align="center">
   <a href="https://devui.design/" target="_blank" rel="noopener noreferrer">
