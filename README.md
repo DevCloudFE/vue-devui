@@ -1,3 +1,5 @@
+[![star](https://gitcode.com/GitCode-official-team/EssayCompetition/star/badge.svg)](https://gitcode.com/DevCloudFE/vue-devui/issue)
+
 <p align="center">
   <a href="https://devui.design/" target="_blank" rel="noopener noreferrer">
     <img alt="DevUI Logo" src="https://vue-devui.github.io/assets/logo.svg" width="180" style="max-width:100%;">
@@ -9,6 +11,7 @@
 <p align="center">Vue3 component library based on <a href="https://devui.design/" target="_blank" rel="noopener noreferrer">DevUI Design</a></p>
 
 English | [简体中文](README.zh-CN.md)
+
 
 🌈 Features：
 
