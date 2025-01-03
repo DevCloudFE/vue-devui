@@ -102,7 +102,14 @@ export class MDRenderService {
   }
 
   private onIgnoreTagAttr(tag: string, name: string, value: string, isWhiteAttr: boolean) {
-    if (!isWhiteAttr && (name === 'id' || (tag === 'span' && name === 'style'))) {
+    if (!isWhiteAttr && (name === 'id' || (tag === 'span' && name === 'style')
+      || (tag === 'a' && name === 'href'))) {
+      return name + '=' + value;
+    }
+  }
+
+  private onTagAttr(tag: string, name: string, value: string, isWhiteAttr: boolean) {
+    if (isWhiteAttr && (tag === 'a' && name === 'href')) {
       return name + '=' + value;
     }
   }
@@ -139,6 +146,7 @@ export class MDRenderService {
     html = filterXSS(html, {
       whiteList: this.xssWhiteList,
       onIgnoreTagAttr: this.onIgnoreTagAttr,
+      onTagAttr: this.onTagAttr,
       css: {
         whiteList: Object.assign({}, this.cssWhiteList, {
           top: true,
