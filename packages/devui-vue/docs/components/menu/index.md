@@ -2,13 +2,17 @@
 
 Menu 组件通常用于导航.
 
-### 何时使用
-
+:::tip 何时使用
 在需要收纳，排列，展示一系列选项时.
+:::
+
+## 用法
 
 ### 基本用法
 
-:::demo 如果屏幕尺寸过小，则会出现省略号
+如果屏幕尺寸过小，则会出现省略号。
+
+:::demo
 
 ```vue
 <template>
@@ -32,11 +36,18 @@ Menu 组件通常用于导航.
   <d-slider :min="0" :max="480" v-model="width"></d-slider>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-let width = ref(480);
-</script>
+<script>
+import { defineComponent, ref } from 'vue';
 
+export default defineComponent({
+  setup() {
+    const width = ref(480);
+    return {
+      width,
+    };
+  },
+});
+</script>
 ```
 
 :::
@@ -65,7 +76,7 @@ let width = ref(480);
 
 ### 垂直菜单
 
-垂直菜单一般在后台中较为广泛使用，子菜单可以嵌入菜单中
+垂直菜单一般在后台中较为广泛使用，子菜单可以嵌入菜单中。
 
 :::demo
 
@@ -102,7 +113,7 @@ let width = ref(480);
 
 ### 默认展开
 
-通过设置`open-keys`可以修改展开的子菜单项目.
+通过设置`open-keys`可以修改展开的子菜单项目。
 
 :::demo
 
@@ -129,79 +140,80 @@ let width = ref(480);
 
 ### 仅展开一项根子菜单
 
-:::demo 通过子菜单状态改变事件修改```open-keys```数组达到效果
+通过子菜单状态改变事件修改`open-keys`数组达到效果。
 
-``` vue
-  <template>
-    <d-menu @submenu-change="submenuChange" :default-select-keys="['item1']" :open-keys="openKeys" width="256px"
-    >
-      <d-sub-menu title="submenu-1" key="submenu-1">
+:::demo
+
+```vue
+<template>
+  <d-menu @submenu-change="submenuChange" :default-select-keys="['item1']" :open-keys="openKeys" width="256px">
+    <d-sub-menu title="submenu-1" key="submenu-1">
+      <template #icon>
+        <i class="icon-infomation"></i>
+      </template>
+      <d-menu-item key="subemenu-item-1">
+        <span>submenu-item-1</span>
+      </d-menu-item>
+      <d-sub-menu title="submenu-4" key="submenu-4">
         <template #icon>
           <i class="icon-infomation"></i>
         </template>
         <d-menu-item key="subemenu-item-1">
           <span>submenu-item-1</span>
         </d-menu-item>
-        <d-sub-menu title="submenu-4" key="submenu-4">
-          <template #icon>
-            <i class="icon-infomation"></i>
-          </template>
-          <d-menu-item key="subemenu-item-1">
-            <span>submenu-item-1</span>
-          </d-menu-item>
-        </d-sub-menu>
-        <d-sub-menu title="submenu-5" key="submenu-5">
-          <template #icon>
-            <i class="icon-infomation"></i>
-          </template>
-          <d-menu-item key="subemenu-item-1">
-            <span>submenu-item-1</span>
-          </d-menu-item>
-        </d-sub-menu>
       </d-sub-menu>
-      <d-sub-menu title="submenu-2" key="submenu-2">
+      <d-sub-menu title="submenu-5" key="submenu-5">
         <template #icon>
-          <i class="icon-setting"></i>
+          <i class="icon-infomation"></i>
         </template>
-        <d-menu-item key="submenu-item-2">
-          <span>submenu-item-2</span>
+        <d-menu-item key="subemenu-item-1">
+          <span>submenu-item-1</span>
         </d-menu-item>
       </d-sub-menu>
-      <d-sub-menu title="submenu-3" key="submenu-3">
-        <template #icon>
-          <i class="icon-setting"></i>
-        </template>
-        <d-menu-item key="submenu-item-2">
-          <span>submenu-item-2</span>
-        </d-menu-item>
-      </d-sub-menu>
-    </d-menu>
-  </template>
+    </d-sub-menu>
+    <d-sub-menu title="submenu-2" key="submenu-2">
+      <template #icon>
+        <i class="icon-setting"></i>
+      </template>
+      <d-menu-item key="submenu-item-2">
+        <span>submenu-item-2</span>
+      </d-menu-item>
+    </d-sub-menu>
+    <d-sub-menu title="submenu-3" key="submenu-3">
+      <template #icon>
+        <i class="icon-setting"></i>
+      </template>
+      <d-menu-item key="submenu-item-2">
+        <span>submenu-item-2</span>
+      </d-menu-item>
+    </d-sub-menu>
+  </d-menu>
+</template>
 
-  <script>
-  import { defineComponent, ref } from 'vue';
+<script>
+import { defineComponent, ref } from 'vue';
 
-  export default defineComponent({
-    setup() {
-      const openKeys = ref(['submenu-1']);
-      const rootSubMenuKeys = ref(['submenu-1','submenu-2','submenu-3']);
-      const submenuChange = (e) => {
-        console.log(e);
-        const {key} = e;
-        if (rootSubMenuKeys.value.includes(key)){
-          while (openKeys.value.length){
-            openKeys.value.shift();
-          }
-          openKeys.value.push(key);
+export default defineComponent({
+  setup() {
+    const openKeys = ref(['submenu-1']);
+    const rootSubMenuKeys = ref(['submenu-1', 'submenu-2', 'submenu-3']);
+    const submenuChange = (e) => {
+      console.log(e);
+      const { key } = e;
+      if (rootSubMenuKeys.value.includes(key)) {
+        while (openKeys.value.length) {
+          openKeys.value.shift();
         }
-      };
-      return {
-        openKeys,
-        submenuChange,
-      };
-    },
-  });
-  </script>
+        openKeys.value.push(key);
+      }
+    };
+    return {
+      openKeys,
+      submenuChange,
+    };
+  },
+});
+</script>
 ```
 
 :::
@@ -211,10 +223,8 @@ let width = ref(480);
 :::demo
 
 ```vue
-<d-button @click="changeCollapsed">
-  Collapsed
-</d-button>
 <template>
+  <d-button @click="changeCollapsed"> Collapsed </d-button>
   <d-menu :collapsed-indent="48" mode="vertical" width="256px" :default-select-keys="['item1']" :collapsed="collapsed">
     <d-menu-item key="item1" :disabled="isDisabled">
       <template #icon>
@@ -241,13 +251,23 @@ let width = ref(480);
   </d-menu>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue';
-let collapsed = ref(false);
-const isDisabled = ref(true);
-const changeCollapsed = () => {
-  collapsed.value = !collapsed.value;
-};
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    let collapsed = ref(false);
+    const isDisabled = ref(true);
+    const changeCollapsed = () => {
+      collapsed.value = !collapsed.value;
+    };
+    return {
+      collapsed,
+      isDisabled,
+      changeCollapsed,
+    };
+  },
+});
 </script>
 ```
 
@@ -303,7 +323,7 @@ export default defineComponent({
 
 ### 响应式参数
 
-例如,`width`, `open-keys`, `default-select-keys`等参数均为响应式
+例如，`width`、`open-keys`、`default-select-keys`等参数均为响应式
 
 :::demo
 
@@ -339,24 +359,37 @@ export default defineComponent({
   <d-slider :min="0" :max="480" v-model="width"></d-slider>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue';
-let collapsed = ref(false);
-let isDisabled = ref(false);
-let selectKeys = ref([]);
-let width = ref(256);
-const changeDisabled = () => {
-  isDisabled.value = !isDisabled.value;
-  console.log(isDisabled.value);
-};
-const addSelect = () => {
-  if (selectKeys.value.includes('system-item')){
-    selectKeys.value.pop();
-  } else {
-    selectKeys.value.push('system-item');
-  }
-  console.log(selectKeys.value);
-}
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    let collapsed = ref(false);
+    let isDisabled = ref(false);
+    let selectKeys = ref([]);
+    let width = ref(256);
+    const changeDisabled = () => {
+      isDisabled.value = !isDisabled.value;
+      console.log(isDisabled.value);
+    };
+    const addSelect = () => {
+      if (selectKeys.value.includes('system-item')) {
+        selectKeys.value.pop();
+      } else {
+        selectKeys.value.push('system-item');
+      }
+      console.log(selectKeys.value);
+    };
+    return {
+      collapsed,
+      isDisabled,
+      selectKeys,
+      width,
+      changeDisabled,
+      addSelect,
+    };
+  },
+});
 </script>
 ```
 
@@ -364,17 +397,17 @@ const addSelect = () => {
 
 ### Menu 参数
 
-| 参数                | 类型                  | 默认       | 说明                                                                            | 跳转 Demo                 |
-| ------------------- | --------------------- | ---------- | ------------------------------------------------------------------------------- | ------------------------- |
-| width               | String                | ''         | 用于控制菜单宽度                                                                | [响应式参数](#响应式参数) |
-| collapsed           | Boolean               | false      | 用于决定菜单是否收起                                                            | [收缩菜单](#收缩菜单)     |
-| collapsed-indent    | Number                | 24         | 收起时图标距离左右边框的距离                                                    | [收缩菜单](#收缩菜单)     |
-| multiple            | Boolean               | false      | 是否可以多选                                                                    | [取消多选](#取消多选)     |
-| mode                | [menuMode](#menumode) | 'vertical' | 菜单类型                                                                        | [基本用法](#基本用法)     |
-| open-keys           | Array                 | []         | 默认展开的子菜单 key 值                                                         | [默认展开](#默认展开)     |
-| default-select-keys | Array                 | []         | 默认选择菜单项 key 值                                                           | [基本用法](#基本用法)     |
-| router              | Boolean               | false      | 是否启用`vue-router`模式。启用该模式会在激活导航时以 key 作为 path 进行路由跳转 | -                         |
-| disable-overflow-style| Boolean               | false      | 是否禁用宽度过小时菜单的省略样式                                              | -                         |
+| 参数                   | 类型                  | 默认       | 说明                                                                            | 跳转 Demo                 |
+| ---------------------- | --------------------- | ---------- | ------------------------------------------------------------------------------- | ------------------------- |
+| width                  | String                | ''         | 用于控制菜单宽度                                                                | [响应式参数](#响应式参数) |
+| collapsed              | Boolean               | false      | 用于决定菜单是否收起                                                            | [收缩菜单](#收缩菜单)     |
+| collapsed-indent       | Number                | 24         | 收起时图标距离左右边框的距离                                                    | [收缩菜单](#收缩菜单)     |
+| multiple               | Boolean               | false      | 是否可以多选                                                                    | [取消多选](#取消多选)     |
+| mode                   | [menuMode](#menumode) | 'vertical' | 菜单类型                                                                        | [基本用法](#基本用法)     |
+| open-keys              | Array                 | []         | 默认展开的子菜单 key 值                                                         | [默认展开](#默认展开)     |
+| default-select-keys    | Array                 | []         | 默认选择菜单项 key 值                                                           | [基本用法](#基本用法)     |
+| router                 | Boolean               | false      | 是否启用`vue-router`模式。启用该模式会在激活导航时以 key 作为 path 进行路由跳转 | -                         |
+| disable-overflow-style | Boolean               | false      | 是否禁用宽度过小时菜单的省略样式                                                | -                         |
 
 ### Menu 事件
 

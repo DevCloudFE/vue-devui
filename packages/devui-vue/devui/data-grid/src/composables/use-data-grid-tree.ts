@@ -1,6 +1,6 @@
 import { ref, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import type { DataGridProps, InnerRowData, RowData, IExpandLoadMoreResult } from '../data-grid-types';
 import { generateInnerData } from '../utils';
 

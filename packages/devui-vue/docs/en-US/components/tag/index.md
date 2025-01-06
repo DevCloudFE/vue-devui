@@ -8,7 +8,9 @@ When multiple tags need to be displayed
 
 ### Basic
 
-:::demo Defines the label style by using the `type` attribute or `color` attribute.
+Defines the label style by using the `type` attribute or `color` attribute.
+
+:::demo
 
 ```vue
 <template>
@@ -51,7 +53,9 @@ export default defineComponent({
 
 ### Custom
 
-:::demo Use the default slot to customize your tag.
+Use the default slot to customize your tag.
+
+:::demo
 
 ```vue
 <template>
@@ -82,7 +86,9 @@ export default defineComponent({
 
 ### Can be selected
 
-:::demo The `checked` attribute is used to set the checked status of the tag, and the `checked` value can be changed by clicking.
+The `checked` attribute is used to set the checked status of the tag, and the `checked` value can be changed by clicking.
+
+:::demo
 
 ```vue
 <template>
@@ -112,7 +118,9 @@ export default defineComponent({
 
 ### Deletable
 
-:::demo The `deletable` attribute is used to set whether the tag can be deleted
+The `deletable` attribute is used to set whether the tag can be deleted
+
+:::demo
 
 ```vue
 <template>
@@ -146,13 +154,13 @@ export default defineComponent({
 
 #### Props
 
-|     参数     |   类型    |  默认值   |                                         说明                                         |              可选值              |             跳转至 Demo             |
-| :----------: | :-------: | :-------: | :----------------------------------------------------------------------------------: | :------------------------------: | :---------------------------------: |
-|     type     | `string`  | 'defalut' | Optional. Type of the a tag, color does not take effect after the type is specified. | `success\|info\|warning\|danger` |           [Basic](#basic)           |
-|    color     | `string`  |    ''     |                         Optional. Theme color of the a tag.                          |                -                 |           [Basic](#basic)           |
+|     参数      |   类型    |  默认值   |                                         说明                                         |              可选值              |             跳转至 Demo             |
+| :-----------: | :-------: | :-------: | :----------------------------------------------------------------------------------: | :------------------------------: | :---------------------------------: |
+|     type      | `string`  | 'defalut' | Optional. Type of the a tag, color does not take effect after the type is specified. | `success\|info\|warning\|danger` |           [Basic](#basic)           |
+|     color     | `string`  |    ''     |                         Optional. Theme color of the a tag.                          |                -                 |           [Basic](#basic)           |
 | title-content | `string`  |    ''     |            Optional. Sets the title displayed when the cursor is hovered.            |                -                 |           [Basic](#basic)           |
-|   checked    | `boolean` |   false   |                     Optional. Initial status of a tag. selected.                     |          `true\|false`           | [Can be selected](#can-be-selected) |
-|  deletable   | `boolean` |   false   |                  Optional. Specifies whether a tag can be deleted.                   |          `true\|false`           |       [Deletable](#deletable)       |
+|    checked    | `boolean` |   false   |                     Optional. Initial status of a tag. selected.                     |          `true\|false`           | [Can be selected](#can-be-selected) |
+|   deletable   | `boolean` |   false   |                  Optional. Specifies whether a tag can be deleted.                   |          `true\|false`           |       [Deletable](#deletable)       |
 
 #### Event
 

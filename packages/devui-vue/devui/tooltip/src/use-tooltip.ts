@@ -1,6 +1,6 @@
 import { onMounted, ref, toRefs, computed, watch } from 'vue';
 import type { Ref } from 'vue';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 import { TooltipProps, BasePlacement, UseTooltipFn } from './tooltip-types';
 
 export const transformOriginMap: Record<BasePlacement, string> = {

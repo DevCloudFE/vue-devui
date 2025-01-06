@@ -10,7 +10,9 @@ A floating panel assembly that slides out from the edge of the screen.
 
 ### Basic Usage
 
-:::demo Slides out from the right by default with a width of `300px`.
+Slides out from the right by default with a width of `300px`.
+
+:::demo
 
 ```vue
 <template>
@@ -35,7 +37,9 @@ export default defineComponent({
 
 ### Left Pop-up
 
-:::demo Sets the left slideout via `position`.
+Sets the left slideout via `position`.
+
+:::demo
 
 ```vue
 <template>
@@ -60,7 +64,9 @@ export default defineComponent({
 
 ### Background Scroll
 
-:::demo drawer After sliding out, the default background scroll is locked, which can be unlocked by setting `lock-scroll` to `false`.
+Drawer after sliding out, the default background scroll is locked, which can be unlocked by setting `lock-scroll` to `false`.
+
+:::demo
 
 ```vue
 <template>
@@ -86,7 +92,9 @@ export default defineComponent({
 
 ### Pre-close Callback
 
-:::demo `before-close` is called when the user closes the drawer, which can be done by executing the `done` function after certain asynchronous operations have been completed.
+`before-close` is called when the user closes the drawer, which can be done by executing the `done` function after certain asynchronous operations have been completed.
+
+:::demo
 
 ```vue
 <template>
@@ -117,7 +125,9 @@ export default defineComponent({
 
 ### Service Method
 
-The :::demo component registers `$drawerService` globally, which can be used as a service, with the content of the drawer passed in as the `content` parameter. The service returns the `close` method for closing the drawer.
+The component registers `$drawerService` globally, which can be used as a service, with the content of the drawer passed in as the `content` parameter. The service returns the `close` method for closing the drawer.
+
+:::demo
 
 ```vue
 <template>

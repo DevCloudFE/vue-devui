@@ -1,5 +1,5 @@
 ---
-home: true
+layout: Home
 heroImage: /assets/devui-design.svg
 heroText: Vue DevUI
 tagline: 一个基于 DevUI Design 的 Vue3 组件库

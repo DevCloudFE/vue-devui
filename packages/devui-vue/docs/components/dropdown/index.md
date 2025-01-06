@@ -2,13 +2,17 @@
 
 按下弹出列表组件。
 
-#### 何时使用
-
+:::tip 何时使用
 当页面上的操作命令过多时，用此组件可以收纳操作元素。点击或移入触点，会出现一个下拉菜单。可在列表中进行选择，并执行相应的命令。
+:::
+
+## 用法
 
 ### 基本用法
 
-:::demo 组件默认插槽中定义触发元素，`menu`插槽中定义菜单。默认通过点击触发元素展开菜单。
+组件默认插槽中定义触发元素，`menu`插槽中定义菜单。默认通过点击触发元素展开菜单。
+
+:::demo
 
 ```vue
 <template>
@@ -31,7 +35,7 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     return {
-      position: ref(['bottom-start', 'right','top-end']),
+      position: ref(['bottom-start', 'right', 'top-end']),
     };
   },
 });
@@ -62,7 +66,9 @@ export default defineComponent({
 
 ### 触发方式
 
-:::demo 组件默认通过`click`方式展开；`hover`方式为鼠标移上触发元素展开菜单；`manually`方式为手动控制，通过设置`visible`来控制组件是否展开。
+组件默认通过`click`方式展开；`hover`方式为鼠标移上触发元素展开菜单；`manually`方式为手动控制，通过设置`visible`来控制组件是否展开。
+
+:::demo
 
 ```vue
 <template>
@@ -113,7 +119,9 @@ export default defineComponent({
 
 ### 可关闭区域
 
-:::demo 通过`close-scope`参数设置点击关闭区域，默认值为`all`表示点击菜单内外都关闭，`blank`点击非菜单空白才关闭，`none`菜单内外均不关闭仅下拉按键可以关闭。
+通过`close-scope`参数设置点击关闭区域，默认值为`all`表示点击菜单内外都关闭，`blank`点击非菜单空白才关闭，`none`菜单内外均不关闭仅下拉按键可以关闭。
+
+:::demo
 
 ```vue
 <template>
@@ -172,7 +180,7 @@ export default defineComponent({
           </li>
           <template #menu>
             <ul class="list-menu">
-              <d-dropdown :position="position" :offset="0" >
+              <d-dropdown :position="position" :offset="0">
                 <li class="menu-item">
                   Item 1-1
                   <i class="icon icon-chevron-right"></i>
@@ -261,14 +269,14 @@ export default defineComponent({
 | visible                   | `boolean`                                   | false      | 可选，可以显式指定 dropdown 是否打开                                                                                         | [触发方式](#触发方式)     |
 | trigger                   | [TriggerType](#triggertype)                 | click      | 可选，dropdown 触发方式, click 为点、hover 为悬停、manually 为完全手动控制                                                   | [触发方式](#触发方式)     |
 | close-scope               | [CloseScopeArea](#closescopearea)           | all        | 可选，点击关闭区域，blank 点击非菜单空白关闭, all 点击菜单内外关闭，none 仅触发元素关闭                                      | [可关闭区域](#可关闭区域) |
-| position                  | [Placement[]](#placement)                   | ['bottom'] | 可选，展开位置，按照顺序自动选择位置                                                      | [基本用法](#基本用法)     |
+| position                  | [Placement[]](#placement)                   | ['bottom'] | 可选，展开位置，按照顺序自动选择位置                                                                                         | [基本用法](#基本用法)     |
 | offset                    | `number` \| [OffsetOptions](#offsetoptions) | 4          | 可选，指定与触发元素的间距                                                                                                   | [多级菜单](#多级菜单)     |
 | shift-offset              | `number`                                    | --         | 可选，当设置该参数时，表示启用贴边功能，当指定的 position 放不下时，选择最近的视图边界对齐，此参数可设置相对视图边界的偏移量 |
 | close-on-mouse-leave-menu | `boolean`                                   | false      | 可选，是否进入菜单后离开菜单的时候关闭菜单                                                                                   |
 | show-animation            | `boolean`                                   | true       | 可选，控制是否显示动画                                                                                                       |
 | overlay-class             | `string`                                    | --         | 可选，自定义 overlay 的样式                                                                                                  |
 | destroy-on-hide           | `boolean`                                   | true       | 可选，是否在关闭 dropdown 时将其销毁                                                                                         |
-| teleport          | `string \| HTMLElement`                            | 'body' | 可选，挂载节点，等同于 Teleport 组件的[to 属性](https://cn.vuejs.org/api/built-in-components.html#teleport) |
+| teleport                  | `string \| HTMLElement`                     | 'body'     | 可选，挂载节点，等同于 Teleport 组件的[to 属性](https://cn.vuejs.org/api/built-in-components.html#teleport)                  |
 
 ### Dropdown 事件
 
