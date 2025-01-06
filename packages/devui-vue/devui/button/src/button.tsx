@@ -14,7 +14,7 @@ export default defineComponent({
   props: buttonProps,
   emits: ['click'],
   setup(props: ButtonProps, ctx: SetupContext) {
-    const { icon, disabled, loading, nativeType } = toRefs(props);
+    const { icon, iconPos, disabled, loading, nativeType } = toRefs(props);
     const { classes, iconClass } = useButton(props, ctx);
     const isMouseDown = ref(false);
     const showWave = ref(false);
@@ -22,6 +22,10 @@ export default defineComponent({
       top: '0px',
       left: '0px',
     });
+
+    if (!['right', 'left'].includes(iconPos.value)) {
+      iconPos.value = 'left';
+    }
 
     const showClickWave = (e: MouseEvent) => {
       waveStyle.left = e.offsetX + 'px';
@@ -49,11 +53,16 @@ export default defineComponent({
           type={nativeType.value}
           onMousedown={() => (isMouseDown.value = true)}
           onMouseup={() => (isMouseDown.value = false)}>
-          {icon.value && <Icon name={icon.value} size="var(--devui-font-size, 12px)" color="" class={iconClass.value} />}
+          {iconPos.value === 'left' && icon.value && (
+            <Icon name={icon.value} size="var(--devui-font-size, 12px)" color="" class={iconClass.value} />
+          )}
           <div class="loading-icon__container" v-show={loading.value}>
             <d-icon name="icon-loading" class="button-icon-loading" color="#BBDEFB"></d-icon>
           </div>
           <span class="button-content">{ctx.slots.default?.()}</span>
+          {iconPos.value === 'right' && icon.value && (
+            <Icon name={icon.value} size="var(--devui-font-size, 12px)" color="" class={iconClass.value} />
+          )}
           {showWave.value && <div class="water-wave" style={waveStyle}></div>}
         </button>
       );
