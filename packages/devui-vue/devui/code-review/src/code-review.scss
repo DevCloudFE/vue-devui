@@ -304,4 +304,16 @@
     box-shadow: 0 0 1px 1px rgba(37, 43, 58, 0.16);
     cursor: pointer;
   }
+
+  &--left-selected {
+    .d-code-right span {
+      user-select: none;
+    }
+  }
+
+  &--right-selected {
+    .d-code-left span {
+      user-select: none;
+    }
+  }
 }

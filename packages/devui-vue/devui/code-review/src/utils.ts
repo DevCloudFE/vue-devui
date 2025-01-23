@@ -721,3 +721,21 @@ export function addCommentCheckedForSingle(
 
   return result;
 }
+
+/* 双栏模式，选中文本时，根据选择的节点查找其父节点，用于判断左侧选中还是右侧选中 */
+export function getSelectionParent(el: HTMLElement) {
+  if (el.tagName === 'TR') {
+    return;
+  }
+  if (el.tagName === 'TD' && (el.classList.contains('d-code-left') || el.classList.contains('d-code-right'))) {
+    if (el.classList.contains('d-code-left')) {
+      return 'left';
+    }
+    if (el.classList.contains('d-code-right')) {
+      return 'right';
+    }
+  }
+  if (el.parentElement) {
+    return getSelectionParent(el.parentElement);
+  }
+}
