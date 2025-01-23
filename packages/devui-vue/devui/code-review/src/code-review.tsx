@@ -31,7 +31,8 @@ export default defineComponent({
       updateLineNumberMap,
       updateCheckedLine,
     } = useCodeReviewComment(reviewContentRef, props, ctx);
-    const { renderHtml, diffFile, onContentClick } = useCodeReview(props, ctx, reviewContentRef, updateLineNumberMap, updateCheckedLine);
+    const { renderHtml, diffFile, selectionSide, onContentClick } =
+    useCodeReview(props, ctx, reviewContentRef, updateLineNumberMap, updateCheckedLine);
     const { isFold, toggleFold } = useCodeReviewFold(props, ctx);
 
     onMounted(() => {
@@ -51,7 +52,7 @@ export default defineComponent({
     });
 
     return () => (
-      <div class={ns.b()}>
+      <div class={[ns.b(), { [ns.m(`${selectionSide.value}-selected`)]: Boolean(selectionSide.value) }]}>
         <CodeReviewHeader onClick={() => (isFold.value = !isFold.value)} />
         <div v-show={!isFold.value}>
           {props.showBlob ? (
