@@ -41,7 +41,7 @@ const validContributors = computed(() => {
     padding: 10px 10px 0;
   }
 
-  ::v-deep .devui-avatar-img {
+  :deep(.devui-avatar-img) {
     display: block;
   }
 }
