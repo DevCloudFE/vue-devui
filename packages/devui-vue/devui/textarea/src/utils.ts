@@ -1,4 +1,4 @@
-import { isNumber } from 'lodash';
+import { isNumber } from 'lodash-es';
 
 let tempTextarea: HTMLTextAreaElement | undefined = undefined;
 

@@ -4,7 +4,7 @@ import { DAY_DURATION, calendarItemHeight } from '../const';
 import { CalendarDateItem, YearAndMonthItem, UseCalendarPanelReturnType, DatePickerProPanelProps } from '../date-picker-pro-types';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
-import { throttle } from 'lodash';
+import { throttle } from 'lodash-es';
 import useCalendarSelected from './use-calendar-selected';
 
 export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: SetupContext): UseCalendarPanelReturnType {

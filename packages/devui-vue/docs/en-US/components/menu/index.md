@@ -8,7 +8,9 @@ When you need to store, arrange and display a series of options
 
 ### Basic
 
-:::demo If the screen size is too small, an ellipsis appears
+If the screen size is too small, an ellipsis appears.
+
+:::demo
 
 ```vue
 <template>
@@ -32,18 +34,25 @@ When you need to store, arrange and display a series of options
   <d-slider :min="0" :max="480" v-model="width"></d-slider>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-let width = ref(480);
-</script>
+<script>
+import { defineComponent, ref } from 'vue';
 
+export default defineComponent({
+  setup() {
+    const width = ref(480);
+    return {
+      width,
+    };
+  },
+});
+</script>
 ```
 
 :::
 
 ### Icon
 
-Sometimes. We need define some icon for subMenu or menuItem. We can use ```icon```slot to define icon. At the same time, we can also use CSS to customize the slot
+Sometimes. We need define some icon for subMenu or menuItem. We can use `icon`slot to define icon. At the same time, we can also use CSS to customize the slot
 
 :::demo
 
@@ -132,43 +141,53 @@ You can modify the expanded submenu items by setting 'open keys'
 :::demo
 
 ```vue
-<d-button @click="changeCollapsed">
-  Collapsed
-</d-button>
 <template>
-  <d-menu :collapsed-indent="48" mode="vertical" width="256px" :default-select-keys="['item1']" :collapsed="collapsed">
-    <d-menu-item key="item1" :disabled="isDisabled">
-      <template #icon>
-        <i class="icon-homepage"></i>
-      </template>
-      <span>Home</span>
-    </d-menu-item>
-    <d-sub-menu title="System" key="system">
-      <template #icon>
-        <i class="icon-system"></i>
-      </template>
-      <d-menu-item key="system-item">
-        <span>System item</span>
-      </d-menu-item>
-      <d-sub-menu title="Setting" key="setting">
+  <d-button @click="changeCollapsed"> Collapsed </d-button>
+  <template>
+    <d-menu :collapsed-indent="48" mode="vertical" width="256px" :default-select-keys="['item1']" :collapsed="collapsed">
+      <d-menu-item key="item1" :disabled="isDisabled">
         <template #icon>
-          <i class="icon-setting"></i>
+          <i class="icon-homepage"></i>
         </template>
-        <d-menu-item key="setting-item">
-          <span>Setting item</span>
+        <span>Home</span>
+      </d-menu-item>
+      <d-sub-menu title="System" key="system">
+        <template #icon>
+          <i class="icon-system"></i>
+        </template>
+        <d-menu-item key="system-item">
+          <span>System item</span>
         </d-menu-item>
+        <d-sub-menu title="Setting" key="setting">
+          <template #icon>
+            <i class="icon-setting"></i>
+          </template>
+          <d-menu-item key="setting-item">
+            <span>Setting item</span>
+          </d-menu-item>
+        </d-sub-menu>
       </d-sub-menu>
-    </d-sub-menu>
-  </d-menu>
+    </d-menu>
+  </template>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue';
-let collapsed = ref(false);
-const isDisabled = ref(true);
-const changeCollapsed = () => {
-  collapsed.value = !collapsed.value;
-};
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    let collapsed = ref(false);
+    const isDisabled = ref(true);
+    const changeCollapsed = () => {
+      collapsed.value = !collapsed.value;
+    };
+    return {
+      collapsed,
+      isDisabled,
+      changeCollapsed,
+    };
+  },
+});
 </script>
 ```
 
@@ -224,80 +243,82 @@ export default defineComponent({
 
 ### Only One Expansion
 
-:::demo Modify the ` ` ` open keys ` ` ` array through the submenu state change event to achieve the effect
+Modify the `open keys` array through the submenu state change event to achieve the effect
 
-``` vue
-  <template>
-    <d-menu @submenu-change="submenuChange" :default-select-keys="['item1']" :open-keys="openKeys" width="256px"
-    >
-      <d-sub-menu title="submenu-1" key="submenu-1">
+:::demo
+
+```vue
+<template>
+  <d-menu @submenu-change="submenuChange" :default-select-keys="['item1']" :open-keys="openKeys" width="256px">
+    <d-sub-menu title="submenu-1" key="submenu-1">
+      <template #icon>
+        <i class="icon-infomation"></i>
+      </template>
+      <d-menu-item key="subemenu-item-1">
+        <span>submenu-item-1</span>
+      </d-menu-item>
+      <d-sub-menu title="submenu-4" key="submenu-4">
         <template #icon>
           <i class="icon-infomation"></i>
         </template>
-        <d-menu-item key="subemenu-item-1">
+        <d-menu-item key="subemenu-item-4">
           <span>submenu-item-1</span>
         </d-menu-item>
-        <d-sub-menu title="submenu-4" key="submenu-4">
-          <template #icon>
-            <i class="icon-infomation"></i>
-          </template>
-          <d-menu-item key="subemenu-item-4">
-            <span>submenu-item-1</span>
-          </d-menu-item>
-        </d-sub-menu>
-        <d-sub-menu title="submenu-5" key="submenu-5">
-          <template #icon>
-            <i class="icon-infomation"></i>
-          </template>
-          <d-menu-item key="subemenu-item-5">
-            <span>submenu-item-1</span>
-          </d-menu-item>
-        </d-sub-menu>
       </d-sub-menu>
-      <d-sub-menu title="submenu-2" key="submenu-2">
+      <d-sub-menu title="submenu-5" key="submenu-5">
         <template #icon>
-          <i class="icon-setting"></i>
+          <i class="icon-infomation"></i>
         </template>
-        <d-menu-item key="submenu-item-2">
-          <span>submenu-item-2</span>
+        <d-menu-item key="subemenu-item-5">
+          <span>submenu-item-1</span>
         </d-menu-item>
       </d-sub-menu>
-      <d-sub-menu title="submenu-3" key="submenu-3">
-        <template #icon>
-          <i class="icon-setting"></i>
-        </template>
-        <d-menu-item key="submenu-item-6">
-          <span>submenu-item-2</span>
-        </d-menu-item>
-      </d-sub-menu>
-    </d-menu>
-  </template>
+    </d-sub-menu>
+    <d-sub-menu title="submenu-2" key="submenu-2">
+      <template #icon>
+        <i class="icon-setting"></i>
+      </template>
+      <d-menu-item key="submenu-item-2">
+        <span>submenu-item-2</span>
+      </d-menu-item>
+    </d-sub-menu>
+    <d-sub-menu title="submenu-3" key="submenu-3">
+      <template #icon>
+        <i class="icon-setting"></i>
+      </template>
+      <d-menu-item key="submenu-item-6">
+        <span>submenu-item-2</span>
+      </d-menu-item>
+    </d-sub-menu>
+  </d-menu>
+</template>
 
-  <script>
-  import { defineComponent, ref } from 'vue';
+<script>
+import { defineComponent, ref } from 'vue';
 
-  export default defineComponent({
-    setup() {
-      const openKeys = ref(['submenu-1']);
-      const rootSubMenuKeys = ref(['submenu-1','submenu-2','submenu-3']);
-      const submenuChange = (e) => {
-        console.log(e);
-        const {key} = e;
-        if (rootSubMenuKeys.value.includes(key)){
-          while (openKeys.value.length){
-            openKeys.value.shift();
-          }
-          openKeys.value.push(key);
+export default defineComponent({
+  setup() {
+    const openKeys = ref(['submenu-1']);
+    const rootSubMenuKeys = ref(['submenu-1', 'submenu-2', 'submenu-3']);
+    const submenuChange = (e) => {
+      console.log(e);
+      const { key } = e;
+      if (rootSubMenuKeys.value.includes(key)) {
+        while (openKeys.value.length) {
+          openKeys.value.shift();
         }
-      };
-      return {
-        openKeys,
-        submenuChange,
-      };
-    },
-  });
-  </script>
+        openKeys.value.push(key);
+      }
+    };
+    return {
+      openKeys,
+      submenuChange,
+    };
+  },
+});
+</script>
 ```
+
 :::
 
 ### Reactivity-Attribute
@@ -337,15 +358,37 @@ eg. `width`, `open-keys`, `default-select-keys`
   <d-slider :min="0" :max="480" v-model="width"></d-slider>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue';
-let collapsed = ref(false);
-let isDisabled = ref(false);
-let width = ref(256);
-const changeDisabled = () => {
-  isDisabled.value = !isDisabled.value;
-  console.log(isDisabled.value);
-};
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    let collapsed = ref(false);
+    let isDisabled = ref(false);
+    let selectKeys = ref([]);
+    let width = ref(256);
+    const changeDisabled = () => {
+      isDisabled.value = !isDisabled.value;
+      console.log(isDisabled.value);
+    };
+    const addSelect = () => {
+      if (selectKeys.value.includes('system-item')) {
+        selectKeys.value.pop();
+      } else {
+        selectKeys.value.push('system-item');
+      }
+      console.log(selectKeys.value);
+    };
+    return {
+      collapsed,
+      isDisabled,
+      selectKeys,
+      width,
+      changeDisabled,
+      addSelect,
+    };
+  },
+});
 </script>
 ```
 
@@ -353,51 +396,51 @@ const changeDisabled = () => {
 
 ### d-menu Attribute
 
-| Attribute                | Type                  | Default Value       | Description                                                                            | Demo                 |
-| ------------------- | --------------------- | ---------- | ------------------------------------------------------------------------------- | ------------------------- |
-| width               | String                | ''         | Used to control menu width                                                                | [Reactivity-Attribute](#Reactivity-Attribute) |
-| collapsed           | Boolean               | false      | Used to decide whether to collapse the menu                                                            | [Collapsed](#Collapsed)     |
-| collapsed-indent    | Number                | 24         | The distance between the starting icon and the left and right borders                                                    | [Collapsed](#Collapsed)     |
-| multiple            | Boolean               | false      | Can I select more than one                                                                    | [Deselect](#Deselect)     |
-| mode                | [menuMode](#menumode) | 'vertical' | menu type                                                                        | [Basic-Use](#Basic-Use)     |
-| open-keys           | Array                 | []         | default open key of menu item| [默认展开](#默认展开)     |
-| default-select-keys | Array                 | []         | default select key of menu item item                                                           | [Basic-Use](#Basic-Use)     |
-| router              | Boolean               | false      | Whether to enable 'Vue router' mode. Enabling this mode will jump the route with the key as the path when the navigation is activated | -                         |
+| Attribute           | Type                  | Default Value | Description                                                                                                                           | Demo                                          |
+| ------------------- | --------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| width               | String                | ''            | Used to control menu width                                                                                                            | [Reactivity-Attribute](#reactivity-attribute) |
+| collapsed           | Boolean               | false         | Used to decide whether to collapse the menu                                                                                           | [Collapsed](#collapsed)                       |
+| collapsed-indent    | Number                | 24            | The distance between the starting icon and the left and right borders                                                                 | [Collapsed](#collapsed)                       |
+| multiple            | Boolean               | false         | Can I select more than one                                                                                                            | [Deselect](#deselect)                         |
+| mode                | [menuMode](#menumode) | 'vertical'    | menu type                                                                                                                             | [Basic-Use](#Basic-Use)                       |
+| open-keys           | Array                 | []            | default open key of menu item                                                                                                         | [默认展开](#默认展开)                         |
+| default-select-keys | Array                 | []            | default select key of menu item item                                                                                                  | [Basic-Use](#Basic-Use)                       |
+| router              | Boolean               | false         | Whether to enable 'Vue router' mode. Enabling this mode will jump the route with the key as the path when the navigation is activated | -                                             |
 
 ### d-menu Event
 
-| Event           | Type                                                                                | Description                                                 | Demo             |
-| -------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------- | --------------------- |
-| select         | `(e: {type: 'select', key: string, el: HTMLElement, e: PointerEvent})=>void`        | if select will trigger this event. if is disabled will not trigger        | [Deselect](#Deselect) |
-| deselect       | `(e: {type: 'deselect', key: string, el: HTMLElement, e: PointerEvent})=>void`      | This event will be triggered when deselecting. If the menu is not multi select, it will not be triggered | [Deselect](#Deselect) |
-| submenu-change | `(e: {type: 'submenu-change', state: boolean, key: string, el: HTMLElement})=>void` | Triggered when the submenu state is changed                             | [Deselect](#Deselect) |
+| Event          | Type                                                                                | Description                                                                                              | Demo                  |
+| -------------- | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | --------------------- |
+| select         | `(e: {type: 'select', key: string, el: HTMLElement, e: PointerEvent})=>void`        | if select will trigger this event. if is disabled will not trigger                                       | [Deselect](#deselect) |
+| deselect       | `(e: {type: 'deselect', key: string, el: HTMLElement, e: PointerEvent})=>void`      | This event will be triggered when deselecting. If the menu is not multi select, it will not be triggered | [Deselect](#deselect) |
+| submenu-change | `(e: {type: 'submenu-change', state: boolean, key: string, el: HTMLElement})=>void` | Triggered when the submenu state is changed                                                              | [Deselect](#deselect) |
 
 ### d-menu-item
 
-|   Attribute   |  Type   | Default Value  |          Description           |       Demo       |
-| :------: | :-----: | :---: | :---------------------: | :-------------------: |
-| disabled | boolean | false | disabled menu item         |           -           |
-|   key    | string  |  ''   | key of the menu item. Need to be unique |           -           |
-|   href   | string  |  ''   | Page to jump to after clicking the menu item  | [Basic-Use](#Basic-Use) |
-|  route   | object  |   -   |   Vue Router path object   |           -           |
+| Attribute |  Type   | Default Value |                 Description                  |          Demo           |
+| :-------: | :-----: | :-----------: | :------------------------------------------: | :---------------------: |
+| disabled  | boolean |     false     |              disabled menu item              |            -            |
+|    key    | string  |      ''       |   key of the menu item. Need to be unique    |            -            |
+|   href    | string  |      ''       | Page to jump to after clicking the menu item | [Basic-Use](#Basic-Use) |
+|   route   | object  |       -       |            Vue Router path object            |            -            |
 
 ### d-sub-menu
 
-|   Attribute   |  Type   | Default Value  |      Description      |       Demo       |
-| :------: | :-----: | :---: | :------------: | :-------------------: |
-|  title   | String  |  ''   | sub-menu title   | [Basic-Use](#Basic-Use) |
-| disabled | boolean | false | disabled sub-menu |           -           |
+| Attribute |  Type   | Default Value |    Description    |          Demo           |
+| :-------: | :-----: | :-----------: | :---------------: | :---------------------: |
+|   title   | String  |      ''       |  sub-menu title   | [Basic-Use](#Basic-Use) |
+| disabled  | boolean |     false     | disabled sub-menu |            -            |
 
 ### d-menu-item slot
 
-| 插槽名 |         Description          |
-| :----: | :-------------------: |
+| 插槽名 |     Description     |
+| :----: | :-----------------: |
 |  icon  | used to define icon |
 
 ### d-sub-menu slot
 
-| 插槽名 |           Description            |
-| :----: | :-----------------------: |
+| 插槽名 |     Description     |
+| :----: | :-----------------: |
 |  icon  | used to define icon |
 
 ### menu type

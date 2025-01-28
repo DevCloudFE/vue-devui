@@ -1,4 +1,4 @@
-import { debounce, cloneDeep } from 'lodash';
+import { debounce, cloneDeep } from 'lodash-es';
 import { ref, SetupContext, UnwrapRef, Ref, watch } from 'vue';
 import { initActiveIndexs } from './use-cascader-single';
 import {

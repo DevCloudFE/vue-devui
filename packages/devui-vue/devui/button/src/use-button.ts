@@ -2,7 +2,7 @@ import { computed, inject } from 'vue';
 import type { SetupContext } from 'vue';
 import { ButtonProps, UseButtonReturnType, buttonGroupInjectionKey } from './button-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-import { isString } from 'lodash';
+import { isString } from 'lodash-es';
 
 export default function useButton(props: ButtonProps, ctx: SetupContext): UseButtonReturnType {
   const ns = useNamespace('button');

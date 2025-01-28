@@ -2,13 +2,17 @@
 
 文本输入框。
 
-#### 何时使用
-
+:::tip 何时使用
 需要手动输入文字使用。
+:::
+
+## 用法
 
 ### 基本用法
 
-:::demo `v-model`对输入值做双向绑定，`placeholder`、`autofocus`等原生 input 支持的属性会被自动继承。
+`v-model`对输入值做双向绑定，`placeholder`、`autofocus`等原生 input 支持的属性会被自动继承。
+
+:::demo
 
 ```vue
 <template>
@@ -111,7 +115,9 @@ export default defineComponent({
 
 ### 尺寸
 
-:::demo 支持`sm`、`md`、`lg`三种尺寸，默认为`md`。
+支持`sm`、`md`、`lg`三种尺寸，默认为`md`。
+
+:::demo
 
 ```vue
 <template>
@@ -317,23 +323,23 @@ export default defineComponent({
 
 ### Input 参数
 
-| 参数名         | 类型                    | 默认值 | 说明                                             | 跳转 Demo                         |
-| :------------- | :---------------------- | :----- | :----------------------------------------------- | :-------------------------------- |
-| v-model        | `string`                | ''     | 绑定值                                           | [基本用法](#基本用法)             |
-| placeholder    | `string`                | ''     | 输入框占位文本                                   | [基本用法](#基本用法)             |
-| disabled       | `boolean`               | false  | 可选，文本框是否被禁用                           | [基本用法](#基本用法)             |
-| error          | `boolean`               | false  | 可选，文本框是否出现输入错误                     | [基本用法](#基本用法)             |
-| size           | [InputSize](#inputsize) | 'md'   | 可选，文本框尺寸，有三种选择`'lg'`,`'md'`,`'sm'` | [尺寸](#尺寸)                     |
-| validate-event | `boolean`               | true   | 可选，输入时是否触发表单的校验                   |                                   |
-| prefix         | `string`                | -      | 可选，自定义前缀图标                             | [带图标的输入框](#带图标的输入框) |
-| suffix         | `string`                | -      | 可选，自定义后缀图标                             | [带图标的输入框](#带图标的输入框) |
-| show-password  | `boolean`               | false  | 可选，是否显示为密码框                           |                                   |
-| clearable      | `boolean`               | false  | 可选，是否可清空                                 | [一键清空](#一键清空)             |
-| name           | `string`                | ''     | 等价于原生 input name 属性                       |                                   |
-| readonly       | `boolean`               | false  | 原生 readonly 属性，是否只读                     |                                   |
-| autocomplete   | `string`                | 'off'  | 原生 autocomplete 属性                           |                                   |
-| autofocus      | `boolean`               | false  | 自动获取焦点                                     |                                   |
-|show-glow-style|`boolean`|true|可选，是否显示悬浮发光效果||
+| 参数名          | 类型                    | 默认值 | 说明                                             | 跳转 Demo                         |
+| :-------------- | :---------------------- | :----- | :----------------------------------------------- | :-------------------------------- |
+| v-model         | `string`                | ''     | 绑定值                                           | [基本用法](#基本用法)             |
+| placeholder     | `string`                | ''     | 输入框占位文本                                   | [基本用法](#基本用法)             |
+| disabled        | `boolean`               | false  | 可选，文本框是否被禁用                           | [基本用法](#基本用法)             |
+| error           | `boolean`               | false  | 可选，文本框是否出现输入错误                     | [基本用法](#基本用法)             |
+| size            | [InputSize](#inputsize) | 'md'   | 可选，文本框尺寸，有三种选择`'lg'`,`'md'`,`'sm'` | [尺寸](#尺寸)                     |
+| validate-event  | `boolean`               | true   | 可选，输入时是否触发表单的校验                   |                                   |
+| prefix          | `string`                | -      | 可选，自定义前缀图标                             | [带图标的输入框](#带图标的输入框) |
+| suffix          | `string`                | -      | 可选，自定义后缀图标                             | [带图标的输入框](#带图标的输入框) |
+| show-password   | `boolean`               | false  | 可选，是否显示为密码框                           |                                   |
+| clearable       | `boolean`               | false  | 可选，是否可清空                                 | [一键清空](#一键清空)             |
+| name            | `string`                | ''     | 等价于原生 input name 属性                       |                                   |
+| readonly        | `boolean`               | false  | 原生 readonly 属性，是否只读                     |                                   |
+| autocomplete    | `string`                | 'off'  | 原生 autocomplete 属性                           |                                   |
+| autofocus       | `boolean`               | false  | 自动获取焦点                                     |                                   |
+| show-glow-style | `boolean`               | true   | 可选，是否显示悬浮发光效果                       |                                   |
 
 ### Input 插槽
 

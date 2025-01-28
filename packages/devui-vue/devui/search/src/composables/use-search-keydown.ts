@@ -3,7 +3,7 @@
  */
 import { SetupContext, Ref } from 'vue';
 import { KeydownReturnTypes, SearchProps } from '../search-types';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 
 type EmitProps = 'update:modelValue' | 'search';
 
