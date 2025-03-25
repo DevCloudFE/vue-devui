@@ -72,8 +72,8 @@ export function useCodeReview(
       ) {
         setTimeout(() => {
           selectionSide.value = '';
-          selection.removeAllRanges();
         });
+        selection.removeRange(selection.getRangeAt(0));
       }
     } else {
       selectionSide.value = '';
