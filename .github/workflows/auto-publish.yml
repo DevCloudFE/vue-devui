@@ -35,7 +35,7 @@ jobs:
         run: |
           ls
           node -v
-          npm install pnpm -g
+          npm install pnpm@9.15.4 -g
           pnpm -v
           pnpm install --no-frozen-lockfile
           pnpm run build:lib
