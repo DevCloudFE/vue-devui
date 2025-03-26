@@ -152,8 +152,6 @@ importers:
         specifier: ^0.29.8
         version: 0.29.8(typescript@4.9.5)
 
-  packages/devui-theme/build: {}
-
   packages/devui-vue:
     dependencies:
       '@babel/helper-hoist-variables':
@@ -197,7 +195,7 @@ importers:
         version: 1.11.11
       devui-theme:
         specifier: workspace:^0.0.1
-        version: link:../devui-theme/build
+        version: link:../devui-theme
       diff2html:
         specifier: ^3.4.35
         version: 3.4.48
@@ -382,239 +380,6 @@ importers:
       vue-tsc:
         specifier: 0.38.8
         version: 0.38.8(typescript@4.9.5)
-
-  packages/devui-vue/build:
-    dependencies:
-      '@babel/helper-hoist-variables':
-        specifier: ^7.22.5
-        version: 7.24.6
-      '@devui-design/icons':
-        specifier: ^1.3.0
-        version: 1.4.0
-      '@floating-ui/dom':
-        specifier: 1.2.5
-        version: 1.2.5
-      '@iktakahiro/markdown-it-katex':
-        specifier: ^4.0.1
-        version: 4.0.1
-      '@types/codemirror':
-        specifier: 0.0.97
-        version: 0.0.97
-      '@types/lodash-es':
-        specifier: ^4.17.4
-        version: 4.17.12
-      '@vue/shared':
-        specifier: ^3.2.33
-        version: 3.4.27
-      '@vueuse/core':
-        specifier: 8.9.4
-        version: 8.9.4(vue@3.4.27(typescript@4.9.5))
-      async-validator:
-        specifier: ^4.0.7
-        version: 4.2.5
-      clipboard:
-        specifier: ^2.0.11
-        version: 2.0.11
-      clipboard-copy:
-        specifier: ^4.0.1
-        version: 4.0.1
-      codemirror:
-        specifier: 5.63.3
-        version: 5.63.3
-      dayjs:
-        specifier: ^1.11.3
-        version: 1.11.11
-      devui-theme:
-        specifier: ^0.0.1
-        version: 0.0.1
-      diff2html:
-        specifier: ^3.4.35
-        version: 3.4.48
-      echarts:
-        specifier: 5.3.3
-        version: 5.3.3
-      fs-extra:
-        specifier: ^10.0.0
-        version: 10.1.0
-      highlight.js:
-        specifier: ^11.6.0
-        version: 11.9.0
-      katex:
-        specifier: ^0.12.0
-        version: 0.12.0
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
-      lodash-es:
-        specifier: ^4.17.20
-        version: 4.17.21
-      markdown-it:
-        specifier: 12.2.0
-        version: 12.2.0
-      markdown-it-emoji:
-        specifier: ^3.0.0
-        version: 3.0.0
-      markdown-it-plantuml:
-        specifier: ^1.4.1
-        version: 1.4.1
-      mermaid:
-        specifier: 9.1.1
-        version: 9.1.1
-      mitt:
-        specifier: ^3.0.0
-        version: 3.0.1
-      monaco-editor:
-        specifier: 0.34.0
-        version: 0.34.0
-      rxjs:
-        specifier: ^7.8.1
-        version: 7.8.1
-      uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
-      vue:
-        specifier: ^3.3
-        version: 3.4.27(typescript@4.9.5)
-      vue-router:
-        specifier: ^4.0.3
-        version: 4.3.2(vue@3.4.27(typescript@4.9.5))
-      xss:
-        specifier: ^1.0.14
-        version: 1.0.15
-
-  packages/devui-vue/build/action-timeline: {}
-
-  packages/devui-vue/build/alert: {}
-
-  packages/devui-vue/build/auto-complete: {}
-
-  packages/devui-vue/build/avatar: {}
-
-  packages/devui-vue/build/badge: {}
-
-  packages/devui-vue/build/breadcrumb: {}
-
-  packages/devui-vue/build/button: {}
-
-  packages/devui-vue/build/card: {}
-
-  packages/devui-vue/build/carousel: {}
-
-  packages/devui-vue/build/category-search: {}
-
-  packages/devui-vue/build/checkbox: {}
-
-  packages/devui-vue/build/code-editor: {}
-
-  packages/devui-vue/build/code-review: {}
-
-  packages/devui-vue/build/collapse: {}
-
-  packages/devui-vue/build/countdown: {}
-
-  packages/devui-vue/build/data-grid: {}
-
-  packages/devui-vue/build/date-picker-pro: {}
-
-  packages/devui-vue/build/dragdrop: {}
-
-  packages/devui-vue/build/dragdrop-new: {}
-
-  packages/devui-vue/build/drawer: {}
-
-  packages/devui-vue/build/dropdown: {}
-
-  packages/devui-vue/build/echarts: {}
-
-  packages/devui-vue/build/editable-select: {}
-
-  packages/devui-vue/build/editor-md: {}
-
-  packages/devui-vue/build/form: {}
-
-  packages/devui-vue/build/fullscreen: {}
-
-  packages/devui-vue/build/git-graph: {}
-
-  packages/devui-vue/build/grid: {}
-
-  packages/devui-vue/build/icon: {}
-
-  packages/devui-vue/build/image-preview: {}
-
-  packages/devui-vue/build/input: {}
-
-  packages/devui-vue/build/input-number: {}
-
-  packages/devui-vue/build/layout: {}
-
-  packages/devui-vue/build/loading: {}
-
-  packages/devui-vue/build/mention: {}
-
-  packages/devui-vue/build/menu: {}
-
-  packages/devui-vue/build/message: {}
-
-  packages/devui-vue/build/modal: {}
-
-  packages/devui-vue/build/notification: {}
-
-  packages/devui-vue/build/overlay: {}
-
-  packages/devui-vue/build/pagination: {}
-
-  packages/devui-vue/build/panel: {}
-
-  packages/devui-vue/build/popover: {}
-
-  packages/devui-vue/build/progress: {}
-
-  packages/devui-vue/build/radio: {}
-
-  packages/devui-vue/build/rate: {}
-
-  packages/devui-vue/build/result: {}
-
-  packages/devui-vue/build/ripple: {}
-
-  packages/devui-vue/build/search: {}
-
-  packages/devui-vue/build/select: {}
-
-  packages/devui-vue/build/skeleton: {}
-
-  packages/devui-vue/build/slider: {}
-
-  packages/devui-vue/build/splitter: {}
-
-  packages/devui-vue/build/statistic: {}
-
-  packages/devui-vue/build/status: {}
-
-  packages/devui-vue/build/steps: {}
-
-  packages/devui-vue/build/switch: {}
-
-  packages/devui-vue/build/table: {}
-
-  packages/devui-vue/build/tabs: {}
-
-  packages/devui-vue/build/tag: {}
-
-  packages/devui-vue/build/textarea: {}
-
-  packages/devui-vue/build/time-picker: {}
-
-  packages/devui-vue/build/time-select: {}
-
-  packages/devui-vue/build/timeline: {}
-
-  packages/devui-vue/build/tooltip: {}
-
-  packages/devui-vue/build/tree: {}
-
-  packages/devui-vue/build/upload: {}
 
 packages:
 
@@ -1581,7 +1346,6 @@ packages:
 
   '@ls-lint/ls-lint@1.11.2':
     resolution: {integrity: sha512-kX+CCjgNz+NHCaOcFyJLSBLRgAoyOxN18QFLpgucz5ILvbr60BGjwKaoPYTv/rBV/77L+Oz82lpP24mzJ2wGsQ==}
-    cpu: [x64, arm64]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -2890,9 +2654,6 @@ packages:
   detect-newline@3.1.0:
     resolution: {integrity: sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==}
     engines: {node: '>=8'}
-
-  devui-theme@0.0.1:
-    resolution: {integrity: sha512-5nF6fChlsXKeAtvkaAF4bZ0NMiEAbzwqQ9XZQiNuM0RRFz5lW29nnbhfDCNPkmnw5ZyCVyXqYwVRBIZrwZHXrA==}
 
   diacritics@1.3.0:
     resolution: {integrity: sha512-wlwEkqcsaxvPJML+rDh/2iS824jbREk6DUMUKkEaSlxdYHeS43cClJtsWglvw2RfeXGm6ohKDqsXteJ5sP5enA==}
@@ -6182,7 +5943,7 @@ snapshots:
       '@babel/traverse': 7.24.6
       '@babel/types': 7.24.6
       convert-source-map: 2.0.0
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -6237,7 +5998,7 @@ snapshots:
       '@babel/core': 7.24.6
       '@babel/helper-compilation-targets': 7.24.6
       '@babel/helper-plugin-utils': 7.24.6
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       lodash.debounce: 4.0.8
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -6895,7 +6656,7 @@ snapshots:
       '@babel/helper-split-export-declaration': 7.24.6
       '@babel/parser': 7.24.6
       '@babel/types': 7.12.1
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       globals: 11.12.0
       lodash: 4.17.21
     transitivePeerDependencies:
@@ -6911,7 +6672,7 @@ snapshots:
       '@babel/helper-split-export-declaration': 7.24.6
       '@babel/parser': 7.24.6
       '@babel/types': 7.24.6
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -7086,7 +6847,7 @@ snapshots:
   '@eslint/eslintrc@0.4.3':
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       espree: 7.3.1
       globals: 13.24.0
       ignore: 4.0.6
@@ -7114,7 +6875,7 @@ snapshots:
   '@humanwhocodes/config-array@0.5.0':
     dependencies:
       '@humanwhocodes/object-schema': 1.2.1
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -7512,7 +7273,7 @@ snapshots:
       '@typescript-eslint/experimental-utils': 4.33.0(eslint@7.32.0)(typescript@4.9.5)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.9.5)
       '@typescript-eslint/scope-manager': 4.33.0
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       eslint: 7.32.0
       functional-red-black-tree: 1.0.1
       ignore: 5.3.1
@@ -7542,7 +7303,7 @@ snapshots:
       '@typescript-eslint/scope-manager': 4.33.0
       '@typescript-eslint/types': 4.33.0
       '@typescript-eslint/typescript-estree': 4.33.0(typescript@4.9.5)
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       eslint: 7.32.0
     optionalDependencies:
       typescript: 4.9.5
@@ -7560,7 +7321,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 4.33.0
       '@typescript-eslint/visitor-keys': 4.33.0
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.6.2
@@ -7881,7 +7642,7 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -8937,10 +8698,6 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
-  debug@4.3.4:
-    dependencies:
-      ms: 2.1.2
-
   debug@4.3.4(supports-color@8.1.1):
     dependencies:
       ms: 2.1.2
@@ -8987,8 +8744,6 @@ snapshots:
   delegate@3.2.0: {}
 
   detect-newline@3.1.0: {}
-
-  devui-theme@0.0.1: {}
 
   diacritics@1.3.0: {}
 
@@ -9446,7 +9201,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.3
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       doctrine: 3.0.0
       enquirer: 2.4.1
       escape-string-regexp: 4.0.0
@@ -9878,14 +9633,14 @@ snapshots:
     dependencies:
       '@tootallnate/once': 1.1.2
       agent-base: 6.0.2
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -10131,7 +9886,7 @@ snapshots:
 
   istanbul-lib-source-maps@4.0.1:
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       istanbul-lib-coverage: 3.2.2
       source-map: 0.6.1
     transitivePeerDependencies:
@@ -12240,7 +11995,7 @@ snapshots:
       '@vue/server-renderer': 3.4.27(vue@3.4.27(typescript@4.9.5))
       chalk: 4.1.2
       compression: 1.7.4
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       diacritics: 1.3.0
       escape-html: 1.0.3
       fs-extra: 10.1.0
