@@ -1,5 +1,5 @@
 import { ref, SetupContext, toRef, reactive, Ref, watch, onMounted } from 'vue';
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash-es';
 import { initActiveIndexs, initSingleIptValue } from './use-cascader-single';
 import { initMultipleCascaderItem, initTagList, getMultiModelValues } from './use-cascader-multiple';
 import type { CascaderItem, CascaderValueType, CascaderProps, UseCascaderFn } from '../src/cascader-types';

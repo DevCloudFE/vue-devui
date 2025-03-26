@@ -1,7 +1,7 @@
 import { defineComponent, ref, computed, onMounted, watch, nextTick, provide, unref, readonly, Transition } from 'vue';
 import type { StyleValue, Ref } from 'vue';
 import { computePosition, flip } from '@floating-ui/dom';
-import { throttle } from 'lodash';
+import { throttle } from 'lodash-es';
 import { useReactive, colorPickerResize, isExhibitionColorPicker, changeColorValue } from './utils/composable';
 import { colorPickerProps, ColorPickerProps } from './color-picker-types';
 import colorPanel from './components/color-picker-panel/color-picker-panel';

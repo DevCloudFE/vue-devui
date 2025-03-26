@@ -2,15 +2,17 @@
 
 24 栅格系统。
 
-#### 何时使用
-
+:::tip 何时使用
 需要使用弹性布局时，并且需要适配不同的屏幕时，使用 grid 组件。
+:::
+
+## 用法
 
 ### 基本用法
 
-基础栅格
+基础栅格，用 Row 和 Col 组件，可以创建一个基本的栅格系统，Col 必须放在 Row 里面。
 
-:::demo 使用 Row 和 Col 组件，可以创建一个基本的栅格系统，Col 必须放在 Row 里面。
+:::demo
 
 ```vue
 <template>
@@ -61,9 +63,9 @@
 
 ### 对齐
 
-垂直对齐和水平对齐
+垂直对齐和水平对齐，使用 Row 的 align 属性和 justify 属性子元素垂直对齐和水平对齐。
 
-:::demo 使用 Row 的 align 属性和 justify 属性子元素垂直对齐和水平对齐。
+:::demo
 
 ```vue
 <template>
@@ -130,9 +132,11 @@
 
 ### 子元素的间隔
 
-栅格之间的间隔可以用 Row 的 gutter 属性
+栅格之间的间隔可以用 Row 的 gutter 属性。
 
-:::demo :gutter="10" 子元素左右间隔为 5px；:gutter="[10, 20]" 子元素左右间隔为 5px，上下间隔为 10px；需要适配屏幕宽度的情况，:gutter="{ xs: 10, sm: 20, md: [20, 10], lg: [30, 20], xl: [40, 30], xxl: [50, 40] }"
+`:gutter="10"` 子元素左右间隔为 `5px`；`:gutter="[10, 20]"` 子元素左右间隔为 `5px`，上下间隔为 `10px`；需要适配屏幕宽度的情况，`:gutter="{ xs: 10, sm: 20, md: [20, 10], lg: [30, 20], xl: [40, 30], xxl: [50, 40] }"`。
+
+:::demo
 
 ```vue
 <template>
@@ -225,7 +229,9 @@ Col 的 flex 属性支持 flex 填充。
 
 使用 Col 的 offset、pull 和 push 来使子元素左右偏移。
 
-:::demo 列偏移。使用 offset 可以将列向右侧偏。例如，offset={4} 将元素向右侧偏移了 4 个列（column）的宽度；offset、pull、push 也可以内嵌到。
+使用 offset 可以将列向右侧偏。例如，offset={4} 将元素向右侧偏移了 4 个列（column）的宽度；offset、pull、push 也可以内嵌到。
+
+:::demo
 
 ```vue
 <template>
@@ -249,7 +255,9 @@ Col 的 flex 属性支持 flex 填充。
 
 预设六个响应尺寸：xs sm md lg xl xxl。
 
-:::demo 参照 Bootstrap 的 [响应式设计](https://getbootstrap.com/docs/3.4/css/)。
+参照 Bootstrap 的 [响应式设计](https://getbootstrap.com/docs/3.4/css/)。
+
+:::demo
 
 ```vue
 <template>
@@ -272,7 +280,9 @@ Col 的 flex 属性支持 flex 填充。
 
 列排序。通过使用 order、 push 和 pull 类就可以改变列（column）的顺。
 
-:::demo 参照 Bootstrap 的 [响应式设计](https://getbootstrap.com/docs/3.4/css/)。
+参照 Bootstrap 的 [响应式设计](https://getbootstrap.com/docs/3.4/css/)。
+
+:::demo
 
 ```vue
 <template>

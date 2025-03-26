@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import type { Ref } from 'vue';
-import { isFunction } from 'lodash';
+import { isFunction } from 'lodash-es';
 import type { RowData, InnerRowData, RowKey, InnerColumnConfig, ColumnConfig } from './data-grid-types';
 import { ColumnMinWidth } from './const';
 
