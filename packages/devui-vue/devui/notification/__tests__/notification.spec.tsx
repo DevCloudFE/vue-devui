@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import DNotification from '../src/notification';
 import NotificationService from '../src/notification-service';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const ns = useNamespace('notification', true);
 describe('d-notification', () => {
