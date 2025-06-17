@@ -258,7 +258,11 @@ class ToolBarHandler {
   static code = (editor: any): void => {
     const cursor = editor.getCursor();
     const selection = editor.getSelection();
-    editor.replaceSelection('`' + selection + '`');
+    if (selection.indexOf('\n') === -1) {
+      editor.replaceSelection('`' + selection + '`');
+    } else {
+      editor.replaceSelection('```\n' + selection + '\n```');
+    }
     editor.focus();
 
     if (selection === '') {
