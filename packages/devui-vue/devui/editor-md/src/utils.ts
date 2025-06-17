@@ -40,7 +40,7 @@ export function locale(key: string): string {
     file: '文件',
     table: '表格',
     link: '超链接',
-    code: '行内代码',
+    code: '代码',
     codeblock: '代码块',
     blockquote: '引用',
     superscript: '上标',
