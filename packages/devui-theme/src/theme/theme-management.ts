@@ -29,25 +29,28 @@ export function ThemeServiceInit(
   ieSupport = false, // TODO：css-var-ponyflll 仍有一些问题待定位
   allowDynamicTheme = false
 ) {
-  if (typeof window === 'undefined') {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
     return null;
   }
-
   window[THEME_KEY.themeCollection] = themes || {
     'devui-light-theme': devuiLightTheme,
     'devui-dark-theme': devuiDarkTheme,
   };
   window[THEME_KEY.currentTheme] = defaultThemeName || 'devui-light-theme';
-  const eventBus = window['globalEventBus'] || new EventBus(); // window.globalEventBus 为 框架的事件总线
+  const eventBus = (window as any).globalEventBus || new EventBus(); // window.globalEventBus 为 框架的事件总线
   const themeService = new ThemeService(eventBus);
   window[THEME_KEY.themeService] = themeService;
 
-  themeService.setExtraData(extraData || {
-    'devui-dark-theme': {
-      appendClasses: ['dark-mode']
+  themeService.setExtraData(
+    extraData || {
+      'devui-dark-theme': {
+        appendClasses: ['dark-mode'],
+      },
     }
-  });
-  themeService.initializeTheme(null, allowDynamicTheme);
+  );
+
+  const currentTheme = window?.localStorage.getItem(THEME_KEY.userLastPreferTheme) || defaultThemeName;
+  themeService.initializeTheme(currentTheme, allowDynamicTheme);
   if (ieSupport) {
     ieSupportCssVar();
   }
@@ -55,25 +58,23 @@ export function ThemeServiceInit(
 }
 
 export function ThemeServiceFollowSystemOn(themeConfig?: { lightThemeName: string; darkThemeName: string }): Subscription {
-  if (typeof window === 'undefined') {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
     return null;
   }
-
   const themeService: ThemeService = window[THEME_KEY.themeService];
   themeService.registerMediaQuery();
-  return themeService.mediaQuery.prefersColorSchemeChange.subscribe(value => {
+  return themeService.mediaQuery.prefersColorSchemeChange.subscribe((value) => {
     if (value === 'dark') {
-      themeService.applyTheme(window[THEME_KEY.themeCollection][themeConfig && themeConfig.darkThemeName || 'devui-dark-theme']);
+      themeService.applyTheme(window[THEME_KEY.themeCollection][(themeConfig && themeConfig.darkThemeName) || 'devui-dark-theme']);
     } else {
-      themeService.applyTheme(window[THEME_KEY.themeCollection][themeConfig && themeConfig.lightThemeName || 'devui-light-theme']);
+      themeService.applyTheme(window[THEME_KEY.themeCollection][(themeConfig && themeConfig.lightThemeName) || 'devui-light-theme']);
     }
   });
 }
 export function ThemeServiceFollowSystemOff(sub?: Subscription) {
-  if (typeof window === 'undefined') {
-    return null;
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return;
   }
-
   if (sub) {
     sub.unsubscribe();
   }
@@ -82,15 +83,16 @@ export function ThemeServiceFollowSystemOff(sub?: Subscription) {
 }
 
 export function ieSupportCssVar() {
-  if (typeof window === 'undefined') {
-    return null;
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return;
   }
-
-  const isNativeSupport = window['CSS'] && CSS.supports && CSS.supports('(--a: 0)') || false;
-  if (isNativeSupport) { return; }
+  const isNativeSupport = ((window as any).CSS && CSS.supports && CSS.supports('(--a: 0)')) || false;
+  if (isNativeSupport) {
+    return;
+  }
   cssVars({ watch: true, silent: true });
-  const observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
       cssVars({ watch: false, silent: true });
       cssVars({ watch: true, silent: true });
     });

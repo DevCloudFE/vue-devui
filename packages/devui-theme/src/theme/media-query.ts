@@ -1,30 +1,18 @@
-import * as enquire from 'enquirejs-ssr';
 import { ReplaySubject } from 'rxjs';
 
 export class PrefersColorSchemeMediaQuery {
-  static enquire = enquire; // prevent code optimization excluding enquire out
   private prefersColorSchemeSubject = new ReplaySubject<PrefersColorSchemeMediaQuery.Value>(1);
   public prefersColorSchemeChange = this.prefersColorSchemeSubject.asObservable();
 
   register() {
-    PrefersColorSchemeMediaQuery.enquire
-      .register.bind(enquire)(PrefersColorSchemeMediaQuery.Query.light, {
-        match: () => {
-          this.handleColorSchemeChange('light');
-        }
-      })
-      .register(PrefersColorSchemeMediaQuery.Query.dark, {
-        match: () => {
-          this.handleColorSchemeChange('dark');
-        }
-      });
+    matchMedia(PrefersColorSchemeMediaQuery.Query.light).addEventListener('change', this.changeToLight);
+    matchMedia(PrefersColorSchemeMediaQuery.Query.dark).addEventListener('change', this.changeToDark);
     this.prefersColorSchemeSubject.next(this.getInitValue());
   }
 
   unregister() {
-    PrefersColorSchemeMediaQuery.enquire
-      .unregister(PrefersColorSchemeMediaQuery.Query.light)
-      .unregister(PrefersColorSchemeMediaQuery.Query.dark);
+    matchMedia(PrefersColorSchemeMediaQuery.Query.light).removeEventListener('change', this.changeToLight);
+    matchMedia(PrefersColorSchemeMediaQuery.Query.dark).removeEventListener('change', this.changeToDark);
     this.prefersColorSchemeSubject.complete();
   }
 
@@ -36,10 +24,23 @@ export class PrefersColorSchemeMediaQuery {
     if (typeof window === 'undefined') {
       return 'light';
     }
+    return (
+      (window.matchMedia(PrefersColorSchemeMediaQuery.Query.light).matches && 'light') ||
+      (window.matchMedia(PrefersColorSchemeMediaQuery.Query.dark).matches && 'dark') ||
+      'no-preference'
+    );
+  }
 
-    return window.matchMedia(PrefersColorSchemeMediaQuery.Query.light).matches && 'light'
-     || window.matchMedia(PrefersColorSchemeMediaQuery.Query.dark).matches && 'dark'
-     || 'no-preference';
+  changeToLight(mql) {
+    if (mql.matches) {
+      this.handleColorSchemeChange('light');
+    }
+  }
+
+  changeToDark(mql) {
+    if (mql.matches) {
+      this.handleColorSchemeChange('dark');
+    }
   }
 }
 

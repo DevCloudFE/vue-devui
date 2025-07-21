@@ -4,14 +4,12 @@ export class ContextService implements IContextService {
     if (typeof window === 'undefined') {
       return null;
     }
-
     return window[nameSpace];
   }
   setDataFromNameSpace(nameSpace: string, value: any) {
     if (typeof window === 'undefined') {
       return;
     }
-
     window[nameSpace] = value;
   }
 }
