@@ -53,34 +53,38 @@ export interface IColorDef {
 export type IEffect = 'hsl' | 'hsv' | 'strong' | 'soft' | 'light' | 'contrast';
 
 /**
- * 自定义主题生成服务类
+ * 自定义主题生成工具类
+ * 提供生成主题色数据、更新颜色、填补空缺颜色等功能。
  */
-export class CustomThemeService {
-  colorHierarchy: any = ColorHierarchyMap;
-  themeDataLight = infinityTheme.data;
-  themeDataDark = galaxyTheme.data;
-
-  constructor(colorHierarchy: any = ColorHierarchyMap, themeDataLight: any = infinityTheme.data, themeDataDark: any = galaxyTheme.data) {
-    this.colorHierarchy = colorHierarchy;
-    this.themeDataLight = themeDataLight;
-    this.themeDataDark = themeDataDark;
-  }
-
+export class CustomThemeUtils {
   /**
    * 生成主题色数据
    */
-  public genThemeData(colorChanges: Array<IColorDef>, isDark = false, effect?: IEffect): IThemeData {
-    const themeData = isDark ? this.themeDataDark : this.themeDataLight;
-    const pattern = this.genColorPattern(this.colorHierarchy, themeData);
-    const updatedPattern = this.updateColor(colorChanges, pattern, effect);
-    this.fillEmptyColor(updatedPattern, effect);
-    return this.pattern2ThemeData(updatedPattern);
+  public static genThemeData(
+    colorChanges: Array<IColorDef>,
+    isDark = false,
+    effect?: IEffect,
+    options: {
+      colorHierarchy: any;
+      themeDataLight: IThemeData;
+      themeDataDark: IThemeData;
+    } = {
+      colorHierarchy: ColorHierarchyMap,
+      themeDataLight: infinityTheme.data,
+      themeDataDark: galaxyTheme.data,
+    }
+  ): IThemeData {
+    const themeData = isDark ? options.themeDataDark : options.themeDataLight;
+    const pattern = CustomThemeUtils.genColorPattern(options.colorHierarchy, themeData);
+    const updatedPattern = CustomThemeUtils.updateColor(colorChanges, pattern, effect);
+    CustomThemeUtils.fillEmptyColor(updatedPattern, effect);
+    return CustomThemeUtils.pattern2ThemeData(updatedPattern);
   }
 
   // 根据颜色层次结构和主题数据生成颜色模式
-  private genColorPattern(colorHierarchy: IColorHierarchy, themeData: IThemeData): IColorHierarchy {
+  private static genColorPattern(colorHierarchy: IColorHierarchy, themeData: IThemeData): IColorHierarchy {
     const pattern: IColorHierarchy = {};
-    const offset = this.getThemeOffset(colorHierarchy, themeData);
+    const offset = CustomThemeUtils.getThemeOffset(colorHierarchy, themeData);
     offset.forEach((obj) => {
       pattern[obj.colorName!] = {
         ...colorHierarchy[obj.colorName!],
@@ -92,7 +96,7 @@ export class CustomThemeService {
   }
 
   // 计算每个颜色与其父级颜色的偏移量
-  private getThemeOffset(colorHierarchy: IColorHierarchy, themeData: IThemeData): Array<IColorObject> {
+  private static getThemeOffset(colorHierarchy: IColorHierarchy, themeData: IThemeData): Array<IColorObject> {
     const colorKeys = Object.keys(colorHierarchy);
     const themeColorOffset = colorKeys
       .map(
@@ -100,14 +104,14 @@ export class CustomThemeService {
           ({
             colorName: key,
             color: Color(themeData[key]),
-            extends: this.colorHierarchy[key].extends ? Color(themeData[this.colorHierarchy[key].extends]) : null,
+            extends: colorHierarchy[key].extends ? Color(themeData[colorHierarchy[key].extends]) : null,
           } as IColorObject)
       )
       .map((colorObj) => {
         if (colorObj.extends) {
           colorObj.offset = {
-            hsl: this.getColorOffset(colorObj.color, colorObj.extends, 'hsl'),
-            hsv: this.getColorOffset(colorObj.color, colorObj.extends, 'hsv'),
+            hsl: CustomThemeUtils.getColorOffset(colorObj.color, colorObj.extends, 'hsl'),
+            hsv: CustomThemeUtils.getColorOffset(colorObj.color, colorObj.extends, 'hsv'),
           };
         }
         return colorObj;
@@ -116,7 +120,7 @@ export class CustomThemeService {
   }
 
   // 计算两种颜色在HSL/HSV模型下的差异（偏移量）
-  private getColorOffset(target: Color, source: Color, mode: 'hsl' | 'hsv'): ISingleOffset {
+  private static getColorOffset(target: Color, source: Color, mode: 'hsl' | 'hsv'): ISingleOffset {
     const targetModel = target[mode]();
     const sourceModel = source[mode]();
     const key = mode.split('');
@@ -140,7 +144,7 @@ export class CustomThemeService {
   }
 
   // 更新颜色层次结构中的颜色值
-  private updateColor(colorChanges: Array<IColorDef>, colorHierarchy: IColorHierarchy, effect?: IEffect) {
+  private static updateColor(colorChanges: Array<IColorDef>, colorHierarchy: IColorHierarchy, effect?: IEffect) {
     const changeKeys = colorChanges.map((change) => change.colorName);
     const changeStack = [...changeKeys];
     const colorKeys = Object.keys(colorHierarchy);
@@ -154,8 +158,8 @@ export class CustomThemeService {
         const extendsKey = pattern[handleKey].extends!;
         const extendsColor = Color(pattern[extendsKey]['default-value']);
         const colorOffset = pattern[handleKey].offset;
-        const { mode, offset } = this.getColorEffectOffset(extendsColor, colorOffset, effect);
-        pattern[handleKey]['default-value'] = this.getHexOrRgba(this.getColorValue(extendsColor, offset, mode));
+        const { mode, offset } = CustomThemeUtils.getColorEffectOffset(extendsColor, colorOffset, effect);
+        pattern[handleKey]['default-value'] = CustomThemeUtils.getHexOrRgba(CustomThemeUtils.getColorValue(extendsColor, offset, mode));
       }
 
       colorKeys.forEach((colorName) => {
@@ -172,7 +176,7 @@ export class CustomThemeService {
   }
 
   // 填补未指定颜色的项，保证主题色板完整。
-  private fillEmptyColor(pattern: IColorHierarchy, effect: IEffect | undefined) {
+  private static fillEmptyColor(pattern: IColorHierarchy, effect: IEffect | undefined) {
     const colorKeys = Object.keys(pattern);
     const noColorArray = colorKeys
       .map((colorName) => ({
@@ -185,13 +189,13 @@ export class CustomThemeService {
       const extendsKey = pattern[handleKey].extends!;
       const extendsColor = Color(pattern[extendsKey]['default-value']);
       const colorOffset = pattern[handleKey].offset;
-      const { mode, offset } = this.getColorEffectOffset(extendsColor, colorOffset, effect);
-      pattern[handleKey]['default-value'] = this.getHexOrRgba(this.getColorValue(extendsColor, offset, mode));
+      const { mode, offset } = CustomThemeUtils.getColorEffectOffset(extendsColor, colorOffset, effect);
+      pattern[handleKey]['default-value'] = CustomThemeUtils.getHexOrRgba(CustomThemeUtils.getColorValue(extendsColor, offset, mode));
     });
   }
 
   // 根据不同风格（如浓郁、柔和等）调整偏移量，生成不同风格的主题色。
-  private getColorEffectOffset(source: Color, colorOffset: IColorOffset | any, effect?: IEffect) {
+  private static getColorEffectOffset(source: Color, colorOffset: IColorOffset | any, effect?: IEffect) {
     let result: any = {};
     switch (effect) {
       case 'hsl':
@@ -213,7 +217,7 @@ export class CustomThemeService {
             ...colorOffset.hsl,
             sp:
               colorOffset?.hsl?.sp! > 0
-                ? this.minmax(colorOffset?.hsl?.sp! * 1.3, colorOffset?.hsl?.sp!, 100)
+                ? CustomThemeUtils.minmax(colorOffset?.hsl?.sp! * 1.3, colorOffset?.hsl?.sp!, 100)
                 : colorOffset?.hsl?.sp! * 0.75,
           },
         };
@@ -225,7 +229,7 @@ export class CustomThemeService {
             ...colorOffset.hsv,
             sp:
               colorOffset?.hsv?.sp! > 0
-                ? this.minmax(colorOffset?.hsv?.sp! * 1.25, colorOffset?.hsv?.sp!, 100)
+                ? CustomThemeUtils.minmax(colorOffset?.hsv?.sp! * 1.25, colorOffset?.hsv?.sp!, 100)
                 : colorOffset?.hsv?.sp! * 0.5,
           },
         };
@@ -235,7 +239,10 @@ export class CustomThemeService {
           mode: 'hsl',
           offset: {
             ...colorOffset.hsl,
-            lp: colorOffset?.hsl?.lp! > 0 ? this.minmax(colorOffset?.hsl?.lp!, colorOffset?.hsl?.lp!, 100) : colorOffset?.hsl?.lp! * 0.2,
+            lp:
+              colorOffset?.hsl?.lp! > 0
+                ? CustomThemeUtils.minmax(colorOffset?.hsl?.lp!, colorOffset?.hsl?.lp!, 100)
+                : colorOffset?.hsl?.lp! * 0.2,
           },
         };
         break;
@@ -258,7 +265,7 @@ export class CustomThemeService {
   }
 
   // 将内部颜色层级结构转换为最终的主题色数据对象
-  private pattern2ThemeData(pattern: IColorHierarchy): IThemeData {
+  private static pattern2ThemeData(pattern: IColorHierarchy): IThemeData {
     const themeData: any = {};
     const colorKeys = Object.keys(pattern);
     colorKeys.forEach((colorName) => {
@@ -268,7 +275,7 @@ export class CustomThemeService {
   }
 
   // 根据偏移量和模式，计算实际的颜色值。
-  private getColorValue(source: Color, offset: any, mode: 'hsl' | 'hsv') {
+  private static getColorValue(source: Color, offset: any, mode: 'hsl' | 'hsv') {
     const sourceModel = source[mode]();
     const key = mode.split('');
     const value = {
@@ -290,7 +297,7 @@ export class CustomThemeService {
   }
 
   // 输出颜色的十六进制或rgba字符串
-  private getHexOrRgba(color: Color) {
+  private static getHexOrRgba(color: Color) {
     if (color.alpha() < 1) {
       const rgb = color.rgb();
       const [r, g, b] = rgb.color;
@@ -301,7 +308,7 @@ export class CustomThemeService {
     }
   }
 
-  private minmax(v: number, min: number, max: number) {
+  private static minmax(v: number, min: number, max: number) {
     if (v < min) {
       return min;
     }
