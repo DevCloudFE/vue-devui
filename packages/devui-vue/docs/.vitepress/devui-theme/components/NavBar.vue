@@ -11,8 +11,6 @@ import ZhLang from './icons/ZhLang.vue'
 import EnLang from './icons/EnLang.vue'
 import ThemePicker from './ThemePicker.vue'
 import { Locale } from '@devui/locale'
-import enUS from '@devui/locale/lang/en-us'
-import zhCN from '@devui/locale/lang/zh-cn'
 import { LANG_KEY, CURRENT_LANG, ZH_CN, EN_US } from '../const'
 
 // 主题切换
@@ -66,16 +64,14 @@ const LANG_MAP = {
 }
 
 const currentLang = ref(CURRENT_LANG);
-const app = getCurrentInstance();
 const switchLang = () => {
   if (currentLang.value === ZH_CN) {
-    Locale.use(EN_US, enUS);
+    Locale.use(EN_US);
     currentLang.value = EN_US;
   } else {
-    Locale.use(ZH_CN, zhCN);
+    Locale.use(ZH_CN);
     currentLang.value = ZH_CN;
   }
-  app.appContext.config.globalProperties.langMessages.value = Locale.messages();
 };
 </script>
 
@@ -97,7 +93,7 @@ const switchLang = () => {
 
         <div class="custom-nav flex items-center ml-l">
           <div class="custom-nav-item ml-m" style="font-size: 0"
-            @click="() => useTranslation(defaultLanguage === ZH_CN ? EN_US : ZH_CN)" v-if="false">
+            @click="() => useTranslation(defaultLanguage === ZH_CN ? EN_US : ZH_CN)" v-if="true">
             <ZhLang v-if="defaultLanguage === ZH_CN"></ZhLang>
             <EnLang v-else></EnLang>
           </div>

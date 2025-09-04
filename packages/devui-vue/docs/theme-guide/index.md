@@ -139,3 +139,38 @@ export class Theme {
   isDark?: boolean;               // 是否是深色主题
 }
 ```
+
+# 组件国际化
+ 
+我们提供了一种比较简洁的方法，可以方便的进行组件的国际化。
+内置支持中文（zh-CN）和英文（en-US）两种，也支持自定义其他语言，并且可以在添加的语言列表中任意随意切换。
+
+<a href="https://github.com/DevCloudFE/vue-devui/tree/dev/packages/devui-vue/devui/locale/lang" target="_blank">多语言文件格式</a>
+
+在main.ts中引用并注册即可（不调用则默认是中文）:
+
+
+ #### 初始化
+
+```ts
+import { createApp } from 'vue';
+import LocalInstall from 'vue-devui/locale';
+const app = createApp(App);
+// 直接初始化使用
+app.use(LocalInstall);
+
+// 指定语言初始化使用
+app.use(LocalInstall, 'en-US');
+```
+
+ #### 切换语言
+```ts
+import { Locale } from 'vue-devui/locale';
+Locale.use('zh-CN');
+
+// 使用自定义语言，假如你有一个多语言文件为jaJP（具体的文件格式参照上述链接中的多语言文件格式）
+Locale.add({ 'ja-JP': jaJP });
+Locale.use('ja-JP');
+```
+
+有些组件暂未完备国际化配置，欢迎各位同学查漏补缺，[加入我们](/contributing/)，贡献代码。
