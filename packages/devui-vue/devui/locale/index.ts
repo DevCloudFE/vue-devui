@@ -1,35 +1,44 @@
 import { App, reactive, ref } from 'vue';
-import { deepAssign } from '../shared/utils/deep-assign';
 import zhCN from './lang/zh-cn';
+import enUS from './lang/en-us';
 
 const lang = ref('zh-CN');
-let langMessages = reactive({
-  [lang.value]: zhCN
+const nowApp = ref(); // 用来存储install注册实例的app
+let langMessages = reactive<{[index: string]: any}> ({
+  ['zh-CN']: zhCN,
+  ['en-US']: enUS,
 });
 
 const Locale = {
-  messages(): Record<string, unknown> {
-    return langMessages[lang.value];
+  messages(language = lang.value): Record<string, unknown> {
+    return langMessages[language];
   },
-
   lang(): string {
     return lang.value;
   },
-
-  use(newLang: string, newMessages?: Record<string, unknown>): void {
+  // 切换语言
+  use(newLang: string): void {
+    const app = nowApp.value;
     lang.value = newLang;
-    this.add({ [newLang]: newMessages });
+    app.config.globalProperties.langMessages = Locale.messages();
   },
-
-  add(newMessages = {}): void {
-    langMessages = deepAssign(langMessages, newMessages);
+  // 在列表中增加一种语言，相同则覆盖 (可以在不影响加载的情况下添加，提高切换性能)
+  add(newMessages: Record<string, unknown>): void {
+    langMessages = {
+      ...langMessages,
+      ...newMessages
+    };
   },
 };
-
+// 导出
 export { Locale };
 
 export default {
-  install(app: App): void {
-    app.config.globalProperties.langMessages = ref(Locale.messages());
+  title: '国际化',
+  category: '基础',
+  status: '100%',
+  install(app: App, language?: string): void {
+    app.config.globalProperties.langMessages = Locale.messages(language);
+    nowApp.value = app;
   }
 };
