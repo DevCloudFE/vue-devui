@@ -2,18 +2,10 @@
  
 `DevUI Theme`是`DevUI`提供的一个框架无关的通用主题定制方案，内置丰富的主题，并支持自定义主题。
  
-`DevUI Theme`提供了4种内置主题+5种扩展主题：
+`DevUI Theme`提供了5种内置主题：
  
 内置主题：
- 
-- 浅色主题`devuiLightTheme`（默认主题，`DevUI蓝`主题）
-- 深色主题`devuiDarkTheme`
-- 绿色主题`devuiGreenTheme`
-- 绿色深色主题`devuiGreenDarkTheme`
- 
-扩展主题：
- 
-- 无限主题`infinityTheme`
+- 无限主题`infinityTheme`（默认主题）
 - 紫罗兰主题`provenceTheme`
 - 蜜糖主题`sweetTheme`
 - 深邃夜空主题`deepTheme`
@@ -28,24 +20,24 @@ npm i devui-theme
 ### 初始化主题
  
 ```ts
-import { ThemeServiceInit, devuiDarkTheme } from 'devui-theme';
+import { ThemeServiceInit, infinityTheme } from 'devui-theme';
  
-// 使用深色主题
-ThemeServiceInit({ devuiDarkTheme }, 'devuiDarkTheme');
+// 使用无限主题
+ThemeServiceInit({ infinityTheme }, 'infinityTheme');
 ```
  
 ### 切换主题
  
 ```ts
-import { ThemeServiceInit, devuiDarkTheme } from 'devui-theme';
+import { ThemeServiceInit, infinityTheme, galaxyTheme } from 'devui-theme';
 
 import { infinityTheme } from 'devui-theme';
  
-// 初始是`infinityTheme`无限主题
+// 初始是 infinityTheme 无限主题
 const themeService = ThemeServiceInit({ infinityTheme }, 'infinityTheme');
  
-// 可以动态切换成`devuiDarkTheme`深色主题
-themeService.applyTheme(devuiDarkTheme);
+// 可以动态切换成 galaxyTheme 追光主题
+themeService.applyTheme(galaxyTheme);
 ```
  
 ### 自定义主题
@@ -147,3 +139,38 @@ export class Theme {
   isDark?: boolean;               // 是否是深色主题
 }
 ```
+
+# 组件国际化
+ 
+我们提供了一种比较简洁的方法，可以方便的进行组件的国际化。
+内置支持中文（zh-CN）和英文（en-US）两种，也支持自定义其他语言，并且可以在添加的语言列表中任意随意切换。
+
+<a href="https://github.com/DevCloudFE/vue-devui/tree/dev/packages/devui-vue/devui/locale/lang" target="_blank">多语言文件格式</a>
+
+在main.ts中引用并注册即可（不调用则默认是中文）:
+
+
+ #### 初始化
+
+```ts
+import { createApp } from 'vue';
+import LocalInstall from 'vue-devui/locale';
+const app = createApp(App);
+// 直接初始化使用
+app.use(LocalInstall);
+
+// 指定语言初始化使用
+app.use(LocalInstall, 'en-US');
+```
+
+ #### 切换语言
+```ts
+import { Locale } from 'vue-devui/locale';
+Locale.use('zh-CN');
+
+// 使用自定义语言，假如你有一个多语言文件为jaJP（具体的文件格式参照上述链接中的多语言文件格式）
+Locale.add({ 'ja-JP': jaJP });
+Locale.use('ja-JP');
+```
+
+有些组件暂未完备国际化配置，欢迎各位同学查漏补缺，[加入我们](/contributing/)，贡献代码。

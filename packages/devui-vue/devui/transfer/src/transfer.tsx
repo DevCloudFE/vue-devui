@@ -1,11 +1,12 @@
-import { defineComponent } from 'vue';
+import { defineComponent, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
 import transferPanel from './components/transfer-panel';
 import transferOperate from './components/transfer-operate';
 import { transferProps, TTransferProps, TKey, IItem } from './transfer-types';
 import { transferState } from './composables/use-transfer';
 import './transfer.scss';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
+import { createI18nTranslate } from '../../locale/create';
 
 export default defineComponent({
   name: 'DTransfer',
@@ -14,8 +15,11 @@ export default defineComponent({
     transferOperate,
   },
   props: transferProps,
-  emits: ['update:modelValue', 'change'],
+  emits: ['update:modelValue', 'change', 'sourceDragEnd', 'targetDragEnd'],
   setup(props: TTransferProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DTransfer', app);
+
     const ns = useNamespace('transfer');
     const {
       sourceTitle,
@@ -46,7 +50,7 @@ export default defineComponent({
             isKeyupSearch={props.isKeyupSearch}
             isDrag={props.isSourceDrag}
             height={props.height}
-            unit={props.unit}
+            unit={props.unit || t('unit')}
             placeholder={props.placeholder}
             sortMethods={props.sortMethods}
             search={props.search}
@@ -68,8 +72,8 @@ export default defineComponent({
             onChangeChecked={(value: IItem[]) => {
               updateSourceCheckedHandle(value);
             }}
-            onUpdateData={(startValue: TKey, endValue: TKey) => {
-              updateSourceDataHandle(startValue, endValue);
+            onUpdateData={(startValue: TKey, endValue: TKey, position: number) => {
+              updateSourceDataHandle(startValue, endValue, position);
             }}></transferPanel>
           <transferOperate
             sourceDisabled={sourceDisabled.value}
@@ -86,7 +90,7 @@ export default defineComponent({
             isKeyupSearch={props.isKeyupSearch}
             isDrag={props.isTargetDrag}
             height={props.height}
-            unit={props.unit}
+            unit={props.unit || t('unit')}
             placeholder={props.placeholder}
             sortMethods={props.sortMethods}
             search={props.search}
@@ -108,8 +112,8 @@ export default defineComponent({
             onChangeChecked={(value: IItem[]) => {
               updateTargetCheckedHandle(value);
             }}
-            onUpdateData={(startValue: TKey, endValue: TKey) => {
-              updateTargetDataHandle(startValue, endValue);
+            onUpdateData={(startValue: TKey, endValue: TKey, position: number) => {
+              updateTargetDataHandle(startValue, endValue, position);
             }}></transferPanel>
         </div>
       );

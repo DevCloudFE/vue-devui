@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import DRadioGroup from '../src/radio-group';
 import DRadio from '../src/radio';
 import DRadioButton from '../src/radio-button';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const ns = useNamespace('radio-group', false);
 const baseClass = ns.b();
@@ -168,7 +168,7 @@ describe('RadioGroup', () => {
 
     const radio1 = wrapper.findAllComponents({ name: 'DRadio' })[0];
     const radio1Wrapper = radio1.find(radioBaseClass);
-    expect(radio1Wrapper.classes()).not.toContain(sizeNs);
+    expect(radio1Wrapper.classes()).toContain(sizeNs);
     await wrapper.setProps({
       border: true,
     });

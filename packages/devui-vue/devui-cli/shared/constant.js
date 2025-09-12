@@ -10,7 +10,7 @@ exports.CSS_CLASS_PREFIX = 'devui';
 exports.TESTS_DIR_NAME = '__tests__';
 exports.INDEX_FILE_NAME = 'index.ts';
 exports.DOCS_FILE_NAME = 'index.md';
-exports.VUE_DEVUI_IGNORE_DIRS = ['shared', 'style'];
+exports.VUE_DEVUI_IGNORE_DIRS = ['shared', 'style', 'locale'];
 exports.VUE_DEVUI_FILE_NAME = 'vue-devui.ts';
 exports.VUE_DEVUI_FILE = resolve(this.DEVUI_DIR, this.VUE_DEVUI_FILE_NAME);
 exports.SITES_DIR = resolve(this.CWD, 'docs');
@@ -29,7 +29,51 @@ exports.VITEPRESS_SIDEBAR_FILE_EN = resolve(
   `config/${this.VITEPRESS_SIDEBAR_FILE_NAME_EN}`
 );
 // 这里的分类顺序将会影响最终生成的页面侧边栏顺序
-exports.VITEPRESS_SIDEBAR_CATEGORY = ['通用', '导航', '反馈', '数据录入', '数据展示', '布局'];
+exports.VITEPRESS_SIDEBAR_CATEGORY = ['通用', '导航', '反馈', '数据录入', '数据展示', '布局', '演进中'];
+exports.DESIGN_TOKENS_INFO = [
+  {
+    text: 'Animation 动效',
+    status: '100%',
+    name: 'design-animation',
+    link: "/components/design-animation/",
+  },
+  {
+    text: 'BorderRadius 圆角',
+    status: '100%',
+    name: 'design-radius',
+    link: "/components/design-radius/",
+  },
+  {
+    text: 'Color 颜色',
+    status: '100%',
+    name: 'design-color',
+    link: "/components/design-color/",
+  },
+  {
+    text: 'Font 字体',
+    status: '100%',
+    name: 'design-font',
+    link: "/components/design-font/",
+  },
+  {
+    text: 'Link 链接',
+    status: '100%',
+    name: 'design-link',
+    link: "/components/design-link/",
+  },
+  {
+    text: 'Shadow 阴影',
+    status: '100%',
+    name: 'design-shadow',
+    link: "/components/design-shadow/",
+  },
+  {
+    text: 'ZIndex 层级',
+    status: '100%',
+    name: 'design-zindex',
+    link: "/components/design-zindex/",
+  }
+];
 exports.VITEPRESS_SIDEBAR_CATEGORY_EN = [
   'General',
   'Navigation',

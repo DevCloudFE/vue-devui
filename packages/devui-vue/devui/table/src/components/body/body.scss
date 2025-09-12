@@ -1,5 +1,9 @@
 @import '../../../../styles-var/devui-var.scss';
 
+$input-height-md: 28px;
+$devui-table-inset-shadow-left: var(--devui-table-inset-shadow-left, 8px 0 8px -4px);
+$devui-table-inset-shadow-right: var(--devui-table-inset-shadow-right, -8px 0 8px -4px);
+
 .#{$devui-prefix}-table {
   &__tbody {
     tr {
@@ -10,6 +14,14 @@
 
       &.hover-enabled:hover {
         background-color: $devui-list-item-hover-bg;
+
+        .#{$devui-prefix}-table--last-sticky-left {
+          background: linear-gradient(to left, transparent, $devui-list-item-hover-bg 10px);
+        }
+
+        .#{$devui-prefix}-table--first-sticky-right {
+          background: linear-gradient(to right, transparent, $devui-list-item-hover-bg 10px);
+        }
       }
 
       td .icon-expand-row:hover {
@@ -22,10 +34,8 @@
 
       td {
         background-clip: padding-box;
+        background-color: inherit;
         vertical-align: middle;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
         line-height: 24px;
         border: none;
         border-bottom: 1px solid $devui-dividing-line;
@@ -41,6 +51,40 @@
         &.is-right {
           text-align: right;
         }
+
+        .editable-cell {
+          position: relative;
+          margin-left: -8px;
+          padding-left: 8px;
+          cursor: pointer;
+
+          &:hover::after {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border: 1px solid $devui-line;
+            border-radius: $devui-border-radius;
+            pointer-events: none;
+          }
+        }
+
+        .#{$devui-prefix}-table__cell {
+          width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          .cell-text {
+            height: 32px;
+            line-height: 32px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
       }
     }
 
@@ -48,20 +92,52 @@
       display: none;
     }
   }
+
+  &__lazy__flag {
+    width: 0;
+    height: 0;
+  }
 }
 
 .#{$devui-prefix}-table {
   &--sticky-cell {
     position: sticky;
     z-index: 5;
-    background-color: inherit;
+  }
 
-    &.left {
-      box-shadow: rgba(0, 0, 0, 0.05) $devui-shadow-length-slide-right;
+  &--scroll-middle,
+  &--scroll-right {
+    .#{$devui-prefix}-table--last-sticky-left {
+      background: linear-gradient(to left, transparent, $devui-base-bg 10px);
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 10px;
+        pointer-events: none;
+        box-shadow: inset $devui-table-inset-shadow-left $devui-light-shadow;
+      }
     }
+  }
 
-    &.right {
-      box-shadow: rgba(0, 0, 0, 0.05) $devui-shadow-length-slide-left;
+  &--scroll-middle,
+  &--scroll-left {
+    .#{$devui-prefix}-table--first-sticky-right {
+      background: linear-gradient(to right, transparent, $devui-base-bg 10px);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 10px;
+        pointer-events: none;
+        box-shadow: inset $devui-table-inset-shadow-right $devui-light-shadow;
+      }
     }
   }
 }

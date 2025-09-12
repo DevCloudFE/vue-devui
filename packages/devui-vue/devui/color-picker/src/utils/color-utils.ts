@@ -1,6 +1,7 @@
 // Utilities
 import { ref } from 'vue';
 import { chunk, padEnd, has, keepDecimal } from './helpers';
+import { omit } from '../../../shared/utils';
 import {
   ColorPickerColor,
   position,
@@ -78,7 +79,7 @@ export function HSVAtoRGBA(hsva: HSVA): RGBA {
     return v - v * s * Math.max(Math.min(k, 4 - k, 1), 0);
   };
 
-  const rgb = [f(5), f(3), f(1)].map((v) => Math.round(v * 255));
+  const rgb = [f(5), f(3), f(1)].map((cv) => Math.round(cv * 255));
 
   return { r: rgb[0], g: rgb[1], b: rgb[2], a };
 }
@@ -203,7 +204,7 @@ export function RGBtoInt(rgba: RGBA): ColorInt {
   return (rgba.r << 16) + (rgba.g << 8) + rgba.b;
 }
 
-export function fromHSVA(hsva: HSVA): ColorPickerColor {
+export function fromHSVA(hsva: HSVA): Partial<ColorPickerColor> {
   hsva = { ...hsva };
   const hexa = HSVAtoHex(hsva);
   const hsla = HSVAtoHSLA(hsva);
@@ -218,7 +219,7 @@ export function fromHSVA(hsva: HSVA): ColorPickerColor {
     rgba
   };
 }
-export function fromRGBA(rgba: RGBA): ColorPickerColor {
+export function fromRGBA(rgba: RGBA): Partial<ColorPickerColor> {
   const hsva = RGBAtoHSVA(rgba);
   const hexa = RGBAtoHex(rgba);
   const hsla = HSVAtoHSLA(hsva);
@@ -236,7 +237,7 @@ export function fromRGBA(rgba: RGBA): ColorPickerColor {
     rgba
   };
 }
-export function fromHexa(hexa: Hexa): ColorPickerColor {
+export function fromHexa(hexa: Hexa): Partial<ColorPickerColor> {
   const hsva = HexToHSVA(hexa);
   const hsla = HSVAtoHSLA(hsva);
   const rgba = HSVAtoRGBA(hsva);
@@ -250,7 +251,7 @@ export function fromHexa(hexa: Hexa): ColorPickerColor {
     rgba
   };
 }
-export function fromHSLA(hsla: HSLA): ColorPickerColor {
+export function fromHSLA(hsla: HSLA): Partial<ColorPickerColor> {
   const hsva = HSLAtoHSVA(hsla);
   const hexa = HSVAtoHex(hsva);
   const rgba = HSVAtoRGBA(hsva);
@@ -264,11 +265,11 @@ export function fromHSLA(hsla: HSLA): ColorPickerColor {
     rgba
   };
 }
-export function fromHex(hex: Hex): ColorPickerColor {
+export function fromHex(hex: Hex): Partial<ColorPickerColor> {
   return fromHexa(parseHex(hex));
 }
 
-export function parseColor(color: Color, oldColor?: ColorPickerColor | null): ColorPickerColor {
+export function parseColor(color: Color, oldColor?: Partial<ColorPickerColor>): Partial<ColorPickerColor> {
   if (!color) {return fromRGBA({ r: 0, g: 0, b: 0, a: 1 });}
 
   if (typeof color === 'string') {
@@ -276,7 +277,7 @@ export function parseColor(color: Color, oldColor?: ColorPickerColor | null): Co
       // const hex = color.replace('#', '').trim()
       // return fromHexa(hex)
     } else if (color.indexOf('hsl') !== -1) {
-      let alpha = null;
+      let alpha = 0;
       const parts = color
         .replace(/hsla|hsl|\(|\)/gm, '')
         .split(/\s|,/g)
@@ -289,7 +290,7 @@ export function parseColor(color: Color, oldColor?: ColorPickerColor | null): Co
       }
       return fromHSLA({ h: parts[0], s: parts[1], l: parts[2], a: alpha });
     } else if (color.indexOf('rgb') !== -1) {
-      let alpha = null;
+      let alpha = 0;
       const parts = color
         .replace(/rgba|rgb|\(|\)/gm, '')
         .split(/\s|,/g)
@@ -303,7 +304,7 @@ export function parseColor(color: Color, oldColor?: ColorPickerColor | null): Co
       }
       return fromRGBA({ r: parts[0], g: parts[1], b: parts[2], a: alpha });
     } else if (color.indexOf('hsv') !== -1) {
-      let alpha = null;
+      let alpha = 0;
       const parts = color
         .replace(/hsva|hsv|\(|\)/gm, '')
         .split(/\s|,/g)
@@ -329,34 +330,37 @@ export function parseColor(color: Color, oldColor?: ColorPickerColor | null): Co
   if (typeof color === 'object') {
     if (color.hasOwnProperty('alpha')) {return color;}
 
-    const a = color.hasOwnProperty('a') ? parseFloat(color.a) : 1;
+    const a = color.hasOwnProperty('a') ? parseFloat((color as { a: string }).a) : 1;
 
     if (has(color, ['r', 'g', 'b'])) {
       if (oldColor && color === oldColor.rgba) {return oldColor;}
-      else {return fromRGBA({ ...color, a });}
+      else {return fromRGBA({ ...color, a } as RGBA);}
     } else if (has(color, ['h', 's', 'l'])) {
       if (oldColor && color === oldColor.hsla) {return oldColor;}
-      else {return fromHSLA({ ...color, a });}
+      else {return fromHSLA({ ...color, a } as HSLA);}
     } else if (has(color, ['h', 's', 'v'])) {
       if (oldColor && color === oldColor.hsva) {return oldColor;}
-      else {return fromHSVA({ ...color, a });}
+      else {return fromHSVA({ ...color, a } as HSVA);}
     }
   }
 
   return fromRGBA({ r: 255, g: 0, b: 0, a: 1 });
 }
 
-function stripAlpha(color: Color, stripAlpha: boolean) {
-  if (stripAlpha) {
-    const { a, ...rest } = color;
-
-    return rest;
+function stripAlpha(color: Record<string, unknown>, curStripAlpha: boolean) {
+  if (curStripAlpha) {
+    return omit(color, ['a']);
   }
 
   return color;
 }
 
-export function extractColor(color: ColorPickerColor, input: Color, mode, showAlpha: boolean): any {
+export function extractColor(
+  color: ColorPickerColor,
+  input: Color,
+  mode: string,
+  showAlpha: boolean
+): string | ColorPickerColor | Record<string, unknown> | undefined {
   // 色相
   const hue = keepDecimal(color.hsla.h, 2);
   // 饱和度
@@ -374,8 +378,8 @@ export function extractColor(color: ColorPickerColor, input: Color, mode, showAl
   // value
   const value = keepDecimal(color.hsva.v, 2);
   if (input == null) {return color;}
-  function isShowAlpha(mode) {
-    return showAlpha ? mode + 'a' : mode;
+  function isShowAlpha(curMode: string) {
+    return showAlpha ? curMode + 'a' : curMode;
   }
   if (typeof input === 'string') {
     if (mode === 'hex') {
@@ -431,12 +435,12 @@ export const elementResize = (parentElement: HTMLElement): position => {
 
 export function RGBtoRGBA(rgba: RGBA): RGBA {
   if (typeof rgba === 'string') {
-    rgba = (/rgba?\((.*?)\)/.exec(rgba) || ['', '0,0,0,1'])[1].split(',');
+    const strRgba = (/rgba?\((.*?)\)/.exec(rgba) || ['', '0,0,0,1'])[1].split(',');
     return {
-      r: Number(rgba[0]) || 0,
-      g: Number(rgba[1]) || 0,
-      b: Number(rgba[2]) || 0,
-      a: Number(rgba[3] ? rgba[3] : 1) // Avoid the case of 0
+      r: Number(strRgba[0]) || 0,
+      g: Number(strRgba[1]) || 0,
+      b: Number(strRgba[2]) || 0,
+      a: Number(strRgba[3] ? strRgba[3] : 1) // Avoid the case of 0
     };
   } else {
     return rgba;
@@ -468,7 +472,7 @@ export function RGBtoHSV(rgb: RGB): HSV {
   const s = max === 0 ? 0 : (max - min) / max;
   const hsv = [h, s, max];
 
-  return { h: hsv[0], s: hsv[1].toFixed(2), v: hsv[2].toFixed(2) };
+  return { h: hsv[0], s: +hsv[1].toFixed(2), v: +hsv[2].toFixed(2) };
 }
 export function HSVtoHSL(hsv: HSV): HSL {
   const { h, s, v } = hsv;

@@ -1,17 +1,29 @@
 import { Ref, SetupContext } from 'vue';
+import { useInitSelectCollection } from './use-init-select-collection';
 import { IInnerTreeNode, IUseCore, IUseSelect } from './use-tree-types';
 
-export default function () {
-  return function useSelect(data: Ref<IInnerTreeNode[]>, core: IUseCore, context: SetupContext): IUseSelect {
+export function useSelect() {
+  return function useSelectFn(data: Ref<IInnerTreeNode[]>, core: IUseCore, context: SetupContext): IUseSelect {
     const { setNodeValue } = core;
+    const { getInitSelectedNodes, clearInitSelectedNodes } = useInitSelectCollection();
 
     let prevActiveNode: IInnerTreeNode;
 
     const selectNode = (node: IInnerTreeNode): void => {
-      if (node.disableSelect) { return; }
+      if (node.disableSelect) {
+        return;
+      }
+
+      const initSelectedNodes = getInitSelectedNodes();
+      if (initSelectedNodes.length) {
+        initSelectedNodes.forEach((item) => {
+          setNodeValue(item, 'selected', false);
+        });
+        clearInitSelectedNodes();
+      }
 
       if (prevActiveNode) {
-        const prevActiveNodeIndex = data.value.findIndex(item => item.id === prevActiveNode.id);
+        const prevActiveNodeIndex = data.value.findIndex((item) => item.id === prevActiveNode.id);
         setNodeValue(data.value[prevActiveNodeIndex], 'selected', false);
       }
 
@@ -34,7 +46,7 @@ export default function () {
     };
 
     const getSelectedNode = (): IInnerTreeNode => {
-      return data.value.find(node => node.selected);
+      return data.value.find((node) => node.selected);
     };
 
     return {

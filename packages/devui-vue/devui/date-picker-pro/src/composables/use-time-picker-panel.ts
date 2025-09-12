@@ -1,10 +1,10 @@
 import { ref, onMounted, watch } from 'vue';
 import type { SetupContext } from 'vue';
 import { initializeTimeData } from '../../../time-picker/src/utils';
-import { TimePickerItem, TimerPickerPanelProps } from '../date-picker-pro-types';
+import { TimePickerItem, TimerPickerPanelProps, UseTimePickerPanelReturnType } from '../date-picker-pro-types';
 import { resetActiveTimeData } from '../utils';
 
-export default function useTimePickerPanel(props: TimerPickerPanelProps, ctx: SetupContext): any {
+export default function useTimePickerPanel(props: TimerPickerPanelProps, ctx: SetupContext): UseTimePickerPanelReturnType {
   const timeListDom = ref();
   const hourList = initializeTimeData('hour');
   const minuteList = initializeTimeData('minute');

@@ -2,7 +2,7 @@ import { defineComponent } from 'vue';
 import { sortProps, SortProps } from './sort-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import './sort.scss';
-
+const XLINK_HREF = { 'xlink:href': '#sort-svg-path-1' };
 export default defineComponent({
   props: sortProps,
   emits: ['sort'],
@@ -40,7 +40,7 @@ export default defineComponent({
               </filter>
             </defs>
             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <use fill-rule="evenodd" xlink:href="#sort-svg-path-1"></use>
+              <use fill-rule="evenodd" {...XLINK_HREF}></use>
               <polygon points="8 4 11 7 5 7"></polygon>
               <polygon points="8 12 5 9 11 9"></polygon>
             </g>

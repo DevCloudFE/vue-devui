@@ -1,5 +1,8 @@
 import { mount } from '@vue/test-utils';
 import { Statistic } from '../index';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const ns = useNamespace('statistic', true);
 async function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
@@ -12,64 +15,64 @@ describe('statistic test', () => {
   it('should work with `title` prop', async () => {
     const wrapper = mount(Statistic, { props: { title: 'test' } });
 
-    expect(wrapper.find('.devui-statistic-title').exists()).toBe(true);
-    expect(wrapper.find('.devui-statistic-title').text()).toBe('test');
+    expect(wrapper.find(ns.e('title')).exists()).toBe(true);
+    expect(wrapper.find(ns.e('title')).text()).toBe('test');
   });
   it('should work with `value` prop and typeof string value', async () => {
     const wrapper = mount(Statistic, { props: { value: 'im string' } });
 
-    expect(wrapper.find('.devui-statistic--value').exists()).toBe(true);
-    expect(wrapper.find('.devui-statistic--value').text()).toBe('im string');
+    expect(wrapper.find(ns.e('value')).exists()).toBe(true);
+    expect(wrapper.find(ns.e('value')).text()).toBe('im string');
   });
   it('should work with `value` prop and typeof number value', async () => {
     const wrapper = mount(Statistic, { props: { value: 666999 } });
 
-    expect(wrapper.find('.devui-statistic--value').exists()).toBe(true);
-    expect(wrapper.find('.devui-statistic--value').text()).toBe('666999');
+    expect(wrapper.find(ns.e('value')).exists()).toBe(true);
+    expect(wrapper.find(ns.e('value')).text()).toBe('666999');
   });
   it('should work with `group-separator` prop', async () => {
     const wrapper = mount(Statistic, { props: { groupSeparator: ',', value: '5201314' } });
 
-    expect(wrapper.find('.devui-statistic--value').exists()).toBe(true);
-    expect(wrapper.find('.devui-statistic--value').text()).toBe('5201314');
+    expect(wrapper.find(ns.e('value')).exists()).toBe(true);
+    expect(wrapper.find(ns.e('value')).text()).toBe('5201314');
   });
   it('should work with `precision` prop', async () => {
     const wrapper = mount(Statistic, { props: { precision: 3, value: '53' } });
 
-    expect(wrapper.find('.devui-statistic--value').exists()).toBe(true);
-    expect(wrapper.find('.devui-statistic--value').text()).toBe('53');
+    expect(wrapper.find(ns.e('value')).exists()).toBe(true);
+    expect(wrapper.find(ns.e('value')).text()).toBe('53');
   });
   it('should work with `suffix` prop', async () => {
     const wrapper = mount(Statistic, { props: { suffix: '%', value: '5201314' } });
 
-    expect(wrapper.find('.devui-statistic--value').exists()).toBe(true);
-    expect(wrapper.find('.devui-statistic--value').text()).toBe('5201314');
-    expect(wrapper.find('.devui-statistic-suffix').text()).toBe('%');
+    expect(wrapper.find(ns.e('value')).exists()).toBe(true);
+    expect(wrapper.find(ns.e('value')).text()).toBe('5201314');
+    expect(wrapper.find(ns.e('suffix')).text()).toBe('%');
   });
   it('should work with `prefix` prop', async () => {
     const wrapper = mount(Statistic, { props: { prefix: '%', value: '5201314' } });
 
-    expect(wrapper.find('.devui-statistic--value').exists()).toBe(true);
-    expect(wrapper.find('.devui-statistic--value').text()).toBe('5201314');
-    expect(wrapper.find('.devui-statistic-prefix').text()).toBe('%');
+    expect(wrapper.find(ns.e('value')).exists()).toBe(true);
+    expect(wrapper.find(ns.e('value')).text()).toBe('5201314');
+    expect(wrapper.find(ns.e('prefix')).text()).toBe('%');
   });
   it('should work with `prefix` slot', async () => {
     const wrapper = mount(Statistic, { slots: { prefix: () => 'test' } });
 
-    expect(wrapper.find('.devui-statistic-prefix').exists()).toBe(true);
-    expect(wrapper.find('.devui-statistic-prefix').text()).toBe('test');
+    expect(wrapper.find(ns.e('prefix')).exists()).toBe(true);
+    expect(wrapper.find(ns.e('prefix')).text()).toBe('test');
   });
   it('should work with `suffix` slot', async () => {
     const wrapper = mount(Statistic, { slots: { suffix: () => 'test' } });
 
-    expect(wrapper.find('.devui-statistic-suffix').exists()).toBe(true);
-    expect(wrapper.find('.devui-statistic-suffix').text()).toBe('test');
+    expect(wrapper.find(ns.e('suffix')).exists()).toBe(true);
+    expect(wrapper.find(ns.e('suffix')).text()).toBe('test');
   });
   it('should work with `extra` slot', async () => {
     const wrapper = mount(Statistic, { slots: { extra: () => 'test' } });
 
-    expect(wrapper.find('.devui-statistic-extra').exists()).toBe(true);
-    expect(wrapper.find('.devui-statistic-extra').text()).toBe('test');
+    expect(wrapper.find(ns.e('extra')).exists()).toBe(true);
+    expect(wrapper.find(ns.e('extra')).text()).toBe('test');
   });
   it('should work with `valueFrom` prop', async () => {
     const wrapper = mount(Statistic, {

@@ -19,7 +19,7 @@ export function useTable(props: TableProps, tableWidth: Ref): UseTable {
     maxHeight: props.maxHeight,
     maxWidth: props.maxWidth,
     height: props.tableHeight,
-    width: tableWidth.value ? `${tableWidth.value}px` : props.tableWidth,
+    width: props.tableWidth,
   }));
   return { classes, styles };
 }
@@ -46,21 +46,21 @@ export function useTableLayout(table: ITable<DefaultRow>): UseTableLayout {
   const tableWidth = ref();
 
   const updateColgroupWidth = () => {
-    const cols = table?.vnode?.el?.querySelectorAll('colgroup > col') || [];
+    const cols = (table?.vnode?.el?.querySelectorAll('colgroup > col') || []) as HTMLElement[];
     if (!cols.length) {
       return;
     }
     const flatColumns = table.store.states.flatColumns;
-    const columnMap: Record<string, any> = {};
+    const columnMap: Record<string, Column> = {};
     flatColumns.value.forEach((column: Column) => {
       columnMap[column.id] = column;
     });
     for (let i = 0, len = cols.length; i < len; i++) {
       const col = cols[i];
-      const columnId = col.getAttribute('column-id');
+      const columnId = col.getAttribute('column-id') as string;
       const column = columnMap[columnId];
       if (column) {
-        col.setAttribute('width', column.realWidth);
+        col.setAttribute('width', column.realWidth as string);
       }
     }
   };
@@ -122,6 +122,8 @@ export function useTableWatcher(props: TableProps, store: TableStore): void {
     () => props.data,
     () => {
       store.updateRows();
-    }
+      store.updateColumns();
+    },
+    { deep: true }
   );
 }

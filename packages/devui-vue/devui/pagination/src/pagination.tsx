@@ -1,10 +1,13 @@
-import { defineComponent, computed, nextTick, toRefs } from 'vue';
-import { paginationProps, PaginationProps } from './pagination-types';
+import { defineComponent, computed, nextTick, toRefs, getCurrentInstance, provide } from 'vue';
+import { Select } from '../../select';
+import { paginationProps, PaginationProps, paginationInjectionKey } from './pagination-types';
 import { liteSelectOptions } from './utils';
 import ConfigMenu from './components/config-menu';
 import JumpPage from './components/jump-page';
 import PageNumBtn from './components/page-nums';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import PageSize from './components/page-size';
+import { useNamespace } from '@devui/shared/utils';
+import { createI18nTranslate } from '@devui/shared/components/locale/create';
 import './pagination.scss';
 
 export default defineComponent({
@@ -17,14 +20,17 @@ export default defineComponent({
   props: paginationProps,
   emits: ['pageIndexChange', 'pageSizeChange', 'update:pageSize', 'update:pageIndex'],
   setup(props: PaginationProps, { emit, slots }) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DPagination', app);
+
     const {
       autoHide,
       pageSizeOptions,
+      pageSizeDirection,
       total,
       canChangePageSize,
       lite,
       size,
-      pageSizeDirection,
       showPageSelector,
       canViewTotal,
       totalItemText,
@@ -37,11 +43,17 @@ export default defineComponent({
       pageIndex,
       showJumpButton,
       haveConfigMenu,
+      maxPage,
     } = toRefs(props);
     const ns = useNamespace('pagination');
 
     // 总页数
-    const totalPages = computed(() => Math.ceil(props.total / props.pageSize));
+    const totalPages = computed(() => {
+      if (maxPage.value) {
+        return Math.min(Math.ceil(props.total / props.pageSize), maxPage.value);
+      }
+      return Math.ceil(props.total / props.pageSize);
+    });
 
     // 极简模式下，可选的下拉选择页码
     const litePageOptions = computed(() => liteSelectOptions(totalPages.value));
@@ -77,8 +89,8 @@ export default defineComponent({
     };
 
     // 每页条数改变
-    const pageSizeChange = (val: Record<string, string | number>) => {
-      currentPageSize.value = val.value as number;
+    const pageSizeChange = (val: number) => {
+      currentPageSize.value = val as number;
       // 页数改变后，如果当前页码超出最大页码时修正
       if (props.autoFixPageIndex) {
         nextTick(() => {
@@ -87,7 +99,7 @@ export default defineComponent({
           }
         });
       }
-      emit('pageSizeChange', val.value as number);
+      emit('pageSizeChange', val);
     };
 
     // 极简模式下的跳转页码
@@ -95,94 +107,83 @@ export default defineComponent({
       changeCursorEmit(page.value);
     };
 
-    return () => {
-      return (
-        // autoHide 为 true，并且 pageSizeOptions 最小值大于 total，则不展示分页
-        autoHide.value && Math.min(...pageSizeOptions.value) > total.value ? null : (
-          <div class={ns.b()}>
-            {
-              // 切换每页数据大小的下拉框
-              canChangePageSize.value && !lite.value && (
-                <div class={[ns.e('size'), size.value ? ns.em('size', size.value) : '']}>
-                  <d-select
-                    options={pageSizeOptions.value}
-                    modelValue={currentPageSize.value}
-                    onValueChange={pageSizeChange}
-                    pageSizeDirection={pageSizeDirection.value}
-                  />
-                </div>
-              )
-            }
-            {
-              // 总页数显示
-              (!lite.value || (lite.value && showPageSelector.value)) && canViewTotal.value && (
-                <div class={ns.e('total-size')}>
-                  {totalItemText.value}: {total.value}
-                </div>
-              )
-            }
-            {
-              // 极简模式下的选择页码下拉框
-              lite.value && showPageSelector.value && (
-                <div class={ns.e('size')}>
-                  <d-select
-                    options={litePageOptions.value}
-                    disabled={total.value === 0}
-                    modelValue={cursor.value}
-                    onValueChange={litePageIndexChange}
-                    pageSizeDirection={pageSizeDirection.value}
-                  />
-                </div>
-              )
-            }
+    provide(paginationInjectionKey, { size, currentPageSize, pageSizeOptions, pageSizeDirection, pageSizeChange, t });
 
-            {/* 页码展示 */}
-            <page-num-btn
-              {...{
-                cursor: cursor.value,
-                totalPages: totalPages.value,
-                size: size.value,
-                lite: lite.value,
-                maxItems: maxItems.value,
-                preLink: preLink.value,
-                nextLink: nextLink.value,
-                showTruePageIndex: showTruePageIndex.value,
-              }}
-              onChangeCursorEmit={changeCursorEmit}
-            />
+    return () =>
+      // autoHide 为 true，并且 pageSizeOptions 最小值大于 total，则不展示分页
+      autoHide.value && Math.min(...pageSizeOptions.value) > total.value ? null : (
+        <div class={ns.b()}>
+          {
+            // 切换每页数据大小的下拉框
+            canChangePageSize.value && !lite.value && <PageSize />
+          }
+          {
+            // 总页数显示
+            (!lite.value || (lite.value && showPageSelector.value)) && canViewTotal.value && (
+              <div class={ns.e('total-size')}>
+                {totalItemText?.value || t('totalItemText')}: {total.value}
+              </div>
+            )
+          }
+          {
+            // 极简模式下的选择页码下拉框
+            lite.value && showPageSelector.value && (
+              <Select
+                options={litePageOptions.value}
+                disabled={total.value === 0}
+                modelValue={cursor.value}
+                onValueChange={litePageIndexChange}
+                size={size.value}
+                style="width:100px"
+              />
+            )
+          }
 
-            {
-              // 跳转页码
-              canJumpPage.value && !lite.value && (
-                <jump-page
-                  {...{
-                    goToText: goToText.value,
-                    size: size.value,
-                    pageIndex: pageIndex.value,
-                    totalPages: totalPages.value,
-                    cursor: cursor.value,
-                    showJumpButton: showJumpButton.value,
-                  }}
-                  onChangeCursorEmit={changeCursorEmit}
-                />
-              )
-            }
-            {
-              // 极简模式下是否显示配置
-              lite.value && haveConfigMenu.value && (
-                <config-menu
-                  {...{
-                    currentPageSize: currentPageSize.value,
-                    pageSizeChange,
-                    pageSizeOptions: pageSizeOptions.value,
-                  }}>
-                  {slots.default?.()}
-                </config-menu>
-              )
-            }
-          </div>
-        )
+          {/* 页码展示 */}
+          <page-num-btn
+            {...{
+              cursor: cursor.value,
+              totalPages: totalPages.value,
+              size: size.value,
+              lite: lite.value,
+              maxItems: maxItems.value,
+              preLink: preLink.value,
+              nextLink: nextLink.value,
+              showTruePageIndex: showTruePageIndex.value,
+            }}
+            onChangeCursorEmit={changeCursorEmit}
+          />
+
+          {
+            // 跳转页码
+            canJumpPage.value && !lite.value && (
+              <jump-page
+                {...{
+                  goToText: goToText.value || t('goToText'),
+                  size: size.value,
+                  pageIndex: pageIndex.value,
+                  totalPages: totalPages.value,
+                  cursor: cursor.value,
+                  showJumpButton: showJumpButton.value,
+                }}
+                onChangeCursorEmit={changeCursorEmit}
+              />
+            )
+          }
+          {
+            // 极简模式下是否显示配置
+            lite.value && haveConfigMenu.value && (
+              <config-menu
+                {...{
+                  currentPageSize: currentPageSize.value,
+                  pageSizeChange,
+                  pageSizeOptions: pageSizeOptions.value,
+                }}>
+                {slots.default?.()}
+              </config-menu>
+            )
+          }
+        </div>
       );
-    };
   },
 });

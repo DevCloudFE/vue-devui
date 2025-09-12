@@ -5,7 +5,11 @@ import { UseDropdownProps, EmitEvent, DropdownProps, UseOverlayFn } from './drop
 
 const dropdownMap = new Map();
 
-function subscribeEvent(dom: Element | Document, type: string, callback: (event: any) => void) {
+function subscribeEvent(
+  dom: Element | Document | null | undefined,
+  type: string,
+  callback: EventListenerOrEventListenerObject
+): () => void {
   dom?.addEventListener(type, callback);
   return () => {
     dom?.removeEventListener(type, callback);
@@ -36,15 +40,16 @@ export const useDropdownEvent = ({ id, isOpen, origin, dropdownRef, props, emit 
   };
   watch([trigger, origin, dropdownRef], ([triggerVal, originVal, dropdownEl], ov, onInvalidate) => {
     const originEl = getElement(originVal);
-    const subscriptions = [];
+    const subscriptions: (() => void)[] = [];
     setTimeout(() => {
       subscriptions.push(
         subscribeEvent(document, 'click', (e: Event) => {
+          e.stopPropagation();
           const dropdownValues = [...dropdownMap.values()];
           if (
             !isOpen.value ||
             closeScope.value === 'none' ||
-            (dropdownEl?.contains(e.target) && closeScope.value === 'blank') ||
+            (dropdownEl?.contains(e.target as Node) && closeScope.value === 'blank') ||
             (dropdownValues.some((item) => item.toggleEl?.contains(e.target)) &&
               dropdownValues.some((item) => item.menuEl?.contains(e.target)))
           ) {
@@ -64,8 +69,8 @@ export const useDropdownEvent = ({ id, isOpen, origin, dropdownRef, props, emit 
     if (triggerVal === 'click') {
       subscriptions.push(
         subscribeEvent(originEl, 'click', () => toggle(!isOpen.value)),
-        subscribeEvent(dropdownEl, 'mouseleave', (e: MouseEvent) => {
-          if (closeOnMouseLeaveMenu.value && !dropdownMap.get(id).child?.contains(e.relatedTarget)) {
+        subscribeEvent(dropdownEl, 'mouseleave', (e: Event) => {
+          if (closeOnMouseLeaveMenu.value && !dropdownMap.get(id).child?.contains((e as MouseEvent).relatedTarget)) {
             handleLeave('dropdown', true);
           }
         })
@@ -84,9 +89,13 @@ export const useDropdownEvent = ({ id, isOpen, origin, dropdownRef, props, emit 
           overlayEnter = true;
           isOpen.value = true;
         }),
-        subscribeEvent(dropdownEl, 'mouseleave', (e: MouseEvent) => {
+        subscribeEvent(dropdownEl, 'mouseleave', (e: Event) => {
           overlayEnter = false;
-          if (e.relatedTarget && (originEl?.contains(e.relatedTarget) || dropdownMap.get(id).child?.contains(e.relatedTarget))) {
+          if (
+            (e as MouseEvent).relatedTarget &&
+            (originEl?.contains((e as MouseEvent).relatedTarget as Node) ||
+              dropdownMap.get(id).child?.contains((e as MouseEvent).relatedTarget))
+          ) {
             return;
           }
           handleLeave('dropdown', true);
@@ -101,22 +110,10 @@ export function useDropdown(
   id: string,
   visible: Ref<boolean>,
   isOpen: Ref<boolean>,
-  origin: Ref<HTMLElement>,
-  dropdownRef: Ref<HTMLElement>,
-  popDirection: Ref<string>,
+  origin: Ref<HTMLElement | undefined>,
+  dropdownRef: Ref<HTMLElement | undefined>,
   emit: EmitEvent
 ): void {
-  const calcPopDirection = (dropdownEl: HTMLElement) => {
-    const elementHeight = dropdownEl.offsetHeight;
-    const bottomDistance = window.innerHeight - origin.value.getBoundingClientRect().bottom;
-    const isBottomEnough = bottomDistance >= elementHeight;
-    if (!isBottomEnough) {
-      popDirection.value = 'top';
-    } else {
-      popDirection.value = 'bottom';
-    }
-  };
-
   watch(
     visible,
     (newVal, oldVal) => {
@@ -144,9 +141,6 @@ export function useDropdown(
         }
       }
     }
-    if (dropdownEl) {
-      calcPopDirection(dropdownEl);
-    }
   });
   onMounted(() => {
     dropdownMap.set(id, { toggleEl: origin.value });
@@ -162,6 +156,7 @@ export function useOverlayProps(props: DropdownProps, currentPosition: Ref<strin
   const overlayShowValue = ref<boolean>(false);
   const styles = computed(() => ({
     transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
+    zIndex: 'var(--devui-z-index-dropdown, 1052)',
   }));
   const classes = computed(() => ({
     'fade-in-bottom': showAnimation.value && isOpen.value && currentPosition.value === 'bottom',
@@ -169,7 +164,7 @@ export function useOverlayProps(props: DropdownProps, currentPosition: Ref<strin
     [`${overlayClass.value}`]: true,
   }));
   const handlePositionChange = (pos: string) => {
-    currentPosition.value = pos.includes('top') || pos.includes('end') ? 'top' : 'bottom';
+    currentPosition.value = pos.includes('top') || pos.includes('right-end') || pos.includes('left-end') ? 'top' : 'bottom';
   };
 
   watch(isOpen, (isOpenVal) => {

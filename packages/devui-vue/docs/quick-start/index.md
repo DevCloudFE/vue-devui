@@ -20,10 +20,10 @@ npm create vite my-vue-app -- --template vue-ts
 
 ### 2. 安装
 
-进入你的项目文件夹，使用 NPM 安装`Vue DevUI`
+进入你的项目文件夹，使用 NPM 安装`Vue DevUI`和配套的图标库
 
 ```shell
-npm i vue-devui
+npm i vue-devui @devui-design/icons devui-theme
 ```
 
 ### 3. 引入插件和样式
@@ -31,10 +31,14 @@ npm i vue-devui
 在`src/main.ts`文件中写入以下内容
 
 ```ts
-import DevUI from 'vue-devui'
-import 'vue-devui/style.css'
+import DevUI from 'vue-devui';
+import 'vue-devui/style.css';
+import '@devui-design/icons/icomoon/devui-icon.css';
+import { ThemeServiceInit, infinityTheme } from 'devui-theme';
 
-createApp(App).use(DevUI).mount('#app')
+ThemeServiceInit({ infinityTheme }, 'infinityTheme');
+
+createApp(App).use(DevUI).mount('#app');
 ```
 
 ### 4. 使用
@@ -53,3 +57,11 @@ createApp(App).use(DevUI).mount('#app')
 ```shell
 npm run dev
 ```
+
+### 6 按需引入
+
+参考：[按需引入](/on-demand/)
+
+### 7 主题定制
+
+参考：[主题定制](/theme-guide/)

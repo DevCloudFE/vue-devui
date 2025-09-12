@@ -1,0 +1,56 @@
+name: Auto publish
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CheckOut Code
+        uses: actions/checkout@master
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Get package version
+        uses: tyankatsu0105/read-package-version-actions@v1
+        id: package-version
+        with: 
+          path: packages/devui-vue
+
+      - name: Create a tag
+        uses: negz/create-tag@v1
+        with:
+          version: v${{ steps.package-version.outputs.version }}
+          message: 'Release v${{ steps.package-version.outputs.version }}'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Build Scripts
+        working-directory: packages/devui-vue/
+        run: |
+          ls
+          node -v
+          npm install pnpm@9.15.4 -g
+          pnpm -v
+          pnpm install --no-frozen-lockfile
+          pnpm run build:lib
+
+      - name: Publish
+        working-directory: packages/devui-vue/build
+        run: |
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.package-version.outputs.version }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{  secrets.GIT_TOKEN  }}

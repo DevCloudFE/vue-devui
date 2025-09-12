@@ -83,8 +83,10 @@ export default defineComponent({
 <template>
   <h4>Small</h4>
   <d-auto-complete size="sm" :source="source" v-model="value1" :width="420"> </d-auto-complete>
+  
   <h4>Middle</h4>
   <d-auto-complete :source="source" v-model="value2" :width="420"> </d-auto-complete>
+  
   <h4>Large</h4>
   <d-auto-complete size="lg" :source="source" v-model="value3" :width="420"> </d-auto-complete>
 </template>
@@ -125,7 +127,7 @@ export default defineComponent({
     </d-col>
     <d-col :flex="2">
       <d-button id="primaryBtn" @click="toggle" style="margin-left:10px">
-        {{ isDisabled ? 'Enable AutoComplete' : 'Disable AutoComplete' }}
+        {{ isDisabled ? '点击启用' : '点击禁用' }}
       </d-button>
     </d-col>
   </d-row>
@@ -453,7 +455,7 @@ export default defineComponent({
 
 :::
 
-### 参数
+### AutoComplete 参数
 
 | 参数名                   | 类型                                    | 默认                                      | 说明                                                              | 跳转 Demo                                              |
 | :----------------------- | :-------------------------------------- | :---------------------------------------- | :---------------------------------------------------------------- | :----------------------------------------------------- |
@@ -466,21 +468,22 @@ export default defineComponent({
 | disabled                 | `boolean`                               | false                                     | 可选，是否禁用指令                                                | [设置禁用](#设置禁用)                                  |
 | delay                    | `number`                                | 300                                       | 可选，只有在 delay 时间经过后并且未输入新值，才做搜索查询（`ms`） | [基本用法](#基本用法)                                  |
 | disabled-key             | `string`                                | --                                        | 可选，禁用单个选项                                                | [自定义数据匹配方法](#自定义数据匹配方法)              |
-| formatter                | `(item: any) => string`                 | [`defaultFormatter`](#defaultFormatter)   | 可选，格式化函数                                                  | [自定义数据匹配方法](#自定义数据匹配方法)              |
+| formatter                | `(item: any) => string`                 | [`defaultFormatter`](#defaultformatter)   | 可选，格式化函数                                                  | [自定义数据匹配方法](#自定义数据匹配方法)              |
 | is-searching             | `boolean`                               | false                                     | 可选，是否在搜索中，用于控制 searchingTemplate 是否显示           | [自定义数据匹配方法](#自定义数据匹配方法)              |
 | scene-type               | `string`                                | --                                        | 可选，值为 'select'、'suggest'                                    | [启用懒加载](#启用懒加载)                              |
-| search-fn                | `(term: string) => Array<any>`          | [`defaultSearchFn`](#defaultSearchFn)     | 可选，自定义搜索过滤                                              | [自定义数据匹配方法](#自定义数据匹配方法)              |
+| search-fn                | `(term: string) => Array<any>`          | [`defaultSearchFn`](#defaultsearchfn)     | 可选，自定义搜索过滤                                              | [自定义数据匹配方法](#自定义数据匹配方法)              |
 | tips-text                | `string`                                | '最近输入'                                | 可选，提示文字                                                    | [设置禁用](#设置禁用)                                  |
 | latest-source            | `Array<any>`                            | --                                        | 可选， 最近输入                                                   | [最近输入](#最近输入)                                  |
-| value-parser             | `(item: any) => any`                    | [`defaultValueParse`](#defaultValueParse) | 可选， 对选中后数据进行处理                                       | [启用懒加载](#启用懒加载)                              |
+| value-parser             | `(item: any) => any`                    | [`defaultValueParse`](#defaultvalueparse) | 可选， 对选中后数据进行处理                                       | [启用懒加载](#启用懒加载)                              |
 | enable-lazy-load         | `boolean`                               | false                                     | 可选，是否允许懒加载                                              | [启用懒加载](#启用懒加载)                              |
 | width                    | `number`                                | 400                                       | 可选，调整宽度（`px`）                                            | [基本用法](#基本用法)                                  |
 | show-animation           | `boolean`                               | true                                      | 可选，是否开启动画                                                |                                                        |
 | prefix                   | `string`                                | --                                        | 可选，自定义前缀图标                                              | [带图标的输入框](../input/index.md/#带图标的输入框)    |
 | suffix                   | `string`                                | --                                        | 可选，自定义后缀图标                                              | [带图标的输入框](../input/index.md/#带图标的输入框)    |
 | clearable                | `boolean`                               | false                                     | 可选，是否可清空                                                  | [参考 `d-input` 一键清空](../input/index.md/#一键清空) |
+|show-glow-style|`boolean`|true|可选，是否显示悬浮发光效果||
 
-### 事件
+### AutoComplete 事件
 
 | 参数                   | 类型              | 说明                                                                                                                                        | 跳转 Demo                 |
 | :--------------------- | :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------ |
@@ -488,7 +491,7 @@ export default defineComponent({
 | select-value           | `function(value)` | 可选，选择选项之后的回调函数                                                                                                                | [基本用法](#基本用法)     |
 | trans-input-focus-emit | `function`        | 可选，Input focus 时回调函数                                                                                                                | [基本用法](#基本用法)     |
 
-### 插槽
+### AutoComplete 插槽
 
 | 插槽名    | 说明                                                                     | 跳转 Demo                                           |
 | :-------- | :----------------------------------------------------------------------- | :-------------------------------------------------- |

@@ -24,7 +24,7 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
       background-color: transparent;
       padding: 0;
       text-decoration: none;
-      color: $devui-text;
+      color: $devui-aide-text;
     }
 
     & a:hover,
@@ -87,7 +87,7 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
 
     & span > a {
       border: none;
-      color: $devui-text;
+      color: $devui-aide-text;
       line-height: 26px;
       padding: 0 16px;
 
@@ -99,7 +99,7 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
     }
 
     &.active {
-      background-color: $devui-tab-options-bg;
+      background: $devui-global-bg;
 
       & span > a {
         color: $devui-brand;
@@ -162,7 +162,7 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
     & a {
       cursor: pointer;
       border: none;
-      color: $devui-text;
+      color: $devui-aide-text;
       line-height: 28px;
       padding: 0 16px;
 
@@ -225,7 +225,7 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
     & a {
       cursor: pointer;
       border: none;
-      color: $devui-text;
+      color: $devui-aide-text;
       border-radius: $devui-border-radius $devui-border-radius 0 0;
 
       &:hover,
@@ -293,6 +293,16 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
   align-items: center;
   list-style: none;
   padding-left: 0;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  user-select: none;
+  // 隐藏滚动条
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   li {
     a {

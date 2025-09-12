@@ -9,7 +9,7 @@ export const rangeDatePickerProProps = {
   },
   placeholder: {
     type: Array as PropType<string[]>,
-    default: ['请选择日期', '请选择日期'],
+    default: ['', ''],
   },
   separator: {
     type: String,
@@ -21,7 +21,6 @@ export const rangeDatePickerProProps = {
 export type RangeDatePickerProProps = ExtractPropTypes<typeof rangeDatePickerProProps>;
 
 export interface UseRangePickerProReturnType {
-  containerRef: Ref<HTMLElement | undefined>;
   originRef: Ref<HTMLElement | undefined>;
   startInputRef: Ref<HTMLElement | undefined>;
   endInputRef: Ref<HTMLElement | undefined>;
@@ -35,7 +34,7 @@ export interface UseRangePickerProReturnType {
   showCloseIcon: ComputedRef<boolean>;
   focusType: Ref<string>;
   pickerDisabled: ComputedRef<boolean>;
-  pickerSize: ComputedRef<string>;
+  pickerSize: ComputedRef<'sm' | 'md' | 'lg'>;
   isValidateError: ComputedRef<boolean>;
   onFocus: (type: string) => void;
   focusHandler: (e: MouseEvent) => void;

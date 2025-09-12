@@ -1,23 +1,28 @@
 @import '../../style/mixins/size';
 @import '../../style/mixins/flex';
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-search {
   position: relative;
+  border-radius: $devui-border-radius;
+  transition: border-color 0.3s $devui-animation-ease-in-out-smooth, box-shadow $devui-animation-duration-base $devui-animation-ease-in;
   @include flex;
 
-  &:not(.#{$devui-prefix}-search--error):not(.#{$devui-prefix}-search--disabled):not(.#{$devui-prefix}-search--focus):hover {
+  &:not(.#{$devui-prefix}-search--error):not(.#{$devui-prefix}-search--disabled):not(.#{$devui-prefix}-search--focus):not(.#{$devui-prefix}-search--glow-style):hover {
     .#{$devui-prefix}-input {
       border-color: $devui-form-control-line-hover;
     }
   }
 
   .#{$devui-prefix}-input {
-    padding: 4px 60px 4px 8px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 100%;
+    height: $devui-size-md;
+    // 60px = clear + icon 的宽度
+    padding: 4px 60px 4px 8px;
+    font-size: $devui-font-size-md;
     color: $devui-text;
     box-sizing: border-box;
     border: 1px solid $devui-form-control-line;
@@ -41,9 +46,16 @@
     }
   }
 
-  svg.svg-icon-clear path,
-  svg.svg-icon-search path {
-    fill: $devui-icon-text;
+  &__clear,
+  &__icon {
+    @include size($devui-size-md, $devui-size-md);
+    @include flex;
+
+    & svg {
+      path {
+        fill: $devui-icon-text;
+      }
+    }
   }
 
   &__clear {
@@ -54,6 +66,19 @@
     font-size: 10px;
     @include size(30px, 100%);
     @include flex;
+
+    & > svg {
+      path {
+        fill: $devui-shape-icon-fill;
+        transition: all $devui-animation-ease-in-out-smooth $devui-animation-duration-slow;
+      }
+
+      &:hover {
+        path {
+          fill: $devui-shape-icon-fill-hover;
+        }
+      }
+    }
 
     &::after {
       content: '';
@@ -70,55 +95,79 @@
   &__icon {
     pointer-events: all;
     cursor: pointer;
-    padding: 0 8px;
     position: absolute;
     z-index: 1;
     right: 0;
     top: 0;
-    font-size: 16px;
-    width: 36px;
-    height: 100%;
-    @include flex;
+  }
+
+  &--glow-style {
+    &:not(.#{$devui-prefix}-search--disabled) {
+      &:hover,
+      &.#{$devui-prefix}-search--focus {
+        box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
+      }
+    }
   }
 
   &--sm {
     .#{$devui-prefix}-input {
+      height: $devui-size-sm;
+      font-size: $devui-font-size-sm;
+
       &.#{$devui-prefix}-input--sm {
         font-size: $devui-font-size;
-        padding-right: 24px;
+        padding-right: 60px;
       }
     }
 
     .#{$devui-prefix}-search__icon {
-      font-size: 14px;
       @include size(34px, 26px);
+
+      svg {
+        width: 14px;
+        height: 14px;
+      }
     }
 
     .#{$devui-prefix}-search__clear {
       @include size(26px, 100%);
 
       right: 34px;
+
+      & > svg {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    .#{$devui-prefix}-search__clear {
+      right: $devui-size-sm;
     }
   }
 
   &--lg {
     .#{$devui-prefix}-input {
-      padding: 4px 36px 4px 10px;
+      height: $devui-size-lg;
+      font-size: $devui-font-size-lg;
 
       &.#{$devui-prefix}-input--lg {
-        padding-right: 70px;
+        padding: 4px 80px 4px 10px;
       }
     }
 
-    .#{$devui-prefix}-search__icon {
-      font-size: 18px;
-      @include size(46px, 46px);
+    .#{$devui-prefix}-search__icon,
+    .#{$devui-prefix}-search__clear {
+      @include size($devui-size-lg, $devui-size-lg);
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
     }
 
     .#{$devui-prefix}-search__clear {
-      @include size(30px, 100%);
-
-      right: 46px;
+      right: $devui-size-lg;
     }
   }
 
@@ -141,15 +190,17 @@
 
   &--left {
     .#{$devui-prefix}-input {
-      padding: 4px 26px 4px 30px;
+      padding-right: $devui-size-md;
+      padding-left: $devui-size-md;
 
       &.#{$devui-prefix}-input--lg {
-        padding-right: 28px;
-        padding-left: 48px;
+        padding-right: $devui-size-lg;
+        padding-left: $devui-size-lg;
       }
 
       &.#{$devui-prefix}-input--sm {
-        padding-right: 24px;
+        padding-right: $devui-size-sm;
+        padding-left: $devui-size-sm;
       }
     }
 
@@ -167,8 +218,13 @@
   }
 
   &--no-border {
-    .#{$devui-prefix}-input {
-      border: none;
+    .#{$devui-prefix}-input,
+    .#{$devui-prefix}-input__wrapper {
+      background-color: unset;
+    }
+
+    &:not(.#{$devui-prefix}-search--focus) .#{$devui-prefix}-input:not(:hover, :focus, :active) {
+      border: 1px solid transparent;
     }
   }
 }

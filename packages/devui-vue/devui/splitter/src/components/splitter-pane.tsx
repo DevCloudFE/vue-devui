@@ -1,9 +1,10 @@
-import { defineComponent, ref, watch, inject, onMounted, onUpdated } from 'vue';
+import { defineComponent, ref, watch, inject, onMounted, onUpdated, getCurrentInstance } from 'vue';
 import { addClass, hasClass, removeClass } from '../../../shared/utils/class';
 import { setStyle } from '../../../shared/utils/set-style';
 import type { SplitterStore } from '../splitter-store';
 import { splitterPaneProps, SplitterPaneProps } from './splitter-pane-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { isHTMLElement } from '../../../shared/utils';
 import './splitter-pane.scss';
 
 export default defineComponent({
@@ -14,6 +15,7 @@ export default defineComponent({
     const store = inject<SplitterStore>('splitterStore');
     const domRef = ref<null | HTMLElement>();
     const orderRef = ref();
+    const currentVnode = getCurrentInstance()?.vnode;
     const ns = useNamespace('splitter');
     watch([orderRef, domRef], ([order, ele]) => {
       if (!ele) {
@@ -103,7 +105,7 @@ export default defineComponent({
     // 收起时用于改变相邻 pane 的 flex-grow 属性来改变非自适应 pane 的 size
     const toggleNearPaneFlexGrow = (collapsed: boolean) => {
       const ele = domRef.value;
-      if (!(ele instanceof HTMLElement)) {
+      if (!isHTMLElement(ele)) {
         return;
       }
       const flexGrowClass = ns.em('pane', 'grow');
@@ -114,11 +116,20 @@ export default defineComponent({
       }
     };
 
+    const updateCollapsed = (collapsed?: boolean) => {
+      if (typeof collapsed === 'boolean') {
+        currentVnode!.component!.props.collapsed = collapsed;
+        return;
+      }
+      currentVnode!.component!.props.collapsed = !currentVnode?.component?.props.collapsed;
+    };
+
     // 暴露给外部使用
     expose({
       order: orderRef,
       getPaneSize,
       toggleNearPaneFlexGrow,
+      updateCollapsed,
     });
 
     return () => {

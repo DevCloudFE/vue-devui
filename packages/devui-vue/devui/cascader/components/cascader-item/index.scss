@@ -4,10 +4,12 @@
 .#{$devui-prefix}-cascader {
   &__li {
     &.dropdown-item {
-      height: 32px;
+      height: 36px;
       padding: 8px 12px;
       color: $devui-text;
       cursor: pointer;
+      border-radius: $devui-border-radius;
+      box-sizing: border-box;
       @include flex(flex-start);
 
       margin-top: 4px;
@@ -42,6 +44,10 @@
     &.disabled {
       background-color: $devui-disabled-bg;
       cursor: not-allowed;
+
+      .dropdown-item-label {
+        color: $devui-disabled-text;
+      }
     }
 
     .cascader-li {
@@ -53,6 +59,8 @@
         margin-right: 4px;
         font-size: $devui-font-size-icon;
         color: $devui-text;
+        line-height: 16px;
+        height: 16px;
 
         &.disabled {
           color: $devui-disabled-text !important;

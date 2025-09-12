@@ -1,5 +1,5 @@
-import type { ValidateError, ValidateFieldsError } from 'async-validator';
-import type { PropType, ExtractPropTypes, InjectionKey, SetupContext } from 'vue';
+import type { ValidateError, ValidateFieldsError, Rules, Values } from 'async-validator';
+import type { PropType, ExtractPropTypes, InjectionKey, SetupContext, Prop } from 'vue';
 import {
   FormItemContext,
   FormRuleItem,
@@ -13,7 +13,10 @@ export type Layout = 'horizontal' | 'vertical';
 export type LabelSize = 'sm' | 'md' | 'lg';
 export type FormSize = 'sm' | 'md' | 'lg';
 export type LabelAlign = 'start' | 'center' | 'end';
-export type FormData = Record<string, any>;
+export type FormData = Record<string, unknown>;
+export type StyleType = 'default' | 'gray';
+export type AppendToBodyScrollStrategy = 'close' | 'reposition';
+export type RequirePosition = 'left' | 'right';
 
 export type FormRules = Partial<Record<string, Array<FormRuleItem>>>;
 export interface ValidateFailure {
@@ -64,6 +67,22 @@ export const formProps = {
   size: {
     type: String as PropType<FormSize>,
   },
+  hideRequiredMark: {
+    type: Boolean,
+    default: false,
+  },
+  styleType: {
+    type: String as PropType<StyleType>,
+    default: 'default',
+  },
+  appendToBodyScrollStrategy: {
+    type: String as PropType<AppendToBodyScrollStrategy>,
+    default: 'reposition',
+  },
+  requirePosition: {
+    type: String as PropType<RequirePosition>,
+    default: 'left',
+  },
 } as const;
 
 export interface UseFieldCollection {
@@ -74,7 +93,7 @@ export interface UseFieldCollection {
 
 export interface UseFormValidation {
   validate: (callback?: FormValidateCallback) => FormValidateResult;
-  validateFields: (fields: string[], callback: any) => FormValidateResult;
+  validateFields: (fields: string[], callback: FormValidateCallback) => FormValidateResult;
   resetFields: (fields: string[]) => void;
   clearValidate: (fields: string[]) => void;
 }
@@ -87,13 +106,20 @@ export interface FormContext extends FormProps {
   removeItemContext: (field: FormItemContext) => void;
 }
 
-export const FORM_TOKEN: InjectionKey<FormContext> = Symbol('dForm');
+export const FORM_TOKEN = 'dForm';
 
-export interface DValidateResult {
-  errors: any;
-  fields: any;
+export const STYLE_TOKEN = 'dFormStyle';
+
+export interface DValidateResult<E = never, F = never> {
+  errors: E;
+  fields: F;
 }
 
 export interface DFormValidateSubmitData {
   callback(valid: boolean, result: DValidateResult): void;
+}
+
+export interface UseValidate {
+  validate: (descriptor: Rules, validateObject: Values) => Promise<Values>;
+  createDevUIBuiltinValidator: (rule: FormRules) => void;
 }

@@ -12,7 +12,7 @@ export const optionsHandles = (cascaderOptions?: CaascaderOptionsType): OptionsC
    */
   const changeCascaderIndexs = (optionItem: CascaderItem, ulIndex: number) => {
     if (!cascaderOptions) {return;}
-    if (optionItem?.children?.length > 0) {
+    if (optionItem?.children?.length && optionItem?.children?.length > 0) {
       cascaderOptions[ulIndex + 1] = optionItem.children;
     } else {
       // 选择的项没有子项时清除多余的ul
@@ -23,5 +23,5 @@ export const optionsHandles = (cascaderOptions?: CaascaderOptionsType): OptionsC
   return {
     cascaderOptions,
     changeCascaderIndexs
-  };
+  } as OptionsCallback;
 };

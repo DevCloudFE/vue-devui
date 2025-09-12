@@ -2,7 +2,7 @@ import { defineComponent, SetupContext } from 'vue';
 import { checkboxGroupProps, CheckboxGroupProps } from './checkbox-types';
 import DCheckbox from './checkbox';
 import './checkbox-group.scss';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { useCheckboxGroup } from './use-checkbox';
 
 export default defineComponent({
@@ -41,9 +41,18 @@ export default defineComponent({
         }
       };
 
+
       return (
-        <div class={ns.e('group')}>
-          <div class={{ [ns.m('list-inline')]: props.direction === 'row' }}>{getContent()}</div>
+        <div
+          class={[
+            ns.e('group'),
+            {
+              'is-row': props.direction === 'row',
+              'is-column': props.direction === 'column',
+            },
+          ]}
+        >
+          {getContent()}
         </div>
       );
     };

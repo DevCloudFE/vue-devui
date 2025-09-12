@@ -6,11 +6,10 @@ export type IconPosition = 'right' | 'left';
 export const searchProps = {
   size: {
     type: String as PropType<Size>,
-    default: '',
   },
   placeholder: {
     type: String,
-    default: '请输入关键字',
+    default: '',
   },
   maxLength: {
     type: Number,
@@ -52,9 +51,18 @@ export const searchProps = {
     type: Function as PropType<(v: string) => void>,
     default: undefined,
   },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
 } as const;
 
 export type SearchProps = ExtractPropTypes<typeof searchProps>;
+
+export interface UseSearchClassTypes {
+  rootClass: ComputedRef<{ [p: string]: string | boolean }>;
+  searchSize: ComputedRef<Size>;
+}
 
 export interface KeywordsReturnTypes {
   keywords: Ref<string>;

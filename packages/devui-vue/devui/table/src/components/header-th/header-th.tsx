@@ -1,25 +1,19 @@
 import { defineComponent, inject, toRefs, ref } from 'vue';
-import type { PropType } from 'vue';
-import { Column } from '../column/column-types';
-import { TABLE_TOKEN } from '../../table-types';
+import { TABLE_TOKEN, ITableInstanceAndDefaultRow } from '../../table-types';
 import Sort from '../sort/sort';
 import Filter from '../filter/filter';
 import { useFixedColumn } from '../../composables/use-table';
 import { useBaseRender, useSort, useFilter, useDragColumnWidth } from './use-header-th';
+import { headerThProps, HeaderThProps } from './header-th-types';
 
 export default defineComponent({
   name: 'DTableHeaderTh',
-  props: {
-    column: {
-      type: Object as PropType<Column>,
-      required: true,
-    },
-  },
-  setup(props: { column: Column }, { expose }) {
-    const table = inject(TABLE_TOKEN);
+  props: headerThProps,
+  setup(props: HeaderThProps, { expose }) {
+    const table = inject(TABLE_TOKEN) as ITableInstanceAndDefaultRow;
     const store = table.store;
     const headerContainerRef = ref();
-    const { column } = toRefs(props);
+    const { column, colspan, rowspan } = toRefs(props);
     const { baseClass } = useBaseRender(column);
     const { direction, sortClass, handleSort, clearSortOrder } = useSort(column);
     const { filterClass, handleFilter } = useFilter(column);
@@ -27,9 +21,13 @@ export default defineComponent({
     const { resizing, dragClass, onMousedown } = useDragColumnWidth(headerContainerRef, column);
 
     expose({ clearSortOrder });
-
     return () => (
-      <th class={[baseClass.value, stickyClass.value, sortClass.value, filterClass.value, dragClass.value]} style={stickyStyle.value}>
+      <th
+        class={[baseClass.value, stickyClass.value, sortClass.value, filterClass.value, dragClass.value]}
+        style={stickyStyle.value}
+        colspan={colspan?.value}
+        rowspan={rowspan?.value}
+      >
         <div ref={headerContainerRef} class="header-container" onMousedown={onMousedown}>
           {column.value.renderHeader?.(column.value, store)}
           {column.value.filterable && (

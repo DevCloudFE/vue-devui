@@ -1,6 +1,9 @@
 import { mount } from '@vue/test-utils';
 import { ref, nextTick } from 'vue';
 import DTextarea from '../src/textarea';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const ns = useNamespace('textarea', true);
 
 describe('textarea test', () => {
   it('d-textarea render work', async () => {
@@ -124,5 +127,30 @@ describe('textarea test', () => {
     const firstStyle = textarea.attributes('style');
     const secondStyle = textarea2.attributes('style');
     expect(firstStyle).not.toEqual(secondStyle);
+  });
+
+  it.todo('props resize work well.');
+
+  it('props show-count work well.', async () => {
+    const value = ref('');
+    const wrapper = mount({
+      components: { DTextarea },
+      template: `
+        <d-textarea v-model="value" show-count />
+      `,
+      setup () {
+        return {
+          value,
+        };
+      },
+    });
+    expect(wrapper.find(ns.e('show-count')).text()).toBe('0');
+    value.value = '12345678';
+    await nextTick();
+    expect(wrapper.find(ns.e('show-count')).text()).toBe('8');
+    await wrapper.setProps({
+      maxlength: 20,
+    });
+    expect(wrapper.find(ns.e('show-count')).text()).toBe('8 / 20');
   });
 });

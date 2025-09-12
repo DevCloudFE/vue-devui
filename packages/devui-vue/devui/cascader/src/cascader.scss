@@ -1,5 +1,5 @@
 @import '../../style/mixins/flex';
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-cascader {
   @include flex(flex-start);
@@ -24,7 +24,28 @@
   }
 
   &__close {
-    cursor: pointer;
+    .close-icon-container {
+      width: 14px;
+      height: 14px;
+      line-height: 14px;
+      cursor: pointer;
+
+      svg {
+        width: 14px;
+        height: 14px;
+
+        path {
+          fill: $devui-shape-icon-fill;
+          transition: all $devui-animation-ease-in-out-smooth $devui-animation-duration-slow;
+        }
+
+        &:hover {
+          path {
+            fill: $devui-shape-icon-fill-hover;
+          }
+        }
+      }
+    }
   }
 
   &__disbaled {
@@ -40,20 +61,20 @@
 
   &__drop-menu-wrapper {
     display: block;
-    margin: 4px 0;
     font-size: 0;
     white-space: nowrap;
     padding: 0;
   }
 
   &--drop-icon-animation {
+    svg path {
+      fill: $devui-text;
+    }
     transition: transform 0.2s linear;
   }
 
   &__drop-menu-animation {
     transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-    z-index: 1000;
-    margin-top: 1px;
   }
 
   &__dropdown-menu {
@@ -63,15 +84,20 @@
   }
 
   &__panel {
-    padding: 12px 0;
+    padding: 12px 12px;
     max-height: 300px;
     overflow-y: auto;
   }
 
   &__suggest-list {
-    padding: 5px 12px;
+    height: 32px;
+    padding: 8px 12px;
+    box-sizing: border-box;
     cursor: pointer;
     font-weight: 400;
+    font-size: $devui-font-size;
+    text-align: left;
+    border-radius: $devui-border-radius;
 
     &:hover {
       color: $devui-brand-active;
@@ -83,5 +109,51 @@
 .#{$devui-prefix}-cascader__dropdown--open {
   .#{$devui-prefix}-cascader__icon {
     transform: rotate(180deg);
+  }
+}
+
+.#{$devui-prefix}-cascader--fade {
+  &-bottom {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0.8;
+      transform: scaleY(0.8) translateY(-4px);
+    }
+
+    &-enter-to,
+    &-leave-from {
+      opacity: 1;
+      transform: scaleY(0.9999) translateY(0);
+    }
+
+    &-enter-active {
+      transition: transform 0.2s cubic-bezier(0.16, 0.75, 0.5, 1), opacity 0.2s cubic-bezier(0.16, 0.75, 0.5, 1);
+    }
+
+    &-leave-active {
+      transition: transform 0.2s cubic-bezier(0.5, 0, 0.84, 0.25), opacity 0.2s cubic-bezier(0.5, 0, 0.84, 0.25);
+    }
+  }
+
+  &-top {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0.8;
+      transform: scaleY(0.8) translateY(4px);
+    }
+
+    &-enter-to,
+    &-leave-from {
+      opacity: 1;
+      transform: scaleY(0.9999) translateY(0);
+    }
+
+    &-enter-active {
+      transition: transform 0.2s cubic-bezier(0.16, 0.75, 0.5, 1), opacity 0.2s cubic-bezier(0.16, 0.75, 0.5, 1);
+    }
+
+    &-leave-active {
+      transition: transform 0.2s cubic-bezier(0.5, 0, 0.84, 0.25), opacity 0.2s cubic-bezier(0.5, 0, 0.84, 0.25);
+    }
   }
 }

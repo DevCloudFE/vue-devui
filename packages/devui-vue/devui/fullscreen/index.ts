@@ -11,5 +11,5 @@ export default {
   status: '100%',
   install(app: App): void {
     app.component(Fullscreen.name, Fullscreen);
-  }
+  },
 };

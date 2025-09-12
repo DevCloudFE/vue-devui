@@ -1,19 +1,22 @@
-import { defineComponent, toRefs, ref } from 'vue';
+import { defineComponent, toRefs, ref, getCurrentInstance } from 'vue';
 import { NotificationService } from '../../notification';
 import type { IFileResponse } from './upload-types';
 import { UploadStatus, UploadProps, uploadProps } from './upload-types';
 import { useSelectFiles } from './composables/use-select-files';
 import { useUpload } from './composables/use-upload';
-import { getExistSameNameFilesMsg } from './i18n-upload';
 import { FileUploader } from './file-uploader';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './upload.scss';
+import { createI18nTranslate } from '../../locale/create';
 
 export default defineComponent({
   name: 'DUpload',
   props: uploadProps,
   emits: ['fileDrop', 'fileOver', 'fileSelect', 'deleteUploadedFile', 'update:modelValue'],
   setup(props: UploadProps, ctx) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DUpload', app);
+
     const {
       uploadOptions,
       placeholder,
@@ -33,7 +36,7 @@ export default defineComponent({
     const inputGroupNs = useNamespace('input-group');
     const formControlNs = useNamespace('form-control');
     const inputGroupAddOnNs = useNamespace('input-group-addon');
-    const { triggerSelectFiles, _validateFiles, triggerDropFiles, checkAllFilesSize } = useSelectFiles();
+    const { triggerSelectFiles, _validateFiles, triggerDropFiles, checkAllFilesSize } = useSelectFiles(t);
     const { fileUploaders, addFile, getFullFiles, deleteFile, upload, resetSameNameFiles, removeFiles, _oneTimeUpload, getSameNameFiles } =
       useUpload();
     const isDropOver = ref(false);
@@ -151,7 +154,7 @@ export default defineComponent({
           checkValid();
           const sameNameFiles = getSameNameFiles();
           if (uploadOptions?.value && uploadOptions.value.checkSameName && sameNameFiles.length) {
-            alertMsg(getExistSameNameFilesMsg(sameNameFiles));
+            alertMsg(t('getExistSameNameFilesMsg')(sameNameFiles));
           }
           selectedFiles.value = fileUploaders.value
             .filter((fileUploader) => fileUploader.status === UploadStatus.preLoad)
@@ -212,14 +215,16 @@ export default defineComponent({
             <div onClick={handleClick}>{ctx.slots.default()}</div>
           ) : (
             <div class={[inputGroupNs.b(), disabled.value ? 'disabled' : '']} onClick={handleClick}>
-              {fileUploaders.value.length === 0 && <div class={[formControlNs.b(), ns.e('placeholder')]}>{placeholder.value}</div>}
+              {fileUploaders.value.length === 0 && (
+                <div class={[formControlNs.b(), ns.e('placeholder')]}>{placeholder.value || t('placeholder')}</div>
+              )}
               {fileUploaders.value.length > 0 && (
                 <ul class={[formControlNs.b(), ns.e('files-list')]}>
                   {fileUploaders.value.map((fileUploader, index) => (
                     <li
                       key={index}
                       class={[ns.e('file-item'), ns.e('file-tag')]}
-                      style="display: inline-block; margin: 0 2px 2px 0"
+                      style="display: inline-block;"
                       title={fileUploader.file.name}
                       onClick={(event: Event) => clickSelectedFile(event, fileUploader.file)}>
                       <span class={[ns.e('filename'), fileUploader.status === UploadStatus.failed ? ns.m('failed-color') : '']}>

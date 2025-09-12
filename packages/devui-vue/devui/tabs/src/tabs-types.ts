@@ -1,4 +1,5 @@
-import type { ComputedRef, ExtractPropTypes, PropType } from 'vue';
+import type { ComputedRef, ExtractPropTypes, PropType, Ref } from 'vue';
+import type { TabContext } from './components/tab/tab-types';
 
 export type Active = string | number | null;
 
@@ -6,15 +7,21 @@ export type ITabsType = 'tabs' | 'pills' | 'options' | 'wrapped' | 'slider';
 
 export type ITabPositionType = 'top' | 'right' | 'bottom' | 'left';
 
+export type TabsStateData = TabContext & {
+  tabId?: string;
+  tabsEle?: Ref<Document>;
+};
+
 export interface TabsState {
-  data?: any[];
+  data: Record<number, TabContext>;
   showContent: boolean;
   active: string | number;
-  slots: any[];
 }
 
 export interface TabsData {
   state: TabsState;
+  addTab(ctx: TabContext): void;
+  deleteTab(id: number | undefined): void;
 }
 
 export const tabsProps = {
@@ -66,7 +73,7 @@ export type TabsProps = ExtractPropTypes<typeof tabsProps>;
 export interface UseTabsEvent {
   onUpdateModelValue: (value: string | number) => void;
   onActiveTabChange: (value: string) => void;
-  onTabRemove: (item: any, ev: MouseEvent) => void;
+  onTabRemove: (item: TabsStateData, ev: MouseEvent) => void;
   onTabAdd: () => void;
   onTabChange: (id: string | undefined, type: string) => void;
 }

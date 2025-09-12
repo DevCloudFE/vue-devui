@@ -5,6 +5,6 @@ export default defineComponent({
   name: 'DAside',
   setup(props, { slots }) {
     const ns = useNamespace('layout');
-    return () => <div class={ns.e('aside')}>{slots.default?.()}</div>;
+    return () => <div class={ns.em('aside', 'inner')}>{slots.default?.()}</div>;
   },
 });

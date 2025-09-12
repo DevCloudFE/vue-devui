@@ -107,7 +107,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <p>默认搜索</p>
+  <div class="mb-1">默认搜索</div>
   <d-transfer
     :source-default-checked="sourceDefaultChecked"
     :target-default-checked="targetDefaultChecked"
@@ -116,9 +116,10 @@ export default defineComponent({
     :filter="filter"
     placeholder="请输入"
     v-model="checkedValues1"
+    class="mb-3"
   >
   </d-transfer>
-  <p>自定义搜索方法</p>
+  <div class="mb-1">自定义搜索方法</div>
   <d-transfer
     :source-default-checked="sourceDefaultChecked"
     :target-default-checked="targetDefaultChecked"
@@ -126,6 +127,7 @@ export default defineComponent({
     :data="source"
     :filter="filterFun"
     v-model="checkedValues2"
+    class="mb-3"
   >
   </d-transfer>
 </template>
@@ -499,9 +501,7 @@ export default defineComponent({
 
 :::
 
-### API
-
-d-transfer 参数
+### Transfer 参数
 
 | **参数**       | **类型**                        | **默认**         | **说明**                                      | **跳转 Demo**                     |
 | -------------- | ------------------------------- | ---------------- | --------------------------------------------- | --------------------------------- |
@@ -513,7 +513,10 @@ d-transfer 参数
 | render-content | `function(h,option)`            | --               | 可选参数，自定义数据项渲染函数                | [自定义渲染内容](#自定义渲染内容) |
 | placeholder    | `string`                        | 请输入关键字搜索 | 可选参数，搜索框的占位符                      | [搜索穿梭框](#搜索穿梭框)         |
 
-d-transfer 事件
-| **事件** | **类型** | **说明** | **跳转 Demo** |
-| ------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------------- |
-| change | `EventEmitter<{value, direction,移动的数组}>` | 右侧列表变化时触发，当前值、数据移动方向（source、target）、发生移动的数据数组 | [基本用法](#基本用法) |
+### Transfer 事件
+
+| **事件**        | **类型**                                      | **说明**                                                                       | **跳转 Demo**         |
+| --------------- | --------------------------------------------- | ------------------------------------------------------------------------------ | --------------------- |
+| change          | `EventEmitter<{value, direction,移动的数组}>` | 右侧列表变化时触发，当前值、数据移动方向（source、target）、发生移动的数据数组 | [基本用法](#基本用法) |
+| source-drag-end | `Function(data: Array)`                       | 左侧列表拖拽结束触发事件，返回拖拽完成后的数据                                 |                       |
+| target-drag-end | `Function(data: Array)`                       | 右侧列表拖拽结束触发事件，返回拖拽完成后的数据                                 |                       |

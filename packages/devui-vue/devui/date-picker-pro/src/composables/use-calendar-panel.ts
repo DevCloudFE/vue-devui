@@ -1,11 +1,11 @@
-import { ref, onBeforeMount, nextTick, watch } from 'vue';
+import { ref, onBeforeMount, nextTick, watch, onMounted } from 'vue';
 import type { SetupContext } from 'vue';
-import { DAY_DURATION, yearItemHeight, calendarItemHeight } from '../const';
+import { DAY_DURATION, calendarItemHeight } from '../const';
 import { CalendarDateItem, YearAndMonthItem, UseCalendarPanelReturnType, DatePickerProPanelProps } from '../date-picker-pro-types';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import { throttle } from 'lodash';
-import useCalendarCommon from './use-calendar-common';
+import useCalendarSelected from './use-calendar-selected';
 
 export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: SetupContext): UseCalendarPanelReturnType {
   const yearScrollRef = ref<HTMLElement>();
@@ -16,7 +16,20 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
   const calendarCacheData = new Map();
   const currentMonthIndex = ref<number>(0);
 
-  const { today, calendarRange, selectDate, rangeSelectDate, minDate, maxDate, fixRangeDate } = useCalendarCommon(props);
+  const {
+    today,
+    calendarRange,
+    selectDate,
+    rangeSelectDate,
+    minDate,
+    maxDate,
+    fixRangeDate,
+    getToDate,
+    emitSelectedDate,
+    isStartDate,
+    isInRangeDate,
+    isEndDate,
+  } = useCalendarSelected(props, ctx);
 
   const fillLeft = (num: number) => {
     return num < 10 ? `0${num}` : `${num}`;
@@ -102,24 +115,24 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
 
   const goToYearDate = (index: number) => {
     updateYearActive(index);
-    let scrollHeight = (index - 4) * yearItemHeight;
-    if (scrollHeight < 0) {
-      scrollHeight = 0;
+    let scrollIndex = index - 4;
+    if (scrollIndex < 0) {
+      scrollIndex = 0;
     }
     nextTick(() => {
       const scrollEl = yearScrollRef.value;
-      scrollEl?.scroll?.(0, scrollHeight);
+      scrollEl?.scrollTo?.(scrollIndex);
     });
   };
 
   const goToMonthDate = () => {
-    let scrollHeight = currentMonthIndex.value * calendarItemHeight;
-    if (scrollHeight < 0) {
-      scrollHeight = 0;
+    let scrollIndex = currentMonthIndex.value;
+    if (scrollIndex < 0) {
+      scrollIndex = 0;
     }
     nextTick(() => {
       const scrollEl = monthScrollRef.value;
-      scrollEl?.scroll?.(0, scrollHeight);
+      scrollEl?.scrollTo?.(scrollIndex);
     });
   };
 
@@ -134,42 +147,21 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     if (!props.visible) {
       return;
     }
-    let toDate: Date | undefined;
-    if (Array.isArray(props.dateValue)) {
-      // 赋值rangeSelectDate
-      if (props.dateValue[0]) {
-        // 初始化时, 日历面板会默认展示时间范围选择的startDate
-        const date = props.dateValue[0];
-        toDate = date.toDate();
-        rangeSelectDate.value[0] = props.dateValue[0];
-      } else {
-        toDate = today.value;
-      }
-      if (props.dateValue[1]) {
-        rangeSelectDate.value[1] = props.dateValue[1];
-      }
-    } else if (!Array.isArray(props.dateValue) && props.dateValue) {
-      const date = props.dateValue;
-      selectDate.value = date;
-      toDate = date.toDate();
-    } else {
-      toDate = today.value;
-    }
+    const toDate = getToDate(props.dateValue);
     if (toDate) {
-      goToShowDate(toDate);
+      goToShowDate(toDate.toDate());
     }
   };
 
   onBeforeMount(() => {
     today.value = new Date();
-    if (props.calendarRange) {
-      calendarRange.value = props.calendarRange;
-    } else {
-      calendarRange.value = [today.value.getFullYear() - 3, today.value.getFullYear() + 3];
-    }
+    calendarRange.value = props.calendarRange;
 
     // 初始化先展示v-model对应的时间，如果没有展示today对应的时间
     initCalendarData();
+  });
+
+  onMounted(() => {
     initCalendarShow();
   });
 
@@ -201,18 +193,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     if (props.isRangeType) {
       handlerSetRangeDate(day);
     }
-    if (props.isRangeType && !props.showTime) {
-      if (props.focusType === 'start') {
-        ctx.emit('changeRangeFocusType', 'end');
-      } else if (props.focusType === 'end' && !rangeSelectDate.value[0]) {
-        rangeSelectDate.value[0] = selectDate.value;
-      }
-    }
-    if (props.isRangeType) {
-      ctx.emit('selectedDate', rangeSelectDate.value);
-    } else {
-      ctx.emit('selectedDate', selectDate.value);
-    }
+    emitSelectedDate();
   };
 
   const handlerYearCollapse = (date?: Date) => {
@@ -232,17 +213,11 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
 
   const handlerClickMonth = (year: number, month: number | undefined) => {
     const date = new Date(year, month || 0, 1);
-    const selectYear = yearAndMonthList.value.find((child) => child.active)?.year || selectDate.value?.year() || calendarRange.value[0];
     if (isListCollapse.value) {
       handlerYearCollapse(date);
     } else {
       goToShowDate(date);
     }
-  };
-
-  const handleScrollYearList = (e: UIEvent) => {
-    let { scrollTop: newScrollTop } = e.currentTarget as Element;
-    newScrollTop = newScrollTop > 0 ? newScrollTop : 0;
   };
 
   const debounceScrollMonth = throttle((newScrollTop) => {
@@ -264,36 +239,6 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
       return selectDate.value.toDate().toDateString() === date.toDateString();
     }
     return false;
-  };
-
-  const isStartDate = (date: Date) => {
-    if (!props.isRangeType) {
-      return false;
-    }
-    return date.toDateString() === rangeSelectDate.value[0]?.toDate()?.toDateString();
-  };
-
-  const isInRangeDate = (date: Date) => {
-    if (!props.isRangeType) {
-      return false;
-    }
-    const dateTime = date.getTime();
-    const dateStr = date.toDateString();
-    const isIn =
-      rangeSelectDate.value[0] &&
-      rangeSelectDate.value[0].toDate()?.getTime() < dateTime &&
-      rangeSelectDate.value[1] &&
-      rangeSelectDate.value[1]?.toDate()?.getTime() > dateTime &&
-      rangeSelectDate.value[0]?.toDate()?.toDateString() !== dateStr &&
-      rangeSelectDate.value[1]?.toDate()?.toDateString() !== dateStr;
-    return isIn ? true : false;
-  };
-
-  const isEndDate = (date: Date) => {
-    if (!props.isRangeType) {
-      return false;
-    }
-    return date.toDateString() === rangeSelectDate.value[1]?.toDate()?.toDateString();
   };
 
   watch(
@@ -332,7 +277,6 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     handlerSelectDate,
     handlerYearCollapse,
     handlerClickMonth,
-    handleScrollYearList,
     handleScrollMonthList,
     isDateSelected,
     isStartDate,

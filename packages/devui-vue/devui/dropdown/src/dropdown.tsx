@@ -15,9 +15,9 @@ export default defineComponent({
   props: dropdownProps,
   emits: ['toggle'],
   setup(props: DropdownProps, { slots, attrs, emit, expose }) {
-    const { visible, position, align, offset, destroyOnHide, shiftOffset, showAnimation } = toRefs(props);
-    const origin = ref<HTMLElement>();
-    const dropdownRef = ref<HTMLElement>();
+    const { visible, position, offset, destroyOnHide, shiftOffset, showAnimation, teleport } = toRefs(props);
+    const origin = ref<HTMLElement | undefined>();
+    const dropdownRef = ref<HTMLElement | undefined>();
     const overlayRef = ref();
     const id = `dropdown_${dropdownId++}`;
     const isOpen = ref<boolean>(false);
@@ -33,7 +33,7 @@ export default defineComponent({
       props,
       emit,
     });
-    useDropdown(id, visible, isOpen, origin, dropdownRef, currentPosition, emit);
+    useDropdown(id, visible, isOpen, origin, dropdownRef, emit);
     const { overlayModelValue, overlayShowValue, styles, classes, handlePositionChange } = useOverlayProps(props, currentPosition, isOpen);
 
     watch(overlayShowValue, (overlayShowValueVal) => {
@@ -51,7 +51,7 @@ export default defineComponent({
     return () => (
       <>
         <PopperTrigger>{slots.default?.()}</PopperTrigger>
-        <Teleport to="body">
+        <Teleport to={teleport.value}>
           <Transition name={showAnimation.value ? ns.m(`fade-${currentPosition.value}`) : ''}>
             <FlexibleOverlay
               v-model={overlayModelValue.value}
@@ -59,10 +59,10 @@ export default defineComponent({
               ref={overlayRef}
               origin={origin.value}
               position={position.value}
-              align={align.value}
               offset={offset.value}
               shiftOffset={shiftOffset?.value}
               onPositionChange={handlePositionChange}
+              click-event-bubble
               class={classes.value}
               style={styles.value}>
               <div ref={dropdownRef} class={ns.e('menu-wrap')} {...attrs}>

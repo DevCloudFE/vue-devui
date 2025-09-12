@@ -1,70 +1,66 @@
 <script setup lang="ts">
-import { ref, computed, watch, defineAsyncComponent, onMounted, onUpdated } from 'vue'
-import { useRoute, useData, useRouter } from 'vitepress'
-import { isSideBarEmpty, getSideBarConfig } from './support/sideBar'
+import { ref, computed, watch, defineAsyncComponent, onMounted, onUpdated } from 'vue';
+import { useRoute, useData, useRouter } from 'vitepress';
+import { isSideBarEmpty, getSideBarConfig } from './support/sideBar';
 // components
-import NavBar from './components/NavBar.vue'
-import SideBar from './components/SideBar.vue'
-import Page from './components/Page.vue'
-import HomeFooter from './components/HomeFooter.vue'
-import { CONTRIBUTORS_MAP } from './components/PageContributorConfig'
-import PageContributor from './components/PageContributor.vue'
+import NavBar from './components/NavBar.vue';
+import SideBar from './components/SideBar.vue';
+import Page from './components/Page.vue';
+import HomeFooter from './components/HomeFooter.vue';
+import DevuiFooter from './components/DevuiFooter.vue';
+import { CONTRIBUTORS_MAP } from './components/PageContributorConfig';
+import PageContributor from './components/PageContributor.vue';
 import { Button } from '@devui/button';
+import { LANG_KEY, ZH_CN, EN_US } from './const';
 
-const Home = defineAsyncComponent(() => import('./components/Home.vue'))
+const Home = defineAsyncComponent(() => import('./components/Home.vue'));
 
-const NoopComponent = () => null
+const NoopComponent = () => null;
 
-const CarbonAds = __CARBON__
-  ? defineAsyncComponent(() => import('./components/CarbonAds.vue'))
-  : NoopComponent
-const BuySellAds = __BSA__
-  ? defineAsyncComponent(() => import('./components/BuySellAds.vue'))
-  : NoopComponent
-const AlgoliaSearchBox = __ALGOLIA__
-  ? defineAsyncComponent(() => import('./components/AlgoliaSearchBox.vue'))
-  : NoopComponent
+const CarbonAds = __CARBON__ ? defineAsyncComponent(() => import('./components/CarbonAds.vue')) : NoopComponent;
+const BuySellAds = __BSA__ ? defineAsyncComponent(() => import('./components/BuySellAds.vue')) : NoopComponent;
+const AlgoliaSearchBox = __ALGOLIA__ ? defineAsyncComponent(() => import('./components/AlgoliaSearchBox.vue')) : NoopComponent;
 
 // generic state
-const route = useRoute()
-const { site, page, theme, frontmatter } = useData()
-const router = useRouter()
+const route = useRoute();
+const { site, page, theme, frontmatter } = useData();
+const router = useRouter();
 
 // custom layout
-const isCustomLayout = computed(() => !!frontmatter.value.customLayout)
+const isCustomLayout = computed(() => !!frontmatter.value.customLayout);
 // home
-const enableHome = computed(() => !!frontmatter.value.home)
+const enableHome = computed(() => !!frontmatter.value.home);
 
 // automatic multilang check for AlgoliaSearchBox
-const isMultiLang = computed(() => Object.keys(theme.value.locales || {}).length > 0)
+const isMultiLang = computed(() => Object.keys(theme.value.locales || {}).length > 0);
 
 // navbar
 const showNavbar = computed(() => {
-  const themeConfig = theme.value
+  const themeConfig = theme.value;
   if (frontmatter.value.navbar === false || themeConfig.navbar === false) {
-    return false
+    return false;
   }
-  return site.value.title || themeConfig.logo || themeConfig.repo || themeConfig.nav
-})
+  return site.value.title || themeConfig.logo || themeConfig.repo || themeConfig.nav;
+});
 
 // sidebar
-const openSideBar = ref(false)
+const openSideBar = ref(false);
 
 const showSidebar = computed(() => {
   if (frontmatter.value.home || frontmatter.value.sidebar === false) {
-    return false
+    return false;
   }
 
-  return !isSideBarEmpty(getSideBarConfig(theme.value.sidebar, route.data.relativePath))
-})
+  return !isSideBarEmpty(getSideBarConfig(theme.value.sidebar, route.data.relativePath));
+});
 
 const toggleSidebar = (to?: boolean) => {
-  openSideBar.value = typeof to === 'boolean' ? to : !openSideBar.value
-}
+  openSideBar.value = typeof to === 'boolean' ? to : !openSideBar.value;
+};
 
-const hideSidebar = toggleSidebar.bind(null, false)
+const hideSidebar = toggleSidebar.bind(null, false);
 // close the sidebar when navigating to a different location
-watch(route, hideSidebar)
+watch(route, hideSidebar);
 // TODO: route only changes when the pathname changes
 // listening to hashchange does nothing because it's prevented in router
 
@@ -74,146 +70,149 @@ const pageClasses = computed(() => {
     {
       'no-navbar': !showNavbar.value,
       'sidebar-open': openSideBar.value,
-      'no-sidebar': !showSidebar.value
-    }
-  ]
-})
+      'no-sidebar': !showSidebar.value,
+    },
+  ];
+});
+const homeContainerClass = computed(() => {
+  return [
+    {
+      'home-page-bg': enableHome.value,
+    },
+  ];
+});
+const initLanguageConfig = () => {
+  // layout组件加载，初始化国际化语言.
+  const result = location.pathname.match(/[a-zA-Z]*-[A-Z]*/);
+  const langList = [ZH_CN, EN_US];
 
-// layout组件加载，初始化国际化语言.
-const result = location.pathname.match(/[a-zA-Z]*-[A-Z]*/)
-const langList = ['zh-CN', 'en-US']
-
-// 避免短横线分隔 (kebab-case）形式的路由命名导致读取语言错误
-if (result && langList.includes(result[0])) {
-  localStorage.setItem('preferred_lang', result[0])
-} else {
-  localStorage.setItem('preferred_lang', navigator.language)
-}
+  // 避免短横线分隔 (kebab-case）形式的路由命名导致读取语言错误
+  if (result && langList.includes(result[0])) {
+    localStorage.setItem(LANG_KEY, result[0]);
+  } else {
+    localStorage.setItem(LANG_KEY, navigator.language);
+  }
+};
 
 // Remove `__VP_STATIC_START__`
 const removeVPStaticFlag = () => {
-  const contentChildNodes = document.querySelector('.content > div')?.childNodes
+  const contentChildNodes = document.querySelector('.content > div')?.childNodes;
 
   contentChildNodes?.forEach((item, index) => {
     if (
-      (index === 0 && item.textContent === '__VP_STATIC_START__')
-      || (index === contentChildNodes.length - 1 && item.textContent === '__VP_STATIC_END__')
+      (index === 0 && item.textContent === '__VP_STATIC_START__') ||
+      (index === contentChildNodes.length - 1 && item.textContent === '__VP_STATIC_END__')
     ) {
-      item.remove()
+      item.remove();
     }
-  })
+  });
+};
+
+const routePath = route.path;
+if (routePath.startsWith('/en-US')) {
+  const path = routePath.split('/en-US');
+  router.go(path[1]);
 }
 
 onMounted(() => {
-  removeVPStaticFlag()
-})
+  initLanguageConfig();
+  removeVPStaticFlag();
+});
 
 onUpdated(() => {
-  removeVPStaticFlag()
-})
+  removeVPStaticFlag();
+});
 
 function unique(arr) {
   let map = new Map();
   let array = new Array();
   for (let i = 0; i < arr.length; i++) {
-    if(map.has(arr[i].homepage)) {
-      map.set(arr[i].homepage, true); 
-    } else { 
+    if (map.has(arr[i].homepage)) {
+      map.set(arr[i].homepage, true);
+    } else {
       map.set(arr[i].homepage, false);
       array.push(arr[i]);
     }
-  } 
+  }
   return array;
 }
 
 const contributors = computed(() => {
   return unique(Object.values(CONTRIBUTORS_MAP).flat());
-})
+});
 </script>
 
 <template>
-  <div class="theme" :class="pageClasses">
-    <NavBar v-if="showNavbar" @toggle="toggleSidebar">
-      <template #search>
-        <slot name="navbar-search">
-          <AlgoliaSearchBox
-            v-if="theme.algolia"
-            :options="theme.algolia"
-            :multilang="isMultiLang"
-            :key="site.lang"
-          />
-        </slot>
-      </template>
-    </NavBar>
+  <div :class="homeContainerClass">
+    <div class="content-container">
+      <div class="theme" :class="pageClasses">
+        <NavBar v-if="showNavbar" @toggle="toggleSidebar">
+          <template #search>
+            <slot name="navbar-search"> </slot>
+          </template>
+        </NavBar>
 
-    <SideBar :open="openSideBar">
-      <template #sidebar-top>
-        <slot name="sidebar-top" />
-      </template>
-      <template #sidebar-bottom>
-        <slot name="sidebar-bottom" />
-      </template>
-    </SideBar>
-    <!-- TODO: make this button accessible -->
-    <div class="sidebar-mask" @click="toggleSidebar(false)" />
+        <SideBar :open="openSideBar">
+          <template #sidebar-top>
+            <slot name="sidebar-top" />
+            <AlgoliaSearchBox v-if="theme.algolia" :options="theme.algolia" :multilang="isMultiLang" :key="site.lang" />
+          </template>
+          <template #sidebar-bottom>
+            <slot name="sidebar-bottom" />
+          </template>
+        </SideBar>
+        <!-- TODO: make this button accessible -->
+        <div class="sidebar-mask" @click="toggleSidebar(false)" />
 
-    <Content v-if="isCustomLayout" />
+        <Content v-if="isCustomLayout" />
 
-    <Home v-else-if="enableHome">
-      <template #hero>
-        <slot name="home-hero" />
-      </template>
-      <template #features>
-        <slot name="home-features" />
-      </template>
-      <template #footer>
-        <slot name="home-footer" />
-      </template>
-    </Home>
+        <Home v-else-if="enableHome">
+          <template #hero>
+            <slot name="home-hero" />
+          </template>
+          <template #features>
+            <slot name="home-features" />
+          </template>
+          <template #footer>
+            <slot name="home-footer" />
+          </template>
+        </Home>
 
-    <Page v-else>
-      <template #top>
-        <slot name="page-top-ads">
-          <div id="ads-container" v-if="theme.carbonAds && theme.carbonAds.carbon">
-            <CarbonAds
-              :key="'carbon' + page.relativePath"
-              :code="theme.carbonAds.carbon"
-              :placement="theme.carbonAds.placement"
-            />
-          </div>
-        </slot>
-        <slot name="page-top" />
-      </template>
-      <template #bottom>
-        <slot name="page-bottom" />
-        <slot name="page-bottom-ads">
-          <BuySellAds
-            v-if="theme.carbonAds && theme.carbonAds.custom"
-            :key="'custom' + page.relativePath"
-            :code="theme.carbonAds.custom"
-            :placement="theme.carbonAds.placement"
-          />
-        </slot>
-      </template>
-    </Page>
-  </div>
+        <Page v-else>
+          <template #top>
+            <slot name="page-top-ads">
+              <div id="ads-container" v-if="theme.carbonAds && theme.carbonAds.carbon">
+                <CarbonAds :key="'carbon' + page.relativePath" :code="theme.carbonAds.carbon" :placement="theme.carbonAds.placement" />
+              </div>
+            </slot>
+            <slot name="page-top" />
+          </template>
+          <template #bottom>
+            <slot name="page-bottom" />
+            <slot name="page-bottom-ads">
+              <BuySellAds
+                v-if="theme.carbonAds && theme.carbonAds.custom"
+                :key="'custom' + page.relativePath"
+                :code="theme.carbonAds.custom"
+                :placement="theme.carbonAds.placement"
+              />
+            </slot>
+          </template>
+        </Page>
+      </div>
 
-  <div class="container-contributors" v-if="enableHome">
-    <div class="contributors-inner">
-      <h2>✨贡献者✨</h2>
-      <PageContributor
-        v-if="contributors && contributors.length > 0"
-        :contributors="contributors"
-        :spacing="20"
-        :avatarSize="48"
-      />
-      <a href="/contributing/"><Button class="btn-become-contributor" variant="solid" color="primary">成为贡献者</Button></a>
+      <div class="container-contributors" v-if="enableHome">
+        <div class="contributors-inner">
+          <h2>✨贡献者✨</h2>
+          <PageContributor v-if="contributors && contributors.length > 0" :contributors="contributors" :spacing="20" :avatarSize="48" />
+          <a href="/contributing/"><Button class="btn-become-contributor" variant="solid" color="primary">成为贡献者</Button></a>
+        </div>
+      </div>
     </div>
+
+    <DevuiFooter class="footer" v-if="enableHome" />
+    <Debug v-if="false" />
   </div>
-
-  <HomeFooter />
-
-  <Debug v-if="false" />
 </template>
 
 <style lang="scss">
@@ -250,15 +249,17 @@ const contributors = computed(() => {
 // iPad/PC
 .container-contributors {
   padding: 2rem 0;
-  background: var(--devui-global-bg, #f3f6f8);
+  margin-bottom: 40px;
 
   .contributors-inner {
-    max-width: 564px;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    box-shadow: 0 8px 32px rgba(150, 180, 255, 0.16);
 
     h2 {
       margin-top: 1rem;
@@ -272,18 +273,36 @@ const contributors = computed(() => {
       max-width: unset;
     }
 
+    a:hover {
+      text-decoration: none;
+    }
+
     .btn-become-contributor {
       margin-top: 1rem;
     }
 
     .page-contributor {
       padding: 0 20px;
-
-      & > a:nth-child(8n) > span {
-        margin: 0 !important;
-      }
     }
   }
+}
+
+.home-page-bg {
+  background-image: url('../../assets/banner-bg.png');
+  background-repeat: no-repeat;
+  background-size: 100% 50%;
+  margin-top: 50px;
+  background-color: var(--devui-global-bg-normal);
+}
+
+body[ui-theme='galaxy-theme'] {
+  .home-page-bg {
+    background-image: url('../../assets/banner-bg-dark.png');
+  }
+}
+
+.content-container {
+  min-height: calc(100vh - 214px);
 }
 
 // iPhone 6/7/8 Plus(414) Nexus 5X/6/6P(412)
@@ -297,7 +316,8 @@ const contributors = computed(() => {
       & > a > span {
         margin: 0 12px 8px 0 !important;
 
-        & > img, & svg {
+        & > img,
+        & svg {
           width: 40px !important;
           height: 40px !important;
         }
@@ -342,5 +362,9 @@ const contributors = computed(() => {
       }
     }
   }
+}
+
+.footer {
+  max-width: 1200px !important;
 }
 </style>

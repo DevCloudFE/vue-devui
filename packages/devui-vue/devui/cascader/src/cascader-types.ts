@@ -14,10 +14,10 @@ export interface CascaderItem {
   _loading?: boolean;
   icon?: string;
   // 用户可以传入自定义属性，并在dropDownItemTemplate中使用
-  [prop: string]: any;
+  [prop: string]: unknown;
 }
-
-type CascaderModelValue = (number | string)[];
+export type CascaderModelValue = (string | number)[];
+export type InputSize = 'sm' | 'md' | 'lg';
 export type CascaderValueType = CascaderModelValue | [CascaderModelValue];
 export const cascaderProps = {
   /**
@@ -36,7 +36,7 @@ export const cascaderProps = {
    * @default 200
    */
   width: {
-    type: Number || String,
+    type: [Number, String],
     default: 200,
   },
   /**
@@ -45,7 +45,7 @@ export const cascaderProps = {
    * @default 200
    */
   dropdownWidth: {
-    type: Number || String,
+    type: [Number, String],
     default: 200,
   },
   /**
@@ -121,8 +121,15 @@ export const cascaderProps = {
     default: 300,
   },
   beforeFilter: {
-    type: Function as PropType<(value: string) => boolean | Promise<any>>,
+    type: Function as PropType<(value: string) => boolean | Promise<unknown>>,
     default: () => true,
+  },
+  size: {
+    type: String as PropType<InputSize>,
+  },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
   },
 } as const;
 
@@ -132,7 +139,6 @@ export interface PopupTypes {
   menuShow: Ref<boolean>;
   menuOpenClass: Ref<string>;
   stopDefault: Ref<boolean>;
-  devuiCascader: Ref<HTMLElement | undefined>;
   openPopup: (e?: MouseEvent) => void;
   updateStopDefaultType: () => void;
 }
@@ -185,7 +191,7 @@ export const cascaderulProps = {
    * @default 200
    */
   dropdownWidth: {
-    type: Number || String,
+    type: [Number, String],
     default: 200,
   },
   /**
@@ -239,18 +245,24 @@ export interface UpdateStatusCallback {
 }
 
 export interface suggestionListType {
-  values: (string | number)[];
+  values: CascaderModelValue;
   labels: string[];
   labelsString?: string;
   disabled?: boolean;
 }
 
+export type UseFilterFn = {
+  handleInput: (val: string) => void;
+  suggestionsList: Ref<suggestionListType[]>;
+  isSearching: Ref<boolean>;
+  chooseSuggestion: (item: suggestionListType) => void;
+};
+
 export type UseCascaderFn = {
   origin: Ref<HTMLElement | undefined>;
-  overlay: Ref<HTMLElement | undefined>;
+  overlayRef: Ref<HTMLElement | undefined>;
   menuShow: Ref<boolean>;
   cascaderItemNeedProps: CascaderItemNeedType;
-  devuiCascader: Ref<HTMLElement | undefined>;
   rootClasses: ComputedRef<string>;
   menuOpenClass: Ref<string>;
   inputValue: Ref<string>;
@@ -267,5 +279,7 @@ export type UseCascaderFn = {
   multiple: Ref<boolean>;
   suggestionsList: Ref<suggestionListType[]>;
   isSearching: Ref<boolean>;
-  chooseSuggestion: (item: CascaderItem) => void;
+  chooseSuggestion: (item: suggestionListType) => void;
+  onFocus: (e: FocusEvent) => void;
+  onBlur: (e: FocusEvent) => void;
 };

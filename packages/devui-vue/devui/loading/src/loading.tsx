@@ -4,7 +4,7 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 import './loading.scss';
 
 export default defineComponent({
-  name: 'DLoading',
+  name: 'Loading',
   inheritAttrs: false,
   props: loadingProps,
   setup(props: LoadingProps) {

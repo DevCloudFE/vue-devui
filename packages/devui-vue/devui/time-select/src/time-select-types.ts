@@ -32,11 +32,10 @@ export const timeSelectProps = {
   },
   placeholder: {
     type: String,
-    default: '请选择时间',
+    default: '',
   },
   size: {
-    type: String as PropType<Size>,
-    default: 'md',
+    type: String as PropType<Size>
   },
   'onUpdate:modelValue': {
     type: Function as PropType<(v: boolean) => void>,

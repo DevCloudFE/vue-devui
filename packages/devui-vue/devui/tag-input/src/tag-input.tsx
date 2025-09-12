@@ -1,26 +1,46 @@
-import { defineComponent, ref, computed, nextTick, watch, SetupContext } from 'vue';
-import removeBtnSvg from './icon-remove';
+import {
+  defineComponent,
+  ref,
+  computed,
+  nextTick,
+  watch,
+  SetupContext,
+  getCurrentInstance,
+  Teleport,
+  Transition,
+  onMounted,
+  onUnmounted,
+} from 'vue';
+import { createI18nTranslate } from '../../locale/create';
+import { FlexibleOverlay } from '../../overlay/src/flexible-overlay';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+import removeBtnSvg from './components/icon-remove';
 import { Suggestion, TagInputProps, tagInputProps } from './tag-input-types';
 import './tag-input.scss';
-
-const KEYS_MAP = {
-  tab: 'Tab',
-  down: 'ArrowDown',
-  up: 'ArrowUp',
-  enter: 'Enter',
-  space: ' ',
-} as const;
+import { useInputKeydown } from './composables/use-input-keydown';
+import { onClickOutside } from '@vueuse/core';
 
 export default defineComponent({
   name: 'DTagInput',
   props: tagInputProps,
-  emits: ['update:tags', 'update:suggestionList', 'valueChange'],
+  emits: ['update:modelValue', 'update:suggestionList', 'change'],
   setup(props: TagInputProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DTagInput', app);
+
+    const ns = useNamespace('tag-input');
+
+    const selectedTags = ref<Array<Suggestion>>([]);
+    watch(() => props.modelValue, () => {
+      selectedTags.value = props.modelValue;
+    }, { immediate: true, deep: true });
+
     const add = (arr: Suggestion[], target: Suggestion) => {
       const res = Object.assign({}, target);
       delete res.__index;
       return arr.concat(res);
     };
+
     const remove = (arr: Suggestion[], targetIdx: number) => {
       const newArr = arr.slice();
       newArr.splice(targetIdx, 1);
@@ -28,232 +48,222 @@ export default defineComponent({
     };
 
     const tagInputVal = ref('');
-    const onInput = ($event: InputEvent) => {
+    const onInput = ($event: Event) => {
       const v = ($event.target as HTMLInputElement).value || '';
       tagInputVal.value = v.trim();
     };
+
     const mergedSuggestions = computed<Suggestion[]>(() => {
-      let suggestions = props.suggestionList.map((item, index: number) => {
+      const suggestions = props.suggestionList.map((item, index: number) => {
         return {
           __index: index,
-          ...item
+          ...item,
         };
       });
       if (tagInputVal.value === '') {
         return suggestions;
       }
-      return suggestions = props.caseSensitivity
-        ? suggestions.filter(item => item[props.displayProperty].indexOf(tagInputVal.value) !== -1)
-        : suggestions.filter(item => item[props.displayProperty].toLowerCase().indexOf(tagInputVal.value.toLowerCase()) !== -1);
+
+      return suggestions.filter((item: Suggestion) => {
+        const val = item[props.displayProperty] as string;
+
+        // 大小写敏感
+        if (props.caseSensitivity) {
+          return val.indexOf(tagInputVal.value) !== -1;
+        } else {
+          return val.toLowerCase().indexOf(tagInputVal.value.toLowerCase()) !== -1;
+        }
+      });
     });
 
     const selectIndex = ref(0);
     watch(mergedSuggestions, () => {
       selectIndex.value = 0;
     });
+
     const onSelectIndexChange = (isUp = false) => {
       if (isUp) {
-        selectIndex.value < mergedSuggestions.value.length - 1 ? selectIndex.value++ : selectIndex.value = 0;
+        selectIndex.value < mergedSuggestions.value.length - 1 ? selectIndex.value++ : (selectIndex.value = 0);
         return;
       }
-      selectIndex.value > 0 ? selectIndex.value-- : selectIndex.value = mergedSuggestions.value.length - 1;
+      selectIndex.value > 0 ? selectIndex.value-- : (selectIndex.value = mergedSuggestions.value.length - 1);
     };
 
-    const tagInputRef = ref<HTMLInputElement | null>(null);
+    const tagInputRef = ref();
     const isInputBoxFocus = ref(false);
     const onInputFocus = () => {
       isInputBoxFocus.value = true;
     };
-    const onInputBlur = () => {
-      isInputBoxFocus.value = false;
-    };
+
     const handleEnter = () => {
-      let res = { [props.displayProperty]: tagInputVal.value };
-      if (tagInputVal.value === '' && mergedSuggestions.value.length === 0) {return false;}
-      if (props.tags.findIndex((item) => item[props.displayProperty] === tagInputVal.value) > -1) {
+      let res: Suggestion = { [props.displayProperty]: tagInputVal.value };
+      if (tagInputVal.value === '' && mergedSuggestions.value.length === 0) {
+        return false;
+      }
+      if (selectedTags.value.findIndex((item) => item[props.displayProperty] === tagInputVal.value) > -1) {
         tagInputVal.value = '';
         return false;
       }
-      if (mergedSuggestions.value.length === 0 &&
-        (tagInputVal.value.length < props.minLength || tagInputVal.value.length > props.maxLength)) {
+      if (
+        mergedSuggestions.value.length === 0 &&
+        (tagInputVal.value.length < props.minLength || tagInputVal.value.length > props.maxLength)
+      ) {
         tagInputVal.value = '';
         return false;
       }
       if (mergedSuggestions.value.length) {
         const target = mergedSuggestions.value[selectIndex.value];
         res = target;
-        ctx.emit('update:suggestionList', remove(props.suggestionList, target.__index));
+        ctx.emit('update:suggestionList', remove(props.suggestionList, target.__index as number));
       }
 
-      const newTags = add(props.tags, res);
-      ctx.emit('valueChange', props.tags, newTags);
-      ctx.emit('update:tags', newTags);
+      const newTags = add(selectedTags.value, res);
+      ctx.emit('change', selectedTags.value, newTags);
+      ctx.emit('update:modelValue', newTags);
       mergedSuggestions.value.length === 0 && (tagInputVal.value = '');
     };
-    const onInputKeydown = ($event: KeyboardEvent) => {
-      switch ($event.key) {
-      case KEYS_MAP.tab:
-      case KEYS_MAP.enter:
-      case KEYS_MAP.space:
-        if (!props.isAddBySpace && KEYS_MAP.space) {return;}
-        handleEnter();
-        break;
-      case KEYS_MAP.down:
-        onSelectIndexChange(true);
-        break;
-      case KEYS_MAP.up:
-        onSelectIndexChange();
-        break;
-      default:
-        break;
-      }
-    };
 
-    const removeTag = ($event: MouseEvent, tagIdx: number) => {
+    const { onInputKeydown } = useInputKeydown(props, handleEnter, onSelectIndexChange);
+
+    const removeTag = ($event: Event, tagIdx: number) => {
       $event.preventDefault();
-      ctx.emit('update:suggestionList', add(props.suggestionList, props.tags[tagIdx]));
-      const newTags = remove(props.tags, tagIdx);
-      ctx.emit('valueChange', props.tags, newTags);
-      ctx.emit('update:tags', newTags);
+      const newTags = remove(selectedTags.value, tagIdx);
+      ctx.emit('change', selectedTags.value, newTags);
+      ctx.emit('update:modelValue', newTags);
+      ctx.emit('update:suggestionList', add(props.suggestionList, selectedTags.value[tagIdx]));
+
       nextTick(() => {
         tagInputRef.value?.focus();
+        isInputBoxFocus.value = true;
       });
     };
-    const onSuggestionItemClick = ($event: MouseEvent, itemIndex: number) => {
+
+    const onSuggestionItemClick = ($event: Event, itemIndex: number) => {
       $event.preventDefault();
       const target = mergedSuggestions.value[itemIndex];
-      const newTags = add(props.tags, target);
-      const newSuggestions = remove(props.suggestionList, target.__index);
-      ctx.emit('valueChange', props.tags, newTags);
-      ctx.emit('update:tags', newTags);
+      const newTags = add(selectedTags.value, target);
+      const newSuggestions = remove(props.suggestionList, target.__index as number);
+      ctx.emit('change', selectedTags.value, newTags);
+      ctx.emit('update:modelValue', newTags);
       ctx.emit('update:suggestionList', newSuggestions);
     };
 
-    const isTagsLimit = computed(() => props.maxTags <= props.tags.length);
+    const isTagsLimit = computed(() => props.maxTags <= selectedTags.value.length);
     const isShowSuggestion = computed(() => {
       return !props.disabled && !isTagsLimit.value && isInputBoxFocus.value;
     });
 
-    return {
-      tagInputRef,
-      tagInputVal,
-      isInputBoxFocus,
-      onInput,
-      onInputFocus,
-      onInputBlur,
-      removeTag,
-      onSuggestionItemClick,
-      onInputKeydown,
-      isShowSuggestion,
-      mergedSuggestions,
-      selectIndex,
-      isTagsLimit
+    // 已选择 tags 列表
+    const chosenTags = () => {
+      return <ul class={ns.e('tags')} title={props.disabled ? props.disabledText : ''}>
+        {selectedTags.value.map((tag, tagIdx) => {
+          return (
+            <li class={ns.e('tags__item')}>
+              <span>{tag[props.displayProperty]}</span>
+              {!props.disabled && (
+                <a class="remove-button" onClick={($event: Event) => removeTag($event, tagIdx)}>
+                  {removeBtnSvg}
+                </a>
+              )}
+            </li>
+          );
+        })}
+      </ul>;
     };
-  },
-  render() {
-    const {
-      tagInputVal,
-      isInputBoxFocus,
-      disabled,
-      disabledText,
-      isTagsLimit,
-      maxTagsText,
-      displayProperty,
-      tags,
-      onInputKeydown,
-      onInputFocus,
-      onInputBlur,
-      onInput,
-      onSuggestionItemClick,
-      removeTag,
-      placeholder,
-      spellcheck,
-      isShowSuggestion,
-      noData,
-      mergedSuggestions,
-      selectIndex,
-      maxTags
-    } = this;
 
-    const inputBoxCls = {
-      'devui-tags': true,
-      'devui-form-control': true,
-      'devui-dropdown-origin': true,
-      'devui-dropdown-origin-open': isInputBoxFocus,
-      'devui-disabled': disabled,
+
+    const origin = ref();
+    // 获取容器宽度
+    const dropdownWidth = ref('0');
+    const updateDropdownWidth = () => {
+      dropdownWidth.value = origin?.value?.clientWidth ? origin.value.clientWidth + 'px' : '100%';
     };
-    const tagInputCls = {
-      input: true,
-      'devui-input': true,
-      'invalid-tag': false
-    };
-    const tagInputStyle = [
-      `display:${disabled ? 'none' : 'block'};`
-    ];
 
-    const noDataTpl = <li class="devui-suggestion-item devui-disabled">
-      {noData}
-    </li>;
+    onMounted(() => {
+      updateDropdownWidth();
+      window.addEventListener('resize', updateDropdownWidth);
+    });
 
-    return (
-      <div class="devui-tags-host" tabindex="-1">
-        <div class={inputBoxCls} style={['box-shadow: none;']}>
-          <ul class="devui-tag-list" title={disabled ? disabledText : ''}>
-            {
-              tags.map((tag, tagIdx) => {
-                return (
-                  <li class="devui-tag-item">
-                    <span>{tag[displayProperty]}</span>
-                    {
-                      !disabled &&
-                      <a class="remove-button" onMousedown={($event) => removeTag($event, tagIdx)}>
-                        {removeBtnSvg}
-                      </a>
-                    }
-                  </li>
-                );
-              })
-            }
-          </ul>
-          <input
-            type="text"
-            ref="tagInputRef"
-            value={tagInputVal}
-            class={tagInputCls}
-            style={tagInputStyle}
-            onKeydown={onInputKeydown}
-            onFocus={onInputFocus}
-            onBlur={onInputBlur}
-            onInput={($event: InputEvent) => onInput($event)}
-            placeholder={isTagsLimit ? `${maxTagsText} ${maxTags}` : placeholder}
-            spellcheck={spellcheck}
-            disabled={isTagsLimit}
-          />
-        </div>
-        {
-          !isShowSuggestion ? '' : (
-            <div class="devui-tags-autocomplete devui-dropdown-menu">
-              <ul class="devui-suggestion-list">
-                {
-                  mergedSuggestions.length === 0 ?
-                    noDataTpl :
-                    mergedSuggestions.map((item: Suggestion, index: number) => {
-                      return (
-                        <li
-                          class={{ 'devui-suggestion-item': true, selected: index === selectIndex }}
-                          onMousedown={($event) => {
-                            onSuggestionItemClick($event, index);
-                          }}>
-                          {item[displayProperty]}
-                        </li>
-                      );
-                    })
-                }
-              </ul>
-            </div>
-          )
-        }
-      </div>
+    onUnmounted(() => {
+      window.removeEventListener('resize', updateDropdownWidth);
+    });
+
+    const dropdownRef = ref();
+    // 点击外部关闭suggestionList
+    onClickOutside(
+      dropdownRef,
+      () => {
+        isInputBoxFocus.value = false;
+      },
+      { ignore: [origin] },
     );
-  }
+
+    // 选择建议列表
+    const suggestionList = () => {
+      const showNoData = mergedSuggestions.value.length === 0;
+      const suggestionListItem = mergedSuggestions.value.map((item: Suggestion, index: number) => {
+        return (
+          <li
+            class={{ [ns.e('suggestion-list__item')]: true, selected: index === selectIndex.value }}
+            onClick={($event: Event) => {
+              onSuggestionItemClick($event, index);
+            }}
+          >
+            {item[props.displayProperty]}
+          </li>
+        );
+      });
+
+      const noDataTplCls = `${ns.e('suggestion-list__item')} ${ns.e('suggestion-list__no-data')}`;
+      const noDataTpl = <li class={noDataTplCls}>{props.noData}</li>;
+
+      return <Teleport to="body">
+        <Transition name="fade">
+          <FlexibleOverlay
+            ref={dropdownRef}
+            origin={origin.value}
+            v-model={isShowSuggestion.value}
+            style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}
+          >
+            <ul class={ns.e('suggestion-list')} style={{ width: `${dropdownWidth.value}` }}>
+              {showNoData ? noDataTpl : suggestionListItem}
+            </ul>
+          </FlexibleOverlay>
+        </Transition>
+      </Teleport>;
+    };
+
+    const tagsWrapperCls = computed(() => {
+      return {
+        [ns.e('tags__wrapper')]: true,
+        'is-disabled': props.disabled,
+      };
+    });
+
+    const inputCls = computed(() => {
+      return {
+        [ns.e('input')]: true,
+        [ns.e('input_hide')]: props.disabled,
+      };
+    });
+
+    return () => (<div class={ns.b()} ref={origin}>
+      <div class={tagsWrapperCls.value}>
+        {chosenTags()}
+        <input
+          type="text"
+          ref="tagInputRef"
+          value={tagInputVal.value}
+          class={inputCls.value}
+          onKeydown={onInputKeydown}
+          onFocus={onInputFocus}
+          onInput={onInput}
+          placeholder={isTagsLimit.value ? `${props.maxTagsText || t('maxTagsText')} ${props.maxTags}` : props.placeholder}
+          spellcheck={props.spellcheck}
+          disabled={isTagsLimit.value}
+        />
+      </div>
+      {suggestionList()}
+    </div>);
+  },
 });

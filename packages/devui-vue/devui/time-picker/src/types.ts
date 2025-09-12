@@ -32,9 +32,8 @@ export type sizeType = 'lg' | 'md' | 'sm';
 export type UseTimerPickerFn = {
   showPopup: Ref<boolean>;
   trueTimeValue: ComputedRef<string>;
-  devuiTimePicker: Ref<HTMLElement | undefined>;
   timePickerValue: Ref<string>;
-  inputDom: Ref<HTMLElement | undefined>;
+  inputDom: Ref;
   overlayRef: Ref<HTMLElement | undefined>;
   timePopupDom: Ref<HTMLElement | undefined>;
   showClearIcon: Ref<boolean>;
@@ -52,8 +51,23 @@ export type UsePopupLineFn = {
   activeHour: Ref<string>;
   activeMinute: Ref<string>;
   activeSecond: Ref<string>;
-  activeTimeFun: (e: any, item: ArrType, index: number) => void;
+  activeTimeFun: (e: MouseEvent, item: ArrType, index: number) => void;
   resetTimeValue: (time: string) => void;
   getNewTime: () => void;
   resetScrollTop: () => void;
+};
+
+export type UseTimeScroll = {
+  scrollThumbDom: Ref<HTMLElement | null>;
+  scrollTrackDom: Ref<HTMLElement | null>;
+  scrollContentDom: Ref<HTMLElement | null>;
+  scrollBoxDom: Ref<HTMLElement | null>;
+  isDown: Ref<boolean>;
+  getScrollHeight: () => void;
+  setVirtualScroll: () => void;
+  clickTrackFun: (e: MouseEvent) => void;
+  mouseDownThum: () => void;
+  mouseOutThum: (e: MouseEvent) => void;
+  thumbMouseMove: (e: MouseEvent & { path?: string }) => void;
+  getScrollWidth: () => number;
 };

@@ -88,7 +88,6 @@ export default defineComponent({
 ```vue
 <template>
   <d-rate v-model="valueHalf" :allow-half="true" @change="change" />
-  {{ valueHalf }}
 </template>
 <script>
 import { ref, defineComponent } from 'vue';

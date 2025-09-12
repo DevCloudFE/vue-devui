@@ -1,9 +1,10 @@
-import type { ComputedRef, ExtractPropTypes, PropType ,InjectionKey, Ref } from 'vue';
+import type { ComputedRef, ExtractPropTypes, PropType, InjectionKey, Ref } from 'vue';
 
 export type IButtonVariant = 'solid' | 'outline' | 'text';
 export type IButtonColor = 'secondary' | 'primary' | 'danger';
-export type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
+export type IButtonSize = 'lg' | 'md' | 'sm';
 export type IButtonShape = 'round' | 'circle';
+export type IButtonType = 'button' | 'submit' | 'reset';
 
 export const buttonProps = {
   variant: {
@@ -31,14 +32,18 @@ export const buttonProps = {
   },
   shape: {
     type: String as PropType<IButtonShape>,
-  }
+  },
+  nativeType: {
+    type: String as PropType<IButtonType>,
+    default: 'button',
+  },
 } as const;
 
 export const buttonGroupProps = {
   size: {
     type: String as PropType<IButtonSize>,
     default: 'md',
-  }
+  },
 } as const;
 
 export type ButtonProps = ExtractPropTypes<typeof buttonProps>;
@@ -55,6 +60,4 @@ interface ButtonGroupInjection {
   size: Ref<IButtonSize>;
 }
 
-export const buttonGroupInjectionKey: InjectionKey<ButtonGroupInjection> =
-  Symbol('d-button-group');
-
+export const buttonGroupInjectionKey: InjectionKey<ButtonGroupInjection> = Symbol('d-button-group');

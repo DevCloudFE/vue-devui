@@ -1,4 +1,4 @@
-import { PropType } from 'vue';
+import { PropType, ExtractPropTypes } from 'vue';
 
 export type ArrowTrigger = 'hover' | 'never' | 'always';
 export type DotTrigger = 'click' | 'hover';
@@ -7,7 +7,7 @@ export type DotPosition = 'bottom' | 'top';
 export const carouselProps = {
   arrowTrigger: {
     type: String as PropType<ArrowTrigger>,
-    default: 'hover'
+    default: 'hover',
   },
   autoplay: {
     type: Boolean,
@@ -15,7 +15,7 @@ export const carouselProps = {
   },
   autoplaySpeed: {
     type: Number,
-    default: 3000
+    default: 3000,
   },
   height: {
     type: String,
@@ -23,7 +23,7 @@ export const carouselProps = {
   },
   showDots: {
     type: Boolean,
-    default: true
+    default: true,
   },
   dotTrigger: {
     type: String as PropType<DotTrigger>,
@@ -35,9 +35,12 @@ export const carouselProps = {
   },
   activeIndex: {
     type: Number,
-    default: 0
+    default: 0,
   },
-  activeIndexChange: {
-    type: Function as unknown as () => ((index: number) => void)
+  transitionSpeed: {
+    type: Number,
+    default: 500,
   },
 } as const;
+
+export type CarouselProps = ExtractPropTypes<typeof carouselProps>;

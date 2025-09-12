@@ -3,12 +3,11 @@ import { reactive, ref, nextTick } from 'vue';
 import DCheckboxGroup from '../src/checkbox-group';
 import DCheckbox from '../src/checkbox';
 import DCheckboxButton from '../src/checkbox-button';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const ns = useNamespace('checkbox', true);
 const baseClass = ns.b();
 const columnMarginClass = ns.e('column-margin');
-const listLineClass = ns.m('list-inline');
 const wrapClass = ns.e('wrap');
 const borderClass = ns.m('bordered');
 const sizeLgClass = ns.m('lg');
@@ -49,6 +48,8 @@ describe('d-checkbox-group', () => {
     await nextTick();
     expect(box1.classes()).toContain('active');
     expect(box2.classes()).toContain('unchecked');
+
+    wrapper.unmount();
   });
 
   it('checkbox-group disabled work', async () => {
@@ -87,6 +88,8 @@ describe('d-checkbox-group', () => {
     expect(list.value).toStrictEqual(['b', 'a']);
     expect(onChange).toBeCalledTimes(1);
     expect(wrapper.findAll(baseClass).some((el) => el.classes().includes('disabled'))).toBe(false);
+
+    wrapper.unmount();
   });
 
   it('checkbox-group direction work', async () => {
@@ -112,11 +115,13 @@ describe('d-checkbox-group', () => {
     });
 
     expect(wrapper.findAll(columnMarginClass).length).toBe(2);
-    expect(wrapper.find(listLineClass).exists()).toBe(false);
+    expect(wrapper.find('.is-column').exists()).toBe(true);
 
     direction.value = 'row';
     await nextTick();
-    expect(wrapper.find(listLineClass).exists()).toBe(true);
+    expect(wrapper.find('.is-row').exists()).toBe(true);
+
+    wrapper.unmount();
   });
 
   it('checkbox-group itemWidth work', () => {
@@ -142,6 +147,8 @@ describe('d-checkbox-group', () => {
     });
 
     expect(wrapper.findAll(wrapClass).length).toBe(2);
+
+    wrapper.unmount();
   });
 
   it('checkbox-group options work', () => {
@@ -175,6 +182,8 @@ describe('d-checkbox-group', () => {
     expect(boxList.length).toBe(2);
     expect(boxList[0].classes()).toContain('unchecked');
     expect(boxList[1].classes()).toContain('active');
+
+    wrapper.unmount();
   });
 
   it('checkbox-group beforeChange work', async () => {
@@ -214,6 +223,8 @@ describe('d-checkbox-group', () => {
     expect(beforeChange).toHaveBeenCalledTimes(2);
     expect(onChange).toBeCalledTimes(1);
     expect(list.value).toStrictEqual(['b', 'a']);
+
+    wrapper.unmount();
   });
 
   it('checkbox-group max work', async () => {
@@ -251,6 +262,8 @@ describe('d-checkbox-group', () => {
     await label2.trigger('click');
     expect(list.value).toStrictEqual(['c']);
     expect(wrapper.findAll(baseClass).filter((el) => el.classes().includes('disabled'))?.length).toBe(0);
+
+    wrapper.unmount();
   });
 
   it('checkbox-group border size work', () => {
@@ -275,6 +288,8 @@ describe('d-checkbox-group', () => {
 
     expect(wrapper.find(borderClass).exists()).toBe(true);
     expect(wrapper.find(sizeLgClass).exists()).toBe(true);
+
+    wrapper.unmount();
   });
 
   it('checkbox-group checkbox-button', async () => {
@@ -303,6 +318,8 @@ describe('d-checkbox-group', () => {
     expect(list.value).toStrictEqual(['b', 'a']);
     await label2.trigger('click');
     expect(list.value).toStrictEqual(['a']);
+
+    wrapper.unmount();
   });
 
   it('checkbox-button color text-color', async () => {
@@ -328,5 +345,7 @@ describe('d-checkbox-group', () => {
     await nextTick();
     const content = wrapper.findAll(contentClass);
     expect(content[0].attributes().style).toBe('border-color: red; background-color: red; color: rgb(204, 204, 204);');
+
+    wrapper.unmount();
   });
 });

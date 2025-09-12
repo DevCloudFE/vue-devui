@@ -18,20 +18,24 @@ export interface GutterScreenSizes {
 export const rowProps = {
   align: {
     type: String as PropType<Align>,
-    default: 'top'
+    default: 'top',
   },
   gutter: {
     type: [Number, Object, Array] as PropType<number | GutterScreenSizes | number[]>,
-    default: 0
+    default: 0,
   },
   justify: {
     type: String as PropType<Justify>,
-    default: 'start'
+    default: 'start',
   },
   wrap: {
     type: Boolean as PropType<boolean>,
-    default: false
-  }
+    default: false,
+  },
+  noOuter: {
+    type: Boolean,
+    default: true,
+  },
 } as const;
 
 export type RowProps = ExtractPropTypes<typeof rowProps>;
@@ -47,7 +51,7 @@ export const colPropsBaseClass = {
   offset: numberProp,
   pull: numberProp,
   push: numberProp,
-  span: numberProp
+  span: numberProp,
 } as const;
 
 export type ColPropsBaseClass = ExtractPropTypes<typeof colPropsBaseClass>;
@@ -67,6 +71,6 @@ export const screenSizes = {
 
 export type ScreenSizes = ExtractPropTypes<typeof screenSizes>;
 
-export const colProps = { ...colPropsBaseStyle, ...colPropsBaseClass, ...screenSizes};
+export const colProps = { ...colPropsBaseStyle, ...colPropsBaseClass, ...screenSizes };
 
 export type ColProps = ExtractPropTypes<typeof colProps>;

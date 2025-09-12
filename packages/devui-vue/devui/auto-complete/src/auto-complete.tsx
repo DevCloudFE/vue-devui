@@ -104,16 +104,30 @@ export default defineComponent({
       valueParser,
     });
     const origin = ref<HTMLElement>();
+    const currentPosition = ref('bottom');
 
     const prefixVisible = ctx.slots.prefix || props.prefix;
     const suffixVisible = ctx.slots.suffix || props.suffix || props.clearable;
 
     const showClearable = computed(() => props.clearable && !isDisabled.value);
+    const overlayStyles = computed(() => ({
+      transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
+      zIndex: 'var(--devui-z-index-dropdown, 1052)',
+    }));
+
+    const handlePositionChange = (pos: string) => {
+      currentPosition.value = pos.includes('top') || pos.includes('right-end') || pos.includes('left-end') ? 'top' : 'bottom';
+    };
 
     const renderBasicDropdown = () => {
       return (
-        <Transition name={showAnimation ? 'fade' : ''}>
-          <FlexibleOverlay origin={origin.value} position={position.value} v-model={visible.value}>
+        <Transition name={showAnimation ? ns.m(`fade-${currentPosition.value}`) : ''}>
+          <FlexibleOverlay
+            origin={origin.value}
+            position={position.value}
+            v-model={visible.value}
+            onPositionChange={handlePositionChange}
+            style={overlayStyles.value}>
             <div
               class={ns.e('menu')}
               style={{

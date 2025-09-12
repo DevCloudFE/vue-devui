@@ -1,4 +1,5 @@
-import { computed, inject, SetupContext, toRef, provide, watch } from 'vue';
+import { computed, inject, toRef, provide, watch } from 'vue';
+import type { SetupContext, Ref } from 'vue';
 import { FORM_TOKEN, FORM_ITEM_TOKEN } from '../../form';
 import {
   CheckboxProps,
@@ -34,8 +35,8 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
   const mergedColor = computed(() => {
     return checkboxGroupConf?.color.value ?? props.color;
   });
-  const itemWidth = checkboxGroupConf?.itemWidth.value;
-  const direction = checkboxGroupConf?.direction.value;
+  const itemWidth = checkboxGroupConf?.itemWidth;
+  const direction = checkboxGroupConf?.direction;
 
   const canChange = (checked: boolean, val: string | undefined) => {
     if (mergedDisabled.value) {
@@ -53,21 +54,24 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
     return Promise.resolve(true);
   };
   const toggle = () => {
-    const current = !isChecked.value;
+    const current = !mergedChecked.value;
     checkboxGroupConf?.toggleGroupVal(props.value);
     ctx.emit('update:checked', current);
     ctx.emit('update:modelValue', current);
     ctx.emit('change', current);
   };
   const handleClick = () => {
-    canChange(!isChecked.value, props.label).then((res) => res && toggle());
+    canChange(!mergedChecked.value, props.label).then((res) => res && toggle());
   };
-  const size = computed(() => formContext?.size || checkboxGroupConf?.size.value || props.size);
+
+  const size = computed(() => props.size || checkboxGroupConf?.size.value || formContext?.size || 'md');
+
   const border = computed(() => checkboxGroupConf?.border.value ?? props.border);
+
   watch(
     () => props.modelValue,
     () => {
-      formItemContext?.validate('change').catch((err) => console.warn(err));
+      formItemContext?.validate('change').catch(() => {});
     }
   );
   return {
@@ -84,9 +88,12 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
   };
 }
 
+type IModelValue = Ref<(string | number | { value: string })[]>;
+
 export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): UseCheckboxGroupFn {
+  const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
-  const valList = toRef(props, 'modelValue');
+  const valList = toRef(props, 'modelValue') as IModelValue;
 
   const defaultOpt = {
     checked: false,
@@ -95,12 +102,12 @@ export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): 
     showAnimation: true,
     disabled: false,
   };
-  const toggleGroupVal = (val: string | number) => {
+  const toggleGroupVal = (val: string | number | undefined) => {
     let index = -1;
     if (['string', 'number'].includes(typeof valList.value[0])) {
       index = valList.value.findIndex((item) => item === val);
     } else if (typeof valList.value[0] === 'object') {
-      index = valList.value.findIndex((item) => item.value === val);
+      index = (valList.value as { value: string }[]).findIndex((item) => item.value === val);
     }
 
     if (index === -1) {
@@ -120,20 +127,23 @@ export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): 
     ctx.emit('update:modelValue', valList.value);
     ctx.emit('change', valList.value);
   };
-  const isItemChecked = (itemVal: string | number) => {
+  const isItemChecked = (itemVal: string | number | undefined) => {
     if (['string', 'number'].includes(typeof valList.value[0])) {
-      return valList.value.includes(itemVal);
+      return valList.value.includes(itemVal as never);
     } else if (typeof valList.value[0] === 'object') {
-      return valList.value.some((item) => item.value === itemVal);
+      return (valList.value as { value: string }[]).some((item) => item.value === itemVal);
     }
   };
   watch(
     () => props.modelValue,
     () => {
-      formItemContext?.validate('change').catch((err) => console.warn(err));
+      formItemContext?.validate('change').catch(() => {});
     },
     { deep: true }
   );
+
+  // 组件 size 优先于表单 size
+  const checkboxGroupSize = computed(() => props.size || formContext?.size || 'md');
 
   provide(checkboxGroupInjectionKey, {
     disabled: toRef(props, 'disabled'),
@@ -145,7 +155,7 @@ export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): 
     toggleGroupVal,
     itemWidth: toRef(props, 'itemWidth'),
     direction: toRef(props, 'direction'),
-    size: toRef(props, 'size'),
+    size: checkboxGroupSize,
     border: toRef(props, 'border'),
     max: toRef(props, 'max'),
     modelValue: toRef(props, 'modelValue'),

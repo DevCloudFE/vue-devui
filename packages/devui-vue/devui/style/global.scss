@@ -1,0 +1,37 @@
+@import '@devui/theme/styles-var/devui-var.scss';
+
+.devui-scroll-overlay {
+	overflow: auto;
+
+	&::-webkit-scrollbar-thumb {
+		background-color: transparent;
+	}
+
+	&:hover {
+		&::-webkit-scrollbar-thumb {
+			background-color: $devui-line;
+		}
+
+		&::-webkit-scrollbar-thumb:hover {
+			background-color: $devui-placeholder;
+		}
+	}
+}
+
+@-moz-document url-prefix() {
+	body * {
+		scrollbar-width: thin;
+
+		.#{$devui-prefix}-data-grid__head-wrapper {
+			scrollbar-color: transparent transparent;
+		}
+
+		.devui-scroll-overlay {
+			scrollbar-color: transparent transparent;
+
+			&:hover {
+				scrollbar-color: $devui-line transparent;
+			}
+		}
+	}
+}

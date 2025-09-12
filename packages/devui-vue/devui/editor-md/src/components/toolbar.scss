@@ -1,0 +1,100 @@
+@import '../../../styles-var/devui-var.scss';
+
+.md-toolbar-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: 20px;
+
+  .md-toolbar-span {
+    width: 1px;
+    height: 22px;
+    margin-right: 12px;
+    background: $devui-dividing-line;
+  }
+}
+
+.md-toolbar-item {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+  cursor: pointer;
+
+  svg,
+  polygon,
+  path {
+    fill: $devui-icon-text;
+  }
+
+  &:hover {
+    background-color: $devui-list-item-hover-bg;
+
+    svg,
+    polygon,
+    path {
+      fill: $devui-brand;
+    }
+  }
+}
+
+.md-toolbar-tip-content {
+  display: inline-block;
+  padding: 4px 16px;
+}
+
+.dropdown-font-size {
+  padding: 0;
+  margin: 0;
+
+  li {
+    width: 80px;
+    padding: 4px 8px;
+    list-style: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $devui-list-item-hover-bg;
+    }
+  }
+}
+
+.dropdown-font-color {
+  display: inline-flex;
+  width: 352px;
+
+  .color-wrap {
+    width: 50%;
+    padding-left: 4px;
+
+    p {
+      line-height: 38px;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  .color-picker {
+    display: flex;
+    flex-wrap: wrap;
+    width: 172px;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: block;
+      width: 20px;
+      height: 20px;
+      margin: 0 2px 2px;
+      padding: 0;
+      list-style: none;
+      cursor: pointer;
+
+      &:hover {
+        border: 2px solid $devui-link-light-active;
+      }
+    }
+  }
+}

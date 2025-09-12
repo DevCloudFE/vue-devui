@@ -1,6 +1,8 @@
 import { mount } from '@vue/test-utils';
 import { Layout, Content, Header, Footer, Aside } from '..';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 
+const ns = useNamespace('layout', true);
 describe('Layout test', () => {
   it('header-content-footer layout', async () => {
     const wrapper = mount({
@@ -18,15 +20,16 @@ describe('Layout test', () => {
       </d-layout>
       `
     });
-    const layout = wrapper.find('.devui-layout');
+    const layout = wrapper.find(ns.b());
     expect(layout.exists()).toBeTruthy();
-    const header = layout.find('.devui-header');
+    const header = layout.find(ns.e('header'));
     expect(header.text()).toBe('Header');
     const content = header.element.nextElementSibling;
     expect(content?.innerHTML).toBe('Content');
-    const footer = layout.find('.devui-content').element.nextElementSibling;
+    const footer = layout.find(ns.e('content')).element.nextElementSibling;
     expect(footer?.innerHTML).toBe('Footer');
   });
+
   it('header-aside-content-footer layout', async () => {
     const wrapper = mount({
       components: {
@@ -49,16 +52,17 @@ describe('Layout test', () => {
     });
     const outerLayout = wrapper.find('#outerLayout');
     expect(outerLayout.exists()).toBeTruthy();
-    const header = outerLayout.find('.devui-header');
+    const header = outerLayout.find(ns.e('header'));
     expect(header.text()).toBe('Header');
     const innerLayout = outerLayout.find('#innerLayout');
-    const aside = innerLayout.find('.devui-aside');
-    const content = innerLayout.find('.devui-content');
+    const aside = innerLayout.find(ns.em('aside', 'inner'));
+    const content = innerLayout.find(ns.e('content'));
     expect(content.text()).toBe('Content');
     expect(aside.text()).toBe('Aside');
-    expect(outerLayout.find('.devui-footer').text()).toBe('Footer');
+    expect(outerLayout.find(ns.e('footer')).text()).toBe('Footer');
   });
-  it('header-aside-content-footer layout', async () => {
+
+  it('aside-header-content-footer layout', async () => {
     const wrapper = mount({
       components: {
         'd-layout': Layout,

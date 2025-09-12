@@ -159,21 +159,9 @@ export default defineComponent({
     <template #footer>
       <slot name="footer">
         <div class="date-picker-footer">
-          <d-button
-            variant="solid"
-            color="secondary"
-            @click="setToday"
-          >
-            今天
-          </d-button>
-          <d-button
-            variant="solid"
-            color="secondary"
-            @click="clearDate"
-          >
-            清除时间
-          </d-button>
-        </ul>
+          <d-button variant="solid" color="secondary" @click="setToday"> 今天 </d-button>
+          <d-button variant="solid" color="secondary" @click="clearDate"> 清除时间 </d-button>
+        </div>
       </slot>
     </template>
   </d-date-picker-pro>
@@ -198,7 +186,7 @@ export default defineComponent({
     };
     const clearDate = () => {
       datePickerProValue2.value = '';
-    }
+    };
 
     return {
       datePickerProValue1,
@@ -297,6 +285,8 @@ export default defineComponent({
   <div class="picker-pro-format-demo mr30">
     <div class="mb10">year picker</div>
     <d-date-picker-pro v-model="pickerProFormatValue" class="mb20 wh250" type="year" />
+    <div class="mb10">month picker</div>
+    <d-date-picker-pro v-model="pickerProFormatValue1" class="mb20 wh250" type="month" />
   </div>
 </template>
 
@@ -306,9 +296,10 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     const pickerProFormatValue = ref<string>('');
-
+    const pickerProFormatValue1 = ref<string>('');
     return {
       pickerProFormatValue,
+      pickerProFormatValue1,
     };
   },
 });
@@ -329,6 +320,8 @@ export default defineComponent({
   <d-range-date-picker-pro v-model="rangeDatePickerProValue1" class="mb20" :showTime="true" format="YYYY/MM/DD HH:mm:ss" />
   <div class="mb10">year range picker</div>
   <d-range-date-picker-pro v-model="rangeDatePickerProValue2" class="mb20 wh250" type="year" />
+  <div class="mb10">month range picker</div>
+  <d-range-date-picker-pro v-model="rangeDatePickerProValue3" class="mb20 wh250" type="month" />
 </template>
 
 <script lang="ts">
@@ -339,11 +332,13 @@ export default defineComponent({
     const rangeDatePickerProValue = ref<string[]>(['', '']);
     const rangeDatePickerProValue1 = ref<string[]>(['', '']);
     const rangeDatePickerProValue2 = ref<string[]>(['', '']);
+    const rangeDatePickerProValue3 = ref<string[]>(['', '']);
 
     return {
       rangeDatePickerProValue,
       rangeDatePickerProValue1,
       rangeDatePickerProValue2,
+      rangeDatePickerProValue3,
     };
   },
 });
@@ -411,21 +406,9 @@ export default defineComponent({
     <template #footer>
       <slot name="footer">
         <div class="date-picker-footer">
-          <d-button
-            variant="solid"
-            color="secondary"
-            @click="clearStartDate"
-          >
-            清除开始时间
-          </d-button>
-          <d-button
-            variant="solid"
-            color="secondary"
-            @click="clearEndDate"
-          >
-            清除结束时间
-          </d-button>
-        </ul>
+          <d-button variant="solid" color="secondary" @click="clearStartDate"> 清除开始时间 </d-button>
+          <d-button variant="solid" color="secondary" @click="clearEndDate"> 清除结束时间 </d-button>
+        </div>
       </slot>
     </template>
   </d-range-date-picker-pro>
@@ -454,12 +437,12 @@ export default defineComponent({
       const [start, end] = datePickerProValue2.value;
       datePickerProValue2.value = ['', end];
       footerCustom?.value.focusChange('start');
-    }
+    };
     const clearEndDate = () => {
       const [start, end] = datePickerProValue2.value;
       datePickerProValue2.value = [start, ''];
       footerCustom?.value.focusChange('end');
-    }
+    };
 
     return {
       datePickerProValue1,
@@ -547,17 +530,19 @@ export default defineComponent({
 
 ### DatePickerPro 参数
 
-| 参数名         | 类型              | 默认                                                        | 说明                                                     | 跳转 Demo                                             |
-| :------------- | :---------------- | :---------------------------------------------------------- | :------------------------------------------------------- | :---------------------------------------------------- |
-| v-model        | `Date`            | ''                                                          | 必选，选中项绑定的值                                     | [基本用法](#基本用法)                                 |
-| format         | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss'                       | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)                                 |
-| placeholder    | `string`          | '请选择日期'                                                | 可选，输入框的 placeholder                               | [基本用法](#基本用法)                                 |
-| showTime       | `boolean`         | false                                                       | 可选，是否显示时分秒                                     | [显示时间](#显示时间)                                 |
-| size           | `string`          | 'md'                                                        | 可选，输入框的尺寸                                       | [基本用法](#基本用法)                                 |
-| disabled       | `boolean`         | false                                                       | 可选，是否禁用选择器                                     | [禁用选择器](#禁用选择器)                             |
-| calendarRange  | `[number,number]` | [new Date().getFullYear() - 3,new Date().getFullYear() + 3] | 可选，设置日历面板显示时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
-| limitDateRange | `[Date,Date]`     | [new Date(calendarRange[0]), new Date(calendarRange[1])]    | 可选，设置日历面板可选时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
-| type           | `string`          | 'date'                                                      | 可选，设置日期选择器类型(date/year)                      | [年月选择器](#年月选择器)                             |
+| 参数名          | 类型                    | 默认                                                     | 说明                                                     | 跳转 Demo                                             |
+| :-------------- | :---------------------- | :------------------------------------------------------- | :------------------------------------------------------- | :---------------------------------------------------- |
+| v-model         | `Date`                  | ''                                                       | 必选，选中项绑定的值                                     | [基本用法](#基本用法)                                 |
+| format          | [Format](#format)       | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss'                    | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)                                 |
+| placeholder     | `string`                | '请选择日期'                                             | 可选，输入框的 placeholder                               | [基本用法](#基本用法)                                 |
+| showTime        | `boolean`               | false                                                    | 可选，是否显示时分秒                                     | [显示时间](#显示时间)                                 |
+| size            | `string`                | 'md'                                                     | 可选，输入框的尺寸                                       | [基本用法](#基本用法)                                 |
+| disabled        | `boolean`               | false                                                    | 可选，是否禁用选择器                                     | [禁用选择器](#禁用选择器)                             |
+| calendarRange   | `[number,number]`       | [1970, 2099]                                             | 可选，设置日历面板显示时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
+| limitDateRange  | `[Date,Date]`           | [new Date(calendarRange[0]), new Date(calendarRange[1])] | 可选，设置日历面板可选时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
+| type            | `string`                | 'date'                                                   | 可选，设置日期选择器类型(date/year/month)                | [年月选择器](#年月选择器)                             |
+| show-glow-style | `boolean`               | true                                                     | 可选，是否显示悬浮发光效果                               |                                                       |
+| position        | [Placement[]](#placement) | ['bottom-start','top-start']                             | 可选，自定义下拉面板位置                                 |                                                       |
 
 ### DatePickerPro 事件
 
@@ -605,18 +590,20 @@ type Format = string;
 
 ### RangeDatePickerPro 参数
 
-| 参数名         | 类型              | 默认                                                        | 说明                                                     | 跳转 Demo                                             |
-| :------------- | :---------------- | :---------------------------------------------------------- | :------------------------------------------------------- | :---------------------------------------------------- |
-| v-model        | `[Date, Date]`    | ['','']                                                     | 必选，选中项绑定的值                                     | [范围选择器](#范围选择器)                             |
-| format         | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss'                       | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)                                 |
-| placeholder    | `Array`           | ['请选择日期', '请选择日期']                                | 可选，输入框的 placeholder                               | [范围选择器](#范围选择器)                             |
-| showTime       | `boolean`         | false                                                       | 可选，是否显示时分秒                                     | [范围选择器](#范围选择器)                             |
-| separator      | `string`          | '-'                                                         | 可选，范围选择器的分割符                                 | [范围选择器](#范围选择器)                             |
-| size           | `string`          | 'md'                                                        | 可选，输入框的尺寸                                       |                                                       |
-| disabled       | `boolean`         | false                                                       | 可选，是否禁用选择器                                     | [禁用选择器](#禁用选择器)                             |
-| calendarRange  | `[number,number]` | [new Date().getFullYear() - 3,new Date().getFullYear() + 3] | 可选，设置日历面板显示时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
-| limitDateRange | `[Date,Date]`     | [new Date(calendarRange[0]), new Date(calendarRange[1])]    | 可选，设置日历面板可选时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
-| type           | `string`          | 'date'                                                      | 可选，设置日期选择器类型(date/year)                      | [范围选择器](#范围选择器)                             |
+| 参数名          | 类型              | 默认                                                     | 说明                                                     | 跳转 Demo                                             |
+| :-------------- | :---------------- | :------------------------------------------------------- | :------------------------------------------------------- | :---------------------------------------------------- |
+| v-model         | `[Date, Date]`    | ['','']                                                  | 必选，选中项绑定的值                                     | [范围选择器](#范围选择器)                             |
+| format          | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss'                    | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)                                 |
+| placeholder     | `Array`           | ['请选择开始日期', '请选择结束日期']                     | 可选，输入框的 placeholder                               | [范围选择器](#范围选择器)                             |
+| showTime        | `boolean`         | false                                                    | 可选，是否显示时分秒                                     | [范围选择器](#范围选择器)                             |
+| separator       | `string`          | '-'                                                      | 可选，范围选择器的分割符                                 | [范围选择器](#范围选择器)                             |
+| size            | `string`          | 'md'                                                     | 可选，输入框的尺寸                                       |                                                       |
+| disabled        | `boolean`         | false                                                    | 可选，是否禁用选择器                                     | [禁用选择器](#禁用选择器)                             |
+| calendarRange   | `[number,number]` | [1970,2099]                                              | 可选，设置日历面板显示时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
+| limitDateRange  | `[Date,Date]`     | [new Date(calendarRange[0]), new Date(calendarRange[1])] | 可选，设置日历面板可选时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
+| type            | `string`          | 'date'                                                   | 可选，设置日期选择器类型(date/year/month)                | [范围选择器](#范围选择器)                             |
+| show-glow-style | `boolean`         | true                                                     | 可选，是否显示悬浮发光效果                               |                                                       |
+| position        | [Placement[]](#placement) | ['bottom-start','top-start']                             | 可选，自定义下拉面板位置                                 |                                                       |
 
 ### RangeDatePickerPro 事件
 
@@ -633,3 +620,23 @@ type Format = string;
 | :-------- | :---------------------------------------------------------------- | :------------------------------------------------ |
 | rightArea | 自定义 RangeDatePickerPro 日历面板右侧内容， 如：日期范围快捷选项 | [自定义日期范围面板区域](#自定义日期范围面板区域) |
 | footer    | 自定义 RangeDatePickerPro 日历面板下侧内容                        | [自定义日期范围面板区域](#自定义日期范围面板区域) |
+
+### 类型定义
+
+#### Placement
+
+```ts
+type Placement =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
+```

@@ -12,14 +12,14 @@
 
 ```vue
 <template>
-  <div>
+  <div class="tag-demo-wrapper">
     <d-tag>标签一</d-tag>
     <d-tag type="primary">标签二</d-tag>
     <d-tag type="success">标签三</d-tag>
     <d-tag type="warning">标签四</d-tag>
     <d-tag type="danger">标签五</d-tag>
   </div>
-  <div>
+  <div class="tag-demo-wrapper">
     <d-tag color="blue-w98">blue-w98</d-tag>
     <d-tag color="aqua-w98">aqua-w98</d-tag>
     <d-tag color="aqua-w98">aqua-w98</d-tag>
@@ -44,7 +44,11 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style>
+.tag-demo-wrapper > * {
+  margin: 4px;
+}
+</style>
 ```
 
 :::
@@ -55,7 +59,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>
+  <div class="tag-demo-wrapper">
     <d-tag><d-icon name="bug" size="12px" /> bug </d-tag>
     <d-tag type="primary"><d-icon name="bug" size="12px" /> bug </d-tag>
     <d-tag color="#b05bc1"><d-icon name="bug" size="12px" /> bug </d-tag>
@@ -74,8 +78,6 @@ export default defineComponent({
   },
 });
 </script>
-
-<style></style>
 ```
 
 :::
@@ -86,7 +88,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>
+  <div class="tag-demo-wrapper">
     <d-tag type="primary" :checked="isChecked" @click="tagClick">不要点我呀</d-tag>
     <d-tag color="#39afcc" :checked="isChecked" @click="tagClick">不要点我呀</d-tag>
   </div>
@@ -104,8 +106,6 @@ export default defineComponent({
   },
 });
 </script>
-
-<style></style>
 ```
 
 :::
@@ -116,7 +116,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>
+  <div class="tag-demo-wrapper">
     <d-tag v-for="item in tagList" deletable :key="item" @tag-delete="() => handleClose(item)">{{ item }}</d-tag>
   </div>
 </template>
@@ -126,7 +126,7 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     const tagList = ref(['tag1', 'tag2', 'tag3']);
-    const handleClose = (item: string) => {
+    const handleClose = (item) => {
       tagList.value.splice(tagList.value.indexOf(item), 1);
     };
     return {
@@ -136,29 +136,25 @@ export default defineComponent({
   },
 });
 </script>
-
-<style></style>
 ```
 
 :::
 
 ### 不同尺寸
 
-:::demo Tag 默认的是 xs 尺寸，还有 lg、md、sm 三种尺寸可选
+:::demo Tag 默认的是 md 尺寸，有 lg、md、sm 三种尺寸可选
 
 ```vue
 <template>
-  <div>
-    <d-tag type="primary" size="lg">标签二</d-tag>
-    <d-tag type="success" size="md">标签三</d-tag>
-    <d-tag type="warning" size="sm">标签四</d-tag>
-    <d-tag type="danger">标签五</d-tag>
+  <div class="tag-demo-wrapper">
+    <d-tag type="primary" size="lg">Large</d-tag>
+    <d-tag type="success" size="md">Middle</d-tag>
+    <d-tag type="warning" size="sm">Small</d-tag>
   </div>
-  <div>
-    <d-tag type="primary" deletable size="lg">标签一</d-tag>
-    <d-tag type="primary" deletable size="md">标签二</d-tag>
-    <d-tag type="primary" deletable size="sm">标签三</d-tag>
-    <d-tag type="primary" deletable size="xs">标签四</d-tag>
+  <div class="tag-demo-wrapper">
+    <d-tag type="primary" deletable size="lg">Large</d-tag>
+    <d-tag type="primary" deletable size="md">Middle</d-tag>
+    <d-tag type="primary" deletable size="sm">Small</d-tag>
   </div>
 </template>
 <script>
@@ -170,22 +166,20 @@ export default defineComponent({
   },
 });
 </script>
-
-<style></style>
 ```
 
 :::
 
 ### Tag 参数
 
-| 参数          | 类型                  | 默认值    | 说明                                        | 跳转至 Demo           |
-| :------------ | :-------------------- | :-------- | :------------------------------------------ | :-------------------- |
-| type          | [TagType](#tagtype)   | 'defalut' | 可选，标签的类型，指定类型后则 color 不生效 | [基本用法](#基本用法) |
-| color         | `string`              | ''        | 可选，标签的主题色                          | [基本用法](#基本用法) |
-| title-content | `string`              | ''        | 可选，设置鼠标悬浮时 title 的显示内容       | [基本用法](#基本用法) |
-| checked       | `boolean`             | false     | 可选，标签选中的初始状态                    | [可被选中](#可被选中) |
-| deletable     | `boolean`             | false     | 可选，设置标签是否可删除                    | [可移除的](#可移除的) |
-| size          | [SizeType](#sizetype) | xs        | 可选，标签尺寸                              | [不同尺寸](#不同尺寸) |
+| 参数          | 类型                  | 默认值 | 说明                                        | 跳转至 Demo           |
+| :------------ | :-------------------- | :----- | :------------------------------------------ | :-------------------- |
+| type          | [TagType](#tagtype)   | ''     | 可选，标签的类型，指定类型后则 color 不生效 | [基本用法](#基本用法) |
+| color         | `string`              | ''     | 可选，标签的主题色                          | [基本用法](#基本用法) |
+| title-content | `string`              | ''     | 可选，设置鼠标悬浮时 title 的显示内容       | [基本用法](#基本用法) |
+| checked       | `boolean`             | false  | 可选，标签选中的初始状态                    | [可被选中](#可被选中) |
+| deletable     | `boolean`             | false  | 可选，设置标签是否可删除                    | [可移除的](#可移除的) |
+| size          | [SizeType](#sizetype) | 'md'   | 可选，标签尺寸                              | [不同尺寸](#不同尺寸) |
 
 ### Tag 事件
 
@@ -206,5 +200,5 @@ type TagType = 'primary' | 'success' | 'warning' | 'danger';
 #### SizeType
 
 ```ts
-type SizeType = 'lg' | 'md' | 'sm' | 'xs';
+type SizeType = 'lg' | 'md' | 'sm';
 ```

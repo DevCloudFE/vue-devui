@@ -1,4 +1,3 @@
-import { ref, Ref } from 'vue';
 import { isBoolean, isFunction, isString } from '../../shared/utils';
 import { DefaultRow, ITable, RowKeyType } from './table-types';
 
@@ -18,7 +17,7 @@ export function getRowIdentity(row: DefaultRow, rowKey: RowKeyType, index?: numb
     return rowKey(row, index) as string;
   } else if (isString(rowKey)) {
     const paths = rowKey.split('.');
-    let obj = row;
+    let obj: Record<string, unknown> | string = row;
 
     for (const p of paths) {
       obj = obj[p];
@@ -29,7 +28,7 @@ export function getRowIdentity(row: DefaultRow, rowKey: RowKeyType, index?: numb
 }
 
 export function getRowKeysMap(data: DefaultRow[], rowKey: RowKeyType): Record<string, { row: DefaultRow; index: number }> {
-  const rowKeyMap: Record<string, any> = {};
+  const rowKeyMap: Record<string, { row: DefaultRow; index: number }> = {};
   (data || []).forEach((row: DefaultRow, index: number) => {
     rowKeyMap[getRowIdentity(row, rowKey)] = { row, index };
   });

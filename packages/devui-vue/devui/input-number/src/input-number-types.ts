@@ -3,6 +3,9 @@ import type { PropType, ExtractPropTypes, ComputedRef, Ref, CSSProperties, Input
 export type ISize = 'lg' | 'md' | 'sm';
 
 export const inputNumberProps = {
+  modelValue: {
+    type: [Number, String] as PropType<number | string | null | undefined>,
+  },
   placeholder: {
     type: String,
   },
@@ -24,21 +27,29 @@ export const inputNumberProps = {
   },
   size: {
     type: String as PropType<ISize>,
-    default: '',
-  },
-  modelValue: {
-    type: Number,
   },
   precision: {
     type: Number,
   },
+  reg: {
+    type: [RegExp, String] as PropType<RegExp | string>,
+    default: '',
+  },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
+  allowEmpty: {
+    type: Boolean,
+    default: false,
+  }
 } as const;
 
 export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>;
 
 export interface IState {
-  currentValue: number | string | undefined;
-  userInputValue: number | string | undefined;
+  currentValue: number | string | undefined | null;
+  userInputValue: number | string | undefined | null;
 }
 
 export interface UseExpose {
@@ -55,7 +66,7 @@ export interface UseRender {
 }
 
 export interface UseEvent {
-  inputVal: ComputedRef<number | string>;
+  inputVal: ComputedRef<number | string | undefined | null>;
   minDisabled: ComputedRef<boolean>;
   maxDisabled: ComputedRef<boolean>;
   onAdd: () => void;

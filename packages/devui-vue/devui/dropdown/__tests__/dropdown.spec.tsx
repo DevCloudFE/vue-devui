@@ -1,12 +1,20 @@
 import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
-import Dropdown from '../src/dropdown';
+import { Dropdown, DropdownMenu } from '../';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
 const buttonClass = useNamespace('button', true).b();
 const flexibleOverlayClass = useNamespace('flexible-overlay', true).b();
+const dropdownNs = useNamespace('dropdown', true);
 
 describe('d-dropdown', () => {
+  beforeEach(() => {
+    const dropdownMenus = document.querySelectorAll(flexibleOverlayClass);
+    [...dropdownMenus].forEach(dropdownMenu => {
+      dropdownMenu && dropdownMenu.parentNode?.removeChild(dropdownMenu);
+    });
+  });
+
   it('should render correctly', async () => {
     const wrapper = mount({
       setup() {
@@ -177,6 +185,67 @@ describe('d-dropdown', () => {
     const btn = wrapper.find(buttonClass);
     await btn.trigger('click');
     expect(onToggle).toBeCalled();
+    wrapper.unmount();
+  });
+
+  it('multi dropdown should work well.', async () => {
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <Dropdown>
+            {{
+              default: () => <d-button>Click Me</d-button>,
+              menu: () => (
+                <ul class="list-menu">
+                  <li class="menu-item">Item 1</li>
+                  <Dropdown>
+                    {{
+                      default: () => <li class="menu-item">Item 2</li>,
+                      menu: () => (
+                        <ul class="sub-list-menu">
+                          <li class="sub-menu-item">Item 2-1</li>
+                          <li class="sub-menu-item">Item 2-2</li>
+                          <li class="sub-menu-item">Item 2-3</li>
+                        </ul>
+                      ),
+                    }}
+                  </Dropdown>
+                </ul>
+              ),
+            }}
+          </Dropdown>
+        );
+      },
+    });
+    await nextTick();
+    const btn = wrapper.find(buttonClass);
+    await btn.trigger('click');
+    expect(document.querySelectorAll(dropdownNs.e('menu-wrap')).length).toBe(1);
+    await document.querySelector(dropdownNs.e('menu-wrap'))?.querySelectorAll('.menu-item')[1]?.click();
+    expect(document.querySelectorAll(dropdownNs.e('menu-wrap')).length).toBe(2);
+    wrapper.unmount();
+  });
+
+  it('d-dropdown-item should work well.', async () => {
+    const isOpen = ref(false);
+    const wrapper = mount({
+      setup () {
+        return () => (
+          <DropdownMenu v-model={isOpen.value}>
+            <ul class="list-menu">
+              <li class="menu-item">Item 1</li>
+              <li class="menu-item">Item 2</li>
+              <li class="menu-item">Item 3</li>
+              <li class="menu-item">Item 4</li>
+            </ul>
+          </DropdownMenu>
+        );
+      },
+    });
+    expect(document.querySelector(dropdownNs.e('menu-wrap'))).toBeFalsy();
+    isOpen.value = true;
+    await nextTick();
+    expect(document.querySelector(dropdownNs.e('menu-wrap'))).toBeTruthy();
     wrapper.unmount();
   });
 });

@@ -38,6 +38,22 @@ export const inputProps = {
     type: Boolean,
     default: false,
   },
+  placeholder: {
+    type: String,
+    default: '',
+  },
+  title: {
+    type: String,
+    default: '',
+  },
+  autofocus: {
+    type: Boolean,
+    default: false,
+  },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
 } as const;
 
 export type InputProps = ExtractPropTypes<typeof inputProps>;
@@ -48,8 +64,8 @@ export interface UseInputRender {
   isFocus: Ref<boolean>;
   wrapClasses: ComputedRef<Record<string, boolean | undefined>>;
   inputClasses: ComputedRef<Record<string, boolean | undefined>>;
-  customStyle: unknown;
-  otherAttrs: unknown;
+  customStyle: Record<string, unknown>;
+  otherAttrs: Record<string, unknown>;
 }
 
 export interface UseInputEvent {

@@ -1,0 +1,319 @@
+@import 'highlight.js/styles/github.css';
+@import 'diff2html/bundles/css/diff2html.min.css';
+@import '@devui/theme/styles-var/devui-var.scss';
+
+.#{$devui-prefix}-code-review {
+  box-sizing: border-box;
+  box-shadow: $devui-shadow-length-base $devui-light-shadow;
+  border-radius: $devui-border-radius-card;
+
+  &__header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+    padding-right: 20px;
+    border-bottom: 1px solid $devui-dividing-line;
+    border-radius: $devui-border-radius-card;
+    background-color: $devui-global-bg-normal;
+    cursor: pointer;
+
+    &--unfold {
+      border-radius: $devui-border-radius-card $devui-border-radius-card 0 0;
+      border-bottom: 1px solid #d8d8d8;
+      box-shadow: inset 0 -1px 0 0 $devui-brand-foil;
+    }
+
+    .diff-type {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 16px;
+      height: 16px;
+      font-size: $devui-font-size-sm;
+      letter-spacing: 0;
+      text-align: center;
+      line-height: 16px;
+      border-radius: 8px 0 8px 0;
+      user-select: none;
+
+      &.modify {
+        color: #fa9841;
+        background-color: rgba(250, 152, 65, 0.2);
+      }
+
+      &.add {
+        color: #3ac295;
+        background-color: rgba(58, 194, 149, 0.2);
+      }
+
+      &.delete {
+        color: #f66f6a;
+        background-color: rgba(246, 111, 106, 0.2);
+      }
+
+      &.rename {
+        color: #71757f;
+        background-color: rgba(113, 117, 127, 0.2);
+      }
+    }
+
+    .file-info {
+      display: flex;
+      align-items: center;
+      padding-left: 18px;
+
+      & > span {
+        display: inline-block;
+        height: 20px;
+        line-height: 20px;
+      }
+
+      & > svg {
+        margin-right: 8px;
+      }
+
+      .invert {
+        transform: scale(-1);
+      }
+
+      .file-name {
+        max-width: 100%;
+        font-size: $devui-font-size-sm;
+        color: $devui-text;
+        font-weight: bold;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .diff-lines {
+        font-size: $devui-font-size-sm;
+        font-weight: bold;
+
+        &.add-lines {
+          padding-left: 8px;
+          color: $devui-success;
+        }
+
+        &.delete-lines {
+          padding-left: 4px;
+          color: $devui-danger;
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+
+  &__content {
+    line-height: 20px;
+
+    table.d2h-diff-table {
+      table-layout: fixed;
+      font-size: 12px;
+      margin: 0;
+    }
+
+    tr {
+      border: none;
+
+      &:hover {
+        .d2h-info {
+          background-color: #bfcbf3;
+        }
+      }
+    }
+
+    th,
+    td {
+      border: none;
+      padding: 0;
+    }
+
+    td {
+      &:first-child {
+        position: static;
+        display: table-cell;
+      }
+
+      &.expand-icon-wrapper {
+        text-align: center;
+      }
+
+      &.comment-icon-hover {
+        background-color: #bfcbf3 !important;
+      }
+
+      .expand-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 24px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $devui-primary;
+
+          svg g g g g {
+            fill: $devui-light-text;
+          }
+
+          svg g g polygon,
+          svg g g path {
+            fill: $devui-light-text;
+          }
+        }
+      }
+    }
+
+    .expand-line {
+      height: 24px;
+      line-height: 24px;
+    }
+
+    .d2h-file-wrapper {
+      border: none;
+    }
+
+    .d2h-code-linenumber::after,
+    .d2h-code-side-linenumber::after {
+      content: '';
+    }
+
+    .d2h-code-linenumber {
+      border-right: 2px solid transparent;
+    }
+
+    .d2h-code-line-ctn {
+      word-break: break-all;
+      word-wrap: break-word !important;
+      white-space: break-spaces !important;
+      display: inline-block !important;
+      line-break: anywhere;
+    }
+
+    .d2h-code-line,
+    .d2h-code-side-line {
+      width: 100%;
+      padding-left: 0;
+      padding-right: 16px;
+    }
+
+    &.side-by-side {
+      tr td:nth-of-type(3) {
+        border-left: 1px solid #eeeeee;
+      }
+
+      tr.comment-block {
+        td:last-child {
+          border-left: 1px solid #eeeeee;
+        }
+
+        .comment-cell {
+          vertical-align: top;
+        }
+      }
+
+      .d2h-file-side-diff {
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .d2h-code-side-linenumber {
+        position: static;
+        display: table-cell;
+      }
+
+      .d-code-left:nth-of-type(2) > .d2h-code-side-line,
+      .d-code-right:nth-of-type(4) > .d2h-code-side-line {
+        border-left: 2px solid transparent;
+      }
+    }
+
+    .d2h-file-diff {
+      // 单栏
+      .comment-checked {
+        &.d2h-cntx {
+          background-color: #fff8c5; // 通常选中
+        }
+
+        &.d2h-del {
+          background-color: #ffe5b4; // 删除行选中
+
+          &.d2h-code-linenumber {
+            background-color: #ffc89d; // 删除行中的number
+          }
+        }
+
+        &.d2h-ins {
+          background-color: #d1f1a8; // 增加行选中
+
+          &.d2h-code-linenumber {
+            background-color: #daf4ae; // 增加行中的number
+          }
+        }
+      }
+    }
+
+    .comment-checked {
+      &.d2h-cntx {
+        background-color: #fff8c5; // 通常选中
+      }
+
+      &.d2h-del {
+        background-color: #ffe5b4; // 删除行选中
+
+        &.d2h-code-side-linenumber {
+          background-color: #ffc89d; // 删除行中的number
+        }
+      }
+
+      &.d2h-ins {
+        background-color: #d1f1a8; // 增加行选中
+
+        &.d2h-code-side-linenumber {
+          background-color: #daf4ae; // 增加行中的number
+        }
+      }
+
+      &.d2h-code-linenumber {
+        border-right: 2px solid #fe7300;
+      }
+
+      &.d-code-left:nth-of-type(2) > .d2h-code-side-line,
+      &.d-code-right:nth-of-type(4) > .d2h-code-side-line {
+        border-left: 2px solid #fe7300;
+      }
+    }
+  }
+
+  .comment-icon {
+    position: fixed;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: $devui-base-bg;
+    transform: translateX(-50%);
+    box-shadow: 0 0 1px 1px rgba(37, 43, 58, 0.16);
+    cursor: pointer;
+  }
+
+  &--left-selected {
+    .d-code-right span {
+      user-select: none;
+    }
+  }
+
+  &--right-selected {
+    .d-code-left span {
+      user-select: none;
+    }
+  }
+}

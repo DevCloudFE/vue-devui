@@ -48,7 +48,7 @@ export const autoCompleteProps = {
   },
   position: {
     type: Array as PropType<Array<Placement>>,
-    default: ['bottom-end'],
+    default: () => ['bottom', 'top', 'left', 'right'],
   },
   disabled: {
     type: Boolean,
@@ -138,6 +138,10 @@ export const autoCompleteProps = {
     type: Boolean,
     default: false,
   },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
 } as const;
 
 export type AutoCompleteProps = ExtractPropTypes<typeof autoCompleteProps>;
@@ -171,7 +175,7 @@ export type SearchFnType = (term: string) => SourceType;
 export type FormatterType = (item: string | SourceItemObj) => string;
 export type DefaultFuncType = () => void;
 export type HandleSearch = (term: string, enableLazyLoad?: boolean) => void;
-export type RecentlyFocus = (latestSource: SourceType) => void;
+export type RecentlyFocus = (latestSource: Array<SourceItemObj>) => void;
 export type InputDebounceCb = (value: string) => void;
 export type TransInputFocusEmit = () => unknown;
 export type SelectOptionClick = (item: string | SourceItemObj) => void;
@@ -189,9 +193,10 @@ export type DropdownProps = {
   dropDownRef: Ref;
   showLoading: Ref<boolean>;
   loadMore: () => void;
-  latestSource: Ref<Array<SourceItemObj>>;
+  latestSource: Ref;
   modelValue: Ref<string>;
   hoverIndex: Ref<number>;
-  valueParser: () => void;
+  valueParser: Ref;
+  isDisabled: ComputedRef<boolean>;
 };
 export const DropdownPropsKey: InjectionKey<DropdownProps> = Symbol('DropdownPropsKey');

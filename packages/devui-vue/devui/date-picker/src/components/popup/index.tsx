@@ -4,6 +4,7 @@ import {
   handlePositionFactory,
   getAttachInputDom,
 } from '../../helper';
+import { datePickerPopupProps, DatePickerPopupProps } from '../../date-picker-types';
 
 import './index.scss';
 
@@ -17,16 +18,10 @@ type TState = {
 
 export default defineComponent({
   name: 'DDatePickerPopup',
-  props: {
-    attach: { type: String },
-    onBinding: { type: Function },
-    onClosed: { type: Function },
-    onOpen: { type: Function },
-    show: { type: Boolean },
-  },
-  setup(props) {
+  props: datePickerPopupProps,
+  setup(props: DatePickerPopupProps) {
 
-    const container = ref<Element>();
+    const container = ref<Element | null>(null);
     const evtman = new EventManager();
     const state = reactive<TState>({
       x: '0',
@@ -67,7 +62,7 @@ export default defineComponent({
         }
       });
       // document层处理`点击其他区域隐藏`
-      evtman.append(document, 'click', (e: MouseEvent) => {
+      evtman.append(document, 'click', (e: Event) => {
         if (!state.show || e.target === el || isIn(e.target as Node, container.value)) {
           return;
         }

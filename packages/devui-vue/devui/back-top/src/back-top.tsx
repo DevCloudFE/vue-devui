@@ -8,7 +8,6 @@ import './back-top.scss';
 export default defineComponent({
   name: 'DBackTop',
   props: backTopProps,
-  emits: [],
   setup(props: BackTopProps, ctx) {
     const slots = ctx.slots;
     const backTopRef = ref(null);
@@ -16,10 +15,10 @@ export default defineComponent({
     const position = usePosition(props);
     const isVisible = useVisibility(props, backTopRef);
 
-    const scrollToTop = () => {
-      // toTop方法暂定
-      window &&
-        window.scrollTo({
+    const scrollToTop = (e: MouseEvent) => {
+      const target = props.target === 'window' ? window || document.documentElement || document.body : document.querySelector(props.target);
+      target &&
+        target.scrollTo({
           top: 0,
           left: 0,
           behavior: 'smooth', // 平滑滚动

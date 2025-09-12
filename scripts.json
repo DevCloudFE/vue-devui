@@ -1,0 +1,51 @@
+{
+  "$schema": "https://raw.githubusercontent.com/iamyoki/better-scripts/main/lib/schema.json",
+  "dev": {
+    "alias": "Dev",
+    "desc": "Start a development server",
+    "command": "pnpm --filter vue-devui dev"
+  },
+  "dev:site": {
+    "alias": "Dev:Site",
+    "desc": "Start a development server",
+    "command": "pnpm --filter vue-devui dev:site"
+  },
+  "build": {
+    "alias": "Build",
+    "desc": "Build theme and docs",
+    "command": "pnpm --filter vue-devui build"
+  },
+  "build:lib": {
+    "alias": "Build lib",
+    "desc": "Build components and release",
+    "command": "pnpm --filter vue-devui build:lib --reporter default"
+  },
+  "build:lib:theme": {
+    "alias": "Build theme lib",
+    "desc": "Build theme package",
+    "command": "pnpm --filter devui-theme build"
+  },
+  "build:cli": {
+    "alias": "Build cli",
+    "desc": "Build devui-cli",
+    "command": "pnpm --filter devui-cli build"
+  },
+  "lints": {
+    "alias": "Lints",
+    "desc": "Select a lint script to run",
+    "scripts": {
+      "eslint": ["eslint \"packages/**/{*.vue,*.js,*.ts,*.jsx,*.tsx}\"", "Lint source files"],
+      "eslint:fix": ["eslint --fix \"packages/**/{*.vue,*.js,*.ts,*.jsx,*.tsx}\"", "Lint and fix source files"],
+      "stylelint": ["stylelint \"packages/**/{*.scss,*.css}\"", "Lint styles"],
+      "stylelint:fix": ["stylelint --fix \"packages/**/{*.scss,*.css}\"", "Lint and fix styles"]
+    }
+  },
+  "tests": {
+    "alias": "Tests",
+    "desc": "Select a test script to run",
+    "scripts": {
+      "test": ["pnpm --filter vue-devui test --reporter default", "Test vue-devui"],
+      "coverage": ["pnpm --filter vue-devui coverage", "Test vue-devui and gen coverage"]
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, Ref, ComputedRef } from 'vue';
+import type { PropType, ExtractPropTypes, Ref, ComputedRef, TeleportProps } from 'vue';
 
 export type TriggerType = 'click' | 'hover' | 'manually';
 export type CloseScopeArea = 'all' | 'blank' | 'none';
@@ -15,10 +15,7 @@ export type Placement =
   | 'bottom-end'
   | 'left-start'
   | 'left-end';
-export type Alignment = 'start' | 'end';
 export type OffsetOptions = { mainAxis?: number; crossAxis?: number };
-
-type ReadonlyRef<T> = Readonly<Ref<T>>;
 
 export type EmitEvent = (event: 'toggle', result: boolean) => void;
 
@@ -37,11 +34,7 @@ export const dropdownProps = {
   },
   position: {
     type: Array as PropType<Array<Placement>>,
-    default: ['bottom'],
-  },
-  align: {
-    type: String as PropType<Alignment> | null,
-    default: null,
+    default: () => ['bottom', 'top', 'left', 'right'],
   },
   offset: {
     type: [Number, Object] as PropType<number | OffsetOptions>,
@@ -66,6 +59,10 @@ export const dropdownProps = {
     type: Boolean,
     default: true,
   },
+  teleport: {
+    type: [String, Object] as PropType<TeleportProps['to']>,
+    default: 'body',
+  },
 };
 
 export type DropdownProps = ExtractPropTypes<typeof dropdownProps>;
@@ -73,8 +70,8 @@ export type DropdownProps = ExtractPropTypes<typeof dropdownProps>;
 export interface UseDropdownProps {
   id: string;
   isOpen: Ref<boolean>;
-  origin: ReadonlyRef<any>;
-  dropdownRef: ReadonlyRef<any>;
+  origin: Ref<HTMLElement | undefined>;
+  dropdownRef: Ref<HTMLElement | undefined>;
   props: DropdownProps;
   emit: EmitEvent;
 }

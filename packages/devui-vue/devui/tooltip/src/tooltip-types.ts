@@ -1,6 +1,18 @@
-import type { ComputedRef, ExtractPropTypes, PropType, Ref } from 'vue';
+import type { ComputedRef, ExtractPropTypes, PropType, Ref, TeleportProps } from 'vue';
 
-export type BasePlacement = 'top' | 'right' | 'bottom' | 'left';
+export type BasePlacement =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
 
 export const tooltipProps = {
   content: {
@@ -9,7 +21,7 @@ export const tooltipProps = {
   },
   position: {
     type: [String, Array] as PropType<BasePlacement | Array<BasePlacement>>,
-    default: 'top',
+    default: () => ['top', 'right', 'bottom', 'left'],
   },
   showAnimation: {
     type: Boolean,
@@ -34,7 +46,15 @@ export const tooltipProps = {
   hideAfter: {
     type: Number,
     default: 0,
-  }
+  },
+  overlayClass: {
+    type: String,
+    default: '',
+  },
+  teleport: {
+    type: [String, Object] as PropType<TeleportProps['to']>,
+    default: 'body',
+  },
 };
 
 export type TooltipProps = ExtractPropTypes<typeof tooltipProps>;

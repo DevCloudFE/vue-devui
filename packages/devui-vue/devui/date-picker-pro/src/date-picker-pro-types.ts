@@ -3,6 +3,20 @@ import type { Dayjs } from 'dayjs';
 import { ArrType } from '../../time-picker/src/types';
 import type { InputSize } from '../../input/src/input-types';
 
+export type Placement =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
+
 export const datePickerProCommonProps = {
   format: {
     type: String,
@@ -21,6 +35,7 @@ export const datePickerProCommonProps = {
   },
   calendarRange: {
     type: Array as PropType<number[]>,
+    default: [1970, 2099],
   },
   limitDateRange: {
     type: Array as PropType<Date[]>,
@@ -28,6 +43,14 @@ export const datePickerProCommonProps = {
   type: {
     type: String,
     default: 'date',
+  },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
+  position: {
+    type: Array as PropType<Placement[]>,
+    default: () => ['bottom-start', 'top-start', 'left-start', 'right-start'],
   },
 };
 
@@ -38,7 +61,7 @@ export const datePickerProProps = {
   },
   placeholder: {
     type: String,
-    default: '请选择日期',
+    default: '',
   },
   ...datePickerProCommonProps,
 } as const;
@@ -46,7 +69,6 @@ export const datePickerProProps = {
 export type DatePickerProProps = ExtractPropTypes<typeof datePickerProProps>;
 
 export interface UseDatePickerProReturnType {
-  containerRef: Ref<HTMLElement | undefined>;
   originRef: Ref<HTMLElement | undefined>;
   inputRef: Ref<HTMLElement | undefined>;
   overlayRef: Ref<HTMLElement | undefined>;
@@ -58,7 +80,7 @@ export interface UseDatePickerProReturnType {
   isMouseEnter: Ref<boolean>;
   showCloseIcon: ComputedRef<boolean>;
   pickerDisabled: ComputedRef<boolean>;
-  pickerSize: ComputedRef<string>;
+  pickerSize: ComputedRef<'sm' | 'md' | 'lg'>;
   isValidateError: ComputedRef<boolean>;
   onFocus: (e: MouseEvent) => void;
   onSelectedDate: (date: Dayjs, isConfirm?: boolean) => void;
@@ -99,7 +121,6 @@ export interface UseCalendarPanelReturnType {
   handlerSelectDate: (day: CalendarDateItem) => void;
   handlerYearCollapse: (date?: Date) => void;
   handlerClickMonth: (year: number, month: number | undefined) => void;
-  handleScrollYearList: (e: UIEvent) => void;
   handleScrollMonthList: (e: UIEvent) => void;
   isDateSelected: (date: Date) => boolean;
   isStartDate: (date: Date) => boolean;
@@ -156,7 +177,14 @@ export interface UseTimePickerPanelReturnType {
   handlerTimeSelected: (date: TimePickerItem) => void;
 }
 
-export interface UseCalendarCommonReturnType {
+export interface UseYearCalendarPanelReturnType {
+  yarListScrollRef: Ref<HTMLElement | undefined>;
+  yearList: Ref<number[][]>;
+  getYearItemCls: (year: number) => Record<string, boolean>;
+  handlerSelectYear: (year: number) => void;
+}
+
+export interface UseCalendarSelectedReturnType {
   today: Ref<Date>;
   calendarRange: Ref<number[]>;
   selectDate: Ref<Dayjs | undefined>;
@@ -164,10 +192,20 @@ export interface UseCalendarCommonReturnType {
   minDate: ComputedRef<Date>;
   maxDate: ComputedRef<Date>;
   fixRangeDate: () => void;
+  getToDate: (dateValue: Dayjs | undefined | (Dayjs | undefined)[]) => Dayjs | undefined;
+  emitSelectedDate: () => void;
+  isStartDate: (date: Date) => boolean;
+  isInRangeDate: (date: Date) => boolean;
+  isEndDate: (date: Date) => boolean;
 }
-export interface UseYearCalendarPanelReturnType {
-  yarListScrollRef: Ref<HTMLElement | undefined>;
-  yearList: Ref<number[][]>;
-  getYearItemCls: (year: number) => any;
+
+export interface UseMonthCalendarPanelReturnType {
+  yearScrollRef: Ref<HTMLElement | undefined>;
+  monthScrollRef: Ref<HTMLElement | undefined>;
+  yearList: Ref<YearAndMonthItem[]>;
+  monthList: number[][];
   handlerSelectYear: (year: number) => void;
+  handlerMonthScroll: (e: MouseEvent) => void;
+  getMonthItemCls: (year: number, month: number) => Record<string, boolean>;
+  handlerSelectMonth: (year: number, month: number) => void;
 }

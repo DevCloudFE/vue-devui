@@ -1,39 +1,69 @@
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-pagination {
+  display: flex;
+  align-items: center;
   font-size: $devui-font-size;
 
   .#{$devui-prefix}-pagination__size {
-    display: inline-block;
-    max-width: 100px;
-    line-height: 24px;
-    margin: 0 12px 0 0;
     position: relative;
     vertical-align: middle;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 28px;
+    height: 32px;
+    margin: 0 8px 0 0;
+    padding: 4px 10px;
+    background-color: $devui-base-bg;
+    border-color: $devui-form-control-line;
+    border-radius: $devui-border-radius;
+    border-width: 1px;
+    border-style: solid;
+    color: $devui-text;
+    transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
+    outline: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    span {
+      margin-right: 8px;
+    }
+
+    svg {
+      transition: transform $devui-animation-ease-in-out-smooth $devui-animation-duration-slow;
+
+      path {
+        fill: $devui-text;
+      }
+    }
+
+    &:hover {
+      border-color: $devui-form-control-line-hover;
+    }
+
+    &:focus {
+      border-color: $devui-form-control-line-active;
+    }
 
     &.#{$devui-prefix}-pagination__size--sm {
-      max-width: 80px;
-
-      .#{$devui-prefix}-select-input {
-        height: 24px;
-      }
+      height: 26px;
     }
 
     &.#{$devui-prefix}-pagination__size--lg {
-      max-width: 100px;
+      height: 46px;
+    }
 
-      .#{$devui-prefix}-select-input {
-        height: 46px;
-      }
-
-      .#{$devui-prefix}-select-item {
-        height: 46px;
+    &.#{$devui-prefix}-pagination__size--open {
+      svg {
+        transform: rotate(180deg);
       }
     }
-  }
 
-  .#{$devui-prefix}-select-input {
-    height: 26px;
+    & > .#{$devui-prefix}-icon__container {
+      display: flex;
+      align-items: center;
+    }
   }
 
   .#{$devui-prefix}-pagination__total-size {
@@ -61,58 +91,109 @@
     display: inline-flex;
     align-items: center;
 
+    > .disabled > a,
+    > .disabled > a:hover,
+    > .disabled > a:focus {
+      cursor: not-allowed;
+    }
+
     li.#{$devui-prefix}-pagination__item {
       cursor: pointer;
 
-      &.active {
+      &:not(.disabled).active {
         a.#{$devui-prefix}-pagination__link {
           text-decoration: none;
-          background-color: $devui-list-item-active-bg;
-          color: $devui-list-item-active-text;
+          background-color: $devui-primary;
+          color: $devui-light-text;
+          cursor: pointer;
+        }
+
+        a.#{$devui-prefix}-pagination__link:hover {
+          text-decoration: none;
+          background-color: $devui-primary;
+          color: $devui-light-text;
+          border: 1px solid transparent;
+          box-shadow: none;
+        }
+      }
+
+      .#{$devui-prefix}-pagination__link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 28px;
+        min-width: 28px;
+        margin-left: 4px;
+        padding: 0 4px;
+        line-height: 24px;
+        border-radius: $devui-border-radius;
+        border: 1px solid transparent;
+        color: $devui-text-weak;
+        transition: background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+
+        &:hover {
+          text-decoration: none;
+          background-color: transparent;
+          color: $devui-text;
+          border: 1px solid $devui-dividing-line;
+          box-shadow: 0 1px 3px 0 $devui-light-shadow;
+        }
+
+        svg {
+          vertical-align: middle;
+
+          g polygon {
+            fill: $devui-icon-text;
+          }
         }
       }
 
       &.disabled {
         a.#{$devui-prefix}-pagination__link {
           cursor: not-allowed;
-          opacity: 0.5;
-          background-color: #ffffff;
-          color: $devui-text-weak;
+          color: $devui-disabled-text;
+
+          &:hover {
+            box-shadow: none;
+            border: none;
+          }
+
+          svg g polygon {
+            fill: $devui-disabled-text;
+          }
         }
       }
 
-      .#{$devui-prefix}-pagination__link {
-        margin-left: 5px;
-        padding: 3px 7px;
-        line-height: 1.5;
-        border-radius: $devui-border-radius;
-        color: $devui-text-weak;
-        display: flex;
-        align-items: center;
-        transition: background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+      &:not(.disabled) {
+        a.#{$devui-prefix}-pagination__link {
+          &:active {
+            svg g polygon {
+              fill: $devui-text;
+            }
+          }
 
-        &:hover {
-          text-decoration: none;
-          background-color: $devui-list-item-hover-bg;
-          color: $devui-list-item-hover-text;
+          &:hover:not(:active) {
+            svg g polygon {
+              fill: $devui-icon-fill-active-hover;
+            }
+          }
         }
       }
     }
   }
 
-  .#{$devui-prefix}-pagination__sm > li.#{$devui-prefix}-pagination__item > a.#{$devui-prefix}-pagination__link {
-    padding: 0 5px;
-    min-width: 18px;
-    height: 22px;
-    line-height: 1.5;
+  .#{$devui-prefix}-pagination--sm > li.#{$devui-prefix}-pagination__item > a.#{$devui-prefix}-pagination__link {
+    min-width: 24px;
+    height: 24px;
+    line-height: 22px;
     font-size: $devui-font-size-sm;
   }
 
-  .#{$devui-prefix}-pagination__lg > li.#{$devui-prefix}-pagination__item > a.#{$devui-prefix}-pagination__link {
-    padding: 0 12px;
-    height: 38px;
+  .#{$devui-prefix}-pagination--lg > li.#{$devui-prefix}-pagination__item > a.#{$devui-prefix}-pagination__link {
+    min-width: 40px;
+    height: 40px;
+    line-height: 38px;
     font-size: $devui-font-size-lg;
-    line-height: 1.5;
   }
 
   .#{$devui-prefix}-pagination__jump-container {
@@ -297,5 +378,46 @@
   .config-item-words:hover {
     background-color: $devui-area;
     cursor: pointer;
+  }
+}
+
+.#{$devui-prefix}-pagination__size-list {
+  min-width: 60px;
+  padding: 12px;
+  background-clip: padding-box;
+  background-color: $devui-connected-overlay-bg;
+  border-radius: $devui-border-radius;
+  outline: none;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  li {
+    display: block;
+    width: 100%;
+    min-height: 36px;
+    line-height: 20px;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: $devui-border-radius;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth,
+      background-color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth;
+
+    &:hover:not(.active) {
+      color: $devui-list-item-hover-text;
+      background-color: $devui-list-item-hover-bg;
+    }
+
+    &.active {
+      color: $devui-list-item-active-text;
+      background-color: $devui-list-item-active-bg;
+    }
   }
 }

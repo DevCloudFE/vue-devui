@@ -44,3 +44,15 @@ export function changeRoute(props: MenuItemProps, router: Router, useRouter: boo
   }
   return undefined;
 }
+
+export function changeSelect(isMultiple: boolean, defaultSelectKeys: string[], key: string): string[] {
+  if (isMultiple) {
+    if (!defaultSelectKeys.indexOf(key)) {
+      defaultSelectKeys.push(key);
+    }
+  } else {
+    defaultSelectKeys = [];
+    defaultSelectKeys.push(key);
+  }
+  return defaultSelectKeys;
+}

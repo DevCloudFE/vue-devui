@@ -1,7 +1,8 @@
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-input {
-  height: 28px;
+  width: 100%;
+  height: $devui-size-md;
   font-size: $devui-font-size;
 
   &__wrapper {
@@ -14,15 +15,25 @@
     border: 1px solid $devui-form-control-line;
     border-radius: $devui-border-radius;
     background-color: $devui-form-control-bg;
-    transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
+    transition: border-color 0.3s $devui-animation-ease-in-out-smooth, box-shadow $devui-animation-duration-base $devui-animation-ease-in;
     height: 100%;
 
     &:not(.#{$devui-prefix}-input--error):not(.#{$devui-prefix}-input--disabled):not(.#{$devui-prefix}-input--focus):hover {
       border-color: $devui-form-control-line-hover;
     }
+
+    &.#{$devui-prefix}-input--glow-style:not(.#{$devui-prefix}-input--error):not(.#{$devui-prefix}-input--disabled):not(.#{$devui-prefix}-input--focus):hover {
+      box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
+      border-color: $devui-form-control-line;
+    }
   }
 
   &--focus:not(.#{$devui-prefix}-input--error) {
+    border-color: $devui-form-control-line-active;
+  }
+
+  &--focus.#{$devui-prefix}-input--glow-style:not(.#{$devui-prefix}-input--error) {
+    box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
     border-color: $devui-form-control-line-active;
   }
 
@@ -50,11 +61,21 @@
   &--sm {
     height: 26px;
     font-size: $devui-font-size-sm;
+
+    .#{$devui-prefix}-input__clear--icon {
+      width: 14px;
+      height: 14px;
+    }
   }
 
   &--lg {
     height: 46px;
     font-size: $devui-font-size-lg;
+
+    .#{$devui-prefix}-input__clear--icon {
+      width: 18px;
+      height: 18px;
+    }
   }
 
   &--feedback {
@@ -71,6 +92,10 @@
     background: none;
     outline: none;
     box-sizing: border-box;
+
+    &::placeholder {
+      color: $devui-placeholder;
+    }
   }
 
   &--prepend {
@@ -108,14 +133,13 @@
 
       .#{$devui-prefix}-button,
       .#{$devui-prefix}-select .#{$devui-prefix}-select__selection {
-        border: none;
-        background-color: transparent;
+        border: none !important;
+        background-color: transparent !important;
         color: inherit;
       }
 
       .#{$devui-prefix}-button,
       .#{$devui-prefix}-select__selection {
-        display: inline-block;
         margin: 0 -20px;
       }
     }
@@ -157,5 +181,47 @@
   &__clear--icon,
   &__password--icon {
     cursor: pointer;
+  }
+
+  &__clear--icon {
+    path {
+      fill: $devui-shape-icon-fill;
+      transition: all $devui-animation-ease-in-out-smooth $devui-animation-duration-slow;
+    }
+
+    &:hover {
+      path {
+        fill: $devui-shape-icon-fill-hover;
+      }
+    }
+  }
+
+  &--gray-style:not(.#{$devui-prefix}-input--disabled) {
+    .#{$devui-prefix}-input__wrapper:not(.#{$devui-prefix}-input--error) {
+      background: $devui-gray-5;
+      border-color: $devui-gray-5;
+
+      &:hover {
+        background: $devui-gray-10;
+        border-color: $devui-gray-10;
+      }
+    }
+  }
+}
+
+body[ui-theme='galaxy-theme'] {
+  .#{$devui-prefix}-input__inner:-webkit-autofill,
+  .#{$devui-prefix}-input__inner:-webkit-autofill:hover,
+  .#{$devui-prefix}-input__inner:-webkit-autofill:focus,
+  .#{$devui-prefix}-input__inner:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+    box-shadow: 0 0 0 1000px transparent inset !important;
+    caret-color: white;
+  }
+
+  .#{$devui-prefix}-input__inner:-internal-autofill-previewed,
+  .#{$devui-prefix}-input__inner:-internal-autofill-selected {
+    -webkit-text-fill-color: $devui-text;
+    transition: background-color 99999s ease-out 0.5s;
   }
 }

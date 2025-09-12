@@ -1,6 +1,20 @@
 import { ExtractPropTypes, PropType } from 'vue';
 import { sizeType } from './types';
 
+export type Placement =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
+
 export const timePickerProps = {
   modelValue: {
     type: String,
@@ -41,11 +55,18 @@ export const timePickerProps = {
   },
   size: {
     type: String as PropType<sizeType>,
-    default: 'md',
   },
   readonly: {
     type: Boolean,
     default: false,
+  },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
+  position: {
+    type: Array as PropType<Placement[]>,
+    default: () => ['bottom', 'top', 'left', 'right'],
   },
 } as const;
 

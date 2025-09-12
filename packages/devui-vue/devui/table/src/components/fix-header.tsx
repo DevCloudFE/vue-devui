@@ -1,9 +1,10 @@
-import { computed, defineComponent, inject } from 'vue';
+import { computed, defineComponent, inject, withModifiers } from 'vue';
 import ColGroup from './colgroup/colgroup';
 import TableHeader from './header/header';
 import TableBody from './body/body';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
-import { TABLE_TOKEN } from '../table-types';
+import { useHorizontalScroll } from '../composables/use-horizontal-scroll';
+import { TABLE_TOKEN, ITableInstanceAndDefaultRow } from '../table-types';
 
 export default defineComponent({
   props: {
@@ -17,13 +18,14 @@ export default defineComponent({
   },
   setup(props: { classes: Record<string, unknown>; isEmpty: boolean }) {
     const ns = useNamespace('table');
-    const table = inject(TABLE_TOKEN, undefined);
+    const table = inject(TABLE_TOKEN, undefined) as ITableInstanceAndDefaultRow;
     const showHeader = computed(() => Boolean(table?.props.showHeader));
+    const { onTableScroll } = useHorizontalScroll(table);
 
     return () => (
-      <div class={ns.e('fix-header')}>
+      <div class={ns.e('fix-header')} onScroll={withModifiers(onTableScroll, ['stop'])}>
         {showHeader.value && (
-          <div style="overflow:hidden scroll;">
+          <div class={ns.e('header-wrapper')}>
             <table class={props.classes} cellpadding="0" cellspacing="0">
               <ColGroup />
               <TableHeader />

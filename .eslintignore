@@ -3,13 +3,3 @@ packages/**/node_modules/*
 packages/**/dist/*
 packages/**/build/*
 packages/**/lib/*
-
-packages/devui-vue/devui/accordion/src/accordion-open-icon.tsx
-packages/devui-vue/devui/auto-complete/src/auto-complete.tsx
-packages/devui-vue/devui/editable-select/src/editable-select.tsx
-packages/devui-vue/devui/gantt/src/gantt-milestone/milestone-icon.tsx
-packages/devui-vue/devui/modal/src/modal.tsx
-packages/devui-vue/devui/pagination/src/components/jump-page.tsx
-packages/devui-vue/devui/search/src/search.tsx
-packages/devui-vue/devui/table/src/header/filter/filter.tsx
-packages/devui-vue/devui/table/src/header/sort/sort.tsx

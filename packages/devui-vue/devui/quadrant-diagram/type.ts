@@ -1,3 +1,9 @@
+import type { CSSProperties } from 'vue';
+export interface IRangeConfigs {
+  min: number; // 坐标轴起始值
+  max: number; // 坐标轴终止值
+  step: number; // 坐标轴刻度值的间隔
+}
 export interface IAxisConfigs {
   tickWidth?: number; // 刻度的宽(高)度，默认为10
   spaceBetweenLabelsAxis?: number; // 刻度值和坐标轴之间的距离，默认为20
@@ -12,11 +18,11 @@ export interface IAxisConfigs {
     left: number;
     bottom: number;
   }; // 原点的位置设置，默认值为{left:30,bottom:30}
-  [propName: string]: any;
+  [propName: string]: unknown;
 }
 export interface IQuadrantConfigs {
-  backgroundColor?: any;
-  color?: any;
+  backgroundColor?: CSSProperties['background-color'];
+  color?: CSSProperties['color'];
   title?: string;
   top?: number;
   left?: number;
@@ -27,7 +33,7 @@ export interface ILabelDataConfigs {
   title: string; // 标签的名称
   content?: string; // 鼠标悬浮在标签上时的提示内容
   progress?: number; // 标签对应事项的进度
-  [propName: string]: any; // 其他数据
+  [propName: string]: unknown; // 其他数据
 }
 
 export interface IViewConfigs {
@@ -35,10 +41,16 @@ export interface IViewConfigs {
   width: number; // 象限图宽度
 }
 
-export interface IRangeConfigs {
-  min: number; // 坐标轴起始值
-  max: number; // 坐标轴终止值
-  step: number; // 坐标轴刻度值的间隔
+export interface ICalAxisConfig {
+  axisOrigin?: { x?: number | null; y?: number | null };
+  axisTop?: number | null;
+  axisRight?: number | null;
+  axisWidth?: number | null;
+  axisHeight?: number | null;
+  yAxisTicksNum?: number | null;
+  xAxisTicksNum?: number | null;
+  xTickSpacing?: number | null;
+  yTickSpacing?: number | null;
 }
 
 export type labelSize = 'small' | 'normal' | 'large';

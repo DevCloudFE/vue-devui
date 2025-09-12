@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { h } from 'vue';
 import Alert from '../src/alert';
 

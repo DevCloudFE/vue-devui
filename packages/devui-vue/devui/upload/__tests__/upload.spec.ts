@@ -3,6 +3,10 @@ import { ref, nextTick, reactive } from 'vue';
 import DUpload from '../src/upload';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 const dotNs = useNamespace('upload', true);
 const dotInputGroupNs = useNamespace('input-group', true);
 const dotProgressNs = useNamespace('progress', true);
@@ -46,6 +50,7 @@ describe('upload', () => {
     };
     mount(TestComponent);
   });
+
   it('should work with `disabled` prop', () => {
     const TestComponent = {
       components: {
@@ -72,6 +77,7 @@ describe('upload', () => {
     const wrapper = mount(TestComponent);
     expect(wrapper.find(`${dotInputGroupClass}.disabled`).exists()).toBe(true);
   });
+
   it('should work with `before-upload auto-upload withoutBtn http-request` prop', async () => {
     const beforeUpload = jest.fn(async () => true);
     const httpRequest = jest.fn(async () => true);
@@ -122,6 +128,7 @@ describe('upload', () => {
     expect(httpRequest).toHaveBeenCalled();
     expect(wrapper.find(`${dotUploadClass} button`).exists()).toBe(false);
   });
+
   it('should work with `placeholder` prop', async () => {
     const TestComponent = {
       components: {
@@ -148,6 +155,7 @@ describe('upload', () => {
     const wrapper = mount(TestComponent);
     expect(wrapper.find(dotUploadPlaceholder).text()).toBe('select file');
   });
+
   it('should work with `limit on-exceed` prop', async () => {
     const onExceed = jest.fn(async () => true);
 
@@ -196,6 +204,7 @@ describe('upload', () => {
     await input.dispatchEvent(evt);
     expect(onExceed).toHaveBeenCalled();
   });
+
   it('should work with `auto-upload  on-change` prop and `submit` func', async () => {
     const onChange = jest.fn(async () => true);
 
@@ -253,6 +262,7 @@ describe('upload', () => {
     await nextTick();
     expect(wrapper.find(dotProgressClass).exists()).toBe(true);
   });
+
   it('should work with `on-progress on-preview` hooks', async () => {
     const onProgress = jest.fn();
     const onPreview = jest.fn();
@@ -302,4 +312,8 @@ describe('upload', () => {
     await nextTick();
     expect(onPreview).toHaveBeenCalled();
   });
+
+  it.todo('method submit work well.');
+
+  it.todo('method clearFiles work well.');
 });

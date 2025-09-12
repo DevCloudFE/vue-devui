@@ -15,7 +15,6 @@ export type Placement =
   | 'bottom-end'
   | 'left-start'
   | 'left-end';
-export type Alignment = 'start' | 'end';
 export type OffsetOptions = { mainAxis?: number; crossAxis?: number };
 
 export const popoverProps = {
@@ -25,11 +24,7 @@ export const popoverProps = {
   },
   position: {
     type: Array as PropType<Array<Placement>>,
-    default: ['bottom'],
-  },
-  align: {
-    type: String as PropType<Alignment> | null,
-    default: null,
+    default: () => ['top', 'right', 'bottom', 'left'],
   },
   offset: {
     type: [Number, Object] as PropType<number | OffsetOptions>,

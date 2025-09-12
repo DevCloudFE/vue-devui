@@ -30,8 +30,10 @@ export const initActiveIndexs = (values: CascaderValueType, curColumn: CascaderI
  * 缓存输入框内容
  * @param inputValueCache 缓存的输入框内容，当最终确定时输出内容
  */
-export const initSingleIptValue = (inputValueCache: Ref<string>): void => {
-  inputValueCache.value = '';
+export const initSingleIptValue = (inputValueCache: Ref<string> | undefined): void => {
+  if (inputValueCache) {
+    inputValueCache.value = '';
+  }
 };
 
 /**

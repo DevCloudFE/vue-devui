@@ -1,7 +1,7 @@
 import { defineComponent, computed, inject, Transition, onMounted, shallowRef } from 'vue';
 import { collapseItemProps } from './collapse-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
-import { Icon } from '../../icon';
+import { useNamespace } from '@devui/shared/utils';
+import { SelectArrowIcon } from '../../svg-icons';
 import { SELECT_TOKEN } from './const';
 
 export default defineComponent({
@@ -24,7 +24,6 @@ export default defineComponent({
     });
     const handlerTitleClick = (e: MouseEvent) => {
       e.preventDefault();
-      e.stopPropagation();
       if (!props.disabled) {
         collapse?.collapseItemClick(props.name);
       }
@@ -66,7 +65,7 @@ export default defineComponent({
             onClick={handlerTitleClick}>
             {ctx.slots.title ? ctx.slots.title() : props.title}
             <span class={ns.e('open-icon')}>
-              <Icon name="select-arrow" size="16px" />
+              <SelectArrowIcon />
             </span>
           </div>
           <Transition name={transitionNs.b()} onEnter={enter} onLeave={leave}>

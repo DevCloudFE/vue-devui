@@ -1,4 +1,4 @@
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-tooltip {
   max-width: 200px;
@@ -73,4 +73,9 @@
       transition: transform 0.1s cubic-bezier(0.5, 0, 0.84, 0.25), opacity 0.1s cubic-bezier(0.5, 0, 0.84, 0.25);
     }
   }
+}
+
+.#{$devui-prefix}-tooltip--with-content {
+  max-width: unset;
+  padding: 0;
 }

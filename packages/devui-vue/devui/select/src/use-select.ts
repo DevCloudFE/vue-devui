@@ -1,6 +1,6 @@
-import { ref, computed, Ref, inject, watch } from 'vue';
+import { ref, computed, Ref, inject, watch, onMounted, nextTick } from 'vue';
 import type { SetupContext } from 'vue';
-import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-types';
+import { SelectProps, OptionObjectItem } from './select-types';
 import { className, KeyType } from './utils';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { onClickOutside } from '@vueuse/core';
@@ -9,20 +9,24 @@ import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../form';
 
 export default function useSelect(
   props: SelectProps,
+  selectRef: Ref<HTMLElement | undefined>,
   ctx: SetupContext,
   focus: () => void,
   blur: () => void,
-  isSelectFocus: Ref<boolean>
-): UseSelectReturnType {
+  isSelectFocus: Ref<boolean>,
+  t: (path: string) => unknown
+) {
   const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
   const ns = useNamespace('select');
-  const containerRef = ref<HTMLElement>();
-  const dropdownRef = ref<HTMLElement>();
+  const dropdownRef = ref();
 
   const selectDisabled = computed(() => formContext?.disabled || props.disabled);
-  const selectSize = computed(() => formContext?.size || props.size);
+  const selectSize = computed(() => props.size || formContext?.size || 'md');
+
   const isObjectOption = ref(false);
+
+  const originRef = ref<HTMLElement>();
 
   // 控制弹窗开合
   const isOpen = ref<boolean>(false);
@@ -33,9 +37,13 @@ export default function useSelect(
     isOpen.value = bool;
     ctx.emit('toggle-change', bool);
   };
-  onClickOutside(containerRef, () => {
-    toggleChange(false);
-  });
+  onClickOutside(
+    dropdownRef,
+    () => {
+      toggleChange(false);
+    },
+    { ignore: [selectRef] }
+  );
 
   const dropdownMenuMultipleNs = useNamespace('dropdown-menu-multiple');
   const selectCls = computed(() => {
@@ -102,9 +110,21 @@ export default function useSelect(
     isObjectOption.value = isObject;
   };
 
+  const updateInjectOptionsStatus = () => {
+    if (props.multiple && Array.isArray(props.modelValue)) {
+      for (const child of injectOptions.value.values()) {
+        if (props.modelValue.includes(child.value)) {
+          child._checked = true;
+        } else {
+          child._checked = false;
+        }
+      }
+    }
+  };
+
   const getInjectOptions = (values: KeyType<OptionObjectItem, 'value'>[]) => {
     return values.map((value) => {
-      if (props.multiple && props.allowCreate) {
+      if (props.allowCreate) {
         const option = injectOptions.value.get(value);
         if (option) {
           return option;
@@ -112,7 +132,7 @@ export default function useSelect(
         const newOption = {
           name: value,
           value: value,
-          _checked: false,
+          _checked: true,
         };
         return value ? newOption : option;
       } else {
@@ -121,28 +141,17 @@ export default function useSelect(
     });
   };
 
-  const selectedOptions = ref<OptionObjectItem[]>([]);
   const filterQuery = ref('');
 
-  // 控制输入框的显示内容
-  // todo injectOptions根据option进行收集，此computed会执行多次; Vue Test Utils: [Vue warn]: Maximum recursive updates exceeded in component <DSelect>
-  // 目前看该警告和下拉面板使用Transition也有关
-  const inputValue = computed<string>(() => {
+  // 当前选中的项
+  const selectedOptions = computed<OptionObjectItem[]>(() => {
     if (props.multiple && Array.isArray(props.modelValue)) {
-      selectedOptions.value = getInjectOptions(props.modelValue).filter((item) => (item ? true : false));
-      return selectedOptions.value.map((item) => item?.name || item?.value || '').join(',');
+      return getInjectOptions(props.modelValue).filter((item) => (item ? true : false));
     } else if (!Array.isArray(props.modelValue)) {
-      selectedOptions.value = getInjectOptions([props.modelValue]).filter((item) => (item ? true : false));
-      return selectedOptions.value[0]?.name || '';
+      return getInjectOptions([props.modelValue]).filter((item) => (item ? true : false));
     }
-    return '';
+    return [];
   });
-
-  const onClick = function (e: MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleChange(!isOpen.value);
-  };
 
   const isSupportFilter = computed(() => isFunction(props.filter) || (typeof props.filter === 'boolean' && props.filter));
 
@@ -199,9 +208,12 @@ export default function useSelect(
       }
       getMultipleSelected(checkedItems);
     } else {
+      if (item.create) {
+        filterQuery.value = '';
+      }
       ctx.emit('update:modelValue', item.value);
-      toggleChange(false);
       getSingleSelected(item);
+      toggleChange(false);
     }
   };
 
@@ -223,13 +235,16 @@ export default function useSelect(
       handleClose();
       blur();
     }
+    filterQuery.value = '';
   };
 
   const tagDelete = (data: OptionObjectItem) => {
     let { modelValue } = props;
-    data._checked = !data._checked;
     const checkedItems = [];
-    for (const child of injectOptions.value.values()) {
+    for (const child of selectedOptions.value) {
+      if (data.value === child.value) {
+        child._checked = false;
+      }
       if (child._checked) {
         checkedItems.push(child.value);
       }
@@ -256,6 +271,7 @@ export default function useSelect(
 
   const queryChange = (query: string) => {
     filterQuery.value = query;
+    ctx.emit('input-change', query);
   };
 
   const isLoading = computed(() => typeof props.loading === 'boolean' && props.loading);
@@ -266,6 +282,7 @@ export default function useSelect(
       props.filter(query);
     } else {
       queryChange(query);
+      dropdownRef.value?.updatePosition();
     }
   };
 
@@ -279,21 +296,24 @@ export default function useSelect(
     const hasCommonOption = injectOptionsArray.value.filter((item) => !item.create).some((item) => item.name === filterQuery.value);
     return typeof props.filter === 'boolean' && props.filter && props.allowCreate && !!filterQuery.value && !hasCommonOption;
   });
+  watch(isShowCreateOption, () => {
+    dropdownRef.value?.updatePosition();
+  });
 
   // no-data-text
   const emptyText = computed(() => {
     const visibleOptionsCount = injectOptionsArray.value.filter((item) => {
       const label = item.name || item.value;
-      return label.toString().toLocaleLowerCase().includes(filterQuery.value.toLocaleLowerCase());
+      return label.toString().toLocaleLowerCase().includes(filterQuery.value.toLocaleLowerCase().trim());
     }).length;
     if (isLoading.value) {
-      return props.loadingText;
+      return '';
     }
     if (isSupportFilter.value && filterQuery.value && injectOptionsArray.value.length > 0 && visibleOptionsCount === 0) {
-      return props.noMatchText;
+      return props.noMatchText || (t('noMatchText') as string);
     }
     if (injectOptionsArray.value.length === 0) {
-      return props.noDataText;
+      return props.noDataText || (t('noDataText') as string);
     }
     return '';
   });
@@ -308,7 +328,7 @@ export default function useSelect(
       return checkOptionDisabledKey;
     } else {
       let tempModelValue = [];
-      tempModelValue = props.modelValue as Array<any>;
+      tempModelValue = props.modelValue as Array<number | string>;
       return (
         checkOptionDisabledKey ||
         (!!props.multipleLimit && props.multipleLimit <= tempModelValue.length && !tempModelValue.includes(item.value))
@@ -320,25 +340,48 @@ export default function useSelect(
     () => props.modelValue,
     () => {
       formItemContext?.validate('change').catch((err) => console.warn(err));
+      updateInjectOptionsStatus();
     },
     { deep: true }
   );
 
+  watch(
+    injectOptions,
+    () => {
+      if (isOpen.value) {
+        dropdownRef.value?.updatePosition();
+      }
+    },
+    { deep: true }
+  );
+
+  watch(
+    isOpen,
+    (val) => {
+      if (val) {
+        dropdownRef.value?.updatePosition();
+      }
+    },
+    { flush: 'post' }
+  );
+
+  onMounted(() => {
+    nextTick(updateInjectOptionsStatus);
+  });
+
   return {
     selectDisabled,
     selectSize,
-    containerRef,
+    originRef,
     dropdownRef,
     isOpen,
     selectCls,
     mergeOptions,
-    inputValue,
     selectedOptions,
     filterQuery,
     emptyText,
     isLoading,
     isShowEmptyText,
-    onClick,
     handleClear,
     valueChange,
     handleClose,

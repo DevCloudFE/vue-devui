@@ -290,6 +290,7 @@ export default defineComponent({
       for (let i = 1; i <= tabs.value.length + 1; i++) {
         if (!tabs.value.find((item) => item.id === `tab${i}`)) {
           tabs.value.push({ id: `tab${i}`, title: `Tab${i}` });
+          editableId.value = `tab${i}`
           break;
         }
       }

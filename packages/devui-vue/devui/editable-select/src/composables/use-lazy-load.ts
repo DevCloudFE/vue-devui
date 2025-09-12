@@ -1,25 +1,22 @@
-import { Ref, SetupContext } from 'vue';
-import { OptionObjectItem } from '../editable-select-types';
-
-interface useLazyLoadReturenType {
+import { Ref, SetupContext, toRefs } from 'vue';
+import { EditableSelectProps } from '../editable-select-types';
+interface UseLazyLoadReturnType {
   loadMore: () => void;
 }
-export const useLazyLoad = (
-  dropdownRef: Ref<HTMLElement>,
-  inputValue: Ref<string>,
-  filterOtion: boolean | ((val: string, option: OptionObjectItem) => boolean) | undefined,
-  ctx: SetupContext
-): useLazyLoadReturenType => {
-  const loadMore = () => {
-    const dropdownVal = dropdownRef.value;
 
-    if (filterOtion !== false) {
+export function useLazyLoad(
+  dropdownRef: Ref<HTMLElement | undefined>,
+  props: EditableSelectProps,
+  ctx: SetupContext
+): UseLazyLoadReturnType {
+  const { enableLazyLoad } = toRefs(props);
+  const loadMore = () => {
+    if (!dropdownRef.value || !enableLazyLoad.value) {
       return;
     }
-
-    if (dropdownVal.clientHeight + dropdownVal.scrollTop >= dropdownVal.scrollHeight) {
-      ctx.emit('loadMore', inputValue.value);
+    if (dropdownRef?.value.clientHeight + dropdownRef.value.scrollTop >= dropdownRef.value.scrollHeight - 12) {
+      ctx.emit('loadMore');
     }
   };
   return { loadMore };
-};
+}

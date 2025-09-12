@@ -16,6 +16,7 @@ ignore:
   - packages/devui-cli/node_modules
   # devui-theme
   - packages/devui-theme/dist
+  - packages/devui-theme/build
   - packages/devui-theme/node_modules
   - packages/devui-theme/src/styles-var
   # devui-vue

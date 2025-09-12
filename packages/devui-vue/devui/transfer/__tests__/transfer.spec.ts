@@ -1,7 +1,12 @@
 import { mount } from '@vue/test-utils';
 import { ref, nextTick } from 'vue';
 import DTransfer from '../src/transfer';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
+
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 const ns = useNamespace('transfer', true);
 const baseClass = ns.b();
 const sourceClass = ns.e('source');
@@ -218,7 +223,10 @@ describe('d-transfer', () => {
       setTimeout(resolve, 500);
     });
     const firstCheckbox = wrapper.find(`${sourceClass} ${bodyClass} .devui-checkbox`);
-    expect(firstCheckbox.text()).toBe('北京北京');
-    expect(firstCheckbox.findAll('span')[2].attributes().style).toBe('color: rgb(94, 124, 224);');
+    const firstCheckboxTextLabel = firstCheckbox.find('.devui-checkbox__label-text span'); // the text element
+    expect(firstCheckboxTextLabel.text()).toBe('北京北京');
+
+    // check the checkbox props —— renderContent: h('span', { style: { color: '#5e7ce0' } }, [option.value, option.name])
+    expect(firstCheckboxTextLabel.attributes().style).toBe('color: rgb(94, 124, 224);');
   });
 });

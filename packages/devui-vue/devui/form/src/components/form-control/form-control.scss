@@ -1,4 +1,4 @@
-@import '../../../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-form__control {
   flex: 1 1 auto;
@@ -70,10 +70,6 @@
         }
       }
     }
-  }
-
-  .#{$devui-prefix}-form__control-content {
-    width: 100%;
   }
 
   .#{$devui-prefix}-form__control-container--has-feedback {

@@ -7,4 +7,4 @@ export const colorPickerBasicColorProps = {
   }
 } as const;
 
-export type colorPickerBasicColorProps = ExtractPropTypes<typeof colorPickerBasicColorProps>;
+export type ColorPickerBasicColorProps = ExtractPropTypes<typeof colorPickerBasicColorProps>;

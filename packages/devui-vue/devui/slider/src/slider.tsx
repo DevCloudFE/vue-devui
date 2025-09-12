@@ -1,7 +1,6 @@
 import { defineComponent, computed, SetupContext } from 'vue';
 import { sliderProps, SliderProps } from './slider-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
-import { isFunction } from '../../shared/utils';
+import { useNamespace, isFunction } from '@devui/shared/utils';
 import { useSliderEvent } from './use-slider';
 import './slider.scss';
 
@@ -35,7 +34,8 @@ export default defineComponent({
             style={{ left: percentDisplay.value }}
             onMousedown={handleButtonMousedown}
             onMouseenter={() => (popoverShow.value = true)}
-            onMouseout={() => (popoverShow.value = false)}></div>
+            onMouseout={() => (popoverShow.value = false)}
+          />
           {props.tipsRenderer === null ? null : popoverShow.value ? (
             <div class={ns.e('popover')} style={{ left: percentDisplay.value }}>
               <div class={ns.e('popover-arrow')}></div>

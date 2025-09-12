@@ -1,20 +1,21 @@
-import { defineComponent, inject, computed } from 'vue';
-import { TABLE_TOKEN, DefaultRow, ITable } from '../../table-types';
+import { defineComponent, inject } from 'vue';
+import { TABLE_TOKEN, DefaultRow, ITableInstanceAndDefaultRow } from '../../table-types';
 import { Column } from '../column/column-types';
 import { CellClickArg, RowClickArg } from './body-types';
 import TD from '../body-td/body-td';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
-import { useMergeCell, useBodyRender } from './use-body';
+import { useMergeCell, useBodyRender, useLazyLoad } from './use-body';
 import './body.scss';
 
 export default defineComponent({
   name: 'DTableBody',
   setup() {
-    const table = inject(TABLE_TOKEN) as ITable;
+    const table = inject(TABLE_TOKEN) as ITableInstanceAndDefaultRow;
     const { flatColumns, flatRows } = table.store.states;
     const ns = useNamespace('table');
     const { tableSpans, removeCells } = useMergeCell();
     const { getTableRowClass } = useBodyRender();
+    const { lazy, lazyFlagRef } = useLazyLoad();
     const onCellClick = (cellClickArg: CellClickArg) => {
       table.emit('cell-click', cellClickArg);
     };
@@ -41,7 +42,11 @@ export default defineComponent({
                     row={row}
                     rowspan={rowspan}
                     colspan={colspan}
-                    onClick={() => onCellClick({ rowIndex, columnIndex, column, row })}
+                    class={{
+                      [ns.m('last-sticky-left')]: column.fixedLeft && !flatColumns.value[columnIndex + 1]?.fixedLeft,
+                      [ns.m('first-sticky-right')]: column.fixedRight && !flatColumns.value[columnIndex - 1]?.fixedRight,
+                    }}
+                    onCellClick={() => onCellClick({ rowIndex, columnIndex, column, row })}
                   />
                 );
               })}
@@ -59,6 +64,7 @@ export default defineComponent({
             )}
           </>
         ))}
+        {lazy && <span ref={lazyFlagRef} class={ns.e('lazy__flag')}></span>}
       </tbody>
     );
   },

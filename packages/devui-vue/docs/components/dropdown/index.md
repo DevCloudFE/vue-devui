@@ -12,7 +12,7 @@
 
 ```vue
 <template>
-  <d-dropdown style="width: 100px;" :position="position" align="start">
+  <d-dropdown style="width: 100px;" :position="position">
     <d-button>Click Me</d-button>
     <template #menu>
       <ul class="list-menu">
@@ -31,7 +31,7 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     return {
-      position: ref(['bottom-start', 'top-start']),
+      position: ref(['bottom-start', 'right','top-end']),
     };
   },
 });
@@ -74,8 +74,8 @@ export default defineComponent({
       </d-radio-group>
     </div>
   </div>
-  <d-dropdown :visible="isOpen" :trigger="trigger" :position="position" align="start" @toggle="handleToggle">
-    <d-button>More</d-button>
+  <d-dropdown :visible="isOpen" :trigger="trigger" :position="position" @toggle="handleToggle">
+    <d-button class="mt-1">More</d-button>
     <template #menu>
       <ul class="list-menu">
         <li class="menu-item">Item 1</li>
@@ -125,8 +125,8 @@ export default defineComponent({
       </d-radio-group>
     </div>
   </div>
-  <d-dropdown :close-scope="closeScope" :position="position" align="start" style="width: 100px;">
-    <d-button>More</d-button>
+  <d-dropdown :close-scope="closeScope" :position="position" style="width: 100px;">
+    <d-button class="mt-1">More</d-button>
     <template #menu>
       <ul class="list-menu">
         <li class="menu-item">Item 1</li>
@@ -165,14 +165,14 @@ export default defineComponent({
     <d-button>Click Me</d-button>
     <template #menu>
       <ul class="list-menu">
-        <d-dropdown :position="position" :offset="0" align="start">
+        <d-dropdown :position="position" :offset="0">
           <li class="menu-item">
             Item 1
             <i class="icon icon-chevron-right"></i>
           </li>
           <template #menu>
             <ul class="list-menu">
-              <d-dropdown :position="position" :offset="0" align="start">
+              <d-dropdown :position="position" :offset="0" >
                 <li class="menu-item">
                   Item 1-1
                   <i class="icon icon-chevron-right"></i>
@@ -261,14 +261,14 @@ export default defineComponent({
 | visible                   | `boolean`                                   | false      | 可选，可以显式指定 dropdown 是否打开                                                                                         | [触发方式](#触发方式)     |
 | trigger                   | [TriggerType](#triggertype)                 | click      | 可选，dropdown 触发方式, click 为点、hover 为悬停、manually 为完全手动控制                                                   | [触发方式](#触发方式)     |
 | close-scope               | [CloseScopeArea](#closescopearea)           | all        | 可选，点击关闭区域，blank 点击非菜单空白关闭, all 点击菜单内外关闭，none 仅触发元素关闭                                      | [可关闭区域](#可关闭区域) |
-| position                  | [Placement[]](#placement)                   | ['bottom'] | 可选，展开位置，若位置包含`start`或`end`，需通过`align`参数设置对齐方式                                                      | [基本用法](#基本用法)     |
-| align                     | `start \| end \| null`                      | null       | 可选，对齐方式，默认居中对齐。若指定`start`对齐，当`start`位置放不下时，会自动调整为`end`对齐                                | [基本用法](#基本用法)     |
+| position                  | [Placement[]](#placement)                   | ['bottom'] | 可选，展开位置，按照顺序自动选择位置                                                      | [基本用法](#基本用法)     |
 | offset                    | `number` \| [OffsetOptions](#offsetoptions) | 4          | 可选，指定与触发元素的间距                                                                                                   | [多级菜单](#多级菜单)     |
 | shift-offset              | `number`                                    | --         | 可选，当设置该参数时，表示启用贴边功能，当指定的 position 放不下时，选择最近的视图边界对齐，此参数可设置相对视图边界的偏移量 |
 | close-on-mouse-leave-menu | `boolean`                                   | false      | 可选，是否进入菜单后离开菜单的时候关闭菜单                                                                                   |
 | show-animation            | `boolean`                                   | true       | 可选，控制是否显示动画                                                                                                       |
 | overlay-class             | `string`                                    | --         | 可选，自定义 overlay 的样式                                                                                                  |
 | destroy-on-hide           | `boolean`                                   | true       | 可选，是否在关闭 dropdown 时将其销毁                                                                                         |
+| teleport          | `string \| HTMLElement`                            | 'body' | 可选，挂载节点，等同于 Teleport 组件的[to 属性](https://cn.vuejs.org/api/built-in-components.html#teleport) |
 
 ### Dropdown 事件
 

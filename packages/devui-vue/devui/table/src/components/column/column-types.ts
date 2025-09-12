@@ -1,13 +1,10 @@
-import type { PropType, ExtractPropTypes, VNode, Slot, ComponentInternalInstance, SetupContext, Slots } from 'vue';
+import type { PropType, ExtractPropTypes, VNode, Slot, ComponentInternalInstance, SetupContext, Slots, ComputedRef } from 'vue';
 import { DefaultRow, TableProps } from '../../table-types';
 import { TableStore } from '../../store/store-types';
 
-// eslint-disable-next-line no-use-before-define
-export type Formatter = (row: DefaultRow, column: Column, cellValue: any, rowIndex: number) => VNode;
+export type SortMethod<T = unknown> = (a: T, b: T) => boolean;
 
-export type SortMethod<T = any> = (a: T, b: T) => boolean;
-
-export type ColumnType = 'checkable' | 'index' | 'expand' | '';
+export type ColumnType = 'checkable' | 'index' | 'expand' | 'editable' | '';
 
 export type SortDirection = 'ASC' | 'DESC' | '';
 
@@ -15,9 +12,60 @@ export type ColumnAlign = 'left' | 'center' | 'right';
 
 export interface FilterConfig {
   name: string;
-  value: any;
+  value: unknown;
   checked?: boolean;
 }
+
+type BaseFormatter<T> = (row: DefaultRow, column: T, cellValue: unknown, rowIndex: number) => VNode;
+
+export interface Column {
+  id: string;
+  type?: ColumnType;
+  field: string;
+  width: number | string;
+  minWidth: number | string;
+  maxWidth: number | string;
+  realWidth?: number | string;
+  header?: string;
+  order?: number;
+  sortable?: boolean;
+  sortDirection?: SortDirection;
+  filterable?: boolean;
+  filterMultiple?: boolean;
+  filterList?: FilterConfig[];
+  fixedLeft?: string;
+  fixedRight?: string;
+  align?: ColumnAlign;
+  cellClass: string;
+  showOverflowTooltip?: boolean;
+  resizeable: boolean;
+  ctx?: SetupContext;
+  customFilterTemplate?: Slot;
+  renderHeader?: (column: Column, store: TableStore) => VNode;
+  renderCell?: (
+    rowData: DefaultRow,
+    columnItem: Column,
+    store: TableStore,
+    rowIndex: number,
+    props?: TableProps,
+    cellMode?: ComputedRef<string>,
+    ctx?: SetupContext
+  ) => VNode;
+  formatter?: BaseFormatter<Column>;
+  sortMethod?: SortMethod;
+  subColumns?: Slot;
+  slots: Slots;
+}
+
+export type LevelColumn = {
+  children?: LevelColumn[];
+  level?: number;
+  colSpan?: number;
+  rowSpan?: number;
+  isSubColumn?: boolean;
+} & Column;
+
+export type Formatter = BaseFormatter<Column>;
 
 export const tableColumnProps = {
   type: {
@@ -98,41 +146,17 @@ export const tableColumnProps = {
     type: Boolean,
     default: false,
   },
+  cellClass: {
+    type: String,
+    default: '',
+  },
 };
 
 export type TableColumnProps = ExtractPropTypes<typeof tableColumnProps>;
 
-export interface Column {
-  id: string;
-  type?: ColumnType;
-  field: string;
-  width: number | string;
-  minWidth: number | string;
-  maxWidth: number | string;
-  realWidth?: number | string;
-  header?: string;
-  order?: number;
-  sortable?: boolean;
-  sortDirection?: SortDirection;
-  filterable?: boolean;
-  filterMultiple?: boolean;
-  filterList?: FilterConfig[];
-  fixedLeft?: string;
-  fixedRight?: string;
-  align?: ColumnAlign;
-  showOverflowTooltip?: boolean;
-  resizeable: boolean;
-  ctx?: SetupContext;
-  customFilterTemplate?: Slot;
-  renderHeader?: (column: Column, store: TableStore) => VNode;
-  renderCell?: (rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number, props?: TableProps) => VNode;
-  formatter?: Formatter;
-  sortMethod?: SortMethod;
-  subColumns?: Slot;
-  slots: Slots;
-}
-
 export interface TableColumn extends ComponentInternalInstance {
+  tableId?: string;
+  parent: TableColumn;
   columnId: string;
   columnConfig: Partial<Column>;
 }

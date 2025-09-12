@@ -1,23 +1,28 @@
-import { defineComponent, Transition, ref, renderSlot, useSlots } from 'vue';
+import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance, Teleport, withModifiers, computed, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import { rangeDatePickerProProps, RangeDatePickerProProps } from '../range-date-picker-types';
 import { FlexibleOverlay } from '../../../overlay';
 import DatePickerProPanel from './date-picker-panel';
 import { Input } from '../../../input';
-import { Icon } from '../../../icon';
+import { IconCalendar } from './icon-calendar';
+import { IconClose } from './icon-close';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import useRangePickerPro from '../composables/use-range-date-picker-pro';
 
 import '../date-picker-pro.scss';
+import { createI18nTranslate } from '../../../locale/create';
 
 export default defineComponent({
   name: 'DRangeDatePickerPro',
   props: rangeDatePickerProProps,
   emits: ['update:modelValue', 'toggleChange', 'confirmEvent', 'focus', 'blur'],
   setup(props: RangeDatePickerProProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DDatePickerPro', app);
+    const { showGlowStyle, position } = toRefs(props);
+
     const ns = useNamespace('range-date-picker-pro');
     const {
-      containerRef,
       originRef,
       startInputRef,
       endInputRef,
@@ -39,7 +44,14 @@ export default defineComponent({
       handlerClearTime,
       onChangeRangeFocusType,
     } = useRangePickerPro(props, ctx);
-    const position = ref(['bottom-start']);
+    const currentPosition = ref('bottom');
+    const handlePositionChange = (pos: string) => {
+      currentPosition.value = pos.split('-')[0] === 'top' ? 'top' : 'bottom';
+    };
+    const styles = computed(() => ({
+      transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
+      'z-index': 'var(--devui-z-index-dropdown, 1052)',
+    }));
 
     return () => {
       const vSlots = {
@@ -48,14 +60,17 @@ export default defineComponent({
       };
 
       return (
-        <div
-          class={[ns.b(), props.showTime ? ns.e('range-time-width') : ns.e('range-width'), isPanelShow.value && ns.m('open')]}
-          ref={containerRef}>
+        <div class={[ns.b(), props.showTime ? ns.e('range-time-width') : ns.e('range-width'), isPanelShow.value && ns.m('open')]}>
           <div
-            class={[ns.e('range-picker'), pickerDisabled.value && ns.m('disabled'), isValidateError.value && ns.m('error')]}
+            class={[
+              ns.e('range-picker'),
+              pickerDisabled.value && ns.m('disabled'),
+              isValidateError.value && ns.m('error'),
+              showGlowStyle.value && ns.m('glow-style'),
+            ]}
             ref={originRef}
-            onmouseover={() => (isMouseEnter.value = true)}
-            onmouseout={() => (isMouseEnter.value = false)}>
+            onMouseover={() => (isMouseEnter.value = true)}
+            onMouseout={() => (isMouseEnter.value = false)}>
             <span
               class={[
                 isPanelShow.value && focusType.value === 'start' ? ns.e('active-input') : ns.e('normal-input'),
@@ -65,15 +80,24 @@ export default defineComponent({
               <Input
                 ref={startInputRef}
                 modelValue={displayDateValue.value[0]}
-                placeholder={placeholder.value[0]}
-                onFocus={(e: MouseEvent) => {
-                  e.stopPropagation();
-                  onFocus('start');
-                  focusHandler(e);
-                }}
+                placeholder={placeholder.value[0] || t('startPlaceholder')}
+                show-glow-style={false}
+                onFocus={withModifiers(
+                  (e: MouseEvent) => {
+                    onFocus('start');
+                    focusHandler(e);
+                  },
+                  ['stop']
+                )}
                 size={pickerSize.value}
                 disabled={pickerDisabled.value}
-                prefix="calendar"
+                v-slots={{
+                  prefix: () => (
+                    <span class={ns.e('range-picker-icon')}>
+                      <IconCalendar></IconCalendar>
+                    </span>
+                  ),
+                }}
               />
             </span>
 
@@ -87,40 +111,51 @@ export default defineComponent({
               <Input
                 ref={endInputRef}
                 modelValue={displayDateValue.value[1]}
-                placeholder={placeholder.value[1]}
-                onFocus={(e: MouseEvent) => {
-                  e.stopPropagation();
-                  onFocus('end');
-                  focusHandler(e);
-                }}
+                placeholder={placeholder.value[1] || t('endPlaceholder')}
+                show-glow-style={false}
+                onFocus={withModifiers(
+                  (e: MouseEvent) => {
+                    onFocus('end');
+                    focusHandler(e);
+                  },
+                  ['stop']
+                )}
                 size={pickerSize.value}
                 disabled={pickerDisabled.value}
                 v-slots={{
                   suffix: () => (
-                    <Icon
-                      class={showCloseIcon.value ? ns.m('icon-visible') : ns.m('icon-hidden')}
-                      name="error-o"
-                      onClick={handlerClearTime}
-                      style="font-size: inherit;"></Icon>
+                    <span
+                      class={[showCloseIcon.value ? ns.m('icon-visible') : ns.m('icon-hidden'), 'close-icon']}
+                      onClick={handlerClearTime}>
+                      <IconClose></IconClose>
+                    </span>
                   ),
                 }}
               />
             </span>
           </div>
-          <Transition name="fade">
-            <FlexibleOverlay v-model={isPanelShow.value} ref={overlayRef} origin={originRef.value} align="start" position={position.value}>
-              <DatePickerProPanel
-                {...props}
-                dateValue={dateValue.value}
-                visible={isPanelShow.value}
-                format={format.value}
-                isRangeType={true}
-                focusType={focusType.value}
-                onSelectedDate={onSelectedDate}
-                onChangeRangeFocusType={onChangeRangeFocusType}
-                v-slots={vSlots}></DatePickerProPanel>
-            </FlexibleOverlay>
-          </Transition>
+          <Teleport to="body">
+            <Transition name={ns.m(`fade-${currentPosition.value}`)}>
+              <FlexibleOverlay
+                v-model={isPanelShow.value}
+                ref={overlayRef}
+                origin={originRef.value}
+                position={position.value}
+                style={styles.value}
+                onPositionChange={handlePositionChange}>
+                <DatePickerProPanel
+                  {...props}
+                  dateValue={dateValue.value}
+                  visible={isPanelShow.value}
+                  format={format.value}
+                  isRangeType={true}
+                  focusType={focusType.value}
+                  onSelectedDate={onSelectedDate}
+                  onChangeRangeFocusType={onChangeRangeFocusType}
+                  v-slots={vSlots}></DatePickerProPanel>
+              </FlexibleOverlay>
+            </Transition>
+          </Teleport>
         </div>
       );
     };

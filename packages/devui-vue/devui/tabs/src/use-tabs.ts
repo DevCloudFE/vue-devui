@@ -1,6 +1,6 @@
 import { computed } from 'vue';
 import type { SetupContext } from 'vue';
-import type { UseTabsEvent, TabsProps, UseTabsRender } from './tabs-types';
+import type { UseTabsEvent, TabsProps, UseTabsRender, TabsStateData } from './tabs-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
 const ns = useNamespace('tabs');
@@ -12,7 +12,8 @@ export function useTabsEvent(ctx: SetupContext): UseTabsEvent {
   const onActiveTabChange = (value: string) => {
     ctx.emit('active-tab-change', value);
   };
-  const onTabRemove = (item: any, ev: MouseEvent) => {
+
+  const onTabRemove = (item: TabsStateData, ev: MouseEvent) => {
     ctx.emit('tab-remove', item, ev);
   };
   const onTabAdd = () => {

@@ -1,20 +1,21 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useToc } from '../composables/useToc'
-import { useActiveSidebarLinks } from '../composables/activeBar'
+import { ref, computed } from 'vue';
+import { useToc } from '../composables/useToc';
+import { useActiveSidebarLinks } from '../composables/activeBar';
+import { CURRENT_LANG, ZH_CN } from '../const';
 
-const headers = useToc()
-const marker = ref()
-const container = ref()
+const headers = useToc();
+const marker = ref();
+const container = ref();
 // 滚动监听
-useActiveSidebarLinks(container, marker)
+useActiveSidebarLinks(container, marker);
 const forwardText = computed(() => {
-  return localStorage.getItem('preferred_lang') === 'zh-CN' ? '快速前往' : 'Forward'
-})
+  return CURRENT_LANG === ZH_CN ? '快速前往' : 'Forward';
+});
 </script>
 
 <template>
-  <aside ref="container">
+  <aside ref="container" v-if="headers?.length > 0">
     <nav class="devui-content-nav">
       <h3 class="devui-fast-forward">{{ forwardText }}</h3>
       <ul class="devui-step-nav">
@@ -34,25 +35,25 @@ const forwardText = computed(() => {
 .devui-content-nav {
   width: 200px;
   position: fixed;
-  top: 50px;
-  right: calc((100vw - 1440px) / 2 - 10px);
+  top: 62px;
+  right: 40px;
   z-index: 1;
 
   .devui-fast-forward {
     width: 130px;
-    font-size: $devui-font-size-card-title;
+    font-size: $devui-font-size;
     color: $devui-text;
     line-height: 24px;
-    font-weight: bold;
-    padding-bottom: 10px;
-    margin-left: 17px;
+    font-weight: 600;
+    padding-bottom: 8px;
+    margin-left: 16px;
   }
 
   .devui-step-nav {
     overflow-y: hidden;
     height: calc(100vh - 182px);
-    margin-top: 10px;
-    padding-bottom: 20px;
+    margin-top: 0;
+    padding-bottom: 0;
 
     &:hover {
       overflow-y: auto;
@@ -61,35 +62,47 @@ const forwardText = computed(() => {
     & > li {
       list-style: none;
       cursor: pointer;
-      height: 30px;
-      line-height: 30px;
-      font-size: $devui-font-size;
+      height: 36px;
+      line-height: 36px;
+      font-size: $devui-font-size-sm;
       color: $devui-text;
       position: relative;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+      border-radius: $devui-border-radius-full;
 
       a {
         display: block;
-        width: 110px;
         overflow: hidden;
         color: $devui-text;
         white-space: nowrap;
         text-overflow: ellipsis;
         -webkit-transition: all 0.3s ease;
         transition: all 0.3s ease;
+        padding-left: 16px;
+        text-decoration: none;
+
+        :hover {
+          background-color: $devui-list-item-hover-bg;
+        }
       }
+
       a.current {
         color: $devui-link;
       }
     }
   }
 
-  .devui-link:hover,
-  .devui-link.active {
-    color: $devui-brand;
-    text-decoration: none;
+  .devui-item {
+    :hover {
+      background-color: $devui-list-item-hover-bg;
+    }
+
+    .active {
+      background-color: $devui-list-item-active-bg;
+      font-weight: 600;
+    }
   }
 }
 
@@ -103,7 +116,7 @@ const forwardText = computed(() => {
   }
 }
 
-@media (max-width: 1250px) {
+@media (max-width: 1640px) {
   .devui-content-nav {
     display: none;
   }

@@ -39,7 +39,9 @@ function toggle() {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@devui/styles-var/devui-var';
+
 .nav-dropdown-link {
   position: relative;
   height: 36px;
@@ -72,7 +74,7 @@ function toggle() {
   font-family: var(--font-family-base);
   font-size: 1rem;
   font-weight: 600;
-  color: var(--c-text);
+  color: $devui-text;
   white-space: nowrap;
   background-color: transparent;
   cursor: pointer;
@@ -128,8 +130,8 @@ function toggle() {
     border-radius: 6px;
     padding: 12px 0;
     min-width: 128px;
-    background-color: var(--c-bg);
-    box-shadow: var(--shadow-3);
+    background-color: $devui-connected-overlay-bg;
+    box-shadow: $devui-shadow-length-connected-overlay $devui-shadow;
   }
 }
 </style>

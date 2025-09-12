@@ -14,17 +14,14 @@
 ```vue
 <template>
   <div>
-    Small
-    <d-select v-model="value1" :options="options" size="sm"></d-select>
-    <br />
-    Middle
-    <d-select v-model="value2" :options="options"></d-select>
-    <br />
-    Large
-    <d-select v-model="value3" :options="options" size="lg"></d-select>
-    <br />
-    Underlined
-    <d-select v-model="value4" :options="options" size="lg" overview="underlined"></d-select>
+    <div class="mb-0">Small</div>
+    <d-select class="mb-2" v-model="value1" :options="options" size="sm"></d-select>
+    <div class="mb-0">Middle</div>
+    <d-select class="mb-2" v-model="value2" :options="options"></d-select>
+    <div class="mb-0">Large</div>
+    <d-select class="mb-2" v-model="value3" :options="options" size="lg"></d-select>
+    <div class="mb-0">Underlined</div>
+    <d-select class="mb-2" v-model="value4" :options="options" size="lg" overview="underlined"></d-select>
   </div>
 </template>
 
@@ -60,14 +57,12 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>基础多选</div>
-  <d-select v-model="value1" :options="options" :multiple="true" :multiple-limit="2" />
-  <br />
-  <div>collapse-tags</div>
-  <d-select v-model="value2" :options="options" :multiple="true" :collapse-tags="true" />
-  <br />
-  <div>collapse-tags-tooltip</div>
-  <d-select v-model="value3" :options="options" :multiple="true" :collapse-tags="true" :collapse-tags-tooltip="true" />
+  <div class="mb-0">基础多选</div>
+  <d-select class="mb-2" v-model="value1" :options="options" :multiple="true" :multiple-limit="2" />
+  <div class="mb-0">collapse-tags</div>
+  <d-select class="mb-2" v-model="value2" :options="options" :multiple="true" :collapse-tags="true" />
+  <div class="mb-0">collapse-tags-tooltip</div>
+  <d-select class="mb-2" v-model="value3" :options="options" :multiple="true" :collapse-tags="true" :collapse-tags-tooltip="true" />
 </template>
 
 <script>
@@ -101,11 +96,9 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-select v-model="value1" :options="options1" :disabled="true" />
-  <br />
-  <d-select v-model="value2" :options="options2" option-disabled-key="disabled" />
-  <br />
-  <d-select v-model="value3" :options="options3" :multiple="true" option-disabled-key="notAllow" />
+  <d-select class="mb-2" v-model="value1" :options="options1" :disabled="true" />
+  <d-select class="mb-2" v-model="value2" :options="options2" option-disabled-key="disabled" />
+  <d-select class="mb-2" v-model="value3" :options="options3" :multiple="true" option-disabled-key="notAllow" />
 </template>
 
 <script>
@@ -171,8 +164,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-select v-model="value1" :options="options" :allow-clear="true" />
-  <br />
+  <d-select class="mb-2" v-model="value1" :options="options" :allow-clear="true" />
   <d-select v-model="value2" :options="options" :multiple="true" :allow-clear="true" />
 </template>
 
@@ -206,8 +198,8 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-button @click="toggleChange" style="margin-bottom: 10px">展开 / 隐藏</d-button>
-    <d-select ref="demoSelect" v-model="toggleValue" :options="options"></d-select>
+    <d-button @click.stop="toggleChange" @pointerup.stop="() => {}"  class="mb-2">展开 / 隐藏</d-button>
+    <d-select ref="demoSelect" v-model="toggleValue" :options="options" @load-more="loadMore"></d-select>
   </div>
 </template>
 
@@ -218,18 +210,26 @@ export default defineComponent({
   setup() {
     const toggleValue = ref('');
     const visitable = ref(false);
-    const items = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const items = new Array(12).fill(0).map((item, i) => `Option ${i + 1}`);
     const options = reactive(items);
+    const newItems = new Array(2).fill(0).map((item, i) => `Option new`);
     const demoSelect = ref(null);
     const toggleChange = () => {
       visitable.value = !visitable.value;
       demoSelect.value.toggleChange(visitable.value);
+    };
+    const loadMore = () => {
+      if(options.length <= 20) {
+        options.push(...newItems);
+        console.log('load more');
+      }
     };
     return {
       toggleValue,
       options,
       demoSelect,
       toggleChange,
+      loadMore,
     };
   },
 });
@@ -245,13 +245,12 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>d-option</div>
-  <d-select v-model="value1" :allow-clear="true">
+  <div class="mb-0">d-option</div>
+  <d-select class="mb-2" v-model="value1" :allow-clear="true">
     <d-option v-for="(item, index) in options.data" :key="index" :value="item.value" :name="item.name"></d-option>
   </d-select>
-  <br />
-  <div>d-option自定义内容及样式</div>
-  <d-select v-model="value2" :allow-clear="true">
+  <div class="mb-0">d-option自定义内容及样式</div>
+  <d-select class="mb-2" v-model="value2" :allow-clear="true">
     <d-option v-for="(item, index) in options1.data" :key="index" :value="item">
       <div class="clear-float">
         <span style="float: left;">{{ item }}</span>
@@ -376,13 +375,12 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>默认筛选</div>
-  <d-select v-model="value1" :allow-clear="true" filter>
+  <div class="mb-0">默认筛选</div>
+  <d-select class="mb-2" v-model="value1" :allow-clear="true" filter @input-change="handleInput">
     <d-option v-for="(item, index) in options.data" :key="index" :value="item.value" :name="item.name"></d-option>
   </d-select>
-  <br />
-  <div>远程搜索</div>
-  <d-select v-model="value2" :allow-clear="true" :filter="filterFunc" remote placeholder="请输入搜索关键字" :loading="loading">
+  <div class="mb-0">远程搜索</div>
+  <d-select class="mb-2" v-model="value2" :allow-clear="true" :filter="filterFunc" remote placeholder="请输入搜索关键字" :loading="loading">
     <d-option v-for="(item, index) in options1.data" :key="index" :value="item.value" :name="item.name"></d-option>
   </d-select>
 </template>
@@ -420,6 +418,9 @@ export default defineComponent({
         options1.data = [];
       }
     };
+    const handleInput = (val) => {
+      console.log(val);
+    };
     return {
       value1,
       value2,
@@ -427,6 +428,7 @@ export default defineComponent({
       options1,
       loading,
       filterFunc,
+      handleInput,
     };
   },
 });
@@ -529,6 +531,9 @@ export default defineComponent({
 | loading               | `boolean`             | false            | 可选, 配置下拉选项是否远程加载，配合 loading-text 使用                                                                                                         | [远程加载数据](#远程加载数据)     |
 | loading-text          | `string`              | '加载中'         | 可选, 远程搜索时显示的文本                                                                                                                                     | [远程加载数据](#远程加载数据)     |
 | multiple-limit        | `number`              | '0'              | 可选, multiple 属性设置为 true 时生效，表示用户最多可以选择的项目数， 为 0 则不限制                                                                            | [多选](#多选)                     |
+|show-glow-style|`boolean`|true|可选，是否展示悬浮发光效果||
+|menu-class|`string`|''|可选，自定义下拉菜单的样式名||
+|max-length|`number`|--|可选，可筛选时输入框可输入的最大长度||
 
 ### Select 事件
 
@@ -540,6 +545,8 @@ export default defineComponent({
 | blur          | `Function(e: FocusEvent)` | 可选，失去焦点时触发                                           |
 | clear         | `Function()`              | 可选, 通过右侧删除图标清空所有选项时触发                       |
 | remove-tag    | `Function(value)`         | 可选，多选时删除单个 tag 时触发，参数为当前 tag 的值           |
+| load-more    | `Function()`               | 可选，下拉框有滚动条时滚动到底部触发           |[下拉列表显隐方法](#下拉列表显隐方法)|
+| input-change    | `Function(value)`       | 可选，输入框输入内容时触发，参数为输入的值           |[筛选、搜索选项](#筛选、搜索选项)|
 
 ### Select 插槽
 

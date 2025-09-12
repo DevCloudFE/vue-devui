@@ -44,7 +44,7 @@ describe('d-collapse', () => {
     const itemOpen1 = collapseItems[1].find(itemOpenClass);
     expect(itemOpen1.exists()).toBeFalsy();
     const itemContent1 = collapseItems[1].find(itemContentClass);
-    expect(itemContent1.isVisible()).toBeFalsy();
+    expect(itemContent1.exists()).toBeFalsy();
     wrapper.unmount();
   });
 
@@ -75,7 +75,7 @@ describe('d-collapse', () => {
     const itemOpen = collapseItems[0].find(itemOpenClass);
     expect(itemOpen.exists()).toBeFalsy();
     const itemContent = collapseItems[0].find(itemContentClass);
-    expect(itemContent.isVisible()).toBeFalsy();
+    expect(itemContent.exists()).toBeFalsy();
 
     const itemTitle1 = collapseItems[1].find(itemTitleClass);
     await itemTitle1.trigger('click');
@@ -113,7 +113,7 @@ describe('d-collapse', () => {
     const itemOpen = collapseItems[0].find(itemOpenClass);
     expect(itemOpen.exists()).toBeFalsy();
     const itemContent = collapseItems[0].find(itemContentClass);
-    expect(itemContent.isVisible()).toBeFalsy();
+    expect(itemContent.exists()).toBeFalsy();
 
     const itemOpen1 = collapseItems[1].find(itemOpenClass);
     expect(itemOpen1.exists()).toBeTruthy();
@@ -150,7 +150,7 @@ describe('d-collapse', () => {
     const itemOpen1 = collapseItems[1].find(itemOpenClass);
     expect(itemOpen1.exists()).toBeFalsy();
     const itemContent1 = collapseItems[1].find(itemContentClass);
-    expect(itemContent1.isVisible()).toBeFalsy();
+    expect(itemContent1.exists()).toBeFalsy();
     wrapper.unmount();
   });
 });

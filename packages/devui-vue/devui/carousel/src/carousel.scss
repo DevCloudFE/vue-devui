@@ -1,4 +1,4 @@
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 @mixin fixed-arrow-button() {
   position: absolute;
@@ -13,6 +13,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border: 0;
 
   &:hover {
     background: $devui-area;
@@ -87,12 +88,12 @@
 
       &:hover {
         cursor: pointer;
-        background: $devui-list-item-hover-bg;
+        background: $devui-icon-fill-hover;
       }
 
       &.active {
         width: 24px;
-        background: $devui-list-item-active-bg;
+        background: $devui-icon-fill-active;
         transition: all $devui-animation-duration-slow $devui-animation-ease-in-smooth;
       }
     }

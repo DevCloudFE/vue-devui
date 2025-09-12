@@ -39,6 +39,10 @@ export const menuProps = {
     type: Boolean,
     default: false,
   },
+  disableOverflowStyle: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type MenuProps = ExtractPropTypes<typeof menuProps>;

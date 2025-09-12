@@ -1,0 +1,265 @@
+@import '@devui/theme/styles-var/devui-var.scss';
+
+.dp-action-timeline {
+  background-color: $devui-base-bg;
+  padding: 0 20px;
+  position: relative;
+
+  .dp-action-timeline-title {
+    font-size: $devui-font-size-sm;
+    padding-top: 12px;
+
+    & > p {
+      position: relative;
+      z-index: 2;
+      background-color: $devui-base-bg;
+      padding: 8px 0;
+    }
+  }
+
+  .dp-action-timeline-item {
+    display: flex;
+    position: relative;
+    padding: 12px 0;
+
+    &.list-last-item {
+      &::before {
+        content: '';
+        position: absolute;
+        top: 24px;
+        height: calc(100% - 24px);
+        left: 10px;
+        border-left: 4px solid $devui-base-bg;
+        z-index: 2;
+      }
+    }
+
+    .dp-action-timeline-list-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background-color: $devui-list-item-hover-bg;
+      position: relative;
+      z-index: 3;
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        height: 2px;
+        width: 2px;
+        left: 11px;
+        background-color: $devui-base-bg;
+        z-index: 3;
+      }
+
+      &::before {
+        top: -2px;
+      }
+
+      &::after {
+        bottom: -2px;
+      }
+
+      &.item-empty-icon {
+        background: none;
+
+        &::before {
+          top: 7px;
+        }
+
+        &::before {
+          bottom: 7px;
+        }
+
+        .list-empty-icon-dot {
+          position: absolute;
+          width: 6px;
+          height: 6px;
+          background-color: $devui-list-item-hover-bg;
+          top: 9px;
+          left: 9px;
+          border-radius: 50%;
+        }
+      }
+
+      .icon {
+        width: 24px;
+        font-size: $devui-font-size-icon;
+        color: $devui-icon-text;
+        text-align: center;
+        line-height: 24px;
+      }
+
+      &.color-info {
+        .icon {
+          color: $devui-info;
+        }
+      }
+
+      &.color-danger {
+        .icon {
+          color: $devui-danger;
+        }
+      }
+
+      &.color-success {
+        .icon {
+          color: $devui-success;
+        }
+      }
+
+      &.color-warning {
+        .icon {
+          color: $devui-warning;
+        }
+      }
+    }
+
+    .dp-action-timeline-list-data {
+      flex: 1;
+      word-break: break-all;
+    }
+
+    .dp-action-timeline-item-date {
+      font-size: $devui-font-size-sm;
+      color: $devui-aide-text;
+    }
+
+    .border-bottom {
+      position: absolute;
+      bottom: 0;
+      width: calc(100% - 12px);
+      height: 1px;
+      margin-left: 12px;
+      background-color: $devui-dividing-line;
+    }
+
+    &.vertical-list-item {
+      display: flex;
+      flex-direction: column;
+
+      .vertical-list-item-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .vertical-list-item-top-left {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+
+  .border-left {
+    position: absolute;
+    bottom: 0;
+    left: 31px;
+    width: 2px;
+    height: 100%;
+    background-color: $devui-dividing-line;
+    z-index: 1;
+  }
+
+  &:first-child .border-left {
+    height: calc(100% - 26px);
+  }
+}
+
+.dp-action-timeline-operation-container {
+  .dp-action-timeline-operation {
+    margin: 0 18px;
+    padding: 4px 0;
+    height: 32px;
+    font-size: $devui-font-size-lg;
+    text-align: center;
+    border: 1px solid $devui-form-control-line;
+    background-color: $devui-base-bg;
+    border-radius: 4px;
+    cursor: pointer;
+    transition:
+      color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+      border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+
+    &:hover {
+      color: $devui-brand-active;
+      border-color: $devui-form-control-line-active;
+    }
+  }
+}
+
+.dp-action-timeline-status-bg {
+  .dp-action-timeline-list-icon {
+    &.color-info {
+      background-color: $devui-info-bg;
+    }
+
+    &.color-danger {
+      background-color: $devui-danger-bg;
+    }
+
+    &.color-success {
+      background-color: $devui-success-bg;
+    }
+
+    &.color-warning {
+      background-color: $devui-warning-bg;
+    }
+  }
+}
+
+@mixin before-style {
+  content: '';
+  position: absolute;
+  top: 40px;
+  height: calc(100% - 40px);
+  left: 11px;
+  border-left: 2px solid transparent;
+  z-index: 2;
+}
+
+.dp-action-timeline-status-line {
+  .border-left {
+    display: none;
+  }
+
+  .dp-action-timeline-item {
+    &::before {
+      @include before-style;
+
+      border-color: $devui-line;
+    }
+
+    &.dp-action-timeline-item-info::before {
+      @include before-style;
+
+      border-color: $devui-info-line;
+    }
+
+    &.dp-action-timeline-item-danger::before {
+      @include before-style;
+
+      border-color: $devui-danger-line;
+    }
+
+    &.dp-action-timeline-item-success::before {
+      @include before-style;
+
+      border-color: $devui-success-line;
+    }
+
+    &.dp-action-timeline-item-warning::before {
+      @include before-style;
+
+      border-color: $devui-warning-line;
+    }
+
+    &.list-last-item::before {
+      @include before-style;
+
+      border-color: $devui-base-bg;
+    }
+  }
+}

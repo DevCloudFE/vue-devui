@@ -1,11 +1,15 @@
-import { defineComponent, inject } from 'vue';
+import { defineComponent, getCurrentInstance, inject } from 'vue';
 import { DropdownProps, DropdownPropsKey, SourceItemObj } from '../auto-complete-types';
-import dLoading from '../../../loading/src/loading-directive';
+import Loading from '../../../loading/src/loading-directive';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { createI18nTranslate } from '../../../locale/create';
 export default defineComponent({
   name: 'DAutoCompleteDropdown',
-  directives: { dLoading },
+  directives: { Loading },
   setup(props, ctx) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DAutoCompleteDropdown', app);
+
     const propsData = inject(DropdownPropsKey) as DropdownProps;
     const {
       visible,
@@ -39,7 +43,7 @@ export default defineComponent({
     return () => {
       return (
         <div
-          v-dLoading={showLoading.value}
+          v-loading={showLoading.value}
           class={[
             dropdownMenuNs.b(),
             ns.e('dropdown-menu-cdk'),
@@ -62,7 +66,7 @@ export default defineComponent({
                 <div class={noDataNs.b()}>{ctx.slots.searchingTemplate()}</div>
               </li>
             )}
-            {latestSource.value && !modelValue.value && <li class={ns.e('popup-tips')}>最近输入</li>}
+            {latestSource.value && !modelValue.value && <li class={ns.e('popup-tips')}>{t('latestInput')}</li>}
             {/*  展示 */}
             {!showNoResultItemTemplate.value &&
               !searchStatus?.value &&

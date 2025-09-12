@@ -1,12 +1,11 @@
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 $devui-icon-background-hover: var(--devui-icon-background-hover, $devui-list-item-hover-bg);
 $devui-icon-background-active: var(--devui-icon-background-active, $devui-list-item-active-bg);
 
 .#{$devui-prefix}-icon {
   &__container {
-    display: inline-flex;
-    align-items: center;
+    display: inline-block;
     color: $devui-icon-fill;
 
     & > *:not(:last-child) {
@@ -17,6 +16,16 @@ $devui-icon-background-active: var(--devui-icon-background-active, $devui-list-i
     i {
       vertical-align: middle;
       transition: all $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+    }
+  }
+
+  &--no-slots {
+    i {
+      display: block;
+    }
+
+    img {
+      display: block;
     }
   }
 
@@ -65,6 +74,7 @@ $devui-icon-background-active: var(--devui-icon-background-active, $devui-list-i
 
     &.#{$devui-prefix}-icon__container {
       height: 32px;
+      line-height: 32px;
       padding: 0 8px;
       margin-left: -8px;
       border-radius: $devui-border-radius;

@@ -1,4 +1,4 @@
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-collapse {
   font-size: $devui-font-size;
@@ -28,11 +28,16 @@
   line-height: 45px;
   color: $devui-text;
   background-color: $devui-base-bg;
+  box-sizing: border-box;
   cursor: pointer;
 
   &.#{$devui-prefix}-collapse__item--disabled {
     color: $devui-disabled-text;
     cursor: not-allowed;
+
+    & > .#{$devui-prefix}-collapse__open-icon svg path {
+      fill: currentColor !important;
+    }
   }
 
   &:not(.#{$devui-prefix}-collapse__item--disabled) {
@@ -58,6 +63,15 @@
     height: 16px;
     line-height: 16px;
     transition: transform ease-out 0.4s;
+
+    svg {
+      width: 16px;
+      height: 16px;
+
+      path {
+        fill: $devui-text-weak;
+      }
+    }
   }
 
   &.#{$devui-prefix}-collapse--open > .#{$devui-prefix}-collapse__open-icon {

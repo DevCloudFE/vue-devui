@@ -9,26 +9,21 @@ const menuItemHorizontalWrapperShow = `${ns.b()}-item-horizontal-wrapper-show`;
 type mouseEventName = 'mouseenter' | 'mouseleave';
 export function useShowSubMenu(eventName: mouseEventName, e: MouseEvent, wrapper: HTMLElement): void {
   const target = e.currentTarget as EventTarget as HTMLElement;
-  const subMenuTitle = target.children[0];
   const targetParent = target.parentElement;
   const wrapperChildren = wrapper.children;
   wrapper.style.padding = `0 20px !important`;
   if (eventName === 'mouseenter') {
-    wrapper.classList.remove(menuItemHorizontalWrapperHidden);
-    wrapper.classList.add(menuItemHorizontalWrapperShow);
     if (targetParent?.tagName === 'DIV') {
       wrapper.classList.add(`${ns.b()}-item-horizontal-wrapper-level`);
-      const { top, left } = target.getClientRects()[0];
-      const x = left + targetParent.clientWidth;
-      const y = top;
-      wrapper.style.top = `${y}px`;
-      wrapper.style.left = `${x}px`;
+      const { width } = target.getClientRects()[0];
+      wrapper.style.top = `0px`;
+      wrapper.style.left = `${width}px`;
     } else {
-      const { top, left, height } = subMenuTitle.getClientRects()[0];
-      const y = top + height;
-      wrapper.style.top = `${y}px`;
-      wrapper.style.left = `${left}px`;
+      wrapper.style.top = `26px`;
+      wrapper.style.left = `0px`;
     }
+    wrapper.classList.remove(menuItemHorizontalWrapperHidden);
+    wrapper.classList.add(menuItemHorizontalWrapperShow);
     for (let i = 0; i < wrapperChildren.length; i++) {
       const ul = wrapperChildren[i];
       if (ul.tagName === 'UL' && ul.classList.contains(subNs.b())) {
@@ -36,10 +31,14 @@ export function useShowSubMenu(eventName: mouseEventName, e: MouseEvent, wrapper
         (ul as HTMLElement).addEventListener('mouseenter', (ev: MouseEvent) => {
           ev.stopPropagation();
           useShowSubMenu('mouseenter', ev, levelUlWrapper as Element as HTMLElement);
+          levelUlWrapper.classList.remove(menuItemHorizontalWrapperHidden);
+          levelUlWrapper.classList.add(menuItemHorizontalWrapperShow);
         });
         (ul as HTMLElement).addEventListener('mouseleave', (ev: MouseEvent) => {
           ev.stopPropagation();
           useShowSubMenu('mouseleave', ev, levelUlWrapper as Element as HTMLElement);
+          levelUlWrapper.classList.remove(menuItemHorizontalWrapperShow);
+          levelUlWrapper.classList.add(menuItemHorizontalWrapperHidden);
         });
       }
     }

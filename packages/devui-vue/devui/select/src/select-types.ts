@@ -13,6 +13,19 @@ export type Options = Array<OptionItem>;
 export type ModelValue = number | string | Array<number | string>;
 export type filterValue = boolean | ((query: string) => void);
 export type SelectSize = 'sm' | 'md' | 'lg';
+export type Placement =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
 export const selectProps = {
   modelValue: {
     type: [String, Number, Array] as PropType<ModelValue>,
@@ -26,17 +39,22 @@ export const selectProps = {
     type: Array as PropType<Options>,
     default: () => [],
   },
+  position: {
+    type: Array as PropType<Placement[]>,
+    default: () => ['bottom', 'top', 'left', 'right'],
+  },
   size: {
     type: String as PropType<SelectSize>,
-    default: 'md',
+    default: '',
   },
+  // TODO: 这个api命名不合理
   overview: {
     type: String as PropType<'border' | 'underlined'>,
     default: 'border',
   },
   placeholder: {
     type: String,
-    default: '请选择',
+    default: '',
   },
   multiple: {
     type: Boolean,
@@ -76,11 +94,11 @@ export const selectProps = {
   },
   noDataText: {
     type: String,
-    default: '无数据',
+    default: '',
   },
   noMatchText: {
     type: String,
-    default: '找不到相关记录',
+    default: '',
   },
   loading: {
     type: Boolean,
@@ -88,7 +106,7 @@ export const selectProps = {
   },
   loadingText: {
     type: String,
-    default: '加载中',
+    default: '',
   },
   onToggleChange: {
     type: Function as PropType<(bool: boolean) => void>,
@@ -102,39 +120,22 @@ export const selectProps = {
     type: Number,
     default: 0,
   },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
+  menuClass: {
+    type: String,
+    default: '',
+  },
+  maxLength: {
+    type: Number,
+  },
 } as const;
 
 export type SelectProps = ExtractPropTypes<typeof selectProps>;
 
 export type OptionModelValue = number | string;
-
-export interface UseSelectReturnType {
-  selectDisabled: ComputedRef<boolean>;
-  selectSize: ComputedRef<SelectSize>;
-  containerRef: Ref<HTMLElement | undefined>;
-  dropdownRef: Ref<HTMLElement | undefined>;
-  isOpen: Ref<boolean>;
-  selectCls: ComputedRef<string>;
-  mergeOptions: ComputedRef<OptionObjectItem[]>;
-  inputValue: ComputedRef<string>;
-  selectedOptions: Ref<OptionObjectItem[]>;
-  filterQuery: Ref<string>;
-  emptyText: ComputedRef<string>;
-  isLoading: Ref<boolean>;
-  isShowEmptyText: ComputedRef<boolean>;
-  onClick: (e: MouseEvent) => void;
-  handleClear: (e: MouseEvent) => void;
-  valueChange: (item: OptionObjectItem) => void;
-  handleClose: () => void;
-  updateInjectOptions: (item: Record<string, unknown>, operation: string, isObject: boolean) => void;
-  tagDelete: (data: OptionObjectItem) => void;
-  onFocus: (e: FocusEvent) => void;
-  onBlur: (e: FocusEvent) => void;
-  isDisabled: (item: OptionObjectItem) => boolean;
-  toggleChange: (bool: boolean) => void;
-  debounceQueryFilter: (query: string) => void;
-  isShowCreateOption: ComputedRef<boolean>;
-}
 
 export interface SelectContext extends SelectProps {
   selectDisabled: boolean;
@@ -177,33 +178,6 @@ export interface UseOptionReturnType {
   selectOptionCls: ComputedRef<string>;
   isVisible: ComputedRef<boolean>;
   optionSelect: () => void;
-}
-
-export const selectContentProps = {
-  value: {
-    type: String,
-    default: '',
-  },
-};
-
-export type SelectContentProps = ExtractPropTypes<typeof selectContentProps>;
-
-export interface UseSelectContentReturnType {
-  searchQuery: Ref<string>;
-  selectedData: ComputedRef<OptionObjectItem[]>;
-  isSelectDisable: ComputedRef<boolean>;
-  isSupportCollapseTags: ComputedRef<boolean>;
-  isDisabledTooltip: ComputedRef<boolean>;
-  isReadOnly: ComputedRef<boolean>;
-  selectionCls: ComputedRef<string>;
-  inputCls: ComputedRef<string>;
-  placeholder: ComputedRef<string>;
-  isMultiple: ComputedRef<boolean>;
-  handleClear: (e: MouseEvent) => void;
-  tagDelete: (data: OptionObjectItem) => void;
-  onFocus: (e: FocusEvent) => void;
-  onBlur: (e: FocusEvent) => void;
-  queryFilter: (e: Event) => void;
 }
 
 export interface UseSelectFunctionReturn {

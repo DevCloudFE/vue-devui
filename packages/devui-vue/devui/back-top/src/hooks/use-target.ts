@@ -1,6 +1,6 @@
-import { BackTopProps } from '../back-top-types';
+import type { BackTopProps, IBackTopRef } from '../back-top-types';
 
-export default function (props: BackTopProps, backTopRef) {
+export default function (props: BackTopProps, backTopRef: IBackTopRef): Element | (Window & typeof globalThis) {
   const target = props.target; // target为元素选择器
 
   const getTargetEl = () => {
@@ -8,8 +8,12 @@ export default function (props: BackTopProps, backTopRef) {
     if (!targetEl) {throw new Error(`props ${target} is not existed`);}
 
     // 设置定位
-    targetEl.parentElement.style.position = 'relative';
-    backTopRef.value.style.position = 'absolute';
+    if (targetEl.parentElement) {
+      targetEl.parentElement.style.position = 'relative';
+    }
+    if (backTopRef.value) {
+      backTopRef.value.style.position = 'absolute';
+    }
     return targetEl;
   };
   const currTarget =

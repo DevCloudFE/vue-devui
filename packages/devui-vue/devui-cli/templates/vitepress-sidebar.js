@@ -5,8 +5,10 @@ const {
   VITEPRESS_SIDEBAR_CATEGORY_EN,
   VITEPRESS_SIDEBAR_CATEGORY_ZH_TO_EN,
   SITES_COMPONENTS_DIR_NAME_EN,
+  DESIGN_TOKENS_INFO
 } = require('../shared/constant');
 const logger = require('../shared/logger');
+const { isReadyToRelease } = require('../shared/utils');
 
 // function buildComponentOptions(text, name, status) {
 //   return { text, link: `/${SITES_COMPONENTS_DIR_NAME}/${kebabCase(name)}/`, status }
@@ -24,6 +26,7 @@ function generateZhMenus(componentsInfo) {
         text: info.title,
         link: `/${SITES_COMPONENTS_DIR_NAME}/${kebabCase(info.name)}/`,
         status: info.status,
+        hide: !isReadyToRelease(kebabCase(info.name)),
       });
     } else {
       logger.warning(`组件 ${info.name} 的分类 ${info.category} 不存在！`);
@@ -40,6 +43,7 @@ function generateEnMenus(componentsInfo) {
         text: info.name,
         link: `/${SITES_COMPONENTS_DIR_NAME_EN}/${kebabCase(info.name)}/`,
         status: info.status,
+        hide: !isReadyToRelease(kebabCase(info.name)),
       });
     }
   });
@@ -55,8 +59,20 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
           link: '/quick-start/',
         },
         {
+          text: '按需引入',
+          link: '/on-demand/',
+        },
+        {
           text: '主题定制',
           link: '/theme-guide/',
+        },
+        {
+          text: '在 Nuxt3 中使用',
+          link: '/nuxt3/',
+        },
+        {
+          "text": "Design Token",
+          "children": DESIGN_TOKENS_INFO
         },
       ],
       handler: generateZhMenus,
@@ -69,8 +85,16 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
           link: '/en-US/quick-start/',
         },
         {
+          text: 'On-demand Import',
+          link: '/on-demand/',
+        },
+        {
           text: 'Theme Guide',
           link: '/theme-guide/',
+        },
+        {
+          "text": "Design Token",
+          "children": DESIGN_TOKENS_INFO
         },
       ],
       handler: generateEnMenus,

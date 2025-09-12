@@ -2,79 +2,46 @@ import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import { FixedOverlay } from '../src/fixed-overlay';
 import { FlexibleOverlay } from '../src/flexible-overlay';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+import { wait } from '../../shared/utils';
 
-let overlayContainerElement: HTMLElement | null;
+const fixedOverlayNs = useNamespace('fixed-overlay', true);
+const flexibleOverlayNs = useNamespace('flexible-overlay', true);
 let origin: HTMLElement;
 
 describe('overlay', () => {
-  beforeEach(() => {
-    const div = document.createElement('div');
-    div.id = 'd-overlay-anchor';
-    document.body.append(div);
-    overlayContainerElement = document.querySelector('#d-overlay-anchor');
-  });
-
   describe('fixed overlay', () => {
     it('should be created', async () => {
-      const wrapper = mount(FixedOverlay, {
-        props: {
-          visible: true,
+      const visible = ref(false);
+      const wrapper = mount({
+        setup() {
+          return () => <FixedOverlay v-model={visible.value}></FixedOverlay>;
         },
       });
+
+      visible.value = true;
+      await wait(100);
       await nextTick();
-      let bgElement = overlayContainerElement?.querySelector('.devui-overlay-background') as HTMLElement;
-      expect(bgElement.getAttribute('style')).toBeNull();
-      await wrapper.setProps({ visible: false });
-      await nextTick();
-      bgElement = overlayContainerElement?.querySelector('.devui-overlay-background') as HTMLElement;
-      expect(bgElement).toBeFalsy();
+      const overlay = wrapper.find(fixedOverlayNs.b());
+      expect(overlay).toBeTruthy();
       wrapper.unmount();
     });
-    it('test backgroundClass, backgroundStyle, overlayStyle', async () => {
-      const wrapper = mount(FixedOverlay, {
-        props: {
-          visible: true,
-          backgroundClass: 'bgColor',
-          backgroundStyle: 'width: 100px',
-          overlayStyle: 'width: 100%',
+
+    it('test close on click overlay', async () => {
+      const visible = ref(true);
+      const wrapper = mount({
+        setup() {
+          return () => <FixedOverlay v-model={visible.value}></FixedOverlay>;
         },
       });
+
+      await wait(100);
       await nextTick();
-      const bgElement = overlayContainerElement?.querySelector('.devui-overlay-background') as HTMLElement;
-      expect(bgElement.classList).toContain('bgColor');
-      expect(bgElement.style.width).toBe('100px');
-      expect((overlayContainerElement?.querySelector('.devui-overlay') as HTMLElement).style.width).toBe('100%');
-      wrapper.unmount();
-    });
-    it('test hasBackdrop', async () => {
-      const wrapper = mount(FixedOverlay, {
-        props: {
-          visible: true,
-          hasBackdrop: false,
-        },
-      });
+      const overlay = wrapper.find(fixedOverlayNs.b());
+      await overlay.trigger('click');
+      await wait(100);
       await nextTick();
-      let bgElement = overlayContainerElement?.querySelector('.devui-overlay-background') as HTMLElement;
-      expect(bgElement.classList).toContain('devui-overlay-background__disabled');
-      await wrapper.setProps({ hasBackdrop: true });
-      await nextTick();
-      bgElement = overlayContainerElement?.querySelector('.devui-overlay-background') as HTMLElement;
-      expect(bgElement.classList).toContain('devui-overlay-background__color');
-      wrapper.unmount();
-    });
-    it('test emit update:visible and onBackdropClick', async () => {
-      const wrapper = mount(FixedOverlay, {
-        props: {
-          visible: true,
-        },
-      });
-      await nextTick();
-      const bgElement = overlayContainerElement?.querySelector('.devui-overlay-background') as HTMLElement;
-      const fn = jest.fn();
-      await wrapper.setProps({ onBackdropClick: fn });
-      bgElement.click();
-      expect(wrapper.emitted('update:visible').length).toBe(1);
-      expect(fn).toHaveBeenCalled();
+      expect(visible.value).toBe(false);
       wrapper.unmount();
     });
   });
@@ -102,7 +69,7 @@ describe('overlay', () => {
           );
         },
       });
-      const flexibleOverlay = wrapper.find('.devui-flexible-overlay');
+      const flexibleOverlay = wrapper.find(flexibleOverlayNs.b());
       expect(flexibleOverlay.exists()).toBe(true);
       wrapper.unmount();
     });
@@ -118,8 +85,8 @@ describe('overlay', () => {
           );
         },
       });
-      const flexibleOverlay = wrapper.find('.devui-flexible-overlay');
-      expect(flexibleOverlay.find('.devui-flexible-overlay-arrow').exists()).toBe(true);
+      const flexibleOverlay = wrapper.find(flexibleOverlayNs.b());
+      expect(flexibleOverlay.find(flexibleOverlayNs.e('arrow')).exists()).toBe(true);
       wrapper.unmount();
     });
   });

@@ -1,4 +1,6 @@
-import type { PropType, ExtractPropTypes, Ref } from 'vue';
+import type { PropType, ExtractPropTypes } from 'vue';
+
+export type ModalType = 'success' | 'failed' | 'warning' | 'info' | '';
 
 export const modalProps = {
   modelValue: {
@@ -10,6 +12,10 @@ export const modalProps = {
     default: '',
   },
   lockScroll: {
+    type: Boolean,
+    default: true,
+  },
+  draggable: {
     type: Boolean,
     default: true,
   },
@@ -28,6 +34,10 @@ export const modalProps = {
     type: Boolean,
     default: true,
   },
+  showAnimation: {
+    type: Boolean,
+    default: true,
+  },
   showOverlay: {
     type: Boolean,
     default: true,
@@ -36,20 +46,22 @@ export const modalProps = {
     type: Boolean,
     default: true,
   },
+  type: {
+    type: String as PropType<ModalType>,
+    default: '',
+  },
+  keepLast: {
+    type: Boolean,
+    default: false,
+  },
 };
 
-export type EmitName = 'update:modelValue';
+export type EmitName = 'update:modelValue' | 'close';
 
 export type EmitEventFn = (event: EmitName, result?: boolean) => void;
 
 export interface UseModal {
-  onCloseBtnClick: () => void;
-  onOverlayClick: () => void;
-}
-
-export interface UseModalRender {
-  showContainer: Ref<boolean>;
-  showModal: Ref<boolean>;
+  execClose: () => void;
 }
 
 export type ModalProps = ExtractPropTypes<typeof modalProps>;

@@ -1,10 +1,11 @@
-import type { EmitsOptions, SetupContext, ShallowRef } from 'vue';
-import { TabsProps, Active, TabsData } from '../../../tabs-types';
+import type { ComputedRef, EmitsOptions, SetupContext, ShallowRef } from 'vue';
+import { TabsProps, Active, TabsData, TabsStateData } from '../../../tabs-types';
 import { OffSetData, UseTabNavFunction } from '../tab-nav-types';
 
 export function useTabNavFunction(
   props: TabsProps,
   tabs: TabsData | undefined,
+  tabsList: ComputedRef,
   data: OffSetData,
   ctx: SetupContext<EmitsOptions>,
   tabsEle: ShallowRef<HTMLUListElement | undefined>
@@ -13,8 +14,8 @@ export function useTabNavFunction(
     if (props.type === 'slider') {
       // 延时等待active样式切换至正确的tab
       setTimeout(() => {
-        const tabEle = tabsEle.value.querySelector('#' + props.modelValue + '.active');
-        if (tabEle) {
+        const tabEle = tabsEle.value?.querySelector('#' + props.modelValue + '.active');
+        if (tabEle && tabsEle.value) {
           if (['top', 'bottom'].includes(props.tabPosition)) {
             data.offsetLeft = tabEle.getBoundingClientRect().left - tabsEle.value.getBoundingClientRect().left;
           } else {
@@ -30,10 +31,10 @@ export function useTabNavFunction(
   const canChange = (currentTab: Active) => {
     let changeResult = Promise.resolve(true);
     if (typeof props.beforeChange === 'function') {
-      const result: any = props.beforeChange(currentTab);
+      const result = props.beforeChange(currentTab) as boolean | Promise<boolean>;
       if (typeof result !== 'undefined') {
-        if (result.then) {
-          changeResult = result;
+        if ((result as Promise<boolean>).then) {
+          changeResult = result as Promise<boolean>;
         } else {
           changeResult = Promise.resolve(result);
         }
@@ -42,18 +43,19 @@ export function useTabNavFunction(
 
     return changeResult;
   };
-  const activeClick = (item, tabEl?) => {
-    if (!props.reactivable && props.modelValue === item.id) {
+  const activeClick = (item: TabsStateData, tabEl?: Element) => {
+    const id = item.props.id;
+    if (!props.reactivable && props.modelValue === id) {
       return;
     }
-    canChange(item.id).then((change) => {
+    canChange(id).then((change) => {
       if (!change) {
         return;
       }
-      const tab = tabs.state.data.find((itemOption) => itemOption.id === item.id);
-      if (tab && !tab.disabled) {
-        tabs.state.active = item.id;
-        if (props.type === 'slider' && tabEl && tabsEle) {
+      const tab = tabsList.value.find((itemOption) => itemOption.props.id === id);
+      if (tabs && tab && !tab.props.disabled) {
+        tabs.state.active = id;
+        if (props.type === 'slider' && tabEl && tabsEle && tabsEle.value) {
           if (['left', 'right'].includes(props.tabPosition)) {
             data.offsetLeft = tabEl.getBoundingClientRect().left - tabsEle.value.nativeElement.getBoundingClientRect().left;
           } else {
@@ -62,24 +64,27 @@ export function useTabNavFunction(
           }
           data.offsetWidth = tabEl.getBoundingClientRect().width;
         }
-        ctx.emit('active-tab-change', tab.id);
+        ctx.emit('active-tab-change', tab.props.id);
       }
     });
   };
 
   const beforeMount = () => {
-    if (props.type !== 'slider' && props.modelValue === undefined && tabs.state.data.length > 0) {
-      activeClick(tabs.state.data[0]);
+    if (props.type !== 'slider' && props.modelValue === undefined && tabsList.value && tabsList.value.length > 0) {
+      activeClick(tabsList.value[0]);
     }
   };
 
   const mounted = () => {
-    if (props.type === 'slider' && props.modelValue === undefined && tabs.state.data.length > 0 && tabs.state.data[0]) {
-      activeClick(tabs.state.data[0].tabsEle.value.getElementById(tabs.state.data[0].tabId));
+    if (props.type === 'slider' && props.modelValue === undefined && tabsList.value && tabsList.value.length > 0 && tabsList.value[0]) {
+      const tabsStateData = tabsList.value[0];
+      const dom = tabsStateData.tabsEle?.value;
+      const ele = dom?.getElementById(tabsStateData.tabId as string);
+      activeClick(ele as unknown as TabsStateData);
     }
   };
 
-  const tabCanClose = (item) => {
+  const tabCanClose = (item: TabsStateData) => {
     return (props.closeable || item.closeable) && !item.disabled;
   };
 

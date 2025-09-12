@@ -1,12 +1,10 @@
 import type { ComponentInternalInstance, Ref } from 'vue';
 import { Column, SortMethod, SortDirection } from '../components/column/column-types';
-import { DefaultRow, ITable } from '../table-types';
+import { DefaultRow } from '../table-types';
 
 // TableStore 对象
 // 主要是为了方便维护 Table 中的各种状态
-export interface TableStore<T = Record<string, any>> {
-  // 内置 table 对象
-  _table: ITable<DefaultRow>;
+export interface TableStore<T = Record<string, unknown>> {
   // 具体存储的数据
   states: {
     // 外部数据源
@@ -33,9 +31,11 @@ export interface TableStore<T = Record<string, any>> {
     thList: ComponentInternalInstance[];
     // 第一个type为''列的id
     firstDefaultColumn: Ref<string>;
+    // 单元格状态
+    tableCellModeMap: Ref<Map<string, string>>;
   };
   // 插入列
-  insertColumn(column: Column, parent: any): void;
+  insertColumn(column: Column, parent: unknown): void;
   // 对列排序
   sortColumn(): void;
   // 移除列
@@ -46,8 +46,9 @@ export interface TableStore<T = Record<string, any>> {
   updateRows(): void;
   // 获取勾选行
   getCheckedRows(): T[];
+  collectTh(th: ComponentInternalInstance): void;
   // 排序数据
-  sortData(direction: SortDirection, sortMethod: SortMethod<T>): void;
+  sortData(direction: SortDirection, sortMethod: SortMethod<T> | undefined): void;
   // 特定行数据是否勾选
   isRowChecked(row: T, index: number): boolean;
   // 保存勾选行的信息
@@ -61,6 +62,12 @@ export interface TableStore<T = Record<string, any>> {
   toggleRowSelection: (row: T) => void;
   // 更新 firstDefaultColumn
   updateFirstDefaultColumn: () => void;
+  // 更新单元格状态
+  setCellMode: (row: DefaultRow, rowIndex: number, fields: string | string[], cellMode: string) => void;
+  // 重置所有单元格状态为只读状态
+  resetCellMode: () => void;
+  // 触发Table组件上的事件
+  emitTableEvent: (eventName: string, ...params: unknown[]) => void;
 }
 
 export interface UseExpand {
@@ -68,4 +75,10 @@ export interface UseExpand {
   updateExpandRows: () => void;
   setExpandRows: (rowKeys: string[]) => void;
   toggleRowExpansion: (row: DefaultRow, expanded?: boolean) => void;
+}
+
+export interface UseEditTableCell {
+  tableCellModeMap: Ref<Map<string, string>>;
+  setCellMode: (row: DefaultRow, rowIndex: number, fields: string | string[], cellMode: string) => void;
+  resetCellMode: () => void;
 }

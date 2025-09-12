@@ -1,7 +1,7 @@
-import { defineComponent, toRefs } from 'vue';
+import { defineComponent, toRefs, ref, reactive } from 'vue';
 import type { SetupContext } from 'vue';
 import { Icon } from '../../icon';
-import loadingDirective from '../../loading/src/loading-directive';
+import LoadingDirective from '../../loading/src/loading-directive';
 import { buttonProps, ButtonProps } from './button-types';
 import useButton from './use-button';
 import './button.scss';
@@ -9,26 +9,52 @@ import './button.scss';
 export default defineComponent({
   name: 'DButton',
   directives: {
-    dLoading: loadingDirective,
+    Loading: LoadingDirective,
   },
   props: buttonProps,
   emits: ['click'],
   setup(props: ButtonProps, ctx: SetupContext) {
-    const { icon, disabled, loading } = toRefs(props);
+    const { icon, disabled, loading, nativeType } = toRefs(props);
     const { classes, iconClass } = useButton(props, ctx);
+    const isMouseDown = ref(false);
+    const showWave = ref(false);
+    const waveStyle = reactive({
+      top: '0px',
+      left: '0px',
+    });
 
+    const showClickWave = (e: MouseEvent) => {
+      waveStyle.left = e.offsetX + 'px';
+      waveStyle.top = e.offsetY + 'px';
+      showWave.value = true;
+
+      setTimeout(() => {
+        showWave.value = false;
+      }, 300);
+    };
     const onClick = (e: MouseEvent) => {
       if (loading.value) {
         return;
       }
+      showClickWave(e);
       ctx.emit('click', e);
     };
 
     return () => {
       return (
-        <button class={classes.value} disabled={disabled.value} v-dLoading={loading.value} onClick={onClick}>
+        <button
+          class={[classes.value, isMouseDown.value ? 'mousedown' : '']}
+          disabled={disabled.value}
+          onClick={onClick}
+          type={nativeType.value}
+          onMousedown={() => (isMouseDown.value = true)}
+          onMouseup={() => (isMouseDown.value = false)}>
           {icon.value && <Icon name={icon.value} size="var(--devui-font-size, 12px)" color="" class={iconClass.value} />}
+          <div class="loading-icon__container" v-show={loading.value}>
+            <d-icon name="icon-loading" class="button-icon-loading" color="#BBDEFB"></d-icon>
+          </div>
           <span class="button-content">{ctx.slots.default?.()}</span>
+          {showWave.value && <div class="water-wave" style={waveStyle}></div>}
         </button>
       );
     };

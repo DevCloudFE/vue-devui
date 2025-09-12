@@ -6,9 +6,9 @@
 
 当两种状态需要来回切换控制时，比如启用/禁用。
 
-### size
+### 尺寸
 
-:::demo size 可选：`sm | md | lg`，默认为`md`
+:::demo 可选，`sm | md | lg`，默认为`md`。
 
 ```vue
 <template>
@@ -22,7 +22,7 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     const checkedSmall = ref(true);
-    const uncheckedMiddle = ref(false);
+    const uncheckedMiddle = ref(true);
     const checkedLarge = ref(true);
     return {
       checkedSmall,
@@ -32,17 +32,23 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="scss">
+.devui-switch:not(:last-of-type) {
+  margin-right: 5px;
+}
+</style>
 ```
 
 :::
 
-### disabled
+### 禁用
 
-:::demo 可选，是否禁用开关，默认为 false
+:::demo 可选，是否禁用开关，默认为 false。
 
 ```vue
 <template>
-  <d-switch v-model="checkedDisabled" :disabled="true"></d-switch>
+  <d-switch class="mr-1" v-model="checkedDisabled" :disabled="true"></d-switch>
   <d-switch v-model="checkedDisabled1" :disabled="true"></d-switch>
 </template>
 <script>
@@ -69,19 +75,30 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-switch v-model="checkedColor" color="#FECC55"></d-switch>
-  <d-switch v-model="checkedContent">
-    <template #checkedContent>开</template>
-    <template #uncheckedContent>关</template>
-  </d-switch>
-  <d-switch color="#50D4AB" v-model="checkedIcon">
-    <template #checkedContent>
-      <i class="icon-right"></i>
-    </template>
-    <template #uncheckedContent>
-      <i class="icon-error"></i>
-    </template>
-  </d-switch>
+  <div>
+    <d-switch v-model="checkedColor" color="#FECC55"></d-switch>
+    <d-switch color="#50D4AB" v-model="checkedIcon">
+      <template #checkedContent>
+        <i class="icon-right"></i>
+      </template>
+      <template #uncheckedContent>
+        <i class="icon-error"></i>
+      </template>
+    </d-switch>
+    <d-switch v-model="checkedSmContent" size="sm">
+      <template #checkedContent>开</template>
+      <template #uncheckedContent>关</template>
+    </d-switch>
+    <d-switch v-model="checkedContent">
+      <template #checkedContent>开</template>
+      <template #uncheckedContent>关</template>
+    </d-switch>
+    <d-switch v-model="checkedLgContent" size="lg">
+      <template #checkedContent>开</template>
+      <template #uncheckedContent>关</template>
+    </d-switch>
+  </div>
+
 </template>
 <script>
 import { defineComponent, ref } from 'vue';
@@ -90,10 +107,14 @@ export default defineComponent({
   setup() {
     const checkedColor = ref(true);
     const checkedContent = ref(false);
+    const checkedSmContent = ref(false);
+    const checkedLgContent = ref(false);
     const checkedIcon = ref(true);
     return {
       checkedColor,
       checkedContent,
+      checkedSmContent,
+      checkedLgContent,
       checkedIcon,
     };
   },
@@ -109,8 +130,8 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-switch v-model="activeValue1" active-value="打开" inactive-value="关闭"></d-switch>
-  <d-switch v-model="activeValue2" :active-value="1" :inactive-value="0"></d-switch>
+  <d-switch class="mr-1" v-model="activeValue1" active-value="打开" inactive-value="关闭"></d-switch>
+  <d-switch class="mr-1" v-model="activeValue2" :active-value="1" :inactive-value="0"></d-switch>
   <d-switch v-model="activeValue3" :active-value="true" :inactive-value="false"></d-switch>
 </template>
 <script>
@@ -135,14 +156,14 @@ export default defineComponent({
 
 ### Switch 参数
 
-| 参数           | 类型                        | 默认  | 说明                         | 跳转 Demo                     |
-| :------------- | :-------------------------- | :---- | :--------------------------- | :---------------------------- |
-| v-model        | `string\| number \|boolean` | --    | 绑定值                       | [基本用法](#size)             |
-| size           | `sm \| md \| lg`            | `md`  | 可选，开关尺寸大小           | [size](#size)                 |
+| 参数           | 类型                          | 默认  | 说明                         | 跳转 Demo                     |
+| :------------- |:----------------------------| :---- | :--------------------------- | :---------------------------- |
+| v-model        | `string\                    | number \|boolean` | --    | 绑定值                       | [基本用法](#size)             |
+| size           | [ISwitchSize](#iswitchsize) | `md`  | 可选，开关尺寸大小           | [size](#size)                 |
 | color          | `string`                    | --    | 可选，开关打开时的自定义颜色 | [自定义样式](#自定义样式)     |
 | disabled       | `boolean`                   | false | 可选，是否禁用开关           | [基本用法](#size)             |
-| active-value   | `string\| number \|boolean` | true  | 可选，开关打开时的值         | [自定义绑定值](#自定义绑定值) |
-| inactive-value | `string\| number \|boolean` | true  | 可选，开关关闭时的值         | [自定义绑定值](#自定义绑定值) |
+| active-value   | `string\                    | number \|boolean` | true  | 可选，开关打开时的值         | [自定义绑定值](#自定义绑定值) |
+| inactive-value | `string\                    | number \|boolean` | true  | 可选，开关关闭时的值         | [自定义绑定值](#自定义绑定值) |
 
 ### Switch 事件
 
@@ -156,3 +177,9 @@ export default defineComponent({
 | :--------------- | :------------- | :--- | :------------------------ |
 | checkedContent   | 打开状态的文案 | --   | [自定义样式](#自定义样式) |
 | uncheckedContent | 关闭状态的文案 | --   | [自定义样式](#自定义样式) |
+
+### Switch 类型定义
+#### ISwitchSize
+```ts
+type ISwitchSize = 'sm' | 'md' | 'lg';
+```

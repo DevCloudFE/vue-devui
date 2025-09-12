@@ -1,7 +1,7 @@
 import type { ExtractPropTypes, PropType } from 'vue';
 
 export interface MenuConfig {
-  name: string; // 显示的名称
+  title: string; // 显示的名称
   link: string; // 跳转的路径，可为绝对路径与相对路径，注意需要与路由的配置一致
   target?: string; // 规定在何处打开链接文档
 }

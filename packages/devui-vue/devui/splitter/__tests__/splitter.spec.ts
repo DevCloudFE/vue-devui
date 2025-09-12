@@ -1,7 +1,12 @@
 import { mount, VueWrapper } from '@vue/test-utils';
-import { ComponentPublicInstance, ref } from 'vue';
+import { ComponentPublicInstance, nextTick, ref } from 'vue';
 import DSplitter from '../src/splitter';
 import DSplitterPane from '../src/components/splitter-pane';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
 
 // 因为 jest 不支持 ResizeObserver，需要 mock 实现
 window.ResizeObserver =
@@ -11,6 +16,7 @@ window.ResizeObserver =
       observe: jest.fn(),
       unobserve: jest.fn(),
     }));
+const ns = useNamespace('splitter', true);
 
 describe('splitter', () => {
   describe('basic', () => {
@@ -20,15 +26,15 @@ describe('splitter', () => {
         DSplitterPane,
       },
       template: `
-        <d-splitter :orientation="orientation" :splitBarSize="splitBarSize" style="height: 500px; border: 1px solid #E3E5E9;">
+        <d-splitter :orientation="orientation" :split-bar-size="splitBarSize" style="height: 500px; border: 1px solid #E3E5E9;">
             <template v-slot:DSplitterPane>
               <d-splitter-pane 
                 :size="size" 
-                :minSize="minSize" 
-                :maxSize="maxSize" 
+                :min-size="minSize" 
+                :max-size="maxSize" 
                 :collapsible="collapsible" 
                 :collapsed="collapsed" 
-                @sizeChange="sizeChange"
+                @size-change="sizeChange"
               >
                 <div class="pane-content">
                   <h2>左侧面板</h2>
@@ -80,25 +86,26 @@ describe('splitter', () => {
       wrapper = mount(testComponent);
       splitterElement = wrapper.vm.$el;
     });
+
     it('should create testComponent', () => {
       expect(wrapper.vm).toBeTruthy();
     });
 
     it('should create splitter container', () => {
       expect(splitterElement).toBeTruthy();
-      expect(wrapper.classes()).toContain('devui-splitter-horizontal');
+      expect(wrapper.classes()).toContain(ns.m('horizontal').slice(1));
     });
 
     it('should render splitter-bar', () => {
-      const handles = wrapper.findAll('.devui-splitter-bar');
+      const handles = wrapper.findAll(ns.e('bar'));
       expect(handles.length).toBe(2);
     });
 
     it('should collapse left pane when collapseButton clicked', async () => {
-      const handleButton = wrapper.find('.prev.devui-collapse');
+      const handleButton = wrapper.find(`.prev${ns.e('collapse')}`);
       handleButton.trigger('click');
       await wrapper.vm.$nextTick();
-      const pane = wrapper.find('.devui-splitter-pane').element;
+      const pane = wrapper.find(ns.e('pane')).element;
       // jsdom 不支持 clientWidth 属性，需要 mock
       Object.defineProperty(pane, 'clientWidth', {
         get: jest.fn().mockImplementation(() => 0),
@@ -108,7 +115,7 @@ describe('splitter', () => {
     });
 
     it('should add collapsed class when collapseButton clicked', async () => {
-      const handleButton = wrapper.find('.prev.devui-collapse');
+      const handleButton = wrapper.find(`.prev${ns.e('collapse')}`);
       handleButton.trigger('click');
       await wrapper.vm.$nextTick();
       expect(handleButton.classes()).toContain('collapsed');
@@ -171,19 +178,19 @@ describe('splitter', () => {
           },
         })
       );
-      expect(wrapper.find('.prev.devui-collapse').classes()).toContain(
+      expect(wrapper.find(`.prev${ns.e('collapse')}`).classes()).toContain(
         'collapsed'
       );
     });
 
     it('should change splitterBar size', async () => {
-      const element = wrapper.find('.devui-splitter-bar').element;
+      const element = wrapper.find(ns.e('bar')).element;
       // jsdom 不支持 clientWidth 属性，需要 mock
       Object.defineProperty(element, 'clientWidth', {
         get: jest.fn().mockImplementation(() => 2),
         set: jest.fn().mockImplementation(() => ({})),
       });
-      expect(wrapper.find('.devui-splitter-bar').element.clientWidth).toBe(2);
+      expect(wrapper.find(ns.e('bar')).element.clientWidth).toBe(2);
     });
 
     it('should change splitter direction', () => {
@@ -213,7 +220,7 @@ describe('splitter', () => {
           },
         })
       );
-      expect(wrapper.classes()).toContain('devui-splitter-vertical');
+      expect(wrapper.classes()).toContain(ns.m('vertical').slice(1));
     });
 
     it('should change pane size', async () => {
@@ -243,14 +250,14 @@ describe('splitter', () => {
           },
         })
       );
-      await wrapper.vm.$nextTick();
+      await nextTick();
       const computedStyle = getComputedStyle(
-        wrapper.find('.devui-splitter-pane').element
+        wrapper.find(ns.e('pane')).element
       );
       expect(computedStyle.flexBasis).toContain('40%');
     });
 
-    it('should change pane size', () => {
+    it('should render pane', () => {
       wrapper = mount(
         Object.assign(testComponent, {
           setup() {
@@ -277,7 +284,8 @@ describe('splitter', () => {
           },
         })
       );
-      expect(wrapper.find('.devui-splitter-pane').classes()).not.toContain(
+
+      expect(wrapper.find(ns.e('pane')).classes()).not.toContain(
         'devui-splitter-pane-fixed'
       );
     });
@@ -332,8 +340,15 @@ describe('splitter', () => {
 
     it('should create vertical container', () => {
       expect(wrapper.vm.$el).toBeTruthy();
-      expect(wrapper.classes()).toContain('devui-splitter-vertical');
+      expect(wrapper.classes()).toContain(ns.m('vertical').slice(1));
     });
-
   });
+
+  it.todo('props disabled-bar-size work well.');
+
+  it.todo('props show-collapse-button work well.');
+
+  it.todo('props collapse-direction work well.');
+
+  it.todo('event size-change/collapsed-change work well.');
 });

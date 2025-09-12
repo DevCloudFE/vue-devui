@@ -1,31 +1,28 @@
-import { debounce, cloneDeep } from 'lodash';
-import { ref, SetupContext, toRef, reactive, Ref, watch } from 'vue';
+import { ref, SetupContext, toRef, reactive, Ref, watch, onMounted } from 'vue';
+import { cloneDeep } from 'lodash';
 import { initActiveIndexs, initSingleIptValue } from './use-cascader-single';
 import { initMultipleCascaderItem, initTagList, getMultiModelValues } from './use-cascader-multiple';
-import { CascaderItem, CascaderValueType, CascaderProps, suggestionListType, UseCascaderFn } from '../src/cascader-types';
+import type { CascaderItem, CascaderValueType, CascaderProps, UseCascaderFn } from '../src/cascader-types';
 import { popupHandles } from './use-cascader-popup';
 import { useCascaderItem } from './use-cascader-item';
 import { useRootStyle } from './use-cascader-style';
 import { useRootClassName } from './use-cascader-class';
+import { useFilter } from './use-filter';
 
 export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascaderFn => {
   const origin = ref<HTMLElement>();
-  const overlay = ref<HTMLElement>();
+  const overlayRef = ref<HTMLElement>();
   const cascaderOptions = reactive<[CascaderItem[]]>(cloneDeep([props?.options]));
   const multiple = toRef(props, 'multiple');
   const inputValue = ref('');
   const tagList = ref<CascaderItem[]>([]); // 多选模式下选中的值数组，用于生成tag
   const rootStyle = useRootStyle(props);
   const showClearable = ref(false);
-  const position = ref(['bottom-start']);
+  const position = ref(['bottom-start', 'top-start']);
   let initIptValue = props.modelValue.length > 0 ? true : false; // 有value默认值时，初始化输出内容
-  const suggestions = ref<suggestionListType[]>([]);
-  const suggestionsList = ref<suggestionListType[]>([]);
-  const isSearching = ref(false);
-  const searchText = ref('');
 
   // popup弹出层
-  const { menuShow, menuOpenClass, openPopup, stopDefault, updateStopDefaultType, devuiCascader } = popupHandles(props);
+  const { menuShow, menuOpenClass, openPopup, stopDefault, updateStopDefaultType } = popupHandles(props, overlayRef, origin);
   // 配置class
   const rootClasses = useRootClassName(props, menuShow);
   // 传递给cascaderItem的props
@@ -104,31 +101,31 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
   /**
    * 监听视图更新
    */
-  watch(cascaderItemNeedProps.activeIndexs, (val) => {
+  watch(cascaderItemNeedProps.activeIndexs as CascaderValueType, (val) => {
     // TODO 多选模式下优化切换选择后的视图切换
-    cascaderOptions.splice(val.length, cascaderOptions.length - 1);
+    cascaderOptions.splice(val?.length || 0, cascaderOptions.length - 1);
     updateCascaderView(val, cascaderOptions[0], 0);
   });
   /**
    * 监听点击最终的节点输出内容
    */
   watch(
-    () => cascaderItemNeedProps.confirmInputValueFlg.value,
+    () => cascaderItemNeedProps.confirmInputValueFlg?.value,
     () => {
       // 单选和多选模式初始化
       multiple.value ? initTagList(tagList.value) : initSingleIptValue(cascaderItemNeedProps.inputValueCache);
       // 输出确认的选中值
-      cascaderItemNeedProps.value = reactive(cloneDeep(cascaderItemNeedProps.valueCache));
+      cascaderItemNeedProps.value = reactive(cloneDeep(cascaderItemNeedProps.valueCache as CascaderValueType));
       menuShow.value = false;
       // 点击确定过后禁止再次选中
       updateStopDefaultType();
       // 更新值
-      updateCascaderValue(cascaderItemNeedProps.value, cascaderOptions[0], 0);
-      inputValue.value = cascaderItemNeedProps.inputValueCache.value;
+      updateCascaderValue(cascaderItemNeedProps.value as CascaderValueType, cascaderOptions[0], 0);
+      inputValue.value = cascaderItemNeedProps.inputValueCache?.value as string;
       // 单选模式默认回显视图的选中态
       // 多选模式不默认视图打开状态，因为选中了太多个，无法确定展示哪一种选中态
       if (initIptValue && !multiple.value) {
-        initActiveIndexs(props.modelValue, cascaderOptions[0], 0, cascaderItemNeedProps.activeIndexs);
+        initActiveIndexs(props.modelValue, cascaderOptions[0], 0, cascaderItemNeedProps.activeIndexs as number[]);
         initIptValue = false; // 只需要初始化一次，之后不再执行
       }
       ctx.emit('update:modelValue', cascaderItemNeedProps.value);
@@ -150,6 +147,9 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
     }
   );
   const showClear = () => {
+    if (props.disabled) {
+      return;
+    }
     showClearable.value = true;
   };
   const hideClear = () => {
@@ -162,135 +162,10 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
     ctx.emit('update:modelValue', []);
     menuShow.value = false;
     cascaderOptions.splice(1, cascaderOptions.length - 1);
-    cascaderItemNeedProps.inputValueCache.value = '';
-    cascaderItemNeedProps.valueCache.splice(0);
-  };
-
-  // 以下为搜索逻辑
-  watch(menuShow, (val) => {
-    if (!val) {
-      isSearching.value = false;
+    if (cascaderItemNeedProps.inputValueCache) {
+      cascaderItemNeedProps.inputValueCache.value = '';
     }
-  });
-
-  const isPromise = (obj: boolean | Promise<any>): boolean => {
-    return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
-  };
-
-  const setChildrenParent = (parentNode: CascaderItem) => {
-    if (parentNode.children && parentNode.children.length) {
-      parentNode.children.forEach((child) => {
-        child.parent = parentNode;
-        if (parentNode.disabled) {
-          child.disabled = true;
-        }
-      });
-    }
-    return parentNode;
-  };
-
-  const addParent = (data: CascaderItem[]) => {
-    data.forEach((item) => {
-      if (item.children && item.children.length) {
-        setChildrenParent(item);
-        addParent(item.children);
-      } else {
-        item.isLeaf = true;
-      }
-    });
-    return data;
-  };
-
-  const allNodes = addParent(cloneDeep(props.options));
-  const flatNodes = (data: CascaderItem[] = []) => {
-    return data.reduce((res: CascaderItem[], node) => {
-      if (node.children) {
-        res.push(node);
-        res = res.concat(flatNodes(node.children));
-      } else {
-        res.push(node);
-      }
-      return res;
-    }, []);
-  };
-  const flatAllNodes = flatNodes(allNodes);
-  const filterLeafs = () => {
-    const leafs = flatAllNodes.filter((item) => {
-      return item.isLeaf && !item.disabled;
-    });
-    return leafs;
-  };
-
-  const findParentValues = (item: CascaderItem, values: (string | number)[] = []) => {
-    values.push(item.value);
-    if (item.parent) {
-      findParentValues(item.parent, values);
-    }
-    return values;
-  };
-  const findParentLabels = (item: CascaderItem, values: string[] = []) => {
-    values.push(item.label);
-    if (item.parent) {
-      findParentLabels(item.parent, values);
-    }
-    return values;
-  };
-  const leafsData = filterLeafs();
-  const labelsAndValues = () => {
-    const suggestionList: suggestionListType[] = [];
-    leafsData.forEach((item) => {
-      suggestionList.push({ values: findParentValues(item, []).reverse(), labels: findParentLabels(item, []).reverse() });
-    });
-    suggestionList.forEach((value) => {
-      value.labelsString = value.labels.join('/');
-    });
-    return suggestionList;
-  };
-  suggestions.value = labelsAndValues();
-
-  const caclSuggestions = () => {
-    suggestionsList.value = suggestions.value.filter((item) => {
-      return item.labelsString?.toLowerCase().includes(searchText.value.toString().toLowerCase()) && !item.disabled;
-    });
-    isSearching.value = true;
-  };
-
-  const hideSuggestion = () => {
-    isSearching.value = false;
-  };
-
-  const handleFilter = debounce((val) => {
-    searchText.value = val;
-    const pass = props.beforeFilter(val);
-    if (isPromise(pass)) {
-      pass.then(caclSuggestions).catch(() => {
-        // catch错误
-      });
-    } else if (pass !== false) {
-      caclSuggestions();
-    } else {
-      hideSuggestion();
-    }
-    menuShow.value = true;
-  }, props.debounce);
-
-  const handleInput = (val: string) => {
-    val ? handleFilter(val) : hideSuggestion();
-  };
-
-  const chooseSuggestion = (item: CascaderItem) => {
-    if (props.showPath) {
-      inputValue.value = item.labelsString;
-    } else {
-      const labels = item.labelsString.split('/');
-      inputValue.value = labels[labels.length - 1];
-    }
-    ctx.emit('update:modelValue', item.values);
-    cascaderItemNeedProps.valueCache.splice(0);
-    cascaderItemNeedProps.valueCache.splice(0, 0, ...item.values);
-    initActiveIndexs(item.values, cascaderOptions[0], 0, cascaderItemNeedProps.activeIndexs);
-    updateCascaderView(cascaderItemNeedProps.activeIndexs, cascaderOptions[0], 0);
-    menuShow.value = false;
+    cascaderItemNeedProps.valueCache?.splice(0);
   };
 
   watch(
@@ -300,12 +175,41 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
     },
     { immediate: true, deep: true }
   );
-  return {
-    origin,
-    overlay,
+
+  watch(
+    () => props.options,
+    () => {
+      const len = cascaderOptions.length;
+      cascaderOptions.splice(0, len, ...cloneDeep([props.options]));
+    },
+    { deep: true }
+  );
+
+  const onFocus = (e: FocusEvent) => {
+    ctx.emit('focus', e);
+  };
+  const onBlur = (e: FocusEvent) => {
+    ctx.emit('blur', e);
+  };
+  const { handleInput, suggestionsList, isSearching, chooseSuggestion } = useFilter(
+    props,
+    ctx,
     menuShow,
     cascaderItemNeedProps,
-    devuiCascader,
+    updateCascaderView,
+    inputValue,
+    cascaderOptions
+  );
+
+  onMounted(() => {
+    origin.value?.addEventListener('click', openPopup);
+  });
+
+  return {
+    origin,
+    overlayRef,
+    menuShow,
+    cascaderItemNeedProps,
     rootClasses,
     menuOpenClass,
     inputValue,
@@ -323,5 +227,7 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
     suggestionsList,
     isSearching,
     chooseSuggestion,
+    onFocus,
+    onBlur,
   };
 };

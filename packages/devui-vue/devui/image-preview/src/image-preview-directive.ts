@@ -19,16 +19,19 @@ function unmountedPreviewImages() {
 }
 
 function getImgByEl(el: HTMLElement): Array<string> {
-  const urlList = [...el.querySelectorAll('img')].map((item: HTMLImageElement) => item.getAttribute('src'));
+  const urlList = [...el.querySelectorAll('img')].map((ele: HTMLImageElement) => ele.getAttribute('src') as string);
   return urlList;
 }
+
 function handleImg(e: MouseEvent) {
-  e.stopPropagation();
   const el = e.currentTarget as PreviewHTMLElement;
   const target = e.target as PreviewHTMLElement;
   if (target?.nodeName?.toLowerCase() === 'img') {
     const urlList = getImgByEl(el);
     const url = target.getAttribute('src');
+    if (!url) {
+      return console.error('attribute is not exist');
+    }
     mountedPreviewImages({
       url,
       previewUrlList: urlList,
@@ -45,7 +48,7 @@ function removeHandle(el: PreviewHTMLElement) {
 }
 export default {
   mounted(el: PreviewHTMLElement, binding: BindingTypes | undefined): void {
-    if (!binding.value) {
+    if (!binding?.value) {
       return handleImgByEl(el);
     }
     const { custom, disableDefault } = binding.value;
@@ -70,10 +73,10 @@ export default {
     unmountedPreviewImages();
   },
   updated(el: PreviewHTMLElement, binding: UpdateBindingTypes | undefined): void {
-    el.zIndex = binding.value?.zIndex;
-    el.backDropZIndex = binding.value?.backDropZIndex;
+    el.zIndex = binding?.value?.zIndex;
+    el.backDropZIndex = binding?.value?.backDropZIndex;
 
-    if (binding.value) {
+    if (binding?.value) {
       const {
         value: { disableDefault },
         oldValue: { disableDefault: oldDisableDefault },

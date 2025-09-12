@@ -1,5 +1,7 @@
 const path = require('path');
+const fs = require('fs');
 const shelljs = require('shelljs');
+const fsExtra = require('fs-extra');
 const { Command } = require('commander');
 const { createPackage } = require('./create-package');
 
@@ -16,14 +18,6 @@ if (options.versions) {
 }
 
 const outputDir = path.resolve(__dirname, '../build');
-const outputDirThemeCollection = path.resolve(__dirname, '../build-theme-collection');
-
-const source = path.resolve(__dirname, '../build-theme-collection');
-const target = path.resolve(__dirname, '../build/theme-collection');
-async function copyThemeCollection() {
-  await shelljs.cp('-R', source, target);
-  await shelljs.rm('-rf', outputDirThemeCollection);
-}
 
 const stylesVarPath = path.resolve(__dirname, '../src/styles-var');
 async function copyStylesVar() {
@@ -33,28 +27,34 @@ async function copyStylesVar() {
 const extendThemePath = path.resolve(__dirname, '../src/theme-collection/extend-theme.scss');
 const extendThemeVuePath = path.resolve(__dirname, '../src/theme-collection/extend-theme-vue.scss');
 async function copyExtendTheme() {
-  await shelljs.cp('-R', extendThemePath, outputDirThemeCollection);
-  await shelljs.cp('-R', extendThemeVuePath, outputDirThemeCollection);
+  const extendThemeDir = path.resolve(__dirname, '../build/theme-collection');
+  await shelljs.mkdir(extendThemeDir);
+  await shelljs.cp('-R', extendThemePath, extendThemeDir);
+  await shelljs.cp('-R', extendThemeVuePath, extendThemeDir);
 }
 
 const typingsPath = path.resolve(__dirname, '../typings');
 const typingsThemePath = path.resolve(typingsPath, 'theme/*');
-const typingsThemeCollectionPath = path.resolve(typingsPath, 'theme-collection/*');
+const typingsCollectionThemePath = path.resolve(typingsPath, 'theme-collection/*');
 async function copyTypings() {
+  const themePublicApi = fs.readFileSync(path.resolve(typingsPath, 'theme/public-api.d.ts'), 'utf8');
+  const themeCollectionPublicApi = fs.readFileSync(path.resolve(typingsPath, 'theme-collection/public-api.d.ts'), 'utf8');
+  let extendThemeContent = fs.readFileSync(path.resolve(typingsPath, 'theme-collection/extend-theme.d.ts'), 'utf8');
+  extendThemeContent = extendThemeContent.replace('../', './');
+
   await shelljs.cp('-R', typingsThemePath, outputDir);
-  await shelljs.cp('-R', typingsThemeCollectionPath, target);
-  await shelljs.cp('-rf', typingsPath);
+  await shelljs.cp('-R', typingsCollectionThemePath, outputDir);
+  fsExtra.outputFileSync(path.resolve(outputDir, 'public-api.d.ts'), `${themePublicApi}${themeCollectionPublicApi}`, 'utf8');
+  fsExtra.outputFileSync(path.resolve(outputDir, 'extend-theme.d.ts'), extendThemeContent, 'utf8');
+  await shelljs.rm('-rf', typingsPath);
 }
 
 async function publish() {
   await shelljs.exec('tsc');
   await copyStylesVar();
   await copyExtendTheme();
-  await createPackage('@devui/theme', version, outputDir);
-  await createPackage('@devui/theme-collection', version, outputDirThemeCollection);
-  await copyThemeCollection();
+  await createPackage('devui-theme', version, outputDir);
   await copyTypings();
-  shelljs.sed('-i', /\/theme/g, '', path.resolve(target, 'extend-theme.d.ts'));
 }
 
 publish();

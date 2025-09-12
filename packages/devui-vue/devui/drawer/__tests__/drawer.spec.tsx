@@ -1,16 +1,17 @@
 import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
-
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { wait } from '../../shared/utils/wait';
 import Drawer from '../src/drawer';
+import DrawerService from '../src/drawer-service';
 
-const drawerClasses = useNamespace('drawer', true);
-const baseClasses = drawerClasses.b();
+const drawerNs = useNamespace('drawer', true);
+const noDotDrawerNs = useNamespace('drawer');
+const baseClasses = drawerNs.b();
 
 const getEl = (selector: string) => document.body.querySelector(selector);
 const getDrawer = () => getEl(baseClasses);
-const getOverlay = () => getEl(drawerClasses.e('overlay'));
-
+const getOverlay = () => getEl(drawerNs.e('overlay'));
 
 describe('d-drawer', () => {
   // html dom, overlay
@@ -24,7 +25,9 @@ describe('d-drawer', () => {
       },
       setup(props) {
         return () => (
-          <Drawer modelValue showOverlay={props.showOverlay}>default innerHTML</Drawer>
+          <Drawer modelValue showOverlay={props.showOverlay}>
+            default innerHTML
+          </Drawer>
         );
       },
     });
@@ -33,7 +36,7 @@ describe('d-drawer', () => {
     let overlay = getOverlay();
 
     expect(drawer).toBeTruthy();
-    expect(drawer?.className).toContain('devui-drawer--right');
+    expect(drawer?.className).toContain(noDotDrawerNs.m('right'));
     expect(drawer?.innerHTML).toEqual('default innerHTML');
 
     expect(overlay).toBeTruthy();
@@ -53,8 +56,7 @@ describe('d-drawer', () => {
     const visible = ref(false);
     const wrapper = mount({
       setup() {
-
-        const toggle = () => visible.value = !visible.value;
+        const toggle = () => (visible.value = !visible.value);
         return () => (
           <>
             <button onClick={toggle}>toggle</button>
@@ -63,7 +65,6 @@ describe('d-drawer', () => {
         );
       },
     });
-
 
     let drawer = getDrawer();
     const button = wrapper.find('button');
@@ -77,7 +78,8 @@ describe('d-drawer', () => {
     expect(drawer).toBeTruthy();
 
     // click outside
-    document.dispatchEvent(new Event('click'));
+    await wait(0);
+    document.dispatchEvent(new Event('click', { bubbles: true }));
     await nextTick();
     drawer = getDrawer();
     expect(drawer).toBeFalsy();
@@ -111,7 +113,7 @@ describe('d-drawer', () => {
       setup() {
         const position = ref<'left' | 'right'>('left');
 
-        const toggle = () => position.value = ({ left: 'right', right: 'left' } as const)[position.value];
+        const toggle = () => (position.value = ({ left: 'right', right: 'left' } as const)[position.value]);
         return () => (
           <>
             <button onClick={toggle}>toggle</button>
@@ -125,11 +127,11 @@ describe('d-drawer', () => {
     const button = wrapper.find('button');
 
     expect(drawer).toBeTruthy();
-    expect(drawer?.className).toContain('devui-drawer--left');
+    expect(drawer?.className).toContain(noDotDrawerNs.m('left'));
 
     await button?.trigger('click');
     drawer = getDrawer();
-    expect(drawer?.className).toContain('devui-drawer--right');
+    expect(drawer?.className).toContain(noDotDrawerNs.m('right'));
 
     wrapper.unmount();
   });
@@ -164,7 +166,8 @@ describe('d-drawer', () => {
     await nextTick();
     expect(onOpen).toBeCalled();
 
-    document.dispatchEvent(new Event('click'));
+    await wait(0);
+    document.dispatchEvent(new Event('click', { bubbles: true }));
     await nextTick();
     expect(onBeforeClose).toBeCalled();
     expect(onClose).toBeCalled();
@@ -172,4 +175,21 @@ describe('d-drawer', () => {
     wrapper.unmount();
   });
 
+  it.todo('props lock-scroll should work well.');
+
+  it('$drawerService should work well.', async () => {
+    const drawerService = new DrawerService();
+
+    const openFn = jest.spyOn(drawerService, 'open');
+
+    const closeOptions = drawerService.open({});
+
+    expect(openFn).toBeCalledTimes(1); // open method executed successfully
+
+    const closeFn = jest.spyOn(closeOptions, 'close');
+
+    closeOptions.close();
+
+    expect(closeFn).toBeCalledTimes(1); // close method executed successfully
+  });
 });

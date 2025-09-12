@@ -1,12 +1,14 @@
 import { mount } from '@vue/test-utils';
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, reactive } from 'vue';
 import DInput from '../src/input';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { Form, FormItem } from '../../form';
+import { useNamespace } from '@devui/shared/utils';
 
 const ns = useNamespace('input');
 const dotNs = useNamespace('input', true);
 const slotNs = useNamespace('input-slot');
 const dotSlotNs = useNamespace('input-slot', true);
+const inputNs = useNamespace('input', true);
 
 const innerClass = ns.e('inner');
 const smClass = ns.m('sm');
@@ -20,6 +22,10 @@ const dotSlotSuffixClass = dotSlotNs.e('suffix');
 const dotSlotPrependClass = dotSlotNs.e('prepend');
 const dotSlotAppendClass = dotSlotNs.e('append');
 const dotNsClearIconClass = dotNs.em('clear', 'icon');
+
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
 
 describe('d-input', () => {
   it('d-input render work', async () => {
@@ -165,7 +171,55 @@ describe('d-input', () => {
   });
 
   it('d-input validate-event work', async () => {
-    // TODO 需要结合form组件进行测试
+    const formData = reactive({ password: '' });
+    const rules = { password: { min: 8, message: '密码至少8位', trigger: 'blur' } };
+    const enable = ref(true);
+
+    const wrapper = mount({
+      components: {
+        'd-form': Form,
+        'd-form-item': FormItem,
+        'd-input': DInput,
+      },
+      setup() {
+        return {
+          formData,
+          rules,
+          enable,
+        };
+      },
+      template: `
+        <d-form :data="formData" :rules="rules">
+          <d-form-item
+            field="password"
+            label="密码"
+          >
+            <d-input :validate-event="enable" v-model="formData.password"></d-input>
+          </d-form-item>
+        </d-form>
+      `,
+    });
+
+    const input = wrapper.find(inputNs.e('inner'));
+
+    /** input validate-event default true */
+    // min length < 8
+    input.setValue('123');
+    await input.trigger('blur');
+    expect(wrapper.find(inputNs.m('error')).exists()).toBe(true);
+
+    // min length = 8
+    input.setValue('12345678');
+    await input.trigger('blur');
+    expect(wrapper.find(inputNs.m('error')).exists()).toBe(false);
+
+    /** set input validate-event as false */
+    enable.value = false;
+    await nextTick();
+    await input.setValue('123');
+    expect((input.element as HTMLInputElement).value).toBe('123');
+    await input.trigger('blur');
+    expect(wrapper.find(inputNs.m('error')).exists()).toBe(false);
   });
 
   it('d-input prefix/suffix props work', async () => {
@@ -242,17 +296,23 @@ describe('d-input', () => {
     const wrapper = mount({
       components: { DInput },
       template: `
-        <d-input @clear="onClear" clearable/>
+        <d-input @clear="onTrigger" clearable v-model="value" />
       `,
       setup() {
+        const value = ref('hello wolrd');
+        const onTrigger = () => {
+          value.value = '';
+          onClear();
+        };
         return {
-          onClear,
+          onTrigger,
+          value,
         };
       },
     });
     expect(wrapper.find(dotNsClearIconClass).exists()).toBe(true);
-    const i = wrapper.find('i');
-    await i.trigger('click');
+    const iTag = wrapper.find('i');
+    await iTag.trigger('click');
     expect(onClear).toBeCalledTimes(1);
   });
 });

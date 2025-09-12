@@ -1,8 +1,7 @@
 import { defineComponent, toRefs } from 'vue';
 import { commentProps, CommentProps } from './comment-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
-import { isUrl, isBase64 } from '../../shared/utils/url';
-import { Avatar } from '../../avatar';
+import { useNamespace, isUrl, isBase64 } from '@devui/shared/utils';
+import { Avatar } from '@devui/shared/components/avatar';
 import './comment.scss';
 
 export default defineComponent({

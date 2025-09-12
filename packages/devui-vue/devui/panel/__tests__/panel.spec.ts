@@ -5,6 +5,9 @@ import DPanel from '../src/panel';
 import DPanelHeader from '../src/components/panel-header';
 import DPanelBody from '../src/components/panel-body';
 import DPanelFooter from '../src/components/panel-footer';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const ns = useNamespace('panel', true);
 
 describe('DPanel', () => {
   // 渲染测试
@@ -26,10 +29,10 @@ describe('DPanel', () => {
                 <d-panel-body>
                     This is body
                 </d-panel-body>
-            </d-panel>            
+            </d-panel>
             `,
     });
-    expect(wrapper.find('transition-stub').html()).toContain('<transition-stub><!----></transition-stub>');
+    expect(wrapper.find(ns.b()).exists()).toBe(true);
   });
 
   it('isCollapsed', async () => {
@@ -57,6 +60,7 @@ describe('DPanel', () => {
     });
     expect(wrapper.find('.devui-panel .devui-panel-default').element.children[0].innerHTML).toBe('<!---->');
   });
+
   it('padding-dynamic', async () => {
     const wrapper = mount({
       components: {

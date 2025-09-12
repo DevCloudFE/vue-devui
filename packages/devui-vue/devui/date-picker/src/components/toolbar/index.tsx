@@ -21,7 +21,7 @@ const Item = (props: TCalendarToolbarItemProps) => {
   );
 };
 
-export const Title = (props: { date: Date }) => {
+export const Title = (props: { date: Date }): JSX.Element => {
   const { date } = props;
   return (
     <a class="title">{
@@ -30,7 +30,7 @@ export const Title = (props: { date: Date }) => {
   );
 };
 
-const CalendarToolbar = (props: TDateToolbarProps) => {
+const CalendarToolbar = (props: TDateToolbarProps): JSX.Element => {
   const {
     type, current, compare, pos,
     dateMax, dateMin,
@@ -63,11 +63,11 @@ const CalendarToolbar = (props: TDateToolbarProps) => {
 
   return (
     <div class="devui-calendar-toolbar">
-      <Item disabled={dis[0]} date={current} pos={pos} button={Year} cb={onPreviousYear} />
-      <Item disabled={dis[1]} date={current} pos={pos} button={Month} rotate={-90} cb={onPreviousMonth} />
+      <Item disabled={dis[0]} date={current} pos={pos as number} button={Year} cb={onPreviousYear} />
+      <Item disabled={dis[1]} date={current} pos={pos as number} button={Month} rotate={-90} cb={onPreviousMonth} />
       <Title date={current} />
-      <Item disabled={dis[2]} date={current} pos={pos} button={Month} rotate={90} cb={onNextMonth} />
-      <Item disabled={dis[3]} date={current} pos={pos} button={Year} rotate={180} cb={onNextYear} />
+      <Item disabled={dis[2]} date={current} pos={pos as number} button={Month} rotate={90} cb={onNextMonth} />
+      <Item disabled={dis[3]} date={current} pos={pos as number} button={Year} rotate={180} cb={onNextYear} />
     </div>
   );
 };

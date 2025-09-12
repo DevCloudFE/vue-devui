@@ -7,17 +7,25 @@ const DEFAULT_CONFIG = {
   recursive: true, // 是否需要获取非直接子节点
 };
 
-const nodeMap = new Map<string, IInnerTreeNode[]>();
-
-export default function() {
-  return function useCore(data: Ref<IInnerTreeNode[]>): IUseCore {
+export function useCore(): (data: Ref<IInnerTreeNode[]>) => IUseCore {
+  const nodeMap = new Map<string, IInnerTreeNode[]>();
+  return function useCoreFn(data: Ref<IInnerTreeNode[]>): IUseCore {
     const getLevel = (node: IInnerTreeNode): number => {
       return data.value.find((item) => item.id === node.id)?.level;
     };
 
     const getChildren = (node: IInnerTreeNode, userConfig = DEFAULT_CONFIG): IInnerTreeNode[] => {
-      if (node.isLeaf) { return []; }
-      if (node.id && nodeMap.has(node.id)) {
+      if (node.isLeaf) {
+        return [];
+      }
+      let mapKey = node.id || '';
+      if (userConfig.expanded) {
+        mapKey += '_expanded';
+      }
+      if (userConfig.recursive) {
+        mapKey += '_recursive';
+      }
+      if (node.id && nodeMap.has(mapKey)) {
         const cacheNode = nodeMap.get(node.id);
         if (cacheNode) {
           return cacheNode;
@@ -29,7 +37,7 @@ export default function() {
           const result = [];
           for (let i = 0, len = data?.value.length; i < len; i++) {
             const item = data?.value[i];
-            if (excludeNodes.map(innerNode => innerNode.id).includes(item.id)) {
+            if (excludeNodes.map((innerNode) => innerNode.id).includes(item.id)) {
               continue;
             }
             if (item.expanded !== true && !item.isLeaf) {
@@ -46,16 +54,20 @@ export default function() {
       const startIndex = treeData.value.findIndex((item) => item.id === node.id);
 
       for (let i = startIndex + 1; i < treeData.value.length && getLevel(node) < treeData.value[i].level; i++) {
-        if (config.recursive) {
+        if (config.recursive && !treeData.value[i].isHide) {
           result.push(treeData.value[i]);
-        } else if (getLevel(node) === treeData.value[i].level - 1) {
+        } else if (getLevel(node) === treeData.value[i].level - 1 && !treeData.value[i].isHide) {
           result.push(treeData.value[i]);
         }
       }
       if (node.id) {
-        nodeMap.set(node.id, result);
+        nodeMap.set(mapKey, result);
       }
       return result;
+    };
+
+    const clearNodeMap = () => {
+      nodeMap.clear();
     };
 
     const getParent = (node: IInnerTreeNode): IInnerTreeNode => {
@@ -66,10 +78,9 @@ export default function() {
       return computed(() => {
         let excludeNodes: IInnerTreeNode[] = [];
         const result = [];
-
         for (let i = 0, len = data?.value.length; i < len; i++) {
           const item = data?.value[i];
-          if (excludeNodes.map(node => node.id).includes(item.id)) {
+          if (excludeNodes.map((node) => node.id).includes(item.id) || item.isHide) {
             continue;
           }
           if (item.expanded !== true) {
@@ -82,6 +93,10 @@ export default function() {
     };
 
     const getIndex = (node: IInnerTreeNode): number => {
+      if (!node) {
+        return -1;
+      }
+
       return data.value.findIndex((item) => item.id === node.id);
     };
 
@@ -90,12 +105,14 @@ export default function() {
     };
 
     const setNodeValue = (node: IInnerTreeNode, key: keyof IInnerTreeNode, value: valueof<IInnerTreeNode>): void => {
-      nodeMap.clear();
-      data.value[getIndex(node)][key] = value;
+      clearNodeMap();
+      if (getIndex(node) !== -1) {
+        data.value[getIndex(node)][key] = value;
+      }
     };
 
     const setTree = (newTree: ITreeNode[]): void => {
-      nodeMap.clear();
+      clearNodeMap();
       data.value = generateInnerTree(newTree);
     };
 
@@ -104,12 +121,13 @@ export default function() {
     };
 
     onUnmounted(() => {
-      nodeMap.clear();
+      clearNodeMap();
     });
 
     return {
       getLevel,
       getChildren,
+      clearNodeMap,
       getParent,
       getExpendedTree,
       getIndex,

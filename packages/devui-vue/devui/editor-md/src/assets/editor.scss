@@ -1,0 +1,288 @@
+@import '../../../styles-var/devui-var.scss';
+
+.dp-md-view {
+  font-size: 14px;
+
+  p {
+    word-wrap: break-word;
+    margin: 0 0 10px;
+    padding: 0;
+  }
+
+  ul {
+    list-style-type: disc;
+    padding-left: 16px;
+  }
+
+  ol {
+    list-style-type: decimal;
+    padding-left: 24px;
+  }
+
+  h1 {
+    position: relative;
+    color: $devui-text;
+    font-weight: bold;
+    font-size: 28px;
+  }
+
+  table {
+    margin-bottom: 10px;
+    border-collapse: collapse;
+    display: table;
+  }
+
+  td,
+  th {
+    padding: 5px 10px;
+    border: 1px solid $devui-dividing-line;
+    background-color: $devui-base-bg;
+  }
+
+  caption {
+    border: 1px dashed $devui-line;
+    border-bottom: 0;
+    padding: 3px;
+    text-align: center;
+  }
+
+  th {
+    border-top: 1px solid $devui-dividing-line;
+    background-color: $devui-global-bg;
+  }
+
+  .ue-table-interlace-color-single {
+    background-color: $devui-base-bg;
+  }
+
+  .ue-table-interlace-color-double {
+    background-color: $devui-list-item-strip-bg;
+  }
+
+  td p {
+    margin: 0;
+    padding: 0;
+  }
+
+  code {
+    color: #c7254e;
+  }
+
+  pre,
+  pre code {
+    color: $devui-text;
+    background-color: $devui-area;
+    padding: 0.5em;
+    font-size: 12px;
+
+    &.hljs {
+      background-color: $devui-area;
+    }
+  }
+
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+  }
+
+  blockquote {
+    padding: 0 8px;
+    margin: 0;
+    color: $devui-text-weak;
+    border-left: 5px solid $devui-dividing-line;
+  }
+
+  a {
+    color: $devui-link;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover {
+      color: $devui-link-active;
+    }
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  input[type='checkbox'] {
+    vertical-align: middle;
+  }
+
+  .hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    color: $devui-text;
+  }
+
+  .hljs-comment,
+  .hljs-quote {
+    color: #999988;
+    font-style: italic;
+  }
+
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-subst {
+    color: $devui-text;
+    font-weight: bold;
+  }
+
+  .hljs-number,
+  .hljs-literal,
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-tag .hljs-attr {
+    color: $devui-warning-line;
+  }
+
+  .hljs-string,
+  .hljs-doctag {
+    color: $devui-danger-line;
+  }
+
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-id {
+    color: $devui-danger-line;
+    font-weight: bold;
+  }
+
+  .hljs-subst {
+    font-weight: normal;
+  }
+
+  .hljs-type,
+  .hljs-class .hljs-title {
+    font-weight: bold;
+    color: #445588;
+  }
+
+  .hljs-tag,
+  .hljs-name,
+  .hljs-attribute {
+    color: #000080;
+    font-weight: normal;
+  }
+
+  .hljs-symbol,
+  .hljs-bullet {
+    color: #990073;
+  }
+
+  .hljs-built_in,
+  .hljs-builtin-name {
+    color: #0086b3;
+  }
+
+  .hljs-meta {
+    color: #999999;
+    font-weight: bold;
+  }
+
+  .hljs-deletion {
+    background: #ffdddd;
+  }
+
+  .hljs-addition {
+    background: #ddffdd;
+  }
+
+  .hljs-emphasis {
+    font-style: italic;
+  }
+
+  .hljs-strong {
+    font-weight: bold;
+  }
+
+  &.devui-md-view-dark {
+    .hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 0.5em;
+      color: #abb2bf;
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #5c6370;
+      font-style: italic;
+    }
+
+    .hljs-doctag,
+    .hljs-keyword,
+    .hljs-formula {
+      color: #c678dd;
+    }
+
+    .hljs-section,
+    .hljs-name,
+    .hljs-selector-tag,
+    .hljs-deletion,
+    .hljs-subst {
+      color: #e06c75;
+    }
+
+    .hljs-literal {
+      color: #56b6c2;
+    }
+
+    .hljs-string,
+    .hljs-regexp,
+    .hljs-addition,
+    .hljs-attribute,
+    .hljs-meta-string {
+      color: #98c379;
+    }
+
+    .hljs-built_in,
+    .hljs-class .hljs-title {
+      color: #e6c07b;
+    }
+
+    .hljs-attr,
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-type,
+    .hljs-selector-class,
+    .hljs-selector-attr,
+    .hljs-selector-pseudo,
+    .hljs-number {
+      color: #d19a66;
+    }
+
+    .hljs-symbol,
+    .hljs-bullet,
+    .hljs-link,
+    .hljs-meta,
+    .hljs-selector-id,
+    .hljs-title {
+      color: #61aeee;
+    }
+
+    .hljs-emphasis {
+      font-style: italic;
+    }
+
+    .hljs-strong {
+      font-weight: bold;
+    }
+
+    .hljs-link {
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  parser: '@typescript-eslint/parser',
+  parser: 'vue-eslint-parser',
   parserOptions: {
     sourceType: 'module',
     ecmaVersion: 6,
@@ -109,5 +109,12 @@ module.exports = {
     'max-depth': 'off',
     '@typescript-eslint/member-ordering': 'off',
     'array-callback-return': 'off',
+    'import/no-unresolved': 'off',
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      parser: '@typescript-eslint/parser',
+    },
+  ],
 };

@@ -1,6 +1,6 @@
 import { defineComponent, SetupContext } from 'vue';
 import { checkboxProps, CheckboxProps } from './checkbox-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { useCheckbox, useCheckboxButton } from './use-checkbox';
 import './checkbox-button.scss';
 
@@ -34,7 +34,7 @@ export default defineComponent({
       return (
         <label title={labelTitle} onClick={handleClick} class={labelCls}>
           <input
-            name={props.name || props.value}
+            name={(props.name || props.value) as string}
             class={ns.e('input')}
             type="checkbox"
             checked={mergedChecked.value}

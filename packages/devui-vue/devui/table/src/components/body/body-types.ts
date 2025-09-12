@@ -1,4 +1,4 @@
-import type { ComputedRef } from 'vue';
+import type { ComputedRef, Ref } from 'vue';
 import { DefaultRow } from '../../table-types';
 import { Column } from '../column/column-types';
 
@@ -19,5 +19,10 @@ export interface UseMergeCell {
 }
 
 export interface UseBodyRender {
-  getTableRowClass: (row: DefaultRow) => ComputedRef<Record<string, boolean | undefined>>;
+  getTableRowClass: (row: DefaultRow) => Record<string, unknown>;
+}
+
+export interface UseLazyLoad {
+  lazy: boolean;
+  lazyFlagRef: Ref;
 }

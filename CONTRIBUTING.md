@@ -4,7 +4,8 @@
 
 ### 快速上手
 
-Vue DevUI 使用 `pnpm` 构建 `monorepo` 仓库，你应该使用 [pnpm](https://www.pnpm.cn/) 包管理器，以确保不会因为包管理器的不同而引发异常。
+Vue DevUI 使用 `pnpm` 构建 `monorepo` 仓库，你应该使用 [pnpm 6.x](https://www.pnpm.cn/) 包管理器，以确保不会因为包管理器的不同而引发异常。
+> pnpm 7.x 发生了[break change](https://github.com/pnpm/pnpm/releases/tag/v7.0.0)，如要使用pnpm 7.x 请自行更新`package.json`的script，例如本地启动：`pnpm --filter vue-devui dev`，其他修改可以查阅上述链接。
 
 如果你想参与 `devui-vue` 的开发或者测试：
 
@@ -25,7 +26,9 @@ pnpm dev
 
 ### 参与贡献
 
-Vue DevUI 是一个多人合作的开源项目，为了避免多人同时开发同一个组件/功能，请先在 [issues 列表](https://github.com/DevCloudFE/vue-devui/issues) 中选择自己感兴趣的任务，在评论区认领
+Vue DevUI 是一个多人合作的开源项目，为了避免多人同时开发同一个组件/功能，请先在 [issues 列表](https://github.com/DevCloudFE/vue-devui/issues) 中选择自己感兴趣的任务，在评论区认领。
+
+> 提交之前需要给Commit添加GPG签名，参考：https://insights.thoughtworks.cn/how-to-sign-git-commit/
 
 1. 请确保你已经完成快速上手中的步骤，并且正常访问 [http://localhost:3000/](http://localhost:3000/)
 2. 创建新分支 `git checkout -b username/feature1`，分支名字建议为`username/feat-xxx`/`username/fix-xxx`
@@ -44,3 +47,17 @@ Vue DevUI 是一个多人合作的开源项目，为了避免多人同时开发�
 1. 完善组件中英文文档
 2. 完善组件的单元测试
 3. 完成组件[自检清单](https://github.com/DevCloudFE/vue-devui/wiki/%E7%BB%84%E4%BB%B6%E8%87%AA%E6%A3%80%E6%B8%85%E5%8D%95)
+
+代码在提交之前会自动执行 ESLint 检查，并且在 GitHub PR 提交门禁中也加上了 ESLint 检查任务，所以在提交之前请确保你的代码符合 ESLint 规范，ESLint 检查不通过，PR 将无法合入哦。
+
+你可通过执行以下命令来手动执行代码检查：
+
+```bash
+# 执行 ESLint 检查
+pnpm cli --filter vue-devui -- code-check -t eslint
+pnpm cli --filter vue-devui -- code-check -t eslint -c alert,button
+
+# 执行单元测试
+pnpm cli --filter vue-devui -- code-check -t unit-test
+pnpm cli --filter vue-devui -- code-check -t unit-test -c alert,button
+```

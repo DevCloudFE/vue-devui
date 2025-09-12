@@ -1,4 +1,4 @@
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-list-item {
   display: flex;
@@ -8,6 +8,7 @@
   line-height: 36px;
   padding: 0 8px;
   color: $devui-text;
+  border-radius: $devui-border-radius;
   box-sizing: border-box;
   cursor: pointer;
   transition:

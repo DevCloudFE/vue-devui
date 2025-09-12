@@ -22,8 +22,8 @@
     <d-alert type="simple" :closeable="false">simple</d-alert>
   </div>
 </template>
-<style>
-.alert-demo-1 .devui-alert {
+<style scoped>
+.alert-demo-1 > * {
   margin-bottom: 20px;
 }
 </style>
@@ -59,8 +59,8 @@ export default {
   },
 };
 </script>
-<style>
-.alert-demo-2 .devui-alert {
+<style scoped>
+.alert-demo-2 > * {
   margin-bottom: 20px;
 }
 </style>
@@ -84,8 +84,8 @@ export default {
     <d-alert type="simple" :show-icon="false">simple</d-alert>
   </div>
 </template>
-<style>
-.alert-demo-3 .devui-alert {
+<style scoped>
+.alert-demo-3 > * {
   margin-bottom: 20px;
 }
 </style>
@@ -99,7 +99,7 @@ export default {
 
 ```vue
 <template>
-  <div class="alert-demo-3">
+  <div class="alert-demo-4">
     <d-alert type="success" center>success</d-alert>
     <d-alert type="danger" center>danger</d-alert>
     <d-alert type="warning" center>warning</d-alert>
@@ -107,8 +107,8 @@ export default {
     <d-alert type="simple" center>simple</d-alert>
   </div>
 </template>
-<style>
-.alert-demo-3 .devui-alert {
+<style scoped>
+.alert-demo-4 > * {
   margin-bottom: 20px;
 }
 </style>

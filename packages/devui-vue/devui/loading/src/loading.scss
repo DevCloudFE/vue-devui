@@ -1,4 +1,4 @@
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 @keyframes devui-busy-spinner-anim {
   0% {
@@ -15,6 +15,8 @@
 }
 
 .#{$devui-prefix}-loading__mask {
+  // to mask cover fixed column
+  z-index: $devui-z-index-full-page-overlay;
   position: absolute;
   left: 0;
   right: 0;
@@ -34,7 +36,7 @@
   right: 0;
   bottom: 0;
   top: 0;
-  z-index: 9999;
+  z-index: $devui-z-index-full-page-overlay;
 }
 
 .#{$devui-prefix}-loading--hidden {

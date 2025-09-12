@@ -1,6 +1,6 @@
 import type { RuleItem, ValidateFieldsError } from 'async-validator';
-import type { ComputedRef, ExtractPropTypes, PropType, InjectionKey, Ref } from 'vue';
-import { LabelAlign, LabelSize, Layout } from '../../form-types';
+import type { ComputedRef, ExtractPropTypes, PropType, Ref, SetupContext } from 'vue';
+import { LabelAlign, LabelSize, Layout, RequirePosition } from '../../form-types';
 import { FeedbackStatus } from '../form-control/form-control-types';
 
 export type FormItemValidateState = '' | 'error' | 'pending' | 'success';
@@ -18,6 +18,13 @@ export type PopPosition =
   | 'bottom-end'
   | 'left-start'
   | 'left-end';
+
+export interface HelpTips {
+  content: string;
+  position?: PopPosition[];
+  trigger?: 'hover' | 'click';
+  popType?: string;
+}
 
 export interface FormRuleItem extends RuleItem {
   trigger?: Array<string>;
@@ -49,7 +56,7 @@ export const formItemProps = {
     default: undefined,
   },
   helpTips: {
-    type: String,
+    type: [String, Object] as PropType<string | HelpTips>,
     default: '',
   },
   feedbackStatus: {
@@ -58,6 +65,10 @@ export const formItemProps = {
   extraInfo: {
     type: String,
     default: '',
+  },
+  isAsyncValidate: {
+    type: Boolean,
+    default: false,
   },
 };
 
@@ -70,6 +81,9 @@ export type LabelData = ComputedRef<{
   layout: Layout;
   labelSize: LabelSize;
   labelAlign: LabelAlign;
+  requiredPosition: RequirePosition;
+  helpTips: string | HelpTips;
+  formItemCtx: SetupContext;
 }>;
 
 export interface FormItemContext extends FormItemProps {
@@ -94,5 +108,9 @@ export interface UseFormItemValidate {
   clearValidate: () => void;
 }
 
-export const FORM_ITEM_TOKEN: InjectionKey<FormItemContext> = Symbol('dFormItem');
-export const LABEL_DATA: InjectionKey<LabelData> = Symbol('labelData');
+export interface UseFormItemRule {
+  _rules: ComputedRef<FormRuleItem[]>;
+}
+
+export const FORM_ITEM_TOKEN = 'dFormItem';
+export const LABEL_DATA = 'dFormLabelData';

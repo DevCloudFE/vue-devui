@@ -1,20 +1,21 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute } from 'vitepress'
-import PageFooter from "./PageFooter.vue"
-import NextAndPrevLinks from "./NextAndPrevLinks.vue"
-import PageToc from "./PageToc.vue"
-import BackToTop from './BackToTop.vue'
-import PageContributor from './PageContributor.vue'
-import { CONTRIBUTORS_MAP } from './PageContributorConfig'
+import { computed } from 'vue';
+import { useRoute } from 'vitepress';
+import PageFooter from './PageFooter.vue';
+import NextAndPrevLinks from './NextAndPrevLinks.vue';
+import PageToc from './PageToc.vue';
+import BackToTop from './BackToTop.vue';
+import PageContributor from './PageContributor.vue';
+import DevuiFooter from './DevuiFooter.vue';
+import { CONTRIBUTORS_MAP } from './PageContributorConfig';
 
-const isComponents = computed(() => useRoute().path.indexOf('components') > -1)
+const isComponents = computed(() => useRoute().path.indexOf('components') > -1);
 
 const contributors = computed(() => {
-  const pathArr = useRoute().path.split('/')
-  const componentName = pathArr[pathArr.length - 2]
-  return CONTRIBUTORS_MAP[componentName]
-})
+  const pathArr = useRoute().path.split('/');
+  const componentName = pathArr[pathArr.length - 2];
+  return CONTRIBUTORS_MAP[componentName];
+});
 </script>
 
 <template>
@@ -36,12 +37,15 @@ const contributors = computed(() => {
       <BackToTop />
       <PageToc v-if="isComponents" class="toc-warpper" />
     </div>
+
+    <DevuiFooter />
   </main>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .page {
   padding-top: var(--header-height);
+  height: 100vh;
 }
 
 @media (min-width: 720px) {
@@ -60,7 +64,14 @@ const contributors = computed(() => {
 .container {
   margin: 0 auto;
   padding: 0 1.5rem 4rem;
-  max-width: 48rem;
+  max-width: 1024px !important;
+  min-height: calc(100% - 196px);
+}
+
+.page > .container:first-child {
+  max-width: 1064px !important;
+  padding: 0 20px 20px 20px !important;
+  padding-bottom: 20px;
 }
 
 .content {
@@ -77,6 +88,6 @@ const contributors = computed(() => {
 .page-contributor-label {
   color: #24292f;
   font-weight: 600;
-  line-height:32px;
+  line-height: 32px;
 }
 </style>

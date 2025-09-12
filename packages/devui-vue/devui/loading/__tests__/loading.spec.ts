@@ -1,11 +1,13 @@
 import { mount } from '@vue/test-utils';
 import { ref, Ref, nextTick, h, shallowReactive } from 'vue';
-import { LoadingService, Loading } from '../index';
+import { LoadingService, LoadingDirective } from '../index';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 
+const ns = useNamespace('loading', true);
 // 全局属性
 const globalOption = {
   directives: {
-    dLoading: Loading,
+    Loading: LoadingDirective,
   },
 };
 
@@ -13,7 +15,7 @@ describe('Loading as directive', () => {
   it('loading init render', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading="true"></div>`,
+        template: `<div v-loading="true"></div>`,
       },
       {
         global: globalOption,
@@ -21,30 +23,30 @@ describe('Loading as directive', () => {
     );
 
     await nextTick();
-    const loadingEl = wrapper.find('.devui-loading');
+    const loadingEl = wrapper.find(ns.b());
     expect(loadingEl.exists()).toBeTruthy();
-    const loadingMask = wrapper.find('.devui-loading-mask');
+    const loadingMask = wrapper.find(ns.e('mask'));
     expect(loadingMask.exists()).toBeTruthy();
   });
 
   it('loading test mask', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading="true" :backdrop="false"></div>`,
+        template: `<div v-loading="true" :backdrop="false"></div>`,
       },
       {
         global: globalOption,
       }
     );
 
-    const loadingMask = wrapper.find('.devui-loading-mask');
+    const loadingMask = wrapper.find(ns.e('mask'));
     expect(loadingMask.exists()).toBeFalsy();
   });
 
   it('loading test positionType', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading="true" id="testLoading" positionType="absolute"></div>`,
+        template: `<div v-loading="true" id="testLoading" positionType="absolute"></div>`,
       },
       {
         global: globalOption,
@@ -62,7 +64,7 @@ describe('Loading as directive', () => {
   it('loading test loadingTemplateRef', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading="true" id="testLoading" :loadingTemplateRef="ele"></div>`,
+        template: `<div v-loading="true" id="testLoading" :loadingTemplateRef="ele"></div>`,
         data() {
           return {
             ele: h(
@@ -85,7 +87,7 @@ describe('Loading as directive', () => {
     expect(loadingComp.exists()).toBeTruthy();
     expect(loadingComp.text()).toEqual('正在加载中...');
 
-    const loadingContainer = wrapper.find('.devui-loading-wrapper');
+    const loadingContainer = wrapper.find(ns.e('wrapper'));
     expect(loadingContainer.exists()).toBeFalsy();
   });
 
@@ -95,7 +97,7 @@ describe('Loading as directive', () => {
         template: `
           <div>
             <button id="testbtn" @click="click"></button>
-            <div v-dLoading="isShow"></div>
+            <div v-loading="isShow"></div>
           </div>
         `,
         setup() {
@@ -115,16 +117,16 @@ describe('Loading as directive', () => {
     );
 
     await nextTick();
-    const loadingContainer = wrapper.find('.devui-loading');
+    const loadingContainer = wrapper.find(ns.b());
     expect(loadingContainer.exists()).toBeFalsy();
     const btn = wrapper.find('#testbtn');
     expect(btn.exists()).toBeTruthy();
 
     await btn.trigger('click');
-    expect(wrapper.find('.devui-loading').exists()).toBeTruthy();
+    expect(wrapper.find(ns.b()).exists()).toBeTruthy();
 
     await btn.trigger('click');
-    expect(wrapper.find('.devui-loading').exists()).toBeFalsy();
+    expect(wrapper.find(ns.b()).exists()).toBeFalsy();
   });
 
   it('loading test Promise', async () => {
@@ -133,7 +135,7 @@ describe('Loading as directive', () => {
         template: `
           <div>
             <button id="testbtn" @click="click"></button>
-            <div v-dLoading="loading" id="testLoading"></div>
+            <div v-loading="loading" id="testLoading"></div>
           </div>
         `,
         setup() {
@@ -160,10 +162,10 @@ describe('Loading as directive', () => {
     expect(btn.exists()).toBeTruthy();
 
     await btn.trigger('click');
-    expect(wrapper.find('.devui-loading-wrapper').exists()).toBeTruthy();
+    expect(wrapper.find(ns.e('wrapper')).exists()).toBeTruthy();
     // TODO 组件移除是在finally内部移除，在微任务队列末尾，这里好像检测不到
     setTimeout(() => {
-      expect(wrapper.find('.devui-loading-wrapper').exists()).toBeFalsy();
+      expect(wrapper.find(ns.e('wrapper')).exists()).toBeFalsy();
     });
   });
 
@@ -173,7 +175,7 @@ describe('Loading as directive', () => {
         template: `
           <div>
             <button id="testbtn" @click="fetchMutiplePromise"></button>
-            <div v-dLoading="promises.value" id="testLoading"></div>
+            <div v-loading="promises.value" id="testLoading"></div>
           </div>
         `,
         setup() {
@@ -208,10 +210,10 @@ describe('Loading as directive', () => {
     expect(btn.exists()).toBeTruthy();
 
     await btn.trigger('click');
-    expect(wrapper.find('.devui-loading-wrapper').exists()).toBeTruthy();
+    expect(wrapper.find(ns.e('wrapper')).exists()).toBeTruthy();
     // TODO 组件移除是在finally内部移除，在微任务队列末尾，这里好像检测不到
     setTimeout(() => {
-      expect(wrapper.find('.devui-loading-wrapper').exists()).toBeFalsy();
+      expect(wrapper.find(ns.e('wrapper')).exists()).toBeFalsy();
     });
   });
 });
@@ -221,13 +223,13 @@ describe('Loading as Service', () => {
     const loading = LoadingService.open();
 
     await nextTick();
-    const ele = document.querySelector('.devui-loading');
+    const ele = document.querySelector(ns.b());
     expect(ele).toBeTruthy();
     expect(ele.parentNode === document.body).toBe(true);
 
     loading.loadingInstance.close();
     await nextTick();
-    const ele2 = document.querySelector('.devui-loading');
+    const ele2 = document.querySelector(ns.b());
     expect(ele2).toBe(null);
   });
 
@@ -240,7 +242,7 @@ describe('Loading as Service', () => {
     });
 
     await nextTick();
-    const ele = document.querySelector('.devui-loading');
+    const ele = document.querySelector(ns.b());
     expect(ele).toBeTruthy();
     expect(ele.parentNode === div).toBe(true);
 
@@ -253,7 +255,7 @@ describe('Loading as Service', () => {
     });
 
     await nextTick();
-    const ele = document.querySelector('.devui-loading');
+    const ele = document.querySelector(ns.b());
     expect(ele).toBeTruthy();
     expect(ele.textContent).toBe('正在加载中...');
 
@@ -271,13 +273,13 @@ describe('Loading as Service', () => {
     });
 
     await nextTick();
-    const ele = document.querySelector('.devui-loading');
+    const ele = document.querySelector(ns.b());
     expect(ele).toBeTruthy();
     // @_ts-ignore
     // 不支持`ts-ignore`，强行修改确保eslint通过。@mrundef-210810
     expect(ele.parentNode.style.position).toBe('absolute');
 
-    const loadingEle = ele.querySelector('.devui-loading-area');
+    const loadingEle = ele.querySelector(ns.e('area'));
     // @_ts-ignore
     // 不支持`ts-ignore`，强行修改确保eslint通过。@mrundef-210810
     const style = loadingEle.style;
@@ -304,7 +306,7 @@ describe('Loading as Service', () => {
     expect(ele).toBeTruthy();
     expect(ele.textContent).toBe('正在加载中');
 
-    const originEle = document.querySelector('.devui-loading-wrapper');
+    const originEle = document.querySelector(ns.e('wrapper'));
     expect(originEle).toBeFalsy();
 
     loading.loadingInstance.close();
@@ -317,8 +319,8 @@ describe('Loading as Service', () => {
 
     await nextTick();
 
-    const wrapper = document.querySelector('.devui-loading-wrapper');
-    const mask = document.querySelector('.devui-loading-mask');
+    const wrapper = document.querySelector(ns.e('wrapper'));
+    const mask = document.querySelector(ns.e('mask'));
 
     expect(wrapper).toBeTruthy();
     expect(mask).toBeFalsy();

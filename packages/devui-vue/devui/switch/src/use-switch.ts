@@ -5,7 +5,9 @@ import { SwitchProps, UseSwitchFn } from './switch-types';
 export function useSwitch(props: SwitchProps, ctx: SetupContext): UseSwitchFn {
   const formContext = inject(FORM_TOKEN, undefined);
   const switchDisabled = computed(() => formContext?.disabled || props.disabled);
-  const switchSize = computed(() => formContext?.size || props.size);
+
+  const switchSize = computed(() => props.size || formContext?.size || 'md');
+
   const canChange = () => {
     if (switchDisabled.value) {
       return Promise.resolve(false);

@@ -18,7 +18,6 @@ export default defineComponent({
         innerStyle.value = {
           ...innerStyle.value,
           transform: `translateY(${offset.value}px)`,
-          position: 'absolute',
           left: 0,
           right: 0,
           top: 0,

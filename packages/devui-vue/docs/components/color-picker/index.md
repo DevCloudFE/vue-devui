@@ -109,7 +109,9 @@ export default defineComponent({
 :::
 
 ### 基础面板自定义
+
 设置可自定义配置的基础面板颜色样本
+
 :::demo
 
 ```vue
@@ -146,9 +148,7 @@ export default defineComponent({
 
 :::
 
-### d-color-picker
-
-d-color-picker 参数
+### ColorPicker 参数
 
 | 参数         | 类型      | 默认   | 说明                                        | 跳转 Demo                   |
 | :---: | :---: | :---: | :---: | :---: |

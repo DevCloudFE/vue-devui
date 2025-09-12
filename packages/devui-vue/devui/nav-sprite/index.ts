@@ -1,10 +1,6 @@
 import { App } from 'vue';
 import NavSprite from './src/nav-sprite';
 
-NavSprite.install = function (app: App) {
-  app.component(NavSprite.name, NavSprite);
-};
-
 export { NavSprite };
 
 export default {
@@ -12,6 +8,6 @@ export default {
   category: '导航',
   status: '10%',
   install(app: App): void {
-    app.use(NavSprite as any);
+    app.component(NavSprite.name, NavSprite);
   }
 };

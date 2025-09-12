@@ -1,120 +1,120 @@
-import { PropType, ExtractPropTypes } from 'vue';
+import type { PropType, ExtractPropTypes, InjectionKey, Ref, WritableComputedRef } from 'vue';
 
-type AppendToBodyDirection = 'rightDown' | 'rightUp' | 'leftUp' | 'leftDown' | 'centerDown' | 'centerUp';
-
-interface ConnectedPosition {
-  originX: 'start' | 'center' | 'end';
-  originY: 'top' | 'center' | 'bottom';
-
-  overlayX: 'start' | 'center' | 'end';
-  overlayY: 'top' | 'center' | 'bottom';
-
-  weight?: number;
-  offsetX?: number;
-  offsetY?: number;
-  panelClass?: string | string[];
-}
+export type PageSizeDirection = 'bottom' | 'top' | 'left' | 'right';
 
 type Size = 'lg' | '' | 'sm';
 
 export const paginationProps = {
   pageSize: {
     type: Number,
-    default: 10
+    default: 10,
   },
   total: {
     type: Number,
-    default: 0
+    default: 0,
   },
   pageSizeOptions: {
     type: Array as PropType<number[]>,
-    default: () => [5, 10, 20, 50]
+    default: () => [5, 10, 20, 50],
   },
   pageSizeDirection: {
-    type: Array as PropType<Array<AppendToBodyDirection | ConnectedPosition>>,
-    default: () => ['centerDown', 'centerUp']
+    type: Array as PropType<Array<PageSizeDirection>>,
+    default: () => ['bottom', 'top', 'left', 'bottom'],
   },
   pageIndex: {
     type: Number,
-    default: 1
+    default: 1,
   },
   maxItems: {
     type: Number,
-    default: 10
+    default: 10,
   },
   preLink: {
     type: String,
-    default: '&lt;'
+    default: '',
   },
   nextLink: {
     type: String,
-    default: '&gt;'
+    default: '',
   },
   size: {
     type: String as PropType<Size>,
-    default: ''
+    default: '',
   },
   canJumpPage: {
     type: Boolean,
-    default: false
+    default: false,
   },
   canChangePageSize: {
     type: Boolean,
-    default: false
+    default: false,
   },
   canViewTotal: {
     type: Boolean,
-    default: false
+    default: false,
   },
   totalItemText: {
     type: String,
-    default: '所有条目'
   },
   goToText: {
     type: String,
-    default: '跳至'
   },
   showJumpButton: {
     type: Boolean,
-    default: false
+    default: false,
   },
   showTruePageIndex: {
     type: Boolean,
-    default: false
+    default: false,
   },
   lite: {
     type: Boolean,
-    default: false
+    default: false,
   },
   showPageSelector: {
     type: Boolean,
-    default: true
+    default: true,
   },
   haveConfigMenu: {
     type: Boolean,
-    default: false
+    default: false,
   },
   autoFixPageIndex: {
     type: Boolean,
-    default: true
+    default: true,
   },
   autoHide: {
     type: Boolean,
-    default: false
+    default: false,
   },
   'onUpdate:pageIndex': {
-    type: Function as PropType<(v: number) => void>
+    type: Function as PropType<(v: number) => void>,
   },
   'onUpdate:pageSize': {
-    type: Function as PropType<(v: number) => void>
+    type: Function as PropType<(v: number) => void>,
   },
-  'onPageIndexChange': {
-    type: Function as PropType<(v: number) => void>
+  onPageIndexChange: {
+    type: Function as PropType<(v: number) => void>,
   },
-  'onPageSizeChange': {
-    type: Function as PropType<(v: number) => void>
-  }
+  onPageSizeChange: {
+    type: Function as PropType<(v: number) => void>,
+  },
+  maxPage: {
+    type: Number,
+    default: 0,
+  },
 } as const;
 
 // 组件props
 export type PaginationProps = ExtractPropTypes<typeof paginationProps>;
+
+export interface IPagination {
+  size: Ref<Size>;
+  currentPageSize: WritableComputedRef<number>;
+  pageSizeOptions: Ref<number[]>;
+  pageSizeDirection: Ref<PageSizeDirection[]>;
+  pageSizeChange: (val: number) => void;
+  t: (path: string) => void;
+}
+
+export const paginationInjectionKey: InjectionKey<IPagination> = Symbol('d-pagination');

@@ -6,7 +6,8 @@ export const colorPickerAlphaSliderProps = {
     type: Object
   },
   modelValue: {
-    type: Object as PropType<ColorPickerColor>
+    type: Object as PropType<ColorPickerColor>,
+    default: {},
   },
   rgba: {
     type: Object,

@@ -9,11 +9,12 @@ export function useTextareaRender(props: TextareaProps): UseTextareaRender {
   const ns = useNamespace('textarea');
   const isValidateError = computed(() => formItemContext?.validateState === 'error');
   const isFocus = ref(false);
-  const { error, disabled } = toRefs(props);
+  const { error, disabled, showGlowStyle } = toRefs(props);
   const textareaDisabled = computed(() => disabled.value || formContext?.disabled);
 
   const wrapClasses = computed(() => ({
     [ns.b()]: true,
+    [ns.m('glow-style')]: showGlowStyle.value,
     [ns.m('focus')]: isFocus.value,
     [ns.m('disabled')]: textareaDisabled.value,
     [ns.m('error')]: error.value || isValidateError.value,

@@ -1,14 +1,15 @@
 import { defineComponent, onBeforeUnmount, onMounted, onUnmounted } from 'vue';
+import type { SetupContext } from 'vue';
 import { TimePickerProps, timePickerProps } from '../../time-picker-types';
 import useTimeScroll from './composables/use-time-scroll';
-import { useNamespace } from '../../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 import './index.scss';
 
 export default defineComponent({
   name: 'DTimeScroll',
   props: timePickerProps,
-  setup(props, ctx) {
+  setup(props: TimePickerProps, ctx: SetupContext) {
     const ns = useNamespace('scroll-box');
     const {
       scrollBoxDom,
@@ -29,16 +30,16 @@ export default defineComponent({
     onMounted(() => {
       getScrollWidth();
       getScrollHeight();
-      scrollBoxDom.value.addEventListener('click', setVirtualScroll);
-      scrollContentDom.value.addEventListener('scroll', setVirtualScroll);
-      scrollThumbDom.value.addEventListener('mousedown', mouseDownThum);
+      scrollBoxDom.value?.addEventListener('click', setVirtualScroll);
+      scrollContentDom.value?.addEventListener('scroll', setVirtualScroll);
+      scrollThumbDom.value?.addEventListener('mousedown', mouseDownThum);
       document.addEventListener('mouseup', mouseOutThum);
       document.addEventListener('mousemove', thumbMouseMove);
     });
     onBeforeUnmount(() => {
-      scrollBoxDom.value.removeEventListener('click', setVirtualScroll);
-      scrollContentDom.value.removeEventListener('scroll', setVirtualScroll);
-      scrollThumbDom.value.removeEventListener('mousedown', mouseDownThum);
+      scrollBoxDom.value?.removeEventListener('click', setVirtualScroll);
+      scrollContentDom.value?.removeEventListener('scroll', setVirtualScroll);
+      scrollThumbDom.value?.removeEventListener('mousedown', mouseDownThum);
     });
     onUnmounted(() => {
       document.removeEventListener('mouseup', mouseOutThum);

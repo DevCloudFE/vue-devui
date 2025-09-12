@@ -1,7 +1,7 @@
 export type TDateCell = { date: Date; current: -1 | 0 | 1 };
 export type TDatePanelMode = 'month' | 'year';
 export type TDatePanelType = 'select' | 'range';
-export type TEventCallback = (date: Date, position?: number) => void;
+export type TEventCallback = (date: Date, position: number) => void;
 
 export type TDateConfig = {
   type?: TDatePanelType;
@@ -32,7 +32,7 @@ export type TDateToolbarDataProps = TDateConfig & {
 
 export type TDateToolbarProps = TDateToolbarDataProps & TDateToolbarEventProps;
 
-export type TDatePanelEventProps = TDateToolbarEventProps & {
+export type TDatePanelEventProps = {
   onSelected?: TEventCallback;
   onReset?: TEventCallback;
   onSelectStart?: TEventCallback;
@@ -40,7 +40,7 @@ export type TDatePanelEventProps = TDateToolbarEventProps & {
   onSelecting?: TEventCallback;
   onToday?: TEventCallback;
   onChange?: (type: TDatePanelType, config: TDateSelectingBase) => void;
-};
+} & TDateToolbarEventProps;
 
 export type TDatePanelDataProps = TDateToolbarDataProps & TDateSelectingBase;
 
@@ -58,12 +58,12 @@ export type TIconSvgProps = {
   color?: string;
   rotate?: number;
 };
-export type TIconSvg = (props: TIconSvgProps) => any;
+export type TIconSvg = <T>(props: TIconSvgProps) => T;
 
 export type TCalendarToolbarItemProps = {
   disabled?: boolean;
   rotate?: number;
-  cb?: (...args: any[]) => void;
+  cb?: <T>(...args: T[]) => void;
   pos: number;
   date: Date;
   button: TIconSvg;

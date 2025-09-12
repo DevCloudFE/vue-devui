@@ -24,6 +24,9 @@ export default defineComponent({
       layout: formContext.layout,
       labelSize: formContext.labelSize,
       labelAlign: formContext.labelAlign,
+      requiredPosition: formContext.requirePosition,
+      helpTips: helpTips.value,
+      formItemCtx: ctx,
     }));
     provide(LABEL_DATA, labelData);
     const context: FormItemContext = reactive({
@@ -42,6 +45,7 @@ export default defineComponent({
     provide(FORM_ITEM_TOKEN, context);
 
     ctx.expose({
+      validate,
       resetField,
       clearValidate,
     });
@@ -58,7 +62,7 @@ export default defineComponent({
 
     return () => (
       <div class={itemClasses.value}>
-        <FormLabel help-tips={helpTips.value}>{label?.value}</FormLabel>
+        <FormLabel>{ctx.slots.label ? ctx.slots.label() : label?.value}</FormLabel>
         <FormControl feedback-status={feedbackStatus?.value} extra-info={extraInfo.value}>
           {ctx.slots.default?.()}
         </FormControl>

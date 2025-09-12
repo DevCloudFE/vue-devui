@@ -1,10 +1,11 @@
 import { clearSelect } from '../../composables/use-layer-operate';
-import { defineComponent, getCurrentInstance, onMounted, ref, Transition, watch, inject, Ref, reactive, toRefs } from 'vue';
+import { defineComponent, getCurrentInstance, onMounted, ref, Transition, watch, inject, Ref, toRefs, computed } from 'vue';
 import { MenuItemProps, menuItemProps } from './menu-item-types';
 import { initSelect, addActiveParent, changeRoute } from './use-menu-item';
 import { useClick } from '../../composables/use-click';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import { Router } from 'vue-router';
+import { Store } from '../../composables/use-store';
 
 const ns = useNamespace('menu');
 
@@ -21,44 +22,48 @@ export default defineComponent({
   setup(props: MenuItemProps, ctx) {
     const instance = getCurrentInstance();
     const key = String(instance?.vnode.key);
+    const menuStore = inject('menuStore') as Store;
     const mode = inject('mode') as Ref<'vertical' | 'horizontal'>;
     const multiple = inject('multiple') as boolean;
     const indent = inject('defaultIndent');
     const isCollapsed = inject('isCollapsed') as Ref<boolean>;
-    const defaultSelectKey = inject('defaultSelectKey') as string[];
+    const defaultSelectKey = inject('defaultSelectKey') as Ref<string[]>;
     const { disabled } = toRefs(props);
-    const isSelect = ref(initSelect(defaultSelectKey, key, multiple, disabled));
+    const isSelect = ref(initSelect(defaultSelectKey.value, key, multiple, disabled));
     const isLayer1 = ref(true);
     const rootMenuEmit = inject('rootMenuEmit') as (eventName: string, ...args: unknown[]) => void;
-    const useRouter = inject('useRouter') as boolean;
+    const useRouter = inject('useRouter') as Ref<boolean>;
     const router = instance?.appContext.config.globalProperties.$router as Router;
-
-    const classObject: Record<string, boolean> = reactive({
+    const classObject = computed(() => ({
       [`${ns.b()}-item`]: true,
       [`${ns.b()}-item-isCollapsed`]: isCollapsed.value,
-      [`${ns.b()}-isCollapsed-item`]: isCollapsed.value,
       [menuItemSelect]: isSelect.value,
       [menuItemDisabled]: disabled.value,
+    }));
+    menuStore.on('menuItem:clear:select', () => {
+      isSelect.value = false;
     });
     const onClick = (e: MouseEvent) => {
       e.stopPropagation();
       const ele = e.currentTarget as HTMLElement;
       let changeRouteResult = undefined;
+      props.disabled && e.preventDefault();
       if (!props.disabled) {
         if (!multiple) {
+          menuStore.emit('menuItem:clear:select');
           clearSelect(ele, e, mode.value === 'horizontal');
           if (mode.value === 'horizontal') {
             useClick(e as clickEvent);
-          } else {
-            ele.classList.add(menuItemSelect);
           }
-          changeRouteResult = changeRoute(props, router, useRouter, key);
+          isSelect.value = true;
+          changeRouteResult = changeRoute(props, router, useRouter.value, key);
         } else {
           if (ele.classList.contains(menuItemSelect)) {
-            ele.classList.remove(menuItemSelect);
             rootMenuEmit('deselect', { type: 'deselect', key, el: ele, e });
+            isSelect.value = false;
             return;
           } else {
+            isSelect.value = true;
             ele.classList.add(menuItemSelect);
           }
         }
@@ -80,13 +85,15 @@ export default defineComponent({
     const icons = <span class={`${ns.b()}-icon`}>{ctx.slots.icon?.()}</span>;
     const menuItems = ref(null);
     watch(disabled, () => {
-      classObject[menuItemSelect] = false;
+      if (!multiple) {
+        classObject.value[menuItemSelect] = false;
+      }
     });
     watch(
-      () => defaultSelectKey,
+      () => [...defaultSelectKey.value],
       (n) => {
         isSelect.value = initSelect(n, key, multiple, disabled);
-        classObject[menuItemSelect] = isSelect.value;
+        classObject.value[menuItemSelect] = isSelect.value;
       }
     );
     onMounted(() => {
@@ -121,13 +128,11 @@ export default defineComponent({
         }
       }
     });
+
     return () => {
       return mode.value === 'vertical' ? (
         <div class={`${ns.b()}-item-vertical-wrapper`}>
-          <li
-            class={[classObject, props['disabled'] ? menuItemDisabled : '', isLayer1.value ? 'layer_1' : '']}
-            onClick={onClick}
-            ref={menuItems}>
+          <li class={classObject.value} onClick={onClick} ref={menuItems}>
             {ctx.slots.icon !== undefined && icons}
             {props.href === '' ? (
               <Transition name="fade">
@@ -141,10 +146,7 @@ export default defineComponent({
           </li>
         </div>
       ) : (
-        <li
-          class={[classObject, props['disabled'] ? menuItemDisabled : '', isLayer1.value ? 'layer_1' : '']}
-          onClick={onClick}
-          ref={menuItems}>
+        <li class={classObject.value} onClick={onClick} ref={menuItems}>
           {ctx.slots.icon !== undefined && icons}
           {props.href === '' ? (
             <Transition name="fade">

@@ -3,11 +3,11 @@ import { ColorPickerHistoryProps, colorPickerHistoryProps } from './color-picker
 import { Icon } from '../../../../icon';
 import './color-history.scss';
 import { fromHexa } from '../../utils/color-utils';
-import { provideColorOptions, ColorPickerColor } from '../../utils/color-utils-types';
+import { ProvideColorOptions, ColorPickerColor } from '../../utils/color-utils-types';
 import { debounce } from 'lodash';
 
 const STORAGE_KEY = 'STORAGE_COLOR_PICKER_HISTORY_KEY';
-const MAX_HISOTRY_COUNT = 8;
+const MAX_HISTORY_COUNT = 8;
 
 /**
  * 创建支持存储Store
@@ -19,7 +19,8 @@ function useStore<T>(v: T, { storage }: { storage?: boolean } = {}): Ref<T | Unw
   // 获取默认值
   const getDefaultValue = (): T => {
     if (storage) {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || v;
+      const storageValue = localStorage.getItem(STORAGE_KEY);
+      return JSON.parse(storageValue + '') || v;
     } else {
       return v;
     }
@@ -47,11 +48,11 @@ export default defineComponent({
   emits: ['update:color'],
   setup(props: ColorPickerHistoryProps) {
     // 获取 是否showalpha
-    const alphaInject: provideColorOptions = inject('provideData');
+    const alphaInject = inject('provideData') as ProvideColorOptions;
 
     // 创建历史存储
     const history = useStore<string[]>([], { storage: true });
-    const color = ref(props.color);
+    const color = ref<Partial<ColorPickerColor> | undefined>(props.color);
 
     // 更新历史值函数
     // 进行缓冲处理
@@ -65,12 +66,12 @@ export default defineComponent({
 
       history.value = [alphaInject.showAlpha ? value.hexa : value.hex, ...history.value].slice(
         0,
-        MAX_HISOTRY_COUNT
+        MAX_HISTORY_COUNT
       );
     }, 100);
 
     // 更新历史值
-    watch(props.color, (value) => {
+    watch(props.color as ColorPickerColor, (value) => {
       updateHistory(value);
     });
 

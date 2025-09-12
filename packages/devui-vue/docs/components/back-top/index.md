@@ -24,15 +24,15 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
     return {
-      msg: 'BackTop 回到顶部 组件文档示例'
-    }
-  }
-})
+      msg: 'BackTop 回到顶部 组件文档示例',
+    };
+  },
+});
 </script>
 
 <style></style>
@@ -57,11 +57,11 @@ export default defineComponent({
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  setup() {}
-})
+  setup() {},
+});
 </script>
 
 <style>
@@ -86,31 +86,26 @@ export default defineComponent({
       <li class="backtop-demo-item" v-for="(item, index) of list" :key="item">
         {{ index + 1 + '. ' + item }}
       </li>
-      <d-back-top
-        target=".devui-scroll-content"
-        :visibleHeight="100"
-        bottom="5px"
-        right="5px"
-      ></d-back-top>
+      <d-back-top target=".devui-scroll-content" :visibleHeight="100" bottom="5px" right="5px"></d-back-top>
     </ul>
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
-    const msg = 'DevUI倡导沉浸、灵活、至简的设计价值观'
-    const list = []
+    const msg = 'DevUI倡导沉浸、灵活、至简的设计价值观';
+    const list = [];
     for (let i = 0; i < 20; i++) {
-      list.push(msg)
+      list.push(msg);
     }
     return {
-      list
-    }
-  }
-})
+      list,
+    };
+  },
+});
 </script>
 
 <style>
@@ -136,9 +131,7 @@ export default defineComponent({
 
 :::
 
-### d-back-top
-
-d-back-top 参数
+### BackTop 参数
 
 |     参数      |   类型   |   默认   |                                 说明                                  |       跳转 Demo       |
 | :-----------: | :------: | :------: | :-------------------------------------------------------------------: | :-------------------: |
@@ -147,11 +140,3 @@ d-back-top 参数
 | visibleHeight | `number` |   300    | 可选，滚动高度达到 visibleHeight 所设值后展示回到顶部按钮，单位为`px` |   [示例](#基本用法)   |
 |    target     | `string` | 'window' |                      可选，触发滚动的元素选择器                       | [示例](#嵌入容器内部) |
 |               |          |          |                                                                       |                       |
-
-d-back-top 事件
-
-| 事件 | 类型 | 说明 | 跳转 Demo |
-| ---- | ---- | ---- | --------- |
-|      |      |      |           |
-|      |      |      |           |
-|      |      |      |           |

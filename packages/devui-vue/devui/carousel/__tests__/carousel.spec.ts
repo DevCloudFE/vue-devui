@@ -1,8 +1,13 @@
 import { ref, nextTick } from 'vue';
 import { mount } from '@vue/test-utils';
-import { CarouselItem, Carousel  } from '../index';
+import { CarouselItem, Carousel } from '../index';
 import { Button } from '../../button';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { wait } from '../../shared/utils';
+
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
 
 const ns = useNamespace('carousel', true);
 const button = useNamespace('button', true);
@@ -16,9 +21,6 @@ const arrowLeftClass = '.arrow-left';
 const arrowRightClass = '.arrow-right';
 
 const buttonBaseClass = button.b();
-
-const wait = (ms = 100) =>
-  new Promise(resolve => setTimeout(() => resolve(true), ms));
 
 describe('d-carousel', () => {
   it('arrowTrigger-never', () => {
@@ -80,7 +82,7 @@ describe('d-carousel', () => {
         'd-carousel-item': CarouselItem,
       },
       template: `
-        <d-carousel ref="carousel" height="200px" :activeIndexChange="onChange">
+        <d-carousel ref="carousel" height="200px" @activeIndexChange="onChange">
           <d-carousel-item>Page 1</d-carousel-item>
           <d-carousel-item>Page 2</d-carousel-item>
           <d-carousel-item>Page 3</d-carousel-item>
@@ -96,9 +98,9 @@ describe('d-carousel', () => {
 
         return {
           activeIndex,
-          onChange
+          onChange,
         };
-      }
+      },
     });
 
     await nextTick();
@@ -114,7 +116,7 @@ describe('d-carousel', () => {
         'd-carousel-item': CarouselItem,
       },
       template: `
-        <d-carousel ref="carousel" height="200px" :activeIndexChange="onChange" dotTrigger="hover">
+        <d-carousel ref="carousel" height="200px" @activeIndexChange="onChange" dotTrigger="hover">
           <d-carousel-item>Page 1</d-carousel-item>
           <d-carousel-item>Page 2</d-carousel-item>
           <d-carousel-item>Page 3</d-carousel-item>
@@ -130,9 +132,9 @@ describe('d-carousel', () => {
 
         return {
           activeIndex,
-          onChange
+          onChange,
         };
-      }
+      },
     });
     await nextTick();
     wrapper.findAll(dotItemClass)[1].trigger('mouseenter');
@@ -148,7 +150,7 @@ describe('d-carousel', () => {
         'd-button': Button,
       },
       template: `
-        <d-carousel ref="carousel" height="200px" arrowTrigger="always" :activeIndexChange="onChange">
+        <d-carousel ref="carousel" height="200px" arrowTrigger="always" @activeIndexChange="onChange">
           <d-carousel-item v-for="item in items" :key="item">{{ item }} </d-carousel-item>
         </d-carousel>
         <div class="carousel-demo-operate">
@@ -186,7 +188,7 @@ describe('d-carousel', () => {
           onGoFirst,
           onChange,
         };
-      }
+      },
     });
 
     await nextTick();
@@ -219,7 +221,7 @@ describe('d-carousel', () => {
         'd-carousel-item': CarouselItem,
       },
       template: `
-        <d-carousel ref="carousel" height="200px" :activeIndexChange="onChange" autoplay :autoplaySpeed="3000">
+        <d-carousel ref="carousel" height="200px" @activeIndexChange="onChange" autoplay :autoplaySpeed="2000">
           <d-carousel-item>Page 1</d-carousel-item>
           <d-carousel-item>Page 2</d-carousel-item>
           <d-carousel-item>Page 3</d-carousel-item>
@@ -235,14 +237,14 @@ describe('d-carousel', () => {
 
         return {
           activeIndex,
-          onChange
+          onChange,
         };
-      }
+      },
     });
 
-    await wait(4500);
+    await wait(2100);
     expect(wrapper.vm.activeIndex).toBe(1);
-    await wait(4600);
-    expect(wrapper.vm.activeIndex).toBe(3);
-  }, 10000);
+    await wait(2100);
+    expect(wrapper.vm.activeIndex).toBe(2);
+  });
 });

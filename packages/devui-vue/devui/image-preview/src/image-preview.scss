@@ -1,4 +1,4 @@
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-image-preview {
   position: fixed;
@@ -6,7 +6,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: calc(#{$devui-z-index-modal});
+  z-index: $devui-z-index-full-page-overlay;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,11 +20,12 @@
   }
   @mixin fixed-button() {
     position: fixed;
-    z-index: $devui-z-index-modal;
+    z-index: $devui-z-index-full-page-overlay;
     cursor: pointer;
     width: 36px;
     height: 36px;
     border-radius: 50%;
+    border: none;
     background: $devui-highlight-overlay;
     box-shadow: $devui-shadow-length-base $devui-light-shadow;
     display: inline-flex;
@@ -92,6 +93,11 @@
       align-items: center;
       justify-content: center;
       color: $devui-text;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      outline: 0;
+      padding: 0;
     }
 
     .#{$devui-prefix}-image-preview__index {
@@ -114,7 +120,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: calc(#{$devui-z-index-modal} - 1);
+  z-index: calc($devui-z-index-full-page-overlay - 1);
   background: $devui-shadow;
   border-radius: $devui-border-radius;
   box-shadow: $devui-shadow-length-fullscreen-overlay $devui-shadow;
