@@ -2,7 +2,7 @@ export default {
   pagination: {
     totalItemText: 'Total',
     goToText: 'Go to',
-    perPage: 'per page',
+    perPage: 'Per page',
   },
   accordion: {
     loading: 'loading',
