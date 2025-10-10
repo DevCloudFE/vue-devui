@@ -20,30 +20,51 @@ export default defineComponent({
     const showSuggestions = ref<boolean>(false);
     const currentIndex = ref<number>(0);
     const suggestionsTop = ref<number>();
+    const suggestionsLeft = ref<number>();
     const suggestions = ref<IMentionSuggestionItem[]>([]);
     const filteredSuggestions = ref<IMentionSuggestionItem[]>([]);
     const suggestionsDom = ref<HTMLDivElement>();
     const loading = computed(() => props.loading);
     const instance = getCurrentInstance();
 
+    function getLastTriggerIndex(val: string) {
+      let lastTriggerIndex = -1;
+      for (const trigger of props.trigger) {
+        lastTriggerIndex = Math.max(lastTriggerIndex, val.lastIndexOf(trigger));
+      }
+      return lastTriggerIndex;
+    }
+
+    function handleCompleteText(val: string | number) {
+      const lastTriggerIndex = getLastTriggerIndex(textContext.value);
+      textContext.value = textContext.value.substring(0, lastTriggerIndex + 1) + val.toLocaleString() + ' ';
+      showSuggestions.value = false;
+    }
+
     const handleUpdate = debounce((val: string) => {
-      if (props.trigger.includes(val[0])) {
+      const lastChar = val.charAt(val.length - 1);
+      if (props.trigger.includes(lastChar)) {
         showSuggestions.value = true;
-        if (props.position === 'top') {
-          setTimeout(() => {
-            const height = window.getComputedStyle(suggestionsDom.value as Element, null).height;
-            suggestionsTop.value = -Number(height.replace('px', ''));
-          }, 0);
-        }
-        filteredSuggestions.value = (suggestions.value as IMentionSuggestionItem[]).filter((item: IMentionSuggestionItem) =>
-          String(item[props.dmValueParse.value as keyof IMentionSuggestionItem])
-            .toLocaleLowerCase()
-            .includes(val.slice(1).toLocaleLowerCase())
-        );
-      } else {
+      }
+      if (lastChar === ' ' || lastChar === '') {
         showSuggestions.value = false;
       }
-      emit('change', val.slice(1));
+      if (showSuggestions.value) {
+        const prefix = val.slice(getLastTriggerIndex(val) + 1, val.length - 1);
+        if (props.position === 'top') {
+          setTimeout(() => {
+            const element = window.getComputedStyle(suggestionsDom.value as Element, null);
+            const { height, width } = element;
+            suggestionsTop.value = -Number(height.replace('px', ''));
+            suggestionsLeft.value = Number(width.replace('px', ''));
+          }, 0);
+        }
+        filteredSuggestions.value = (suggestions.value as IMentionSuggestionItem[]).filter((item: IMentionSuggestionItem) => {
+          const string = String(item[props.dmValueParse.value as keyof IMentionSuggestionItem]).toLocaleLowerCase();
+          return string.includes(prefix);
+        });
+      }
+      emit('change', lastChar);
     }, 300);
 
     const handleBlur = (e: Event) => {
@@ -57,7 +78,9 @@ export default defineComponent({
     };
 
     const handleFocus = () => {
-      if (props.trigger.includes(textContext.value)) {
+      const val = textContext.value;
+      const lastChar = val.charAt(val.length - 1);
+      if (props.trigger.includes(lastChar)) {
         showSuggestions.value = true;
       }
     };
@@ -67,11 +90,18 @@ export default defineComponent({
       e.stopPropagation();
       e.preventDefault();
       showSuggestions.value = false;
-      textContext.value = textContext.value.substring(0, 1) + item[props.dmValueParse.value as keyof IMentionSuggestionItem];
+      handleCompleteText(item[props.dmValueParse.value as keyof IMentionSuggestionItem]);
     };
 
     const arrowKeyDown = (e: KeyboardEvent) => {
       if (showSuggestions.value && filteredSuggestions.value.length) {
+        if (e.key === 'Enter') {
+          e.stopPropagation();
+          e.preventDefault();
+          showSuggestions.value = false;
+          handleCompleteText(filteredSuggestions.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem]);
+          emit('select', filteredSuggestions.value[currentIndex.value]);
+        }
         if (e.key === 'ArrowDown') {
           currentIndex.value++;
           if (currentIndex.value === filteredSuggestions.value.length) {
@@ -96,20 +126,6 @@ export default defineComponent({
       }
     };
 
-    const enterKeyDown = (e: KeyboardEvent) => {
-      if (showSuggestions.value && filteredSuggestions.value.length) {
-        if (e.key === 'Enter') {
-          e.stopPropagation();
-          e.preventDefault();
-          showSuggestions.value = false;
-          textContext.value =
-            textContext.value.substring(0, 1) +
-            filteredSuggestions.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem];
-          emit('select', filteredSuggestions.value[currentIndex.value]);
-        }
-      }
-    };
-
     watch(
       () => props.suggestions,
       (val) => {
@@ -121,14 +137,13 @@ export default defineComponent({
 
     onMounted(() => {
       window.addEventListener('keydown', arrowKeyDown);
-      window.addEventListener('keydown', enterKeyDown);
       document.addEventListener('click', handleBlur);
     });
 
     onUnmounted(() => {
       window.removeEventListener('keydown', arrowKeyDown);
-      window.removeEventListener('keydown', enterKeyDown);
       document.removeEventListener('click', handleBlur);
+      showSuggestions.value = false;
     });
 
     return () => {
@@ -149,6 +164,7 @@ export default defineComponent({
                 style={{
                   marginTop: props.position === 'top' ? '0px' : '-16px',
                   top: suggestionsTop.value ? suggestionsTop.value + 'px' : 'inherit',
+                  left: suggestionsLeft.value ? suggestionsLeft.value + 'px' : 'inherit',
                 }}>
                 {filteredSuggestions.value.length > 0 ? (
                   filteredSuggestions.value?.map((item, index) => {
