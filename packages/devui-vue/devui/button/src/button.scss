@@ -337,7 +337,8 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 }
 
 .#{$devui-prefix}-button {
-  transition: background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+  transition:
+    background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
   white-space: nowrap;
@@ -400,6 +401,10 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 
 .clear-right-5 {
   margin-right: 5px;
+}
+
+.clear-left-5 {
+  margin-left: 5px;
 }
 
 .loading-icon__container {

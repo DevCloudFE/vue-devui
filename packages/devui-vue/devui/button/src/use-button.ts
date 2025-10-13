@@ -36,7 +36,11 @@ export default function useButton(props: ButtonProps, ctx: SetupContext): UseBut
     }
     const origin = `${ns.e('icon-fix')} icon`;
     if (hasContent.value) {
-      return `${origin} clear-right-5`;
+      if (props.iconPos === 'left') {
+        return `${origin} clear-right-5`;
+      } else {
+        return `${origin} clear-left-5`;
+      }
     } else {
       return origin;
     }
