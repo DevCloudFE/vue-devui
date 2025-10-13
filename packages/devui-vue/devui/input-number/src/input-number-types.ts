@@ -39,6 +39,9 @@ export const inputNumberProps = {
     type: Boolean,
     default: true,
   },
+  decimalLimit: {
+    type: Number,
+  },
   allowEmpty: {
     type: Boolean,
     default: false,
