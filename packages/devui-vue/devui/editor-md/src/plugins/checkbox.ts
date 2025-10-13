@@ -1,4 +1,4 @@
-import { extend } from 'lodash';
+import { extend } from 'lodash-es';
 
 const checkboxReplace = function (md: any, options: any) {
   let lastId: number;

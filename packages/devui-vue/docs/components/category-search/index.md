@@ -2,6 +2,8 @@
 
 按类型进行搜索，目前支持的类型包括：`radio`、`checkbox`、`label`、`textInput`，`numberRange`，`keyword`。
 
+## 用法
+
 ### 基本用法
 
 :::demo
@@ -142,7 +144,9 @@ export default defineComponent({
 
 ### 自定义展示模板
 
-:::demo 自定义分类下拉展示模板和选中后的标签展示模板。分类下拉展示模板的插槽名为`${field}Menu`，标签展示模板的插槽名为`${field}Tag`，`field`为分类的字段名；插槽参数为`category`参数中对应分类的数据。
+自定义分类下拉展示模板和选中后的标签展示模板。分类下拉展示模板的插槽名为`${field}Menu`，标签展示模板的插槽名为`${field}Tag`，`field`为分类的字段名；插槽参数为`category`参数中对应分类的数据。
+
+:::demo
 
 ```vue
 <template>
@@ -241,7 +245,9 @@ export default defineComponent({
 
 ### 自定义扩展按钮
 
-:::demo 自定义分类下拉展示模板和选中后的标签展示模板。分类下拉展示模板的插槽名为`${field}Menu`，标签展示模板的插槽名为`${field}Tag`，`field`为分类的字段名；插槽参数为`category`参数中对应分类的数据。
+自定义分类下拉展示模板和选中后的标签展示模板。分类下拉展示模板的插槽名为`${field}Menu`，标签展示模板的插槽名为`${field}Tag`，`field`为分类的字段名；插槽参数为`category`参数中对应分类的数据。
+
+:::demo
 
 ```vue
 <template>
@@ -395,13 +401,13 @@ export default defineComponent({
 
 ### CategorySearch 方法
 
-| 方法名              | 说明                                                                       | 参数                                                          |
-| :------------------ | :------------------------------------------------------------------------- | :------------------------------------------------------------ |
-| chooseItem          | 调用组件方法处理选中数据，针对`radio`类型，参数为当前 tag 和选中项         | (tag: ICategorySearchTagItem, chooseItem: ITagOption) => void |
-| chooseItems         | 调用组件方法处理选中数据，针对`checkbox \| label`类型，参数为当前 tag      | (tag: ICategorySearchTagItem) => void                         |
-| getTextInputValue   | 调用组件方法处理选中数据，针对`textInput`类型，参数为当前 tag 和输入内容   | (tag: ICategorySearchTagItem, inputValue: string) => void     |
-| getNumberRangeValue | 调用组件方法处理选中数据，针对`numberRange`类型，参数为当前 tag 和输入内容 | (tag: ICategorySearchTagItem, rangeValue: number[]) => void   |
-|toggleTagMenu|控制某个已选择tag所对应下拉框的展开收起状态，可通过`status`参数指定展开收起状态|`(field: string, status?: boolean) => void`|
+| 方法名              | 说明                                                                              | 参数                                                          |
+| :------------------ | :-------------------------------------------------------------------------------- | :------------------------------------------------------------ |
+| chooseItem          | 调用组件方法处理选中数据，针对`radio`类型，参数为当前 tag 和选中项                | (tag: ICategorySearchTagItem, chooseItem: ITagOption) => void |
+| chooseItems         | 调用组件方法处理选中数据，针对`checkbox \| label`类型，参数为当前 tag             | (tag: ICategorySearchTagItem) => void                         |
+| getTextInputValue   | 调用组件方法处理选中数据，针对`textInput`类型，参数为当前 tag 和输入内容          | (tag: ICategorySearchTagItem, inputValue: string) => void     |
+| getNumberRangeValue | 调用组件方法处理选中数据，针对`numberRange`类型，参数为当前 tag 和输入内容        | (tag: ICategorySearchTagItem, rangeValue: number[]) => void   |
+| toggleTagMenu       | 控制某个已选择 tag 所对应下拉框的展开收起状态，可通过`status`参数指定展开收起状态 | `(field: string, status?: boolean) => void`                   |
 
 ### 类型定义
 

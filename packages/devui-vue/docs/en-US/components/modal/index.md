@@ -10,7 +10,9 @@ Modal dialog.
 
 ### Basic Usage
 
-:::demo `v-model` bidirectional binding, which controls whether Modal is displayed. `title` as parameter is to set modal title.
+`v-model` bidirectional binding, which controls whether Modal is displayed. `title` as parameter is to set modal title.
+
+:::demo
 
 ```vue
 <template>
@@ -47,7 +49,9 @@ export default defineComponent({
 
 ### Keep Last Closed Position
 
-:::demo `keep-last` can keep the last closed position when the current modal is opened again.
+`keep-last` can keep the last closed position when the current modal is opened again.
+
+:::demo
 
 ```vue
 <template>
@@ -84,7 +88,9 @@ export default defineComponent({
 
 ### Customize Title & Action Buttons
 
-:::demo `header` slot can customize Modal top area, subcomponent `d-modal-header` provides a default style for the top area, customized styles can be implemented by setting `style/class` in subcomponent. `footer` slot is the same.
+`header` slot can customize Modal top area, subcomponent `d-modal-header` provides a default style for the top area, customized styles can be implemented by setting `style/class` in subcomponent. `footer` slot is the same.
+
+:::demo
 
 ```vue
 <template>
@@ -134,7 +140,9 @@ export default defineComponent({
 
 ### Information Prompt
 
-:::demo Various types of information prompt modals.
+Various types of information prompt modals.
+
+:::demo
 
 ```vue
 <template>
@@ -176,7 +184,9 @@ export default defineComponent({
 
 ### Callback Before Closing
 
-:::demo `before-close` called when the user clicks the close button or mask layer, you can close them through the `done` parameter after completing some asynchronous operations.
+`before-close` called when the user clicks the close button or mask layer, you can close them through the `done` parameter after completing some asynchronous operations.
+
+:::demo
 
 ```vue
 <template>

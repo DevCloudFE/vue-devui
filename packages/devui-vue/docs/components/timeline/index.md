@@ -9,6 +9,7 @@
 ### 基本用法
 
 通过 `direction` 属性配置时间线排列方向，默认值为`vertical`。
+
 :::demo
 
 ```vue

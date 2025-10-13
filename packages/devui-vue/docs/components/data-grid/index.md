@@ -2,9 +2,13 @@
 
 展示行列数据。
 
+## 用法
+
 ### 基本用法
 
-:::demo `data`参数传入要展示的数据，`columns`参数传入列数据；列数据中的`field`参数为对应列内容的字段名，`header`参数为对应列的标题。
+`data`参数传入要展示的数据，`columns`参数传入列数据；列数据中的`field`参数为对应列内容的字段名，`header`参数为对应列的标题。
+
+:::demo
 
 ```vue
 <template>
@@ -107,7 +111,9 @@ export default defineComponent({
 
 ### 表格样式
 
-:::demo `striped`参数设置是否显示斑马纹；`header-bg`参数设置是否显示表头背景色；`border-type`参数设置边框类型；`shadow-type`参数设置阴影类型；`show-header`参数设置是否显示表头；列配置中的`align`参数设置对齐方式。
+`striped`参数设置是否显示斑马纹；`header-bg`参数设置是否显示表头背景色；`border-type`参数设置边框类型；`shadow-type`参数设置阴影类型；`show-header`参数设置是否显示表头；列配置中的`align`参数设置对齐方式。
+
+:::demo
 
 ```vue
 <template>
@@ -219,7 +225,9 @@ export default defineComponent({
 
 ### 动态数据
 
-:::demo loading 由业务自行添加。
+`loading` 由业务自行添加。
+
+:::demo
 
 ```vue
 <template>
@@ -358,7 +366,9 @@ export default defineComponent({
 
 ### 懒加载
 
-:::demo `lazy`参数设置为`true`，即可启用懒加载，在`load-more`事件回调中可动态添加数据。
+`lazy`参数设置为`true`，即可启用懒加载，在`load-more`事件回调中可动态添加数据。
+
+:::demo
 
 ```vue
 <template>
@@ -478,7 +488,9 @@ export default defineComponent({
 
 ### 自定义行样式
 
-:::demo 通过`row-class`参数自定义行样式，可传入字符串，来自定义每一行的样式；也可传入函数，来自定义某一行或某几行的样式，函数参数为行数据和行索引。
+通过`row-class`参数自定义行样式，可传入字符串，来自定义每一行的样式；也可传入函数，来自定义某一行或某几行的样式，函数参数为行数据和行索引。
+
+:::demo
 
 ```vue
 <template>
@@ -542,7 +554,9 @@ export default defineComponent({
 
 ### 自定义单元格样式
 
-:::demo 通过`cell-class`参数自定义行样式，可传入字符串，来自定义每一行的样式；也可传入函数，来自定义某一行或某几行的样式，函数参数为行数据、行索引、列数据、列索引。
+通过`cell-class`参数自定义行样式，可传入字符串，来自定义每一行的样式；也可传入函数，来自定义某一行或某几行的样式，函数参数为行数据、行索引、列数据、列索引。
+
+:::demo
 
 ```vue
 <template>
@@ -606,7 +620,13 @@ export default defineComponent({
 
 ### 自定义列宽
 
-:::demo 通过`width`参数配置列宽，参数类型为`string | number | undefined`，`number`类型为固定宽度；`string`类型可配置为像素或者百分比，当为百分比时，基于表格所在容器总宽计算该列实际宽度；当为`undefined`即不配置列宽参数时，会与其他不配置列宽的列平分剩余宽度（即容器总宽减去已知列宽）。<br />通过`minWidth`参数配置最小列宽，参数类型同`width`，当该列未配置`width`参数时，若给该列分配的宽度小于`minWidth`，则按照`minWidth`设置列宽，未配置`minWidth`参数时，为保证该列能够显示，会默认设置`80px`宽度。<br />通过`maxWidth`参数配置最大列宽，参数类型同`width`，当该列未配置`width`参数时，若给该列分配的宽度大于`maxWidth`，则按照`maxWidth`设置列宽。
+通过`width`参数配置列宽，参数类型为`string | number | undefined`，`number`类型为固定宽度；`string`类型可配置为像素或者百分比，当为百分比时，基于表格所在容器总宽计算该列实际宽度；当为`undefined`即不配置列宽参数时，会与其他不配置列宽的列平分剩余宽度（即容器总宽减去已知列宽）。
+
+通过`minWidth`参数配置最小列宽，参数类型同`width`，当该列未配置`width`参数时，若给该列分配的宽度小于`minWidth`，则按照`minWidth`设置列宽，未配置`minWidth`参数时，为保证该列能够显示，会默认设置`80px`宽度。
+
+通过`maxWidth`参数配置最大列宽，参数类型同`width`，当该列未配置`width`参数时，若给该列分配的宽度大于`maxWidth`，则按照`maxWidth`设置列宽。
+
+:::demo
 
 ```vue
 <template>
@@ -661,7 +681,9 @@ export default defineComponent({
 
 ### 自定义单元格内容
 
-:::demo 通过在列数据的`cellRender`参数来自定义单元格内容，函数参数依次为行数据、行索引、列数据、列索引。`cellRender`函数可返回由[h 函数](https://cn.vuejs.org/api/render-function.html#h)创建的虚拟 DOM 节点。
+通过在列数据的`cellRender`参数来自定义单元格内容，函数参数依次为行数据、行索引、列数据、列索引。`cellRender`函数可返回由[h 函数](https://cn.vuejs.org/api/render-function.html#h)创建的虚拟 DOM 节点。
+
+:::demo
 
 ```vue
 <template>
@@ -729,7 +751,9 @@ export default defineComponent({
 
 ### 自定义表头
 
-:::demo 通过在列数据的`headRender`参数来自定义表头，函数参数为当前列数据。`headRender`函数可返回由[h 函数](https://cn.vuejs.org/api/render-function.html#h)创建的虚拟 DOM 节点。
+通过在列数据的`headRender`参数来自定义表头，函数参数为当前列数据。`headRender`函数可返回由[h 函数](https://cn.vuejs.org/api/render-function.html#h)创建的虚拟 DOM 节点。
+
+:::demo
 
 ```vue
 <template>
@@ -789,7 +813,11 @@ export default defineComponent({
 
 ### 自定义提示内容
 
-:::demo `showOverflowTooltip`参数可设置内容超出后，鼠标悬浮是否显示提示内容，可设置为`true`值来开启此功能，也可通过`TooltipConfig`类型的参数来对提示内容做一些配置。<br/>`showHeadOverflowTooltip`用来设置表头，作用及参数值与`showOverflowTooltip`一致。
+`showOverflowTooltip`参数可设置内容超出后，鼠标悬浮是否显示提示内容，可设置为`true`值来开启此功能，也可通过`TooltipConfig`类型的参数来对提示内容做一些配置。
+
+`showHeadOverflowTooltip`用来设置表头，作用及参数值与`showOverflowTooltip`一致。
+
+:::demo
 
 ```vue
 <template>
@@ -855,7 +883,9 @@ export default defineComponent({
 
 ### 空数据模板
 
-:::demo 通过`empty`插槽可自定义数据为空时显示的内容。
+通过`empty`插槽可自定义数据为空时显示的内容。
+
+:::demo
 
 ```vue
 <template>
@@ -930,7 +960,9 @@ export default defineComponent({
 
 ### 固定表头
 
-:::demo `fix-header`参数设置为`true`即可固定表头。
+`fix-header`参数设置为`true`即可固定表头。
+
+:::demo
 
 ```vue
 <template>
@@ -1009,7 +1041,9 @@ export default defineComponent({
 
 ### 固定列
 
-:::demo 通过列数据的`fixed`参数可将该列固定，参数值为`left`和`right`，可分别固定在左侧和右侧。
+通过列数据的`fixed`参数可将该列固定，参数值为`left`和`right`，可分别固定在左侧和右侧。
+
+:::demo
 
 ```vue
 <template>
@@ -1092,7 +1126,9 @@ export default defineComponent({
 
 ### 排序
 
-:::demo 列数据中的`sortable`参数设置为`true`可启用排序功能，`sortMethod`参数自定义排序方法，排序后触发`sort-change`事件，事件抛出产生排序的列字段以及当前排序方式。
+列数据中的`sortable`参数设置为`true`可启用排序功能，`sortMethod`参数自定义排序方法，排序后触发`sort-change`事件，事件抛出产生排序的列字段以及当前排序方式。
+
+:::demo
 
 ```vue
 <template>
@@ -1151,7 +1187,9 @@ export default defineComponent({
 
 ### 过滤
 
-:::demo 列数据中的`filterable`参数设置为`true`可启用过滤功能，内置过滤器默认为多选，通过`filterMultiple: false`可设置单选过滤器；`filterList`参数设置过滤器列表；`filterChange`参数为过滤条件变更后的回调；`filterMenu`参数可以自定义过滤器，函数可返回由[h 函数](https://cn.vuejs.org/api/render-function.html#h)创建的虚拟 DOM 节点。。
+列数据中的`filterable`参数设置为`true`可启用过滤功能，内置过滤器默认为多选，通过`filterMultiple: false`可设置单选过滤器；`filterList`参数设置过滤器列表；`filterChange`参数为过滤条件变更后的回调；`filterMenu`参数可以自定义过滤器，函数可返回由[h 函数](https://cn.vuejs.org/api/render-function.html#h)创建的虚拟 DOM 节点。
+
+:::demo
 
 ```vue
 <template>
@@ -1376,7 +1414,9 @@ export default defineComponent({
 
 ### 列宽拖拽
 
-:::demo 列数据配置`resizable`为`true`，使该列可拖拽，拖拽后，会通过最后一列做宽度补偿。**虚拟滚动暂时不支持列宽拖拽**。
+列数据配置`resizable`为`true`，使该列可拖拽，拖拽后，会通过最后一列做宽度补偿。**虚拟滚动暂时不支持列宽拖拽**。
+
+:::demo
 
 ```vue
 <template>
@@ -1431,7 +1471,9 @@ export default defineComponent({
 
 ### 可选择
 
-:::demo 列数据中`type`参数设置为`checkable`可启用勾选功能；行数据中`checked`参数可设置默认勾选状态，`disableCheck`参数可设置禁用勾选；行勾选状态变更时触发`check-change`事件，事件参数为当前行的勾选状态和行数据；表头勾选状态变更时触发`check-all-change`事件，事件参数为当前勾选状态。
+列数据中`type`参数设置为`checkable`可启用勾选功能；行数据中`checked`参数可设置默认勾选状态，`disableCheck`参数可设置禁用勾选；行勾选状态变更时触发`check-change`事件，事件参数为当前行的勾选状态和行数据；表头勾选状态变更时触发`check-all-change`事件，事件参数为当前勾选状态。
+
+:::demo
 
 ```vue
 <template>
@@ -1504,7 +1546,9 @@ export default defineComponent({
 
 ### 父子联动
 
-:::demo 在搭配树形表格使用时，通过`checkable-relation`参数可以控制父子联动方式，默认为`both`，即勾选状态改变会同时影响父和子；其他可选参数为`downward`、`upward`、`none`，具体表现参考 demo 。
+在搭配树形表格使用时，通过`checkable-relation`参数可以控制父子联动方式，默认为`both`，即勾选状态改变会同时影响父和子；其他可选参数为`downward`、`upward`、`none`，具体表现参考 demo。
+
+:::demo
 
 ```vue
 <template>
@@ -1621,7 +1665,9 @@ export default defineComponent({
 
 ### 操作方法
 
-:::demo `toggleRowChecked`方法切换行的勾选状态，第一个参数为行数据，第二个参数可选，可设置勾选状态；`toggleAllRowChecked`方法切换全选状态，参数可选，可设置勾选状态；`getCheckedRows`方法获取当前已勾选数据。
+`toggleRowChecked`方法切换行的勾选状态，第一个参数为行数据，第二个参数可选，可设置勾选状态；`toggleAllRowChecked`方法切换全选状态，参数可选，可设置勾选状态；`getCheckedRows`方法获取当前已勾选数据。
+
+:::demo
 
 ```vue
 <template>

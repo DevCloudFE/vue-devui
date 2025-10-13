@@ -2,13 +2,17 @@
 
 全局信息提示组件。
 
-#### 何时使用
-
+:::tip 何时使用
 当需要向用户全局展示提示信息时使用，显示数秒后消失。
+:::
+
+## 用法
 
 ### 基本用法
 
-:::demo 推荐使用服务方式调用，默认情况只展示消息内容和关闭按钮。
+推荐使用服务方式调用，默认情况只展示消息内容和关闭按钮。
+
+:::demo
 
 ```vue
 <template>
@@ -36,7 +40,9 @@ export default defineComponent({
 
 ### 消息标题
 
-:::demo 通过`title`参数设置消息标题，默认为空，不显示标题。
+通过`title`参数设置消息标题，默认为空，不显示标题。
+
+:::demo
 
 ```vue
 <template>
@@ -65,7 +71,9 @@ export default defineComponent({
 
 ### 消息类型
 
-:::demo 通过`type`参数设置消息类型，目前支持`normal`、`info`、`success`、`warning`、`danger`五种类型，默认`normal`类型，不显示类型图标。
+通过`type`参数设置消息类型，目前支持`normal`、`info`、`success`、`warning`、`danger`五种类型，默认`normal`类型，不显示类型图标。
+
+:::demo
 
 ```vue
 <template>
@@ -95,7 +103,9 @@ export default defineComponent({
 
 ### 超时时间
 
-:::demo 通过`duration`参数设置超时时间，单位`ms`，默认`3000 ms`后自动关闭，设置为`0`则不会自动关闭。
+通过`duration`参数设置超时时间，单位`ms`，默认`3000 ms`后自动关闭，设置为`0`则不会自动关闭。
+
+:::demo
 
 ```vue
 <template>
@@ -125,7 +135,9 @@ export default defineComponent({
 
 ### 关闭回调
 
-:::demo 通过`onClose`参数设置消息关闭时的回调。
+通过`onClose`参数设置消息关闭时的回调。
+
+:::demo
 
 ```vue
 <template>
@@ -157,7 +169,9 @@ export default defineComponent({
 
 ### 组件方式调用
 
-:::demo 除服务方式外，还提供组件方式调用，组件方式的默认插槽与服务方式的`content`参数作用一致，其他参数与服务方式保持同名。
+除服务方式外，还提供组件方式调用，组件方式的默认插槽与服务方式的`content`参数作用一致，其他参数与服务方式保持同名。
+
+:::demo
 
 ```vue
 <template>

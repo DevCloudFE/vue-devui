@@ -2,13 +2,17 @@
 
 文字提示组件。
 
-#### 何时使用
-
+:::tip 何时使用
 用户鼠标移动到文字上，需要进一步的提示时使用。
+:::
+
+## 用法
 
 ### 基本用法
 
-:::demo 默认在触发元素的上方展示提示信息，可通过`position`更改展示位置；`content`可设置提示信息；`show-animation`控制是否开启动画;`disabled`提示组件是否可用;`enterable`鼠标是否可以进入 tooltip;。
+默认在触发元素的上方展示提示信息，可通过`position`更改展示位置；`content`可设置提示信息；`show-animation`控制是否开启动画；`disabled`提示组件是否可用；`enterable`鼠标是否可以进入 tooltip。
+
+:::demo
 
 ```vue
 <template>
@@ -64,7 +68,9 @@ export default defineComponent({
 
 ### 延时触发
 
-:::demo 鼠标移入的时长超过 `mouse-enter-delay` 毫秒之后才会触发，以防止用户无意划过导致的闪现，默认值是 150 毫秒；鼠标移出之后，再经过`mouse-leave-delay`毫秒后，Tooltip 组件才会隐藏，默认值是 100 毫秒。
+鼠标移入的时长超过 `mouse-enter-delay` 毫秒之后才会触发，以防止用户无意划过导致的闪现，默认值是 150 毫秒；鼠标移出之后，再经过`mouse-leave-delay`毫秒后，Tooltip 组件才会隐藏，默认值是 100 毫秒。
+
+:::demo
 
 ```vue
 <template>
@@ -125,18 +131,18 @@ export default defineComponent({
 
 ### Tooltip 参数
 
-| 参数名            | 类型                                               | 默认值 | 说明                                                                                                              | 跳转 Demo             |
-| :---------------- | :------------------------------------------------- | :----- | :---------------------------------------------------------------------------------------------------------------- | :-------------------- |
-| content           | `string`                                           | --     | 可选，Tooltip 显示内容                                                                                            | [基本用法](#基本用法) |
-| position          | [BasePlacement \| BasePlacement[]](#baseplacement) | top    | 可选，Tooltip 显示位置                                                                                            | [基本用法](#基本用法) |
-| align             | `start \| end \| null`                             | null   | 可选，对齐方式，默认居中对齐。                                                                                    |                       |
-| show-animation    | `boolean`                                          | true   | 可选，是否显示动画                                                                                                | [基本用法](#基本用法) |
-| mouse-enter-delay | `number`                                           | 150    | 可选，鼠标移入后延时多久才显示 Tooltip，单位是 ms                                                                 | [延时触发](#延时触发) |
-| mouse-leave-delay | `number`                                           | 100    | 可选，鼠标移出后延时多久才隐藏 Tooltip，单位是 ms                                                                 | [延时触发](#延时触发) |
-| disabled          | `boolean`                                          | false  | 可选，Tooltip 是否可用                                                                                            | [基本用法](#基本用法) |
-| enterable         | `boolean`                                          | true   | 可选，鼠标是否可以进入到 tooltip 中                                                                               | [基本用法](#基本用法) |
-| hide-after        | `number`                                           | 0      | 可选，tooltip 出现后自动隐藏延时，单位为 ms                                                                       | [基本用法](#基本用法) |
-| overlay-class     | `string`                                           | ''     | 可选，自定义弹出层的样式                                                                                          |                       |
+| 参数名            | 类型                                               | 默认值 | 说明                                                                                                        | 跳转 Demo             |
+| :---------------- | :------------------------------------------------- | :----- | :---------------------------------------------------------------------------------------------------------- | :-------------------- |
+| content           | `string`                                           | --     | 可选，Tooltip 显示内容                                                                                      | [基本用法](#基本用法) |
+| position          | [BasePlacement \| BasePlacement[]](#baseplacement) | top    | 可选，Tooltip 显示位置                                                                                      | [基本用法](#基本用法) |
+| align             | `start \| end \| null`                             | null   | 可选，对齐方式，默认居中对齐。                                                                              |                       |
+| show-animation    | `boolean`                                          | true   | 可选，是否显示动画                                                                                          | [基本用法](#基本用法) |
+| mouse-enter-delay | `number`                                           | 150    | 可选，鼠标移入后延时多久才显示 Tooltip，单位是 ms                                                           | [延时触发](#延时触发) |
+| mouse-leave-delay | `number`                                           | 100    | 可选，鼠标移出后延时多久才隐藏 Tooltip，单位是 ms                                                           | [延时触发](#延时触发) |
+| disabled          | `boolean`                                          | false  | 可选，Tooltip 是否可用                                                                                      | [基本用法](#基本用法) |
+| enterable         | `boolean`                                          | true   | 可选，鼠标是否可以进入到 tooltip 中                                                                         | [基本用法](#基本用法) |
+| hide-after        | `number`                                           | 0      | 可选，tooltip 出现后自动隐藏延时，单位为 ms                                                                 | [基本用法](#基本用法) |
+| overlay-class     | `string`                                           | ''     | 可选，自定义弹出层的样式                                                                                    |                       |
 | teleport          | `string \| HTMLElement`                            | 'body' | 可选，挂载节点，等同于 Teleport 组件的[to 属性](https://cn.vuejs.org/api/built-in-components.html#teleport) |
 
 ### Tooltip 插槽

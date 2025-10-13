@@ -2,9 +2,9 @@
 
 内容面板，用于内容分组。
 
-#### 何时使用
-
+:::tip 何时使用
 当页面内容需要进行分组显示时使用，一般包含头部、内容区域、底部三个部分。
+:::
 
 ### 基本用法
 
@@ -23,7 +23,9 @@
 
 ### 默认状态
 
-:::demo 通过设置`is-collapsed`为`true`可以默认展开面板。
+通过设置`is-collapsed`为`true`可以默认展开面板。
+
+:::demo
 
 ```vue
 <template>
@@ -38,7 +40,9 @@
 
 ### 面板类型
 
-:::demo 面板类型有5种：`primary` / `success` / `danger` / `warning` / `info`，默认为`info`。
+面板类型有 5 种：`primary` / `success` / `danger` / `warning` / `info`，默认为`info`。
+
+:::demo
 
 ```vue
 <template>
@@ -46,22 +50,22 @@
     <d-panel-header>Panel with info Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
-  <br>
+  <br />
   <d-panel type="primary" :is-collapsed="true">
     <d-panel-header>Panel with primary Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
-  <br>
+  <br />
   <d-panel type="success" :is-collapsed="true">
     <d-panel-header>Panel with success Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
-  <br>
+  <br />
   <d-panel type="warning" :is-collapsed="true">
     <d-panel-header>Panel with warning Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
-  <br>
+  <br />
   <d-panel type="danger" :is-collapsed="true">
     <d-panel-header>Panel with danger Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
@@ -84,7 +88,7 @@
     </d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
-  <br>
+  <br />
   <d-panel :is-collapsed="true">
     <d-panel-header>Panel with header and footer</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
@@ -104,9 +108,9 @@ export default defineComponent({
 
     return {
       toggle,
-      toggleState
+      toggleState,
     };
-  }
+  },
 });
 </script>
 ```
@@ -115,23 +119,20 @@ export default defineComponent({
 
 ### 阻止折叠
 
-:::demo 我们可以使用`before-toggle`来阻止面板的收起。根据条件判断，当`Panel`展开时，点击阻止折叠按钮，将无法折叠`Panel`，当`Panel`展开时不影响操作。
+我们可以使用`before-toggle`来阻止面板的收起。根据条件判断，当`Panel`展开时，点击阻止折叠按钮，将无法折叠`Panel`，当`Panel`展开时不影响操作。
+
+:::demo
 
 ```vue
 <template>
-  <d-panel
-    type="primary"
-    :is-collapsed="isCollapsed"
-    @toggle="handleToggle"
-    :before-toggle="beforeToggle"
-  >
+  <d-panel type="primary" :is-collapsed="isCollapsed" @toggle="handleToggle" :before-toggle="beforeToggle">
     <d-panel-header>
       Panel header
       <i :class="`icon-chevron-${toggle ? 'down' : 'up'}`"></i>
     </d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
-  <br>
+  <br />
   <d-button @click="panelToggle = !panelToggle">
     {{ panelToggle ? '阻止折叠' : '允许折叠' }}
   </d-button>
@@ -149,7 +150,7 @@ export default defineComponent({
     const handleToggle = (value) => {
       toggle.value = value;
     };
-    
+
     const beforeToggle = () => {
       return panelToggle.value;
     };
@@ -161,21 +162,22 @@ export default defineComponent({
       isCollapsed,
       handleToggle,
     };
-  }
+  },
 });
 </script>
 ```
+
 :::
 
 ### Panel 参数
 
-| 参数名           | 类型                                          | 默认   | 说明                                                                                               |
-| :--------------- | :-------------------------------------------- | :----- | :------------------------------------------------------------------------------------------------- |
-| type             | [PanelType](#paneltype)                       | 'info' | 可选，面板的类型                                                                                   |
-| is-collapsed     | `boolean`                                     | false  | 可选，是否默认展开                                                                                 |
-| has-left-padding | `boolean`                                     | true   | 可选，是否显示左侧填充                                                                             |
-| show-animation   | `boolean`                                     | true   | 可选，是否显示动画                                                                                 |
-| before-toggle    | `(value: boolean, done?: () => void) => void` | --     | 可选，面板折叠状态改变前的回调函数。<br>参数`value`代表当前状态，<br>参数`done()`可以控制Panel开合 |
+| 参数名           | 类型                                          | 默认   | 说明                                                                                                 |
+| :--------------- | :-------------------------------------------- | :----- | :--------------------------------------------------------------------------------------------------- |
+| type             | [PanelType](#paneltype)                       | 'info' | 可选，面板的类型                                                                                     |
+| is-collapsed     | `boolean`                                     | false  | 可选，是否默认展开                                                                                   |
+| has-left-padding | `boolean`                                     | true   | 可选，是否显示左侧填充                                                                               |
+| show-animation   | `boolean`                                     | true   | 可选，是否显示动画                                                                                   |
+| before-toggle    | `(value: boolean, done?: () => void) => void` | --     | 可选，面板折叠状态改变前的回调函数。<br>参数`value`代表当前状态，<br>参数`done()`可以控制 Panel 开合 |
 
 ### Panel 事件
 

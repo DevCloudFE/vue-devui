@@ -4,9 +4,13 @@
 
 由于 monaco editor 对语法处理是通过 web Worker 实现的，所以需要加载处理语法的 Worker, 配置方式参考[官方教程](https://github.com/microsoft/monaco-editor/blob/main/docs/integrate-esm.md).
 
+## 用法
+
 ### 基本用法
 
-:::demo `v-model`双向绑定编辑器内容，`options`参数[参考 monaco editor 定义](https://github.com/microsoft/monaco-editor/api/interfaces/monaco.editor.IEditorConstructionOptions.html)。
+`v-model`双向绑定编辑器内容，`options`参数[参考 monaco editor 定义](https://github.com/microsoft/monaco-editor/api/interfaces/monaco.editor.IEditorConstructionOptions.html)。
+
+:::demo
 
 ```vue
 <template>
@@ -40,7 +44,9 @@ export default defineComponent({
 
 ### 代码高亮
 
-:::demo 对一个代码块进行高亮
+对一个代码块进行高亮。
+
+:::demo
 
 ```vue
 <template>

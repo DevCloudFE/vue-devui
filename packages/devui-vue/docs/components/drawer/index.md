@@ -2,15 +2,21 @@
 
 屏幕边缘滑出的浮层面板组件。
 
-#### 何时使用
+:::tip 何时使用
 
 1. 抽屉从父窗体边缘滑入，覆盖住部分父窗体内容。用户在抽屉内操作时不必离开当前任务，操作完成后，可以平滑地回到到原任务。
 2. 当需要一个附加的面板来控制父窗体内容，这个面板在需要时呼出。比如，控制界面展示样式，往界面中添加内容。
 3. 当需要在当前任务流中插入临时任务，创建或预览附加内容。比如展示协议条款，创建子对象。
 
+:::
+
+## 用法
+
 ### 基本用法
 
-:::demo 默认从右侧滑出，宽度为`300px`。
+默认从右侧滑出，宽度为`300px`。
+
+:::demo
 
 ```vue
 <template>
@@ -35,7 +41,9 @@ export default defineComponent({
 
 ### 左侧弹出
 
-:::demo 通过`position`设置左侧滑出。
+通过`position`设置左侧滑出。
+
+:::demo
 
 ```vue
 <template>
@@ -60,7 +68,9 @@ export default defineComponent({
 
 ### 背景滚动
 
-:::demo drawer 滑出之后，默认背景滚动会被锁定，可通过`lock-scroll`设置为`false`来解锁。
+Drawer 滑出之后，默认背景滚动会被锁定，可通过`lock-scroll`设置为`false`来解锁。
+
+:::demo
 
 ```vue
 <template>
@@ -86,7 +96,9 @@ export default defineComponent({
 
 ### 关闭前回调
 
-:::demo `before-close`在用户关闭 drawer 时会被调用，可在完成某些异步操作后，通过执行`done`函数关闭。
+`before-close`在用户关闭 drawer 时会被调用，可在完成某些异步操作后，通过执行`done`函数关闭。
+
+:::demo
 
 ```vue
 <template>
@@ -117,7 +129,9 @@ export default defineComponent({
 
 ### 服务方式
 
-:::demo 组件在全局注册了`$drawerService`，可通过服务的方式使用，drawer 的内容通过`content`参数传入。服务返回了用于关闭 drawer 的`close`方法。
+组件在全局注册了`$drawerService`，可通过服务的方式使用，drawer 的内容通过`content`参数传入。服务返回了用于关闭 drawer 的`close`方法。
+
+:::demo
 
 ```vue
 <template>

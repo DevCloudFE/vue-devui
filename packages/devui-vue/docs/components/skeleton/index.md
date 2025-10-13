@@ -2,13 +2,17 @@
 
 用于在内容加载过程中展示一组占位图形。
 
-#### 何时使用
-
+:::tip 何时使用
 在需要等待加载内容的位置设置一个骨架屏，某些场景下比 Loading 的视觉效果更好。
+:::
+
+## 用法
 
 ### 基本用法
 
-:::demo 默认排版：一个标题+三个段落，标题宽度为`40%`，中间两个段落宽度为`100%`，最后一个段落宽度为`60%`。
+默认排版：一个标题+三个段落，标题宽度为`40%`，中间两个段落宽度为`100%`，最后一个段落宽度为`60%`。
+
+:::demo
 
 ```vue
 <template>
@@ -20,7 +24,9 @@
 
 ### 自定义排版
 
-:::demo 当默认排版不满足需求时，可自定义排版结构，通过`class`和`style`可自定义宽高等样式。
+当默认排版不满足需求时，可自定义排版结构，通过`class`和`style`可自定义宽高等样式。
+
+:::demo
 
 ```vue
 <template>
@@ -57,7 +63,9 @@ export default defineComponent({
 
 ### 细粒度模式
 
-:::demo `d-skeleton-item`组件提供两种抽象类型：`circle`、`square`，一种具象类型：`image`。针对`circle`和`image`两种类型提供`size`参数，内置了三种大小。`d-skeleton`组件提供`round`和`show-animation`参数分别设置圆角和动画。
+`d-skeleton-item`组件提供两种抽象类型：`circle`、`square`，一种具象类型：`image`。针对`circle`和`image`两种类型提供`size`参数，内置了三种大小。`d-skeleton`组件提供`round`和`show-animation`参数分别设置圆角和动画。
+
+:::demo
 
 ```vue
 <template>

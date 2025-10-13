@@ -1,7 +1,7 @@
 import { computed, ComputedRef, getCurrentInstance, nextTick, onMounted, reactive, ref, Ref, SetupContext, watch } from 'vue';
 import { EditableSelectProps, Option, Options } from '../editable-select-types';
 import { createI18nTranslate } from '../../../locale/create';
-import { isFunction, isNil } from 'lodash';
+import { isFunction, isNil } from 'lodash-es';
 
 export interface UseSelectStatesReturnType {
   hoveringIndex: number;
