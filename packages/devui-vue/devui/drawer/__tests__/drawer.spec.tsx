@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { wait } from '../../shared/utils/wait';
 import Drawer from '../src/drawer';
 import DrawerService from '../src/drawer-service';
