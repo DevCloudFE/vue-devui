@@ -6,17 +6,17 @@
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
-    "lib": ["esnext", "dom","DOM.Iterable"],
-    "types": ["vite/client", "jest","node"],
+    "lib": ["esnext", "dom", "DOM.Iterable"],
+    "types": ["vite/client", "jest", "node"],
     "esModuleInterop": true,
     "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
     "paths": {
       "hooks/*": ["./devui/shared/hooks/*"],
       "@devui/shared/components/*": ["./devui/*"],
-      "@devui/*": ["./devui/*"],
+      "@devui/*": ["./devui/*"]
     },
     "declaration": true,
-    "declarationDir": "build/types",
+    "declarationDir": "build/types"
   },
   "include": ["devui/**/*.ts", "devui/**/*.d.ts", "devui/**/*.tsx", "devui/**/*.vue"]
 }
