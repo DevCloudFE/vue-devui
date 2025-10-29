@@ -3,7 +3,7 @@ import { IInnerTreeNode, IUseCore, IUseSearchFilter, SearchFilterOption } from '
 import { trim } from 'lodash';
 export function useSearchFilter() {
   return function useSearchFilterFn(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseSearchFilter {
-    const { clearNodeMap, getExpendedTree } = core;
+    const { clearNodeMap, getExpendedTree, toggleChildNodeVisible, hashTreeData } = core;
     const virtualListRef = ref();
     const resetNodeSearchProperty = () => {
       data.value.forEach((item) => {
@@ -26,8 +26,30 @@ export function useSearchFilter() {
       );
     };
 
+    const delParent = (set: Set<string>) => {
+      const arr = Array.from(set);
+      const tempSet = new Set<string>();
+      for (let i = 0; i < arr.length; i++) {
+        const node = hashTreeData.value[arr[i]];
+        if (!node) {
+          continue;
+        }
+        node.childrenMatched = true;
+        node.expanded = true;
+        if (node.parentId) {
+          tempSet.add(node.parentId);
+        } else {
+          toggleChildNodeVisible(node, true);
+        }
+      }
+      if (tempSet.size) {
+        delParent(tempSet);
+      }
+    };
+
     const dealMatchedData = (target: string, matchKey: string | undefined, pattern: RegExp | undefined) => {
       const trimmedTarget = trim(target).toLocaleLowerCase();
+      const set = new Set();
       for (let i = 0; i < data.value.length; i++) {
         const key = matchKey ? data.value[i][matchKey] : data.value[i].label;
         const selfMatched = pattern ? pattern.test(key) : key.toLocaleLowerCase().includes(trimmedTarget);
@@ -39,26 +61,10 @@ export function useSearchFilter() {
             // 没有parentId表示时根节点，不需要再向前遍历
             continue;
           }
-          let L = i - 1;
-          const set = new Set();
           set.add(data.value[i].parentId);
-          // 没有parentId时，表示此节点的纵向parent已访问完毕
-          // 没有父节点被处理过，表示时第一次向上处理当前纵向父节点
-          while (L >= 0 && data.value[L].parentId && !hasDealParentNode(L, i, set)) {
-            if (set.has(data.value[L].id)) {
-              data.value[L].childrenMatched = true;
-              data.value[L].expanded = true;
-              set.add(data.value[L].parentId);
-            }
-            L--;
-          }
-          // 循环结束时需要额外处理根节点一层
-          if (L >= 0 && !data.value[L].parentId && set.has(data.value[L].id)) {
-            data.value[L].childrenMatched = true;
-            data.value[L].expanded = true;
-          }
         }
       }
+      delParent(set);
     };
 
     const hasParentNodeMatched = (pre: number, cur: number, parentIdSet: Set<unknown>) => {

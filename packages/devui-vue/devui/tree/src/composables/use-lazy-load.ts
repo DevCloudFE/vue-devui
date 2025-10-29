@@ -4,7 +4,7 @@ import { generateInnerTree } from './utils';
 
 export function useLazyLoad() {
   return function useLazyLoadFn(data: Ref<IInnerTreeNode[]>, core: IUseCore, context: SetupContext): IUseLazyLoad {
-    const { getNode, setNodeValue, getIndex, getChildren } = core;
+    const { getNode, setNodeValue, getIndex, getChildren, updateHashTreeData, toggleChildNodeVisible } = core;
 
     const setCommonParent = (node: IInnerTreeNode, nodes: Ref<IInnerTreeNode[]>) => {
       nodes.value.forEach((item) => {
@@ -21,6 +21,12 @@ export function useLazyLoad() {
       }
     };
 
+    // 更新childList
+    const setChildList = (parent: IInnerTreeNode, nodes: Ref<IInnerTreeNode[]>) => {
+      const childList = nodes.value.filter((node) => node.parentId === parent.id);
+      parent.childList = [...childList];
+    };
+
     const dealChildNodes = (result: LazyNodeResult) => {
       const node = getNode(result.node);
       setNodeValue(node, 'loading', false);
@@ -29,9 +35,15 @@ export function useLazyLoad() {
       setCommonParent(node, childNodes);
       // 插入children
       insertChildrenNodes(node, childNodes);
+      // 更新hashTreeData
+      updateHashTreeData();
       // 更新childrenNodes数量
       const childrenNodes = getChildren(node);
       setNodeValue(node, 'childNodeCount', childrenNodes.length);
+      // 更新childList
+      setChildList(node, childNodes);
+      // 更新子节点展开状态
+      toggleChildNodeVisible(node, true);
     };
 
     const lazyLoadNodes = (node: IInnerTreeNode): void => {
