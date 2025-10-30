@@ -3,7 +3,7 @@ import { IInnerTreeNode, IUseCore, IUseToggle, IUseLazyLoad } from './use-tree-t
 
 export function useToggle() {
   return function useToggleFn(data: Ref<IInnerTreeNode[]>, core: IUseCore, context: SetupContext, lazyLode: IUseLazyLoad): IUseToggle {
-    const { getNode, setNodeValue } = core;
+    const { getNode, setNodeValue, toggleChildNodeVisible } = core;
     const { lazyLoadNodes } = lazyLode;
 
     const expandNode = (node: IInnerTreeNode): void => {
@@ -12,6 +12,7 @@ export function useToggle() {
       }
 
       setNodeValue(node, 'expanded', true);
+      toggleChildNodeVisible(node, true);
       context.emit('toggle-change', node);
     };
 
@@ -20,6 +21,7 @@ export function useToggle() {
         return;
       }
       setNodeValue(node, 'expanded', false);
+      toggleChildNodeVisible(node, false);
       context.emit('toggle-change', node);
     };
 
@@ -38,7 +40,11 @@ export function useToggle() {
 
     const expandAllNodes = (): void => {
       data.value.forEach((node: IInnerTreeNode) => {
-        expandNode(node);
+        if (node.disableToggle || node.loading) {
+          return;
+        }
+        node.expanded = true;
+        node.showNode = true;
       });
     };
 

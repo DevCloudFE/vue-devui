@@ -1,4 +1,5 @@
-import { randomId, omit } from '../../../shared/utils';
+import { v4 as uuidv4 } from 'uuid';
+import { omit } from '../../../shared/utils';
 import { useInitSelectCollection } from './use-init-select-collection';
 import { IInnerTreeNode, ITreeNode } from './use-tree-types';
 
@@ -24,6 +25,23 @@ export function flatToNested(flatTree: IInnerTreeNode[]): ITreeNode[] {
   }, []);
 }
 
+const toggleChildNodeVisible = (node: IInnerTreeNode, visible: boolean) => {
+  if (!node.childList?.length) {
+    return;
+  }
+  const nodeList = [...node.childList];
+  while (nodeList.length) {
+    const item = nodeList.shift();
+    if (item) {
+      item.showNode = visible;
+      if ((visible && item.expanded) || (!visible && item.childNodeCount)) {
+        const temp = item.childList || [];
+        nodeList.push(...temp);
+      }
+    }
+  }
+};
+
 /**
  * 用于生成内部使用的扁平结构，对树的所有操作都是在操作这个内部的扁平结构，
  * 该数据一旦发生变化，树组件的 UI 即相应变化。
@@ -42,13 +60,16 @@ export function flatToNested(flatTree: IInnerTreeNode[]): ITreeNode[] {
  * - 'currentIndex'：当前节点在父节点的索引
  */
 const { setInitSelectedNode } = useInitSelectCollection();
-export function generateInnerTree(tree: ITreeNode[], key = 'children', level = 0, path: ITreeNode[] = []): IInnerTreeNode[] {
+export function generateInnerTree(tree: ITreeNode[], key = 'children', level = 0, parentNode: IInnerTreeNode = {}): IInnerTreeNode[] {
   level++;
 
-  return tree.reduce((acc: IInnerTreeNode[], item: ITreeNode, currentIndex) => {
+  const result: IInnerTreeNode[] = [];
+
+  for (let i = 0; i < tree.length; i++) {
+    const item = tree[i];
     const newItem: Partial<IInnerTreeNode> = Object.assign({}, item);
     if (newItem.id === undefined) {
-      newItem.id = randomId();
+      newItem.id = uuidv4();
       newItem.idType = 'random';
     }
 
@@ -58,26 +79,31 @@ export function generateInnerTree(tree: ITreeNode[], key = 'children', level = 0
 
     newItem.level = level;
     newItem.parentChildNodeCount = tree.length;
-    newItem.currentIndex = currentIndex;
+    newItem.currentIndex = i;
     newItem.childNodeCount = newItem.children?.length || 0;
+    newItem.isLeaf = newItem.isLeaf ?? !newItem.children?.length;
+    newItem.showNode = level === 1;
 
-    if (path.length > 0 && path[path.length - 1]?.level >= level) {
-      while (path[path.length - 1]?.level >= level) {
-        path.pop();
-      }
-    }
-
-    path.push(newItem);
-
-    const parentNode = path[path.length - 2];
     if (parentNode) {
       newItem.parentId = parentNode.id;
     }
 
     if (!newItem[key]) {
-      return acc.concat({ ...newItem, isLeaf: newItem.isLeaf === false ? false : true });
+      result.push({ ...newItem, isLeaf: newItem.isLeaf === false ? false : true });
     } else {
-      return acc.concat(omit<ITreeNode>(newItem, 'children'), generateInnerTree(newItem[key], key, level, path));
+      const children = generateInnerTree(newItem[key], key, level, newItem);
+      const childList: IInnerTreeNode[] = [];
+      for (let j = 0; j < children.length; j++) {
+        const item = children[j];
+        if (item.parentId === newItem.id) {
+          childList.push(item);
+        }
+      }
+      newItem.childList = childList;
+      newItem.expanded && toggleChildNodeVisible(newItem, true);
+      result.push(omit<ITreeNode>(newItem, 'children'), ...children);
     }
-  }, []);
+  }
+
+  return result;
 }
