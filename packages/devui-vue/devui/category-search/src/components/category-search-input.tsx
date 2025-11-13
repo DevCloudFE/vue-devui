@@ -26,6 +26,7 @@ export default defineComponent({
 			currentSearchCategory,
 			ComponentMap,
 			currentSelectTag,
+			appendToBody,
 			onCategoryItemClick,
 			searchKeyChangeEvent,
 			searchInputValue,
@@ -77,6 +78,7 @@ export default defineComponent({
 						align='start'
 						position={['bottom-start', 'top-start', 'bottom-end', 'top-end']}
 						close-scope={checkType(currentSelectTag.value)}
+						append-to-body={appendToBody.value}
 						onToggle={onToggle}>
 						{{
 							default: () => (

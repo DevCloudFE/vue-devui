@@ -131,6 +131,10 @@ export const selectProps = {
   maxLength: {
     type: Number,
   },
+  appendToBody: {
+    type: Boolean,
+    default: true
+  }
 } as const;
 
 export type SelectProps = ExtractPropTypes<typeof selectProps>;

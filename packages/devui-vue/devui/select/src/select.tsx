@@ -133,7 +133,7 @@ export default defineComponent({
             toggleChange(!isOpen.value);
           }, ['stop'])}>
           <SelectContent ref={selectRef}></SelectContent>
-          <Teleport to="body">
+          <Teleport to="body" disabled={!props.appendToBody}>
             <Transition name={`fade-${currentPosition.value}`}>
               <FlexibleOverlay
                 v-show={isOpen.value}

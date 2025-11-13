@@ -10,7 +10,7 @@ export default defineComponent({
 	props: extendIconProps,
 	setup(props: ExtendIconProps) {
 		const { disabled } = toRefs(props);
-		const { innerTextConfig, filterNameRules, createFilterFn } = inject(categorySearchInjectionKey) as CategorySearchInjection;
+		const { innerTextConfig, filterNameRules, appendToBody, createFilterFn } = inject(categorySearchInjectionKey) as CategorySearchInjection;
 		const { isVisible, formRef, formData, inputRef, onConfirm, onToggle } = useCategorySearchSave(createFilterFn);
 
 		return () => (
@@ -22,6 +22,7 @@ export default defineComponent({
 					position={['bottom-start', 'top-start', 'bottom-end', 'top-end']}
 					close-scope='blank'
 					class='dp-save-panel'
+					append-to-body={appendToBody.value}
 					onToggle={onToggle}>
 					{{
 						default: () => <SaveIcon textConfig={innerTextConfig.value} onClick={() => (isVisible.value = !isVisible.value)} />,
