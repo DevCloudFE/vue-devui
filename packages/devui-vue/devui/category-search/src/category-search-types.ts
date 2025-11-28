@@ -111,6 +111,7 @@ export interface TextConfig {
   filterTitle?: string;
   labelConnector?: string;
   noCategoriesAvailable?: string;
+  tagMenuEmpty?: string;
 }
 export interface ExtendConfig {
   show?: boolean;
@@ -189,6 +190,7 @@ export const categorySearchProps = {
       filterTitle: '',
       labelConnector: '|',
       noCategoriesAvailable: '',
+      tagMenuEmpty: ''
     }),
   },
   extendConfig: {
