@@ -7,7 +7,7 @@ export default defineComponent({
 	props: typeMenuProps,
 	setup(props: TypeMenuProps) {
 		const { tag } = toRefs(props);
-		const { chooseItem } = inject(categorySearchInjectionKey) as CategorySearchInjection;
+		const { chooseItem, innerTextConfig } = inject(categorySearchInjectionKey) as CategorySearchInjection;
 		const key = computed(() => tag.value.filterKey || 'label');
 
 		return () =>
@@ -23,7 +23,7 @@ export default defineComponent({
 					))}
 				</ul>
 			) : (
-				<div class='dp-no-data-tip'>暂无数据</div>
+				<div class='dp-no-data-tip'>{ innerTextConfig.value.tagMenuEmpty || '暂无数据' }</div>
 			);
 	},
 });

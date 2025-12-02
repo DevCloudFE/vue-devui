@@ -51,7 +51,7 @@ export default defineComponent({
     return () => (
       <>
         <PopperTrigger>{slots.default?.()}</PopperTrigger>
-        <Teleport to={teleport.value}>
+        <Teleport to={teleport.value} disabled={!props.appendToBody}>
           <Transition name={showAnimation.value ? ns.m(`fade-${currentPosition.value}`) : ''}>
             <FlexibleOverlay
               v-model={overlayModelValue.value}

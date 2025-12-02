@@ -63,6 +63,10 @@ export const dropdownProps = {
     type: [String, Object] as PropType<TeleportProps['to']>,
     default: 'body',
   },
+  appendToBody: {
+    type: Boolean,
+    default: true
+  }
 };
 
 export type DropdownProps = ExtractPropTypes<typeof dropdownProps>;

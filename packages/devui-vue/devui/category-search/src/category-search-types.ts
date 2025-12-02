@@ -111,6 +111,7 @@ export interface TextConfig {
   filterTitle?: string;
   labelConnector?: string;
   noCategoriesAvailable?: string;
+  tagMenuEmpty?: string;
 }
 export interface ExtendConfig {
   show?: boolean;
@@ -189,6 +190,7 @@ export const categorySearchProps = {
       filterTitle: '',
       labelConnector: '|',
       noCategoriesAvailable: '',
+      tagMenuEmpty: ''
     }),
   },
   extendConfig: {
@@ -198,6 +200,10 @@ export const categorySearchProps = {
     type: String as PropType<StyleType>,
     default: 'default',
   },
+  appendToBody: {
+    type: Boolean,
+    default: true
+  }
 };
 export type CategorySearchProps = ExtractPropTypes<typeof categorySearchProps>;
 
@@ -208,6 +214,7 @@ export interface CategorySearchInjection {
   innerTextConfig: Ref<TextConfig>;
   tagMaxWidth: Ref<number | undefined> | undefined;
   inputReadOnly: Ref<boolean>;
+  appendToBody: Ref<boolean>;
   placeholder: Ref<string>;
   innerSearchKey: Ref<string>;
   innerSelectedTags: Ref<ICategorySearchTagItem[]>;
