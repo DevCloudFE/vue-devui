@@ -368,8 +368,10 @@ export default defineComponent({
 | before-tag-change    | `(tag: ICategorySearchTagItem, searchKey: string, operation: string) => boolean \| Promise<boolean>` | --     | 可选，改变标签前调用的方法，返回 false 可以阻止分类值改变                                |                                   |
 | show-search-category | `boolean \| SearchConfig`                                                                            | true   | 可选，是否显示搜索关键字下拉菜单                                                         |                                   |
 | filter-name-rules    | `Record<string, any>[]`                                                                              | --     | 可选，配置保存过滤器标题的校验规则，详细规则参见 vue-devui 库的 form 组件                | [基本用法](#基本用法)             |
+| text-config          | [TextConfig]                                                                                         | --     | 可选，配置组件默认文案                                                                   | [自定义展示模板](#自定义展示模板) |
 | extend-config        | [ExtendConfig](#extendconfig)                                                                        | --     | 可选，配置右侧扩展按钮功能                                                               | [自定义扩展按钮](#自定义扩展按钮) |
 | tag-max-width        | `number`                                                                                             | --     | 可选，单个过滤条件的最大宽度，超过则显示省略号，不设置则不限制                           | [自定义展示模板](#自定义展示模板) |
+| append-to-body       | `boolean`                                                                                            | true   | 可选，下拉菜单是否 append to body                                                        |                                   |
 
 ### CategorySearch 事件
 
@@ -395,13 +397,13 @@ export default defineComponent({
 
 ### CategorySearch 方法
 
-| 方法名              | 说明                                                                       | 参数                                                          |
-| :------------------ | :------------------------------------------------------------------------- | :------------------------------------------------------------ |
-| chooseItem          | 调用组件方法处理选中数据，针对`radio`类型，参数为当前 tag 和选中项         | (tag: ICategorySearchTagItem, chooseItem: ITagOption) => void |
-| chooseItems         | 调用组件方法处理选中数据，针对`checkbox \| label`类型，参数为当前 tag      | (tag: ICategorySearchTagItem) => void                         |
-| getTextInputValue   | 调用组件方法处理选中数据，针对`textInput`类型，参数为当前 tag 和输入内容   | (tag: ICategorySearchTagItem, inputValue: string) => void     |
-| getNumberRangeValue | 调用组件方法处理选中数据，针对`numberRange`类型，参数为当前 tag 和输入内容 | (tag: ICategorySearchTagItem, rangeValue: number[]) => void   |
-|toggleTagMenu|控制某个已选择tag所对应下拉框的展开收起状态，可通过`status`参数指定展开收起状态|`(field: string, status?: boolean) => void`|
+| 方法名              | 说明                                                                              | 参数                                                          |
+| :------------------ | :-------------------------------------------------------------------------------- | :------------------------------------------------------------ |
+| chooseItem          | 调用组件方法处理选中数据，针对`radio`类型，参数为当前 tag 和选中项                | (tag: ICategorySearchTagItem, chooseItem: ITagOption) => void |
+| chooseItems         | 调用组件方法处理选中数据，针对`checkbox \| label`类型，参数为当前 tag             | (tag: ICategorySearchTagItem) => void                         |
+| getTextInputValue   | 调用组件方法处理选中数据，针对`textInput`类型，参数为当前 tag 和输入内容          | (tag: ICategorySearchTagItem, inputValue: string) => void     |
+| getNumberRangeValue | 调用组件方法处理选中数据，针对`numberRange`类型，参数为当前 tag 和输入内容        | (tag: ICategorySearchTagItem, rangeValue: number[]) => void   |
+| toggleTagMenu       | 控制某个已选择 tag 所对应下拉框的展开收起状态，可通过`status`参数指定展开收起状态 | `(field: string, status?: boolean) => void`                   |
 
 ### 类型定义
 
@@ -527,5 +529,18 @@ interface ExtendConfig {
     show?: boolean;
     disabled?: boolean;
   };
+}
+```
+
+#### TextConfig
+
+```ts
+interface TextConfig {
+  keywordName?: string; // 关键字
+  createFilter?: string; // 保存过滤器
+  filterTitle?: string; // 过滤器标题
+  labelConnector?: string; // 链接符，默认'|'
+  noCategoriesAvailable?: string; // 没有筛选条件
+  tagMenuEmpty?: string; // 分类下拉菜单无数据展示的内容，默认'暂无数据'
 }
 ```
