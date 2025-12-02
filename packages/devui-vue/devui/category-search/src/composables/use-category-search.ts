@@ -38,6 +38,7 @@ export function useCategorySearch(props: CategorySearchProps, ctx: SetupContext)
     showSearchCategory,
     filterNameRules,
     extendConfig,
+    appendToBody
   } = toRefs(props);
   const innerCategory: Ref<ICategorySearchTagItem[]> = ref([]);
   const innerSelectedTags: Ref<ICategorySearchTagItem[]> = ref([]);
@@ -368,6 +369,7 @@ export function useCategorySearch(props: CategorySearchProps, ctx: SetupContext)
     innerTextConfig,
     tagMaxWidth,
     inputReadOnly,
+    appendToBody,
     placeholder,
     innerSearchKey,
     innerSelectedTags,

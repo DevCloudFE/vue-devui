@@ -9,7 +9,7 @@ export default defineComponent({
   props: categorySearchDropdownProps,
   setup(props: CategorySearchDropdownProps) {
     const { item, isJoinLabelType } = toRefs(props);
-    const { rootCtx, ComponentMap, onSearchKeyTagClick, addTagContext, removeTagContext } = inject(
+    const { rootCtx, ComponentMap, appendToBody, onSearchKeyTagClick, addTagContext, removeTagContext } = inject(
       categorySearchInjectionKey
     ) as CategorySearchInjection;
     const isVisible = ref(false);
@@ -50,6 +50,7 @@ export default defineComponent({
           position={['bottom-start', 'top-start', 'bottom-end', 'top-end']}
           class="dp-category-search-dropdown dp-dropdown-menu-fix"
           close-scope={checkType(item.value)}
+          append-to-body={appendToBody.value}
           onToggle={onToggle}>
           {{
             default: () => (

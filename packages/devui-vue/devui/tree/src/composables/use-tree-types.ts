@@ -31,6 +31,8 @@ export interface IInnerTreeNode extends ITreeNode {
   childrenMatched?: boolean; // 搜索过滤时是否有子节点存在匹配
   isHide?: boolean; // 过滤后是否不显示该节点
   matchedText?: string; // 节点匹配的文字（需要高亮显示）
+  showNode?: boolean; // 是否展示该节点
+  childList?: IInnerTreeNode[];
 }
 
 export type valueof<T> = T[keyof T];
@@ -52,6 +54,10 @@ export interface IUseCore {
   setNodeValue: (node: IInnerTreeNode, key: keyof IInnerTreeNode, value: valueof<IInnerTreeNode>) => void;
   setTree: (newTree: IInnerTreeNode[]) => void;
   getTree: () => IInnerTreeNode[];
+  updateHashTreeData: () => void;
+  toggleChildNodeVisible: (node: IInnerTreeNode, visible: boolean) => void;
+  hashTreeData: Ref<Record<string | number, IInnerTreeNode>>;
+  getFlattenChildren: (node: IInnerTreeNode) => IInnerTreeNode[];
 }
 
 export interface IUseCheck {
@@ -159,12 +165,12 @@ export interface IDropNode {
 export type IUseTree = {
   treeData: Ref<IInnerTreeNode[]>;
 } & IUseCore &
-IUseToggle &
-IUseSelect &
-IUseCheck &
-IUseDisable &
-IUseOperate &
-IUseMergeNodes &
-IUseLazyLoad &
-IUseSearchFilter &
-IUseDraggable;
+  IUseToggle &
+  IUseSelect &
+  IUseCheck &
+  IUseDisable &
+  IUseOperate &
+  IUseMergeNodes &
+  IUseLazyLoad &
+  IUseSearchFilter &
+  IUseDraggable;

@@ -198,7 +198,7 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-button @click.stop="toggleChange" @pointerup.stop="() => {}"  class="mb-2">展开 / 隐藏</d-button>
+    <d-button @click.stop="toggleChange" @pointerup.stop="() => {}" class="mb-2">展开 / 隐藏</d-button>
     <d-select ref="demoSelect" v-model="toggleValue" :options="options" @load-more="loadMore"></d-select>
   </div>
 </template>
@@ -219,7 +219,7 @@ export default defineComponent({
       demoSelect.value.toggleChange(visitable.value);
     };
     const loadMore = () => {
-      if(options.length <= 20) {
+      if (options.length <= 20) {
         options.push(...newItems);
         console.log('load more');
       }
@@ -531,22 +531,23 @@ export default defineComponent({
 | loading               | `boolean`             | false            | 可选, 配置下拉选项是否远程加载，配合 loading-text 使用                                                                                                         | [远程加载数据](#远程加载数据)     |
 | loading-text          | `string`              | '加载中'         | 可选, 远程搜索时显示的文本                                                                                                                                     | [远程加载数据](#远程加载数据)     |
 | multiple-limit        | `number`              | '0'              | 可选, multiple 属性设置为 true 时生效，表示用户最多可以选择的项目数， 为 0 则不限制                                                                            | [多选](#多选)                     |
-|show-glow-style|`boolean`|true|可选，是否展示悬浮发光效果||
-|menu-class|`string`|''|可选，自定义下拉菜单的样式名||
-|max-length|`number`|--|可选，可筛选时输入框可输入的最大长度||
+| show-glow-style       | `boolean`             | true             | 可选，是否展示悬浮发光效果                                                                                                                                     |                                   |
+| menu-class            | `string`              | ''               | 可选，自定义下拉菜单的样式名                                                                                                                                   |                                   |
+| max-length            | `number`              | --               | 可选，可筛选时输入框可输入的最大长度                                                                                                                           |                                   |
+| append-to-body        | `boolean`             | true             | 可选，下拉菜单是否 append to body                                                                                                                              |                                   |
 
 ### Select 事件
 
-| 事件名        | 类型                      | 说明                                                           | 跳转 Demo |
-| :------------ | :------------------------ | :------------------------------------------------------------- | :-------- |
-| value-change  | `Function(data)`          | 可选，当选中值发生变化时触发，参数为目前选中的值(多选时为数组) |           |
-| toggle-change | `Function(boolean)`       | 可选，下拉打开关闭 toggle 事件                                 |           |
+| 事件名        | 类型                      | 说明                                                           | 跳转 Demo                             |
+| :------------ | :------------------------ | :------------------------------------------------------------- | :------------------------------------ |
+| value-change  | `Function(data)`          | 可选，当选中值发生变化时触发，参数为目前选中的值(多选时为数组) |                                       |
+| toggle-change | `Function(boolean)`       | 可选，下拉打开关闭 toggle 事件                                 |                                       |
 | focus         | `Function(e: FocusEvent)` | 可选，获取焦点时触发                                           |
 | blur          | `Function(e: FocusEvent)` | 可选，失去焦点时触发                                           |
 | clear         | `Function()`              | 可选, 通过右侧删除图标清空所有选项时触发                       |
 | remove-tag    | `Function(value)`         | 可选，多选时删除单个 tag 时触发，参数为当前 tag 的值           |
-| load-more    | `Function()`               | 可选，下拉框有滚动条时滚动到底部触发           |[下拉列表显隐方法](#下拉列表显隐方法)|
-| input-change    | `Function(value)`       | 可选，输入框输入内容时触发，参数为输入的值           |[筛选、搜索选项](#筛选、搜索选项)|
+| load-more     | `Function()`              | 可选，下拉框有滚动条时滚动到底部触发                           | [下拉列表显隐方法](#下拉列表显隐方法) |
+| input-change  | `Function(value)`         | 可选，输入框输入内容时触发，参数为输入的值                     | [筛选、搜索选项](#筛选、搜索选项)     |
 
 ### Select 插槽
 

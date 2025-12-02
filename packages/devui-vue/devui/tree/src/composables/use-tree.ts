@@ -10,6 +10,7 @@ export const DEFAULT_TREE_PLUGINS = [useToggle()];
 export function useTree(tree: ITreeNode[], plugins = [], context: SetupContext): Partial<IUseTree> {
   const treeData = ref<IInnerTreeNode[]>(generateInnerTree(tree));
   const core: IUseCore = useCore()(treeData);
+  core.updateHashTreeData();
 
   // 因为展开操作和懒加载有耦合，需要此处引入
   const lazyLode = useLazyLoad()(treeData, core, context);

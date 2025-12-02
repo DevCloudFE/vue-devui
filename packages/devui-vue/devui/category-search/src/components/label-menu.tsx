@@ -11,7 +11,7 @@ export default defineComponent({
 	emits: ['close'],
 	setup(props: TypeMenuProps, ctx: SetupContext) {
 		const { tag } = toRefs(props);
-		const { chooseItems } = inject(categorySearchInjectionKey) as CategorySearchInjection;
+		const { chooseItems, innerTextConfig } = inject(categorySearchInjectionKey) as CategorySearchInjection;
 		const onConfirmClick = () => {
 			chooseItems(tag.value);
 			ctx.emit('close');
@@ -56,7 +56,7 @@ export default defineComponent({
 					</div>
 				</>
 			) : (
-				<div class='dp-no-data-tip'>暂无数据</div>
+				<div class='dp-no-data-tip'>{ innerTextConfig.value.tagMenuEmpty || '暂无数据' }</div>
 			);
 	},
 });
