@@ -372,6 +372,7 @@ export default defineComponent({
 | extend-config        | [ExtendConfig](#extendconfig)                                                                        | --     | 可选，配置右侧扩展按钮功能                                                               | [自定义扩展按钮](#自定义扩展按钮) |
 | tag-max-width        | `number`                                                                                             | --     | 可选，单个过滤条件的最大宽度，超过则显示省略号，不设置则不限制                           | [自定义展示模板](#自定义展示模板) |
 | append-to-body       | `boolean`                                                                                            | true   | 可选，下拉菜单是否 append to body                                                        |                                   |
+| input-autofocus      | `boolean`                                                                                            | true   | 可选，是否允许自动聚焦搜索框，规避有滚动条场景下自动聚焦导致的位移                       |
 
 ### CategorySearch 事件
 

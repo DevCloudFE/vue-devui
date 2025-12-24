@@ -203,6 +203,10 @@ export const categorySearchProps = {
   appendToBody: {
     type: Boolean,
     default: true
+  },
+  inputAutofocus: {
+    type: Boolean,
+    default: true
   }
 };
 export type CategorySearchProps = ExtractPropTypes<typeof categorySearchProps>;
