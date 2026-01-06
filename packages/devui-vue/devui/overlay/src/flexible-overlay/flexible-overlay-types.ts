@@ -69,6 +69,10 @@ export const flexibleOverlayProps = {
     type: Boolean,
     default: false,
   },
+  autoUpdatePosition: {
+    type: Boolean,
+    default: false,
+  },
 };
 
 export type FlexibleOverlayProps = ExtractPropTypes<typeof flexibleOverlayProps>;

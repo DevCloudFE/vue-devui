@@ -38,7 +38,7 @@ export function useCategorySearch(props: CategorySearchProps, ctx: SetupContext)
     showSearchCategory,
     filterNameRules,
     extendConfig,
-    appendToBody
+    appendToBody,
   } = toRefs(props);
   const innerCategory: Ref<ICategorySearchTagItem[]> = ref([]);
   const innerSelectedTags: Ref<ICategorySearchTagItem[]> = ref([]);
@@ -210,6 +210,7 @@ export function useCategorySearch(props: CategorySearchProps, ctx: SetupContext)
       currentSelectTag.value.title = setTitle(currentSelectTag.value, currentSelectTag.value.type || '', '');
       inputRef.value.openMenu();
       props.inputAutofocus && inputRef.value.focus();
+      ctx.emit('selectedCategory', { tag: item });
     }, DROPDOWN_ANIMATION_TIMEOUT);
   };
 
@@ -250,6 +251,7 @@ export function useCategorySearch(props: CategorySearchProps, ctx: SetupContext)
     innerSearchKey.value = '';
     inputRef.value.closeMenu();
     chooseCategory(tag);
+    ctx.emit('selectedCategory', { tag });
     setTimeout(() => {
       isFocus.value = true;
       enterSearch.value = false;

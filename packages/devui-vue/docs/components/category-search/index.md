@@ -357,32 +357,35 @@ export default defineComponent({
 
 ### CategorySearch 参数
 
-| 参数名               | 类型                                                                                                 | 默认值 | 说明                                                                                     | 跳转                              |
-| :------------------- | :--------------------------------------------------------------------------------------------------- | :----- | :--------------------------------------------------------------------------------------- | :-------------------------------- |
-| category             | [ICategorySearchTagItem[]](#icategorysearchtagitem)                                                  | []     | 必选，传入分类搜索源数据                                                                 | [基本用法](#基本用法)             |
-| default-search-field | `String[]`                                                                                           | []     | 可选，配置输入关键字时可在哪些分类中筛选                                                 | [基本用法](#基本用法)             |
-| selected-tags        | [ICategorySearchTagItem[]](#icategorysearchtagitem)                                                  | []     | 可选，传入需要默认选中的分类数据                                                         | [基本用法](#基本用法)             |
-| search-key           | `string`                                                                                             | ''     | 可选，搜索框内的默认展示值                                                               | [基本用法](#基本用法)             |
-| placeholder          | `string`                                                                                             | ''     | 可选， 自定义搜索输入框占位文字                                                          | [基本用法](#基本用法)             |
-| input-read-only      | `boolean`                                                                                            | false  | 可选，是否可通过搜索框输入关键字搜索，`true`则无法输入关键字，仅可根据提供的分类数据筛选 |                                   |
-| before-tag-change    | `(tag: ICategorySearchTagItem, searchKey: string, operation: string) => boolean \| Promise<boolean>` | --     | 可选，改变标签前调用的方法，返回 false 可以阻止分类值改变                                |                                   |
-| show-search-category | `boolean \| SearchConfig`                                                                            | true   | 可选，是否显示搜索关键字下拉菜单                                                         |                                   |
-| filter-name-rules    | `Record<string, any>[]`                                                                              | --     | 可选，配置保存过滤器标题的校验规则，详细规则参见 vue-devui 库的 form 组件                | [基本用法](#基本用法)             |
-| text-config          | [TextConfig]                                                                                         | --     | 可选，配置组件默认文案                                                                   | [自定义展示模板](#自定义展示模板) |
-| extend-config        | [ExtendConfig](#extendconfig)                                                                        | --     | 可选，配置右侧扩展按钮功能                                                               | [自定义扩展按钮](#自定义扩展按钮) |
-| tag-max-width        | `number`                                                                                             | --     | 可选，单个过滤条件的最大宽度，超过则显示省略号，不设置则不限制                           | [自定义展示模板](#自定义展示模板) |
-| append-to-body       | `boolean`                                                                                            | true   | 可选，下拉菜单是否 append to body                                                        |                                   |
-| input-autofocus      | `boolean`                                                                                            | true   | 可选，是否允许自动聚焦搜索框，规避有滚动条场景下自动聚焦导致的位移                       |
+| 参数名                | 类型                                                                                                 | 默认值                                           | 说明                                                                                     | 跳转                              |
+| :-------------------- | :--------------------------------------------------------------------------------------------------- | :----------------------------------------------- | :--------------------------------------------------------------------------------------- | :-------------------------------- |
+| category              | [ICategorySearchTagItem[]](#icategorysearchtagitem)                                                  | []                                               | 必选，传入分类搜索源数据                                                                 | [基本用法](#基本用法)             |
+| default-search-field  | `String[]`                                                                                           | []                                               | 可选，配置输入关键字时可在哪些分类中筛选                                                 | [基本用法](#基本用法)             |
+| selected-tags         | [ICategorySearchTagItem[]](#icategorysearchtagitem)                                                  | []                                               | 可选，传入需要默认选中的分类数据                                                         | [基本用法](#基本用法)             |
+| search-key            | `string`                                                                                             | ''                                               | 可选，搜索框内的默认展示值                                                               | [基本用法](#基本用法)             |
+| placeholder           | `string`                                                                                             | ''                                               | 可选， 自定义搜索输入框占位文字                                                          | [基本用法](#基本用法)             |
+| input-read-only       | `boolean`                                                                                            | false                                            | 可选，是否可通过搜索框输入关键字搜索，`true`则无法输入关键字，仅可根据提供的分类数据筛选 |                                   |
+| before-tag-change     | `(tag: ICategorySearchTagItem, searchKey: string, operation: string) => boolean \| Promise<boolean>` | --                                               | 可选，改变标签前调用的方法，返回 false 可以阻止分类值改变                                |                                   |
+| show-search-category  | `boolean \| SearchConfig`                                                                            | true                                             | 可选，是否显示搜索关键字下拉菜单                                                         |                                   |
+| filter-name-rules     | `Record<string, any>[]`                                                                              | --                                               | 可选，配置保存过滤器标题的校验规则，详细规则参见 vue-devui 库的 form 组件                | [基本用法](#基本用法)             |
+| text-config           | [TextConfig]                                                                                         | --                                               | 可选，配置组件默认文案                                                                   | [自定义展示模板](#自定义展示模板) |
+| extend-config         | [ExtendConfig](#extendconfig)                                                                        | --                                               | 可选，配置右侧扩展按钮功能                                                               | [自定义扩展按钮](#自定义扩展按钮) |
+| tag-max-width         | `number`                                                                                             | --                                               | 可选，单个过滤条件的最大宽度，超过则显示省略号，不设置则不限制                           | [自定义展示模板](#自定义展示模板) |
+| append-to-body        | `boolean`                                                                                            | true                                             | 可选，下拉菜单是否 append to body                                                        |                                   |
+| input-autofocus       | `boolean`                                                                                            | true                                             | 可选，是否允许自动聚焦搜索框，规避有滚动条场景下自动聚焦导致的位移                       |
+| collapse-tags         | `boolean \| number`                                                                                  | false                                            | 可选，选择值数量较多时，是否将选择值折叠为数量显示                                       |                                   |
+| collapse-tags-tooltip | [popover 参数](../popover/#Popover 参数)                                                             | { trigger: 'hover', position: ['top','bottom'] } | 可选，选择值数折叠为数量显示时悬浮提示框的配置项                                         |                                   |
 
 ### CategorySearch 事件
 
-| 事件名             | 回调参数                      | 说明                                                         |
-| :----------------- | :---------------------------- | :----------------------------------------------------------- |
-| search             | `Function(SearchEvent)`       | 点击搜索按钮时触发，返回值为当前选中分类数据和搜索框中关键字 |
-| selectedTagsChange | `Function(SelectedTagsEvent)` | 分类数据变更时触发，返回值为当前选中的分类数据               |
-| createFilter       | `Function(CreateFilterEvent)` | 点击保存按钮时触发，返回值为当前选中分类数据和搜索框中关键字 |
-| clearAll           | `Function(e:Event)`           | 点击清除按钮时触发，返回值为当前选中分类数据和搜索框中关键字 |
-| searchKeyChange    | `Function(val: string)`       | 搜索关键字变更时触发，返回值为输入框的绑定值                 |
+| 事件名             | 回调参数                             | 说明                                                         |
+| :----------------- | :----------------------------------- | :----------------------------------------------------------- |
+| search             | `Function(SearchEvent)`              | 点击搜索按钮时触发，返回值为当前选中分类数据和搜索框中关键字 |
+| selectedTagsChange | `Function(SelectedTagsEvent)`        | 分类数据变更时触发，返回值为当前选中的分类数据               |
+| createFilter       | `Function(CreateFilterEvent)`        | 点击保存按钮时触发，返回值为当前选中分类数据和搜索框中关键字 |
+| clearAll           | `Function(e:Event)`                  | 点击清除按钮时触发，返回值为当前选中分类数据和搜索框中关键字 |
+| searchKeyChange    | `Function(val: string)`              | 搜索关键字变更时触发，返回值为输入框的绑定值                 |
+| selectedCategory   | `Function(e: SelectedCategoryEvent)` | 点击分类时触发，返回值为当前选中的分类数据                   |
 
 ### CategorySearch 插槽
 
@@ -490,6 +493,14 @@ interface ITagOption {
 interface SearchEvent {
   selectedTags: Array<ICategorySearchTagItem>;
   searchKey: string;
+}
+```
+
+#### SelectedCategoryEvent
+
+```ts
+interface SelectedCategoryEvent {
+  tag: ICategorySearchTagItem;
 }
 ```
 
