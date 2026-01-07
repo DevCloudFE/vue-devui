@@ -9,12 +9,15 @@ import CategorySearchMore from './components/category-search-more';
 import { categorySearchProps } from './category-search-types';
 import type { CategorySearchProps } from './category-search-types';
 import { useCategorySearch } from './composables/use-category-search';
+import { useCategorySelectedTags } from './composables/use-category-selected-tags';
+import { Popover } from '../../popover';
+import { Tag } from '../../tag';
 import './category-search.scss';
 
 export default defineComponent({
   name: 'DCategorySearch',
   props: categorySearchProps,
-  emits: ['search', 'selectedTagsChange', 'createFilter', 'clearAll', 'searchKeyChange'],
+  emits: ['search', 'selectedTagsChange', 'selectedCategory', 'createFilter', 'clearAll', 'searchKeyChange'],
   setup(props: CategorySearchProps, ctx: SetupContext) {
     const {
       rootRef,
@@ -28,6 +31,7 @@ export default defineComponent({
       operationConfig,
       onSearch,
     } = useCategorySearch(props, ctx);
+    const { isCollapseTags, collapseTagsCount, popoverConfig } = useCategorySelectedTags(props);
 
     return () => (
       <div
@@ -42,9 +46,31 @@ export default defineComponent({
         )}
         <div ref={scrollBarRef} class="dp-category-search-line-container">
           <ul class="dp-category-search-line">
-            {innerSelectedTags.value.map((item) => (
-              <CategorySearchTagDropdown item={item} isJoinLabelType={joinLabelTypes.includes(item.type || '')} />
-            ))}
+            {innerSelectedTags.value.map((item, index) => {
+              if (isCollapseTags.value) {
+                return (
+                  index < collapseTagsCount.value && (
+                    <CategorySearchTagDropdown item={item} isJoinLabelType={joinLabelTypes.includes(item.type || '')} />
+                  )
+                );
+              } else {
+                return <CategorySearchTagDropdown item={item} isJoinLabelType={joinLabelTypes.includes(item.type || '')} />;
+              }
+            })}
+            {isCollapseTags.value && innerSelectedTags.value.length > collapseTagsCount.value && (
+              <Popover auto-update-position {...popoverConfig.value}>
+                {{
+                  default: () => <Tag deletable={false}>{`+${innerSelectedTags.value.length - collapseTagsCount.value}`}</Tag>,
+                  content: () =>
+                    innerSelectedTags.value.map(
+                      (item, index) =>
+                        index >= collapseTagsCount.value && (
+                          <CategorySearchTagDropdown item={item} isJoinLabelType={joinLabelTypes.includes(item.type || '')} />
+                        )
+                    ),
+                }}
+              </Popover>
+            )}
             <CategorySearchInput ref={inputRef} />
           </ul>
         </div>

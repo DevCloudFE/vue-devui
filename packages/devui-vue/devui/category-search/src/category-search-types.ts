@@ -1,4 +1,5 @@
 import type { ExtractPropTypes, PropType, InjectionKey, SetupContext, Ref } from 'vue';
+import type { PopoverProps } from '../../popover';
 
 export type CategorySearchTagType = 'radio' | 'checkbox' | 'label' | 'textInput' | 'numberRange' | 'keyword';
 export type StyleType = 'default' | 'gray';
@@ -131,6 +132,9 @@ export interface ExtendConfig {
 export interface ITagContext {
   toggle: (status?: boolean) => void;
 }
+export interface SelectedCategoryEvent {
+  tag: ICategorySearchTagItem;
+}
 
 export const categorySearchProps = {
   category: {
@@ -190,7 +194,7 @@ export const categorySearchProps = {
       filterTitle: '',
       labelConnector: '|',
       noCategoriesAvailable: '',
-      tagMenuEmpty: ''
+      tagMenuEmpty: '',
     }),
   },
   extendConfig: {
@@ -202,8 +206,19 @@ export const categorySearchProps = {
   },
   appendToBody: {
     type: Boolean,
-    default: true
-  }
+    default: true,
+  },
+  inputAutofocus: {
+    type: Boolean,
+    default: true,
+  },
+  collapseTags: {
+    type: [Boolean, Number],
+    default: false,
+  },
+  collapseTagsTooltip: {
+    type: Object as PropType<PopoverProps>,
+  },
 };
 export type CategorySearchProps = ExtractPropTypes<typeof categorySearchProps>;
 
