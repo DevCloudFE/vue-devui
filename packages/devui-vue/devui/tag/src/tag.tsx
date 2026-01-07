@@ -13,7 +13,6 @@ export default defineComponent({
     const { type, color, checked, titleContent, deletable } = toRefs(props);
     const tagClass = useClass(props);
     const themeColor = useColor(props);
-    const tagTitle = titleContent.value || '';
     const isDefaultTag = () => !type.value && !color.value;
 
     const handleClick = (e: MouseEvent) => {
@@ -54,7 +53,7 @@ export default defineComponent({
             color: contentColor.value,
             backgroundColor: checked.value ? themeColor.value : !color.value ? '' : 'var(--devui-base-bg, #ffffff)',
           }}
-          title={tagTitle}>
+          title={titleContent.value || ''}>
           {slots.default?.()}
           {closeIconEl()}
         </span>

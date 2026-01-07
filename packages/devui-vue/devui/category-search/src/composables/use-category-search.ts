@@ -38,7 +38,7 @@ export function useCategorySearch(props: CategorySearchProps, ctx: SetupContext)
     showSearchCategory,
     filterNameRules,
     extendConfig,
-    appendToBody
+    appendToBody,
   } = toRefs(props);
   const innerCategory: Ref<ICategorySearchTagItem[]> = ref([]);
   const innerSelectedTags: Ref<ICategorySearchTagItem[]> = ref([]);
@@ -173,7 +173,7 @@ export function useCategorySearch(props: CategorySearchProps, ctx: SetupContext)
 
   const onSearchKeyTagClick = () => {
     innerSearchKey.value = searchKeyCache;
-    inputRef.value.focus();
+    props.inputAutofocus && inputRef.value.focus();
     ctx.emit('searchKeyChange', innerSearchKey.value);
   };
 
@@ -209,7 +209,8 @@ export function useCategorySearch(props: CategorySearchProps, ctx: SetupContext)
       }
       currentSelectTag.value.title = setTitle(currentSelectTag.value, currentSelectTag.value.type || '', '');
       inputRef.value.openMenu();
-      inputRef.value.focus();
+      props.inputAutofocus && inputRef.value.focus();
+      ctx.emit('selectedCategory', { tag: item });
     }, DROPDOWN_ANIMATION_TIMEOUT);
   };
 
@@ -250,6 +251,7 @@ export function useCategorySearch(props: CategorySearchProps, ctx: SetupContext)
     innerSearchKey.value = '';
     inputRef.value.closeMenu();
     chooseCategory(tag);
+    ctx.emit('selectedCategory', { tag });
     setTimeout(() => {
       isFocus.value = true;
       enterSearch.value = false;
@@ -482,7 +484,7 @@ export function useCategorySearch(props: CategorySearchProps, ctx: SetupContext)
 
   function finishChoose() {
     currentSelectTag.value = undefined;
-    inputRef.value.focus();
+    props.inputAutofocus && inputRef.value.focus();
   }
 
   function afterDropdownClosed() {
@@ -665,7 +667,7 @@ export function useCategorySearch(props: CategorySearchProps, ctx: SetupContext)
       }
     } else if (!isInit) {
       // 初始化不聚焦，避免展开下拉
-      inputRef.value.focus();
+      props.inputAutofocus && inputRef.value.focus();
     }
   }
 

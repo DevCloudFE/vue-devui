@@ -29,6 +29,7 @@ export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn) {
   const arrowRef = ref<HTMLElement | undefined>();
   const overlayWidth = ref(0);
   let originObserver: ResizeObserver;
+  let overlayObserver: ResizeObserver;
 
   const styles = computed(() => {
     if (fitOriginWidth.value) {
@@ -104,6 +105,17 @@ export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn) {
     originEl && originObserver?.unobserve(originEl);
   };
 
+  const observeOverlay = () => {
+    if (props.autoUpdatePosition && typeof window !== 'undefined' && overlayRef.value) {
+      overlayObserver = new window.ResizeObserver(updatePosition);
+      overlayObserver.observe(overlayRef.value);
+    }
+  };
+
+  const unobserveOverlay = () => {
+    overlayRef.value && overlayObserver?.unobserve(overlayRef.value);
+  };
+
   watch(
     () => props.modelValue,
     () => {
@@ -112,10 +124,12 @@ export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn) {
         window.addEventListener('scroll', scrollCallback, true);
         window.addEventListener('resize', updatePosition);
         observeOrigin();
+        nextTick(observeOverlay);
       } else {
         window.removeEventListener('scroll', scrollCallback, true);
         window.removeEventListener('resize', updatePosition);
         unobserveOrigin();
+        unobserveOverlay();
       }
     }
   );
@@ -123,6 +137,7 @@ export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn) {
     window.removeEventListener('scroll', scrollCallback, true);
     window.removeEventListener('resize', updatePosition);
     unobserveOrigin();
+    unobserveOverlay();
   });
 
   return { arrowRef, overlayRef, styles, updatePosition };
