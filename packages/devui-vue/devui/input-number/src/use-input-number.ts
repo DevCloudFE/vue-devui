@@ -1,17 +1,20 @@
-import { computed, reactive, toRefs, watch, ref, inject, InjectionKey } from 'vue';
+import { computed, reactive, toRefs, watch, ref, inject } from 'vue';
 import type { SetupContext, Ref, CSSProperties } from 'vue';
 import { InputNumberProps, UseEvent, UseRender, IState, UseExpose } from './input-number-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { isNumber, isUndefined } from '../../shared/utils';
-import { FORM_TOKEN, type FormProps } from '../../form';
+import { FORM_TOKEN, FORM_ITEM_TOKEN } from '../../form';
+import type { FormItemContext, FormProps } from '../../form';
 
 const ns = useNamespace('input-number');
 
 export function useRender(props: InputNumberProps, ctx: SetupContext): UseRender {
   const formContext: FormProps | undefined | any = inject(FORM_TOKEN, undefined); // 修复ts语法错误组件不被d-from组件引用时，formContext未被定义
+  const formItemContext = inject(FORM_ITEM_TOKEN, undefined) as FormItemContext | undefined;
   const { style, class: customClass, ...otherAttrs } = ctx.attrs;
   const customStyle = { style: style as CSSProperties };
   const inputNumberSize = computed(() => props.size || formContext?.size || 'md');
+  const isValidateError = computed(() => formItemContext?.validateState === 'error');
 
   const wrapClass = computed(() => [
     {
@@ -24,6 +27,7 @@ export function useRender(props: InputNumberProps, ctx: SetupContext): UseRender
 
   const controlButtonsClass = computed(() => ({
     [ns.e('control-buttons')]: true,
+    [ns.em('control-buttons', 'error')]: isValidateError.value,
     disabled: props.disabled,
   }));
 
@@ -33,6 +37,7 @@ export function useRender(props: InputNumberProps, ctx: SetupContext): UseRender
 
   const inputInnerClass = computed(() => ({
     [ns.e('input-box')]: true,
+    [ns.em('input-box', 'error')]: isValidateError.value,
     disabled: props.disabled,
   }));
 
@@ -110,7 +115,8 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
   };
 
   const correctValue = (value: number | string | undefined | null) => {
-    if ((!value && value !== 0) && props.allowEmpty) { // 当用户开始允许空值时 value不为0的false全返回null(即'',null,undefined,NaN都会反回null设计与dev_ui_ag版本一致)
+    if (!value && value !== 0 && props.allowEmpty) {
+      // 当用户开始允许空值时 value不为0的false全返回null(即'',null,undefined,NaN都会反回null设计与dev_ui_ag版本一致)
       return null;
     }
     // 校验正则
