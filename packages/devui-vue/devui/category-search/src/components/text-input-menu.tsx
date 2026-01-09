@@ -10,7 +10,7 @@ export default defineComponent({
   emits: ['close'],
   setup(props: TypeMenuProps, ctx: SetupContext) {
     const formEl = ref();
-    const { getTextInputValue } = inject(categorySearchInjectionKey) as CategorySearchInjection;
+    const { rootProps, getTextInputValue } = inject(categorySearchInjectionKey) as CategorySearchInjection;
     const formData = reactive({
       text: props.tag.value!.value,
     });
@@ -38,10 +38,10 @@ export default defineComponent({
         </d-form-item>
         <div class="dp-dropdown-operation-area">
           <Button variant="solid" onClick={onConfirmClick}>
-            确定
+            {rootProps.menuBtnConfig?.confirmText ?? '确定'}
           </Button>
           <Button variant="solid" color="secondary" onClick={onCancelClick}>
-            取消
+            {rootProps.menuBtnConfig?.cancelText ?? '取消'}
           </Button>
         </div>
       </d-form>

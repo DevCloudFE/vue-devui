@@ -367,6 +367,7 @@ export function useCategorySearch(props: CategorySearchProps, ctx: SetupContext)
   provide(categorySearchInjectionKey, {
     rootRef,
     rootCtx: ctx,
+    rootProps: props,
     id,
     innerTextConfig,
     tagMaxWidth,

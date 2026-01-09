@@ -136,6 +136,11 @@ export interface SelectedCategoryEvent {
   tag: ICategorySearchTagItem;
 }
 
+export interface IMenuBtnConfig {
+  confirmText: string;
+  cancelText: string;
+}
+
 export const categorySearchProps = {
   category: {
     type: Array as PropType<ICategorySearchTagItem[]>,
@@ -219,12 +224,16 @@ export const categorySearchProps = {
   collapseTagsTooltip: {
     type: Object as PropType<PopoverProps>,
   },
+  menuBtnConfig: {
+    type: Object as PropType<IMenuBtnConfig>
+  }
 };
 export type CategorySearchProps = ExtractPropTypes<typeof categorySearchProps>;
 
 export interface CategorySearchInjection {
   rootCtx: SetupContext;
   rootRef: Ref<HTMLElement | undefined>;
+  rootProps: CategorySearchProps;
   id: Ref<number>;
   innerTextConfig: Ref<TextConfig>;
   tagMaxWidth: Ref<number | undefined> | undefined;

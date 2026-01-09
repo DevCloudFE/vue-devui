@@ -11,7 +11,7 @@ export default defineComponent({
 	emits: ['close'],
 	setup(props: TypeMenuProps, ctx: SetupContext) {
 		const { tag } = toRefs(props);
-		const { getNumberRangeValue } = inject(categorySearchInjectionKey) as CategorySearchInjection;
+		const { rootProps, getNumberRangeValue } = inject(categorySearchInjectionKey) as CategorySearchInjection;
 		const num = ref(tag.value.value!.value?.length ? [...tag.value.value!.value] : [0, 0]);
 		const onConfirmClick = () => {
 			getNumberRangeValue(tag.value, num.value);
@@ -42,10 +42,10 @@ export default defineComponent({
 				</div>
 				<div class='dp-dropdown-operation-area'>
 					<Button variant='solid' onClick={onConfirmClick}>
-						确定
+						{rootProps.menuBtnConfig?.confirmText ?? '确定'}
 					</Button>
 					<Button variant='solid' color='secondary' onClick={onCancelClick}>
-						取消
+						{rootProps.menuBtnConfig?.cancelText ?? '取消'}
 					</Button>
 				</div>
 			</>

@@ -11,7 +11,7 @@ export default defineComponent({
 	emits: ['close'],
 	setup(props: TypeMenuProps, ctx: SetupContext) {
 		const { tag } = toRefs(props);
-		const { chooseItems, innerTextConfig } = inject(categorySearchInjectionKey) as CategorySearchInjection;
+		const { rootProps, chooseItems, innerTextConfig } = inject(categorySearchInjectionKey) as CategorySearchInjection;
 		const onConfirmClick = () => {
 			chooseItems(tag.value);
 			ctx.emit('close');
@@ -48,10 +48,10 @@ export default defineComponent({
 					</div>
 					<div class='dp-dropdown-operation-area'>
 						<Button variant='solid' onClick={onConfirmClick}>
-							确定
+							{rootProps.menuBtnConfig?.confirmText ?? '确定'}
 						</Button>
 						<Button variant='solid' color='secondary' onClick={onCancelClick}>
-							取消
+							{rootProps.menuBtnConfig?.cancelText ?? '取消'}
 						</Button>
 					</div>
 				</>
