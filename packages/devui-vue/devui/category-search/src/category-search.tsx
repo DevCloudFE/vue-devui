@@ -31,7 +31,7 @@ export default defineComponent({
       operationConfig,
       onSearch,
     } = useCategorySearch(props, ctx);
-    const { isCollapseTags, collapseTagsCount, popoverConfig } = useCategorySelectedTags(props);
+    const { isCollapseTags, collapseTagsCount, popoverConfig, onMouseEnter, onMouseLeave } = useCategorySelectedTags(props);
 
     return () => (
       <div
@@ -60,14 +60,26 @@ export default defineComponent({
             {isCollapseTags.value && innerSelectedTags.value.length > collapseTagsCount.value && (
               <Popover auto-update-position {...popoverConfig.value}>
                 {{
-                  default: () => <Tag deletable={false}>{`+${innerSelectedTags.value.length - collapseTagsCount.value}`}</Tag>,
-                  content: () =>
-                    innerSelectedTags.value.map(
-                      (item, index) =>
-                        index >= collapseTagsCount.value && (
-                          <CategorySearchTagDropdown item={item} isJoinLabelType={joinLabelTypes.includes(item.type || '')} />
-                        )
-                    ),
+                  default: () => (
+                    <Tag deletable={false} onMouseenter={onMouseEnter} onMouseleave={onMouseLeave}>
+                      {`+${innerSelectedTags.value.length - collapseTagsCount.value}`}
+                    </Tag>
+                  ),
+                  content: () => (
+                    <div onMouseenter={onMouseEnter} onMouseleave={onMouseLeave}>
+                      {innerSelectedTags.value.map(
+                        (item, index) =>
+                          index >= collapseTagsCount.value && (
+                            <CategorySearchTagDropdown
+                              item={item}
+                              isJoinLabelType={joinLabelTypes.includes(item.type || '')}
+                              onMouseenter={onMouseEnter}
+                              onMouseleave={onMouseLeave}
+                            />
+                          )
+                      )}
+                    </div>
+                  ),
                 }}
               </Popover>
             )}

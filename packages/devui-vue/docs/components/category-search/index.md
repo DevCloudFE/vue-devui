@@ -374,7 +374,7 @@ export default defineComponent({
 | append-to-body        | `boolean`                                                                                            | true                                             | 可选，下拉菜单是否 append to body                                                        |                                   |
 | input-autofocus       | `boolean`                                                                                            | true                                             | 可选，是否允许自动聚焦搜索框，规避有滚动条场景下自动聚焦导致的位移                       |
 | collapse-tags         | `boolean \| number`                                                                                  | false                                            | 可选，选择值数量较多时，是否将选择值折叠为数量显示                                       |                                   |
-| collapse-tags-tooltip | [popover 参数](../popover/#Popover 参数)                                                             | { trigger: 'hover', position: ['top','bottom'] } | 可选，选择值数折叠为数量显示时悬浮提示框的配置项                                         |                                   |
+| collapse-tags-tooltip | [ICollapseTagsTooltip](#icollapsetagstooltip)                                                        | { trigger: 'hover', position: ['top','bottom'] } | 可选，选择值数折叠为数量显示时悬浮提示框的配置项                                         |                                   |
 
 ### CategorySearch 事件
 
@@ -512,6 +512,29 @@ interface SelectedTagsEvent {
   currentChangeTag: ICategorySearchTagItem;
   operation: 'add' | 'delete' | 'clear';
 }
+```
+
+#### ICollapseTagsTooltip
+
+```ts
+interface ICollapseTagsTooltip {
+  trigger: 'hover' | 'click';
+  position: Placement[];
+}
+
+type Placement =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
 ```
 
 #### CreateFilterEvent

@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType, InjectionKey, SetupContext, Ref } from 'vue';
-import type { PopoverProps } from '../../popover';
+import type { Placement } from '../../popover';
 
 export type CategorySearchTagType = 'radio' | 'checkbox' | 'label' | 'textInput' | 'numberRange' | 'keyword';
 export type StyleType = 'default' | 'gray';
@@ -136,6 +136,17 @@ export interface SelectedCategoryEvent {
   tag: ICategorySearchTagItem;
 }
 
+export interface ICollapseTagsTooltip {
+  trigger: 'hover' | 'click';
+  position: Placement[];
+}
+
+export interface IRealCollapseTagsTooltip {
+  trigger: 'hover' | 'click' | 'manually';
+  position: Placement[];
+  isOpen?: boolean;
+}
+
 export interface IMenuBtnConfig {
   confirmText: string;
   cancelText: string;
@@ -222,11 +233,11 @@ export const categorySearchProps = {
     default: false,
   },
   collapseTagsTooltip: {
-    type: Object as PropType<PopoverProps>,
+    type: Object as PropType<ICollapseTagsTooltip>,
   },
   menuBtnConfig: {
-    type: Object as PropType<IMenuBtnConfig>
-  }
+    type: Object as PropType<IMenuBtnConfig>,
+  },
 };
 export type CategorySearchProps = ExtractPropTypes<typeof categorySearchProps>;
 
