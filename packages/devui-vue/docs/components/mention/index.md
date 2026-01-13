@@ -9,6 +9,7 @@
 ### 基本用法
 
 展示提及组件的基本使用方法。
+
 :::demo
 
 ```vue
@@ -18,53 +19,63 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-const suggestions = [
-  {
-    id: 1,
-    value: 'javascript',
-  },
-  {
-    id: 2,
-    value: 'Vue',
-  },
-  {
-    id: 3,
-    value: 'React',
-  },
-  {
-    id: 4,
-    value: 'Angular',
-  },
-  {
-    id: 5,
-    value: 'Html',
-  },
-  {
-    id: 6,
-    value: 'Css',
-  },
-  {
-    id: 7,
-    value: 'Koa',
-  },
-  {
-    id: 8,
-    value: 'Express',
-  },
-  {
-    id: 9,
-    value: 'Nuxt',
-  },
-  {
-    id: 10,
-    value: 'Next',
-  },
-];
+<script>
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const suggestions = ref([
+      {
+        id: 1,
+        value: 'javascript',
+      },
+      {
+        id: 2,
+        value: 'Vue',
+      },
+      {
+        id: 3,
+        value: 'React',
+      },
+      {
+        id: 4,
+        value: 'Angular',
+      },
+      {
+        id: 5,
+        value: 'Html',
+      },
+      {
+        id: 6,
+        value: 'Css',
+      },
+      {
+        id: 7,
+        value: 'Koa',
+      },
+      {
+        id: 8,
+        value: 'Express',
+      },
+      {
+        id: 9,
+        value: 'Nuxt',
+      },
+      {
+        id: 10,
+        value: 'Next',
+      },
+    ]);
 
-const handleSelect = (val) => {
-  console.log(val);
-};
+    const handleSelect = (val) => {
+      console.log(val);
+    };
+
+    return {
+      suggestions,
+      handleSelect,
+    };
+  },
+});
 </script>
 ```
 
@@ -82,50 +93,59 @@ const handleSelect = (val) => {
   </div>
 </template>
 
-<script lang="ts" setup>
-const triggers = ['@', '#'];
-const suggestions = [
-  {
-    id: 1,
-    value: 'javascript',
+<script>
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const triggers = ref(['@', '#']);
+    const suggestions = ref([
+      {
+        id: 1,
+        value: 'javascript',
+      },
+      {
+        id: 2,
+        value: 'Vue',
+      },
+      {
+        id: 3,
+        value: 'React',
+      },
+      {
+        id: 4,
+        value: 'Angular',
+      },
+      {
+        id: 5,
+        value: 'Html',
+      },
+      {
+        id: 6,
+        value: 'Css',
+      },
+      {
+        id: 7,
+        value: 'Koa',
+      },
+      {
+        id: 8,
+        value: 'Express',
+      },
+      {
+        id: 9,
+        value: 'Nuxt',
+      },
+      {
+        id: 10,
+        value: 'Next',
+      },
+    ]);
+    return {
+      triggers,
+      suggestions,
+    };
   },
-  {
-    id: 2,
-    value: 'Vue',
-  },
-  {
-    id: 3,
-    value: 'React',
-  },
-  {
-    id: 4,
-    value: 'Angular',
-  },
-  {
-    id: 5,
-    value: 'Html',
-  },
-  {
-    id: 6,
-    value: 'Css',
-  },
-  {
-    id: 7,
-    value: 'Koa',
-  },
-  {
-    id: 8,
-    value: 'Express',
-  },
-  {
-    id: 9,
-    value: 'Nuxt',
-  },
-  {
-    id: 10,
-    value: 'Next',
-  },
-];
+});
 </script>
 ```
 
@@ -143,69 +163,80 @@ const suggestions = [
   </div>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue';
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const loading = ref(true);
+    const suggestions = ref([]);
 
-const loading = ref(true);
-const suggestions = ref([]);
+    const fetchSuggestions = (value: string, callback: (suggestions: string[]) => void) => {
+      const users = [
+        {
+          id: 1,
+          value: 'javascript',
+        },
+        {
+          id: 2,
+          value: 'Vue',
+        },
+        {
+          id: 3,
+          value: 'React',
+        },
+        {
+          id: 4,
+          value: 'Angular',
+        },
+        {
+          id: 5,
+          value: 'Html',
+        },
+        {
+          id: 6,
+          value: 'Css',
+        },
+        {
+          id: 7,
+          value: 'Koa',
+        },
+        {
+          id: 8,
+          value: 'Express',
+        },
+        {
+          id: 9,
+          value: 'Nuxt',
+        },
+        {
+          id: 10,
+          value: 'Next',
+        },
+      ];
 
-const onSearchChange = (val: string) => {
-  loading.value = true;
-  fetchSuggestions(val, (result) => {
-    suggestions.value = result;
-    loading.value = false;
-  });
-};
-const fetchSuggestions = (value: string, callback: (suggestions: string[]) => void) => {
-  const users = [
-    {
-      id: 1,
-      value: 'javascript',
-    },
-    {
-      id: 2,
-      value: 'Vue',
-    },
-    {
-      id: 3,
-      value: 'React',
-    },
-    {
-      id: 4,
-      value: 'Angular',
-    },
-    {
-      id: 5,
-      value: 'Html',
-    },
-    {
-      id: 6,
-      value: 'Css',
-    },
-    {
-      id: 7,
-      value: 'Koa',
-    },
-    {
-      id: 8,
-      value: 'Express',
-    },
-    {
-      id: 9,
-      value: 'Nuxt',
-    },
-    {
-      id: 10,
-      value: 'Next',
-    },
-  ];
-  setTimeout(() => {
-    const result = users.filter((item) => {
-      return item.value.toLocaleLowerCase().indexOf(value.toLocaleLowerCase()) !== -1;
-    });
-    return callback(result);
-  }, 1000);
-};
+      setTimeout(() => {
+        const result = users.filter((item) => {
+          return item.value.toLocaleLowerCase().indexOf(value.toLocaleLowerCase()) !== -1;
+        });
+        return callback(result);
+      }, 1000);
+    };
+
+    const onSearchChange = (val) => {
+      loading.value = true;
+      fetchSuggestions(val, (result) => {
+        suggestions.value = result;
+        loading.value = false;
+      });
+    };
+
+    return {
+      loading,
+      suggestions,
+      onSearchChange,
+    };
+  },
+});
 </script>
 ```
 
@@ -223,25 +254,34 @@ const fetchSuggestions = (value: string, callback: (suggestions: string[]) => vo
   </div>
 </template>
 
-<script lang="ts" setup>
-const suggestions = [
-  {
-    id: 1,
-    value: 'javascript',
+<script>
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const suggestions = ref([
+      {
+        id: 1,
+        value: 'javascript',
+      },
+      {
+        id: 2,
+        value: 'Vue',
+      },
+      {
+        id: 3,
+        value: 'React',
+      },
+      {
+        id: 4,
+        value: 'Angular',
+      },
+    ]);
+
+    return {
+      suggestions,
+    };
   },
-  {
-    id: 2,
-    value: 'Vue',
-  },
-  {
-    id: 3,
-    value: 'React',
-  },
-  {
-    id: 4,
-    value: 'Angular',
-  },
-];
+});
 </script>
 ```
 
@@ -264,37 +304,45 @@ const suggestions = [
   </div>
 </template>
 
-<script lang="ts" setup>
-const suggestions = [
-  {
-    name: 'C#',
-    id: 1,
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const suggestions = ref([
+      {
+        name: 'C#',
+        id: 1,
+      },
+      {
+        name: 'C',
+        id: 2,
+      },
+      {
+        name: 'C++',
+        id: 3,
+      },
+      {
+        name: 'Python',
+        id: 4,
+      },
+      {
+        name: 'Java',
+        id: 5,
+      },
+      {
+        name: 'JavaScript',
+        id: 6,
+      },
+      {
+        name: 'Go',
+        id: 7,
+      },
+    ]);
+    return {
+      suggestions,
+    };
   },
-  {
-    name: 'C',
-    id: 2,
-  },
-  {
-    name: 'C++',
-    id: 3,
-  },
-  {
-    name: 'Python',
-    id: 4,
-  },
-  {
-    name: 'Java',
-    id: 5,
-  },
-  {
-    name: 'JavaScript',
-    id: 6,
-  },
-  {
-    name: 'Go',
-    id: 7,
-  },
-];
+});
 </script>
 ```
 
@@ -302,15 +350,15 @@ const suggestions = [
 
 ### Mention 参数
 
-| 参数名                 | 类型                          | 默认                      | 说明                                       | 跳转 Demo                 |
-| :--------------------- | :---------------------------- | :------------------------ | :----------------------------------------- | :------------------------ |
-| suggestions     | array                         | -                         | 必填，建议数据源                           | [基本用法](#基本用法)     |
-| position        | top / bottom                  | bottom                    | 可选，建议框位置                           | [向上展开](#向上展开)     |
-| notFoundContent | string                        | No suggestion matched     | 可选，用于在没有匹配到数据的时候的提示     | -                         |
-| loading         | boolean                       | false                     | 可选，异步加载数据源的时候是否显示加载效果 | [异步加载](#异步加载)     |
-| dmValueParse           | `{value: string, id: string}` | `{value: value, id: id}` | 可选，建议选项的取值方法                   | [异步加载](#异步加载)     |
+| 参数名          | 类型                          | 默认                     | 说明                                       | 跳转 Demo                 |
+| :-------------- | :---------------------------- | :----------------------- | :----------------------------------------- | :------------------------ |
+| suggestions     | array                         | -                        | 必填，建议数据源                           | [基本用法](#基本用法)     |
+| position        | top / bottom                  | bottom                   | 可选，建议框位置                           | [向上展开](#向上展开)     |
+| notFoundContent | string                        | No suggestion matched    | 可选，用于在没有匹配到数据的时候的提示     | -                         |
+| loading         | boolean                       | false                    | 可选，异步加载数据源的时候是否显示加载效果 | [异步加载](#异步加载)     |
+| dmValueParse    | `{value: string, id: string}` | `{value: value, id: id}` | 可选，建议选项的取值方法                   | [异步加载](#异步加载)     |
 | trigger         | string[]                      | `['@']`                  | 可选，触发组件的前缀符                     | [自定义前缀](#自定义前缀) |
-|show-glow-style|`boolean`|true|可选，是否展示悬浮发光效果||
+| show-glow-style | `boolean`                     | true                     | 可选，是否展示悬浮发光效果                 |                           |
 
 ### Mention 事件
 
