@@ -5,6 +5,7 @@ export type IButtonColor = 'secondary' | 'primary' | 'danger';
 export type IButtonSize = 'lg' | 'md' | 'sm';
 export type IButtonShape = 'round' | 'circle';
 export type IButtonType = 'button' | 'submit' | 'reset';
+export type IButtonIconPos = 'left' | 'right';
 
 export const buttonProps = {
   variant: {
@@ -21,6 +22,10 @@ export const buttonProps = {
   icon: {
     type: String,
     default: '',
+  },
+  iconPos: {
+    type: String as PropType<IButtonIconPos>,
+    default: 'left',
   },
   loading: {
     type: Boolean,

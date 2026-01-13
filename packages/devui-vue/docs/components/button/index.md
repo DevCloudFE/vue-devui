@@ -54,6 +54,14 @@ button/icon
 
 :::
 
+### 图标位置
+
+:::demo
+
+button/iconPos
+
+:::
+
 ### 按钮组
 
 将多个按钮作为一组放入按钮组容器中。按钮组可通过 size 设置尺寸，并与下拉菜单混合使用。
@@ -66,16 +74,17 @@ button/buttonGroup
 
 ### Button 参数
 
-| 参数名   | 类型                              | 默认        | 说明                      | 跳转 Demo                 |
-| :------- | :-------------------------------- | :---------- | :------------------------ | :------------------------ |
-| variant  | [IButtonVariant](#ibuttonvariant) | 'outline'   | 可选，按钮形态            | [形态](#形态)             |
-| color    | [IButtonColor](#ibuttoncolor)     | 'secondary' | 可选，按钮主题            | [主题色](#主题色)         |
-| size     | [IButtonSize](#ibuttonsize)       | 'md'        | 可选，按钮尺寸            | [尺寸](#尺寸)             |
-| icon     | `string`                          | --          | 可选，自定义按钮图标      | [图标按钮](#图标按钮)     |
-| shape    | [IButtonShape](#ibuttonshape)     | --          | 可选，按钮形状(圆形/圆角) | [图标按钮](#图标按钮)     |
-| disabled | `boolean`                         | false       | 可选，是否禁用 button     | [禁用状态](#禁用状态)     |
-| loading  | `boolean`                         | false       | 可选，设置加载中状态      | [加载中状态](#加载中状态) |
-| native-type  | [IButtonType](#ibuttontype)    | 'button'       | 可选，按钮原生type属性      |  |
+| 参数名      | 类型                              | 默认        | 说明                      | 跳转 Demo                 |
+| :---------- | :-------------------------------- | :---------- | :------------------------ | :------------------------ |
+| variant     | [IButtonVariant](#ibuttonvariant) | 'outline'   | 可选，按钮形态            | [形态](#形态)             |
+| color       | [IButtonColor](#ibuttoncolor)     | 'secondary' | 可选，按钮主题            | [主题色](#主题色)         |
+| size        | [IButtonSize](#ibuttonsize)       | 'md'        | 可选，按钮尺寸            | [尺寸](#尺寸)             |
+| icon        | `string`                          | --          | 可选，自定义按钮图标      | [图标按钮](#图标按钮)     |
+| iconPos     | [IButtonIconPos](#ibuttoniconpos) | 'left'      | 可选，自定义按钮图标位置  | [图标位置](#图标位置)     |
+| shape       | [IButtonShape](#ibuttonshape)     | --          | 可选，按钮形状(圆形/圆角) | [图标按钮](#图标按钮)     |
+| disabled    | `boolean`                         | false       | 可选，是否禁用 button     | [禁用状态](#禁用状态)     |
+| loading     | `boolean`                         | false       | 可选，设置加载中状态      | [加载中状态](#加载中状态) |
+| native-type | [IButtonType](#ibuttontype)       | 'button'    | 可选，按钮原生 type 属性  |                           |
 
 ### Button 类型定义
 
@@ -107,6 +116,12 @@ type IButtonShape = 'circle' | 'round';
 
 ```ts
 type IButtonType = 'button' | 'submit' | 'reset';
+```
+
+#### IButtonIconPos
+
+```ts
+type IButtonIconPos = 'left' | 'right';
 ```
 
 ### ButtonGroup 参数
