@@ -190,7 +190,7 @@ export default defineComponent({
   <div>
     <div class="space">reg</div>
     <d-input-number v-model="num1" :reg="reg"></d-input-number>
-    
+
     <div class="space">regStr</div>
     <d-input-number v-model="num2" :reg="regStr"></d-input-number>
   </div>
@@ -208,7 +208,7 @@ export default defineComponent({
       num1,
       num2,
       reg,
-      regStr
+      regStr,
     };
   },
 });
@@ -219,6 +219,33 @@ export default defineComponent({
   font-size: 16px;
 }
 </style>
+```
+
+:::
+
+### 限制小数
+
+:::demo 设置 `decimalLimit` 属性可以限制小数位数。设置此参数后会将所有小数点后面的数字截断，而不是四舍五入。
+
+
+```vue
+<template>
+  <div>
+    <d-input-number v-model="num" :decimalLimit="1" :step="0.1"></d-input-number>
+  </div>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const num = ref(3.9);
+    return {
+      num,
+    };
+  },
+});
+</script>
 ```
 
 :::
@@ -251,23 +278,23 @@ export default defineComponent({
 </script>
 ```
 
-:::
 
 ### InputNumber 参数
 
-| 参数名         | 类型              | 默认值        | 说明                 | 跳转 Demo            |
-|:------------|:----------------|:-----------|:-------------------|:-------------------|
-| v-model     | `number`        | --         | 可选，文本框的值           | [基本用法](#基本用法)      |
-| step        | `number`        | 1          | 可选，步数              | [步数](#步数)          |
-| placeholder | `string`        | --         | 可选，文本框 placeholder | [基本用法](#基本用法)      |
-| max         | `number`        | Infinity   | 可选，输入框的最大值 max     | [数值范围](#数值范围)      |
-| min         | `number`        | -Infinity  | 可选，输入框的最小值 min     | [数值范围](#数值范围)      |
-| disabled    | `boolean`       | false      | 可选，文本框是否被禁用        | [禁用状态](#禁用状态)      |
-| precision   | `number`        | --         | 可选，数值精度            | [精度](#精度)          |
-| size        | [ISize](#isize) | 'md'       | 可选，文本框尺寸           | [尺寸](#尺寸)          |
-| reg         | `RegExp \| string`    |  --   | 可选，用于限制输入的正则或正则字符串 | [正则限制](#正则限制)|
-| allowEmpty	| `boolean \| false`	 |  --   | 可选，是否允许值为空	允许空值 | [允许空值](#允许空值) |
-|show-glow-style|`boolean`|true|可选，是否展示悬浮发光效果||
+| 参数名          | 类型              | 默认值    | 说明                                 | 跳转 Demo             |
+| :-------------- | :---------------- | :-------- | :----------------------------------- | :-------------------- |
+| v-model         | `number`          | --        | 可选，文本框的值                     | [基本用法](#基本用法) |
+| step            | `number`          | 1         | 可选，步数                           | [步数](#步数)         |
+| placeholder     | `string`          | --        | 可选，文本框 placeholder             | [基本用法](#基本用法) |
+| max             | `number`          | Infinity  | 可选，输入框的最大值 max             | [数值范围](#数值范围) |
+| min             | `number`          | -Infinity | 可选，输入框的最小值 min             | [数值范围](#数值范围) |
+| disabled        | `boolean`         | false     | 可选，文本框是否被禁用               | [禁用状态](#禁用状态) |
+| precision       | `number`          | --        | 可选，数值精度                       | [精度](#精度)         |
+| decimalLimit    | `number`          | --        | 可选，限制小数长度                   | [限制小数](#限制小数) |
+| size            | [ISize](#isize)   | 'md'      | 可选，文本框尺寸                     | [尺寸](#尺寸)         |
+| reg             | `RegExp\| string` | --        | 可选，用于限制输入的正则或正则字符串 | [正则限制](#正则限制) |
+| allowEmpty	    | `boolean \| false` |  --      | 可选，是否允许值为空	允许空值      | [允许空值](#允许空值) |
+| show-glow-style | `boolean`         | true      | 可选，是否展示悬浮发光效果           |                       |
 
 ### InputNumber 事件
 
