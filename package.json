@@ -10,7 +10,7 @@
     "build": "pnpm --filter vue-devui build",
     "build:lib": "pnpm --filter vue-devui build:lib",
     "build:lib:theme": "pnpm --filter vue-devui build:lib:theme",
-    "test": "pnpm --filter vue-devui tests.test"
+    "test": "pnpm --filter vue-devui test"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
