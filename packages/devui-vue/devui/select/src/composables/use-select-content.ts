@@ -91,6 +91,15 @@ export default function useSelectContent() {
 
   const onBlur = (e: FocusEvent) => {
     select?.onBlur(e);
+    // 使用setTimeout的原因：点击option会触发onBlur事件，导致先触发onblur事件
+    setTimeout(()=> {
+      if(e&&e.target) {
+        e.target.value = select?.multiple ? '' : displayInputValue.value;
+      }
+      if (!isReadOnly.value && select?.debounceQueryFilter) {
+        select?.debounceQueryFilter('');
+      }
+    },300);
   };
 
   const queryFilter = (e: Event) => {
