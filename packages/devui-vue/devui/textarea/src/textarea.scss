@@ -4,6 +4,8 @@
   width: 100%;
   box-sizing: border-box;
   padding: 4px 8px;
+  font-size: $devui-font-size;
+  font-family: inherit;
   color: var(--devui-text, #252b3a);
   vertical-align: middle;
   outline: none;
@@ -11,6 +13,10 @@
   border-radius: $devui-border-radius;
   background: $devui-form-control-bg;
   transition: border-color 0.3s $devui-animation-ease-in-out-smooth, box-shadow 0.3s $devui-animation-ease-in;
+
+  &::placeholder {
+    color: $devui-placeholder;
+  }
 
   &:not(.#{$devui-prefix}-textarea--error):not(.#{$devui-prefix}-textarea--disabled):not(.#{$devui-prefix}-textarea--focus):hover {
     border-color: $devui-form-control-line-hover;
@@ -60,5 +66,15 @@
 
   &--feedback {
     padding-right: 28px;
+  }
+
+  &--gray-style:not(.#{$devui-prefix}-textarea--disabled):not(.#{$devui-prefix}-textarea--error) {
+    background: $devui-gray-5;
+    border-color: $devui-gray-5;
+
+    &:hover {
+      background: $devui-gray-10;
+      border-color: $devui-gray-10 !important;
+    }
   }
 }
