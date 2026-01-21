@@ -2,7 +2,7 @@ import { computed, defineComponent, toRefs } from 'vue';
 import type { PropType } from 'vue';
 import { NotificationType } from './notification-types';
 import { SuccessIcon, WarningIcon, InfoIcon, ErrorIcon } from './notification-icons';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 export default defineComponent({
   props: {
