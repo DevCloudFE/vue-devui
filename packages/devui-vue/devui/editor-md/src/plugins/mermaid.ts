@@ -1,4 +1,4 @@
-import Mermaid from 'mermaid/dist/mermaid.js';
+import Mermaid from 'mermaid/dist/mermaid.core.mjs';
 
 const DEFAULT_CONFIG = {
   startOnLoad: false,
@@ -33,8 +33,47 @@ export function mermaidRender(md: any, options = {}) {
   };
 }
 
-export function refreshMermaid(delay = 0) {
+let runningPromise: Promise<void> | null = null;
+
+export function refreshMermaid(delay = 0, nodes?: HTMLElement | HTMLElement[]) {
   setTimeout(() => {
-    Mermaid.init();
+    const mermaidAny = Mermaid as any;
+    let targetNodes: HTMLElement[] | undefined;
+    if (nodes) {
+      const list = Array.isArray(nodes) ? nodes : [nodes];
+      targetNodes = list.flatMap(n => Array.from(n.querySelectorAll<HTMLElement>('.mermaid:not([data-processed])')));
+      if (targetNodes.length === 0) {
+        return;
+      }
+    }
+
+    const run = (): Promise<void> => {
+      try {
+        let result: any;
+        const hasRunApi = typeof mermaidAny.run === 'function';
+        const shouldTarget = targetNodes !== undefined;
+
+        if (hasRunApi) {
+          result = shouldTarget ? mermaidAny.run({ nodes: targetNodes }) : mermaidAny.run();
+        } else {
+          result = shouldTarget ? mermaidAny.init(undefined, targetNodes) : mermaidAny.init();
+        }
+
+        return Promise.resolve(result).then(() => undefined);
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    };
+
+    const next = () =>
+      run().catch(() => {
+        runningPromise = null;
+      });
+    
+      if (runningPromise) {
+        runningPromise = runningPromise.then(next, next);
+      } else {
+        runningPromise = next();
+      }
   }, delay);
 }

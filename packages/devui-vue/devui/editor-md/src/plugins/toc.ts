@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
-import Token from 'markdown-it/lib/token';
+import Token from 'markdown-it/lib/token.mjs';
 
 const TOC = '[toc]';
 const TOC_RE = /^\[toc\]/im;
