@@ -29,6 +29,26 @@ const popoverNs = useNamespace('popover', true);
 const popoverContentCls = popoverNs.e('content');
 
 describe('select', () => {
+  it('ignores an open option after becoming disabled', async () => {
+    const wrapper = mount(DSelect, {
+      props: { modelValue: 'Apple', options: ['Apple', 'Orange'] },
+      attachTo: document.body,
+      global: { stubs: { DFlexibleOverlay: { template: '<div><slot /></div>', methods: { updatePosition: jest.fn() } } } },
+    });
+    await wrapper.find(selectInputCls).trigger('click');
+    await nextTick();
+    const option = document.querySelectorAll<HTMLElement>(selectItemCls)[1];
+    expect(option).toBeTruthy();
+    await wrapper.setProps({ disabled: true });
+    option.click();
+    await nextTick();
+
+    expect(wrapper.emitted('update:modelValue')).toBeUndefined();
+    expect(wrapper.emitted('value-change')).toBeUndefined();
+    expect(wrapper.find<HTMLInputElement>(selectInputCls).element.value).toBe('Apple');
+    wrapper.unmount();
+  });
+
   it('select render work', async () => {
     const value = ref(1);
     const options = reactive([1, 2, 'string']);

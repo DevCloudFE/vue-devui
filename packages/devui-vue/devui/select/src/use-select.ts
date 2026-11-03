@@ -180,6 +180,10 @@ export default function useSelect(
   };
 
   const valueChange = (item: OptionObjectItem) => {
+    if (selectDisabled.value) {
+      return;
+    }
+
     const { multiple } = props;
     let { modelValue } = props;
     if (multiple) {
