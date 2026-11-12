@@ -156,6 +156,7 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
     showClearable.value = false;
   };
   const clearData = (e: MouseEvent) => {
+    if (props.disabled) return;
     e.stopPropagation();
     menuShow.value = false;
     inputValue.value = '';

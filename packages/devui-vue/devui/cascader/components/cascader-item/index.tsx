@@ -12,7 +12,7 @@ export const DCascaderItem = (props: CascaderItemPropsType): JSX.Element => {
   const isTriggerHover = trigger === 'hover';
   const rootClasses = useListClassName(props);
   const { updateStatus } = updateCheckOptionStatus(tagList as CascaderItem[]);
-  const disbaled = computed(() => cascaderItem?.disabled); // 当前项是否被禁用
+  const isDisabled = computed(() => cascaderItemNeedProps.disabled?.value || cascaderItem?.disabled);
   // 触发联动更新
   const updateValues = () => {
     if (stopDefault?.value) {
@@ -31,7 +31,7 @@ export const DCascaderItem = (props: CascaderItemPropsType): JSX.Element => {
   };
   // 鼠标hover（多选模式下只能点击操作触发）
   const mouseEnter = () => {
-    if (disbaled.value || multiple) {
+    if (isDisabled.value || multiple) {
       return;
     }
     updateValues();
@@ -43,7 +43,7 @@ export const DCascaderItem = (props: CascaderItemPropsType): JSX.Element => {
     : {};
   // 鼠标click
   const mouseClick = () => {
-    if (disbaled.value) {
+    if (isDisabled.value) {
       return;
     }
     updateValues();
@@ -54,6 +54,7 @@ export const DCascaderItem = (props: CascaderItemPropsType): JSX.Element => {
     }
   };
   const checkboxChange = () => {
+    if (isDisabled.value) return;
     updateStatus(cascaderItem, cascaderOptions, ulIndex);
   };
   return (
@@ -62,7 +63,7 @@ export const DCascaderItem = (props: CascaderItemPropsType): JSX.Element => {
         <div class="cascader-li__checkbox">
           <Checkbox
             checked={cascaderItem?.checked}
-            disabled={cascaderItem.disabled}
+            disabled={isDisabled.value}
             halfChecked={cascaderItem?.halfChecked}
             onChange={checkboxChange}
           />
