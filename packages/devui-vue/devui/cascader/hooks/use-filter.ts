@@ -119,6 +119,7 @@ export const useFilter = (
   };
 
   const handleFilter = debounce((val) => {
+    if (props.disabled) return;
     searchText.value = val;
     const pass = props.beforeFilter(val);
     if (isPromise(pass)) {
@@ -141,6 +142,7 @@ export const useFilter = (
   };
 
   const chooseSuggestion = (item: suggestionListType) => {
+    if (props.disabled) return;
     if (props.showPath) {
       inputValue.value = item.labelsString as string;
     } else {

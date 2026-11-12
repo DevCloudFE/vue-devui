@@ -22,6 +22,13 @@ export const popupHandles = (props: CascaderProps, overlayRef: Ref, origin: Ref)
     updateStopDefaultType();
   };
 
+  watch(disabled, (isDisabled) => {
+    if (isDisabled) {
+      menuShow.value = false;
+      updateStopDefaultType();
+    }
+  });
+
   watch(menuShow, (status) => {
     menuOpenClass.value = dropdownOpenClass(status);
   });

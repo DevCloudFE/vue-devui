@@ -150,6 +150,7 @@ export interface OptionsCallback {
 }
 
 export interface CascaderItemNeedType {
+  disabled?: Ref<boolean>;
   valueCache?: CascaderValueType;
   trigger?: TriggerTypes;
   value?: CascaderValueType;

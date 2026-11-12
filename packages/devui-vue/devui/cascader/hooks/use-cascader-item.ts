@@ -2,7 +2,7 @@
  * 处理cascader-item中需要的参数
  */
 import { cloneDeep } from 'lodash';
-import { ref, reactive, Ref } from 'vue';
+import { ref, reactive, Ref, toRef } from 'vue';
 import { CascaderProps, UseCascaderItemCallback, CascaderItem } from '../src/cascader-types';
 
 export const useCascaderItem = (props: CascaderProps, stopDefault?: Ref<boolean>, tagList?: CascaderItem[]): UseCascaderItemCallback => {
@@ -11,6 +11,7 @@ export const useCascaderItem = (props: CascaderProps, stopDefault?: Ref<boolean>
    */
   const cascaderItemNeedProps = {
     trigger: props.trigger,
+    disabled: toRef(props, 'disabled'),
     inputValueCache: ref(''),
     confirmInputValueFlg: ref(false), // 用于监听点击确定时输出选择内容
     valueCache: reactive(cloneDeep(props.modelValue)), // 操作时缓存选中的值
